@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @copyright Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license   GNU/GPLv2 and later
  *
@@ -11,7 +12,13 @@
 
 defined('_JEXEC') or die;
 
-// Gantry Specific Module Chrome
+/**
+ * Gantry Specific Module Chrome
+ *
+ * @param object $module
+ * @param object $params
+ * @param string $attribs
+ */
 function modChrome_gantry($module, &$params, &$attribs)
 {
 	$moduleTag      = $params->get('module_tag', 'div');

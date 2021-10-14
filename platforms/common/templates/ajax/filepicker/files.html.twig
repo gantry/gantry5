@@ -19,8 +19,11 @@
     {% endspaceless %}
 {%- endmacro %}
 
+{% import _self as macro %}
+
 <ul class="g-list-labels">
     <li>
+        <span class="g-file-thumb"></span>
         <span class="g-file-name">{{ 'GANTRY5_PLATFORM_NAME'|trans }}</span>
         <span class="g-file-size">{{ 'GANTRY5_PLATFORM_SIZE'|trans }}</span>
         <span class="g-file-mtime">{{ 'GANTRY5_PLATFORM_LATEST_MODIFIED'|trans }}</span>
@@ -29,15 +32,15 @@
 <ul>
     {% for index,file in files %}
         <li data-file="{{ file|json_encode()|e('html_attr') }}" data-file-url="{{ file.pathname }}"{{ file.pathname == value ? ' class="selected"' : '' }}
-            title="{{ file.filename }} ({{ _self.bytesToSize(file.size) }})">
+            title="{{ file.filename }} ({{ macro.bytesToSize(file.size) }})">
             {% if file.isInCustom %}
                 <span class="g-file-delete" data-g-file-delete data-dz-remove title="{{ 'GANTRY5_PLATFORM_FILE_REMOVE'|trans }}">
-                    <i class="fa fa-fw fa-trash-o"></i>
+                    <i class="far fa-fw fa-trash-alt" aria-hidden="true"></i>
                 </span>
             {% endif %}
             {% if file.isImage %}
                 <span class="g-file-preview" data-g-file-preview title="{{ 'GANTRY5_PLATFORM_FILE_PREVIEW'|trans }}">
-                    <i class="fa fa-fw fa-eye"></i>
+                    <i class="fa fa-fw fa-eye" aria-hidden="true"></i>
                 </span>
                 <div class="g-thumb g-image g-image-{{ file.extension }}">
                     <div style="background-image: url('{{ url(file.pathname) }}')"></div>
@@ -47,7 +50,7 @@
             {% endif %}
 
             <span class="g-file-name">{{ file.filename }}</span>
-            <span class="g-file-size">{{ _self.bytesToSize(file.size) }}</span>
+            <span class="g-file-size">{{ macro.bytesToSize(file.size) }}</span>
             <span class="g-file-mtime">{{ file.mtime|date('j M o') }}</span>
         </li>
     {% endfor %}

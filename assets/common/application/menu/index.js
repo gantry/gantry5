@@ -44,9 +44,14 @@ var Menu = new prime({
 
         this.selectors = this.options.selectors;
         this.states = this.options.states;
-        this.overlay = zen('div' + this.selectors.overlay).top('#g-page-surround');
+        this.overlay = zen('div' + this.selectors.overlay);
         this.active = null;
         this.location = [];
+
+        var pageSurround = $('#g-page-surround');
+        if (pageSurround) {
+            this.overlay.top(pageSurround);
+        }
 
         var mainContainer = $(this.selectors.mainContainer);
         if (!mainContainer) { return; }
@@ -78,7 +83,10 @@ var Menu = new prime({
 
         if (hasTouchEvents || !this.hoverExpand) {
             var linkedParent = $(selectors.linkedParent);
-            if (linkedParent) { linkedParent.on('touchend', this.bound('touchend')); }
+            if (linkedParent) {
+                linkedParent.on('touchmove', this.bound('touchmove'));
+                linkedParent.on('touchend', this.bound('touchend'));
+            }
             this.overlay.on('touchend', this.bound('closeAllDropdowns'));
         }
 
@@ -125,6 +133,11 @@ var Menu = new prime({
         this.closeDropdown(element);
     },
 
+    touchmove: function(event) {
+        var target      = $(event.target);
+        target.isMoving = true;
+    },
+
     touchend: function(event) {
         var selectors = this.selectors,
             states    = this.states;
@@ -134,6 +147,14 @@ var Menu = new prime({
             menuType    = target.parent('.g-standard') ? 'standard' : 'megamenu',
             isGoingBack = target.parent('.g-go-back'),
             parent, isSelected;
+
+        if (target.isMoving) {
+            target.isMoving = false;
+            return false;
+        }
+
+        target.off('touchmove', this.bound('touchmove'));
+        target.isMoving = false;
 
         if (indicator) {
             target = indicator;
@@ -247,18 +268,41 @@ var Menu = new prime({
 
     _fixHeights: function(parent, sublevel, isGoingBack, isNavMenu) {
         if (parent == sublevel) { return; }
-        if (isGoingBack) { parent.attribute('style', null); }
+        if (isGoingBack) {
+            parent.attribute('style', null);
+        }
 
-        var heights = {
+        var parents, heights = {
                 from: parent[0].getBoundingClientRect(),
                 to: (!isNavMenu ? sublevel.parent('.g-dropdown')[0] : sublevel[0]).getBoundingClientRect()
             },
             height  = Math.max(heights.from.height, heights.to.height);
 
+        if (isGoingBack) {
+            parents = parent.parents('[style^="height"]');
+            (parents || []).forEach(function(element) {
+                element = $(element);
+                if (element.parent('.g-toplevel')) {
+                    element[0].style.height = heights.from.height + 'px';
+                }
+            });
+        }
+
         if (!isGoingBack) {
             // if from height is < than to height set the parent height else, set the target
-            if (heights.from.height < heights.to.height) { parent[0].style.height = height + 'px'; }
-            else if (isNavMenu) { sublevel[0].style.height = height + 'px'; }
+            if (heights.from.height < heights.to.height) {
+                parent[0].style.height = height + 'px';
+
+                parents = parent.parents('[style^="height"]');
+                (parents || []).forEach(function(element) {
+                    element = $(element);
+                    if (element.parent('.g-toplevel')) {
+                        element[0].style.height = height + 'px';
+                    }
+                });
+            } else if (isNavMenu) {
+                sublevel[0].style.height = height + 'px';
+            }
 
             // fix sublevels heights in side menu (offcanvas etc)
             if (!isNavMenu) {

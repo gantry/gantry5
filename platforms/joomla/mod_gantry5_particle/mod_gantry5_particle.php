@@ -1,55 +1,66 @@
 <?php
+
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 defined('_JEXEC') or die;
 
+use Gantry\Component\Content\Block\HtmlBlock;
+use Gantry\Framework\Document;
+use Gantry\Framework\Gantry;
+use Gantry\Debugger;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
 // Detect Gantry Framework or fail gracefully.
 if (!class_exists('Gantry\Framework\Gantry')) {
-    $lang = JFactory::getLanguage();
-    JFactory::getApplication()->enqueueMessage(
-        JText::sprintf('MOD_GANTRY5_PARTICLE_NOT_INITIALIZED', JText::_('MOD_GANTRY5_PARTICLE')),
+    $app = Factory::getApplication();
+    $app->enqueueMessage(
+        Text::sprintf('MOD_GANTRY5_PARTICLE_NOT_INITIALIZED', Text::_('MOD_GANTRY5_PARTICLE')),
         'warning'
     );
     return;
 }
 
-include_once dirname(__FILE__) . '/helper.php';
+include_once __DIR__ . '/helper.php';
 
 /** @var object $params */
+/** @var object $module */
 
-$gantry = \Gantry\Framework\Gantry::instance();
+$gantry = Gantry::instance();
 
-GANTRY_DEBUGGER && \Gantry\Debugger::startTimer("module-{$module->id}", "Rendering Particle Module #{$module->id}");
+if (\GANTRY_DEBUGGER) {
+    Debugger::startTimer("module-{$module->id}", "Rendering Particle Module #{$module->id}");
+}
 
 // Set up caching.
 $cacheid = md5($module->id);
 
 $cacheparams = (object) [
     'cachemode'    => 'id',
-    'class'        => 'ModGantryParticlesHelper',
-    'method'       => 'render',
+    'class'        => 'ModGantry5ParticleHelper',
+    'method'       => 'cache',
     'methodparams' => [$module, $params],
     'modeparams'   => $cacheid
 ];
 
-$data = JModuleHelper::moduleCache($module, $params, $cacheparams);
-
-if (!is_array($data)) {
-    $data = ModGantryParticlesHelper::render($module, $params);
+/** @var HtmlBlock $block */
+$block = ModGantry5ParticleHelper::moduleCache($module, $params, $cacheparams);
+if (null === $block) {
+    $block = ModGantry5ParticleHelper::render($module, $params);
 }
 
-list ($html, $assets) = $data;
-
-/** @var \Gantry\Framework\Document $document */
+/** @var Document $document */
 $document = $gantry['document'];
-$document->appendHeaderTags($assets);
+$document->addBlock($block);
 
-echo $html;
+echo $block->toString();
 
-GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer("module-{$module->id}");
+if (\GANTRY_DEBUGGER) {
+    Debugger::stopTimer("module-{$module->id}");
+}

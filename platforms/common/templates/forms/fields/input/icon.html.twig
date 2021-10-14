@@ -18,8 +18,8 @@
                     />
             {% set picker = 'input[name="' ~ ((scope ~ name)|fieldName|e) ~ '"]' %}
              <span class="input-group-btn">
-                <button class="button" type="button" aria-label="{{ 'GANTRY5_PLATFORM_SELECT'|trans }} {{ field.label }}" data-g5-iconpicker="{{ picker|e('html_attr') }}">
-                    <i class="{{ value|default('fa fa-hand-o-up picker')|e('html_attr') }}"></i>
+                <button class="button" type="button" aria-label="{{ 'GANTRY5_PLATFORM_SELECT'|trans }} {{ field.label|trans_key('GANTRY5_FORM_FIELD', scope, name, 'LABEL') }}" data-g5-iconpicker="{{ picker|e('html_attr') }}">
+                    <i class="{{ value|default('far fa-hand-point-up picker')|e('html_attr') }}"></i>
                 </button>
             </span>
             {% block reset_field %}{{ parent() }}{% endblock %}

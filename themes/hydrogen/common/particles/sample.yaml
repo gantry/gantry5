@@ -1,7 +1,11 @@
 name: Sample Content
 description: Displays Sample Content
 type: particle
-icon: fa-pencil-square-o
+icon: far fa-edit
+
+configuration:
+  caching:
+    type: static
 
 form:
   fields:
@@ -72,7 +76,7 @@ form:
         .id:
           type: input.text
           label: CSS ID
-          description: Enter the ID for the block without the hash (#) (ie. <code>your-id</code>. You can then reference the element via CSS as <code>#your-id</code>
+          description: 'Enter the ID for the block without the hash (#) (ie. <code>your-id</code>. You can then reference the element via CSS as <code>#your-id</code>'
           default:
 
         .class:

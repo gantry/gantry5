@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,6 +14,10 @@
 
 namespace Gantry\Component\Controller;
 
+/**
+ * Interface RestfulControllerInterface
+ * @package Gantry\Component\Controller
+ */
 interface RestfulControllerInterface
 {
     /**

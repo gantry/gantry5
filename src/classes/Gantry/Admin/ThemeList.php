@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -18,6 +19,10 @@ use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class ThemeList
+ * @package Gantry\Admin
+ */
 class ThemeList
 {
     protected static $items;
@@ -34,6 +39,10 @@ class ThemeList
         return static::$items;
     }
 
+    /**
+     * @param string $name
+     * @return ThemeDetails|null
+     */
     public static function getTheme($name)
     {
         if (!is_array(static::$items)) {
@@ -57,18 +66,22 @@ class ThemeList
         natsort($files);
 
         foreach ($files as $theme) {
-            if ($locator('gantry-themes://' . $theme . '/gantry/theme.yaml')) {
-                $details = new ThemeDetails($theme);
-                $details->addStreams();
+            try {
+                if ($locator('gantry-themes://' . $theme . '/gantry/theme.yaml')) {
+                    $details = new ThemeDetails($theme);
+                    $details->addStreams();
 
-                $details['name'] = $theme;
-                $details['title'] = $details['details.name'];
-                $details['preview_url'] = $gantry['platform']->getThemePreviewUrl($theme);
-                $details['admin_url'] = $gantry['platform']->getThemeAdminUrl($theme);
-                $details['params'] = [];
+                    $details['name'] = $theme;
+                    $details['title'] = $details['details.name'];
+                    $details['preview_url'] = $gantry['platform']->getThemePreviewUrl($theme);
+                    $details['admin_url'] = $gantry['platform']->getThemeAdminUrl($theme);
+                    $details['params'] = [];
 
-                $list[$details->name] = $details;
-
+                    $list[$details->name] = $details;
+                }
+            } catch (\Exception $e) {
+                // Do not add broken themes into the list.
+                continue;
             }
         }
 

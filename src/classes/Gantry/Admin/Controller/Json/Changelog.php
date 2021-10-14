@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,37 +14,49 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Controller\JsonController;
+use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Remote\Response as RemoteResponse;
 use Gantry\Component\Response\JsonResponse;
 
+/**
+ * Class Changelog
+ * @package Gantry\Admin\Controller\Json
+ */
 class Changelog extends JsonController
 {
+    /** @var string */
     protected $url = 'https://raw.githubusercontent.com/gantry/gantry5';
+    /** @var string */
     protected $fullurl = 'https://github.com/gantry/gantry5/blob/develop';
+    /** @var string */
     protected $issues = 'https://github.com/gantry/gantry5/issues';
+    /** @var string */
     protected $contrib = 'https://github.com';
+    /** @var string */
     protected $file = 'CHANGELOG.md';
-
+    /** @var array */
     protected $platforms = ['common' => 'share-alt', 'joomla' => '', 'wordpress' => '', 'grav' => ''];
-
+    /** @var array */
     protected $httpVerbs = [
         'POST' => [
             '/' => 'index'
         ]
     ];
 
+    /**
+     * @return JsonResponse
+     */
     public function index()
     {
         $version = $this->request->post['version'];
         $lookup = $version;
-        
-        if ($version == '@version@') {
+
+        if ($version === '@version@') {
             $version = 'develop';
             $lookup  = '';
         }
 
-        if (substr($version, 0, 4) == 'dev-') {
+        if (strpos($version, 'dev-') === 0) {
             $version = preg_replace('/^dev-/i', '', $version);
             $lookup  = '';
         }
@@ -58,14 +71,14 @@ class Changelog extends JsonController
                 $changelog = \Parsedown::instance()->parse($changelog[0]);
 
                 // auto-link issues
-                $changelog = preg_replace("/#(\\d{1,})/uis", '<a target="_blank" href="' . $this->issues . '/$1">#$1</a>', $changelog);
+                $changelog = preg_replace("/#(\\d{1,})/ui", '<a target="_blank" rel="noopener" href="' . $this->issues . '/$1">#$1</a>', $changelog);
 
                 // auto-link contributors
-                $changelog = preg_replace("/@([\\w]+)[^\\w]/uis", '<a target="_blank" href="' . $this->contrib . '/$1">@$1</a> ', $changelog);
+                $changelog = preg_replace("/@([\\w]+)[^\\w]/ui", '<a target="_blank" rel="noopener" href="' . $this->contrib . '/$1">@$1</a> ', $changelog);
 
                 // add icons for platforms
                 foreach($this->platforms as $platform => $icon) {
-                    $changelog = preg_replace('/(<a href="\#' . $platform . '">)/uis', '$1<i class="fa fa-' . ($icon ?: $platform) . '"></i> ', $changelog);
+                    $changelog = preg_replace('/(<a href="\#' . $platform . '">)/uis', '$1<i class="fa fa-' . ($icon ?: $platform) . '" aria-hidden="true"></i> ', $changelog);
                 }
             } else {
                 $changelog = 'No changelog for version <strong>' . $version . '</strong> was found.';
@@ -73,7 +86,7 @@ class Changelog extends JsonController
         }
 
         $response = [
-            'html' => $this->container['admin.theme']->render('@gantry-admin/ajax/changelog.html.twig', [
+            'html' => $this->render('@gantry-admin/ajax/changelog.html.twig', [
                 'changelog' => $changelog,
                 'version'   => $version,
                 'url'       => $url,

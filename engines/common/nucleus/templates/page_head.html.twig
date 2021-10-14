@@ -1,54 +1,69 @@
-{% do gantry.debugger.assets() %}
+{%- do gantry.debugger.assets() -%}
+{%- do gantry.theme.loadAtoms() -%}
 
+{% set faEnabled = gantry.config.page.fontawesome.enable|default(1) %}
+{% set faVersion = gantry.config.page.fontawesome.version|default('fa4') %}
 {% assets with { priority: 10 } %}
     {% block head_stylesheets -%}
-        <link rel="stylesheet" href="{{ url('gantry-assets://css/font-awesome.min.css') }}" type="text/css"/>
-        <link rel="stylesheet" href="{{ url('gantry-engine://css-compiled/nucleus.css') }}" type="text/css"/>
-        {% for css in gantry.theme.configuration.css.persistent|default(gantry.theme.configuration.css.files) %}
-            {%- set url = url(gantry.theme.css(css)) %}{% if url %}
-            <link rel="stylesheet" href="{{ url(gantry.theme.css(css)) }}" type="text/css"/>
+        {% if faEnabled %}
+            {% if faVersion == 'fa4' %}
+                <link rel="stylesheet" href="gantry-assets://css/font-awesome.min.css" type="text/css"/>
+            {% elseif faVersion == 'fa5css' %}
+                <link rel="stylesheet" href="gantry-assets://css/font-awesome5-all.min.css" type="text/css">
+                {% if gantry.config.page.fontawesome.fa4_compatibility|default(1) %}
+                    <link rel="stylesheet" href="gantry-assets://css/font-awesome5-shim.min.css" type="text/css">
+                {% endif %}
+            {% elseif (faVersion == 'fa5js' or (faVersion == 'manual' and gantry.config.page.fontawesome.html_js_import)) and (gantry.config.page.fontawesome.content_compatibility|default(1)) %}
+                <link rel="stylesheet" href="gantry-assets://css/font-awesome5-pseudo.min.css" type="text/css">
+            {% elseif faVersion == 'manual' %}
+                {{ gantry.config.page.fontawesome.html_css_import|html|raw -}}
+            {% endif %}
         {% endif %}
+        <link rel="stylesheet" href="gantry-engine://css-compiled/nucleus.css" type="text/css"/>
+        {% for scss in gantry.theme.configuration.css.persistent|default(gantry.theme.configuration.css.files) %}
+        <link rel="stylesheet" href="{{ scss }}.scss" type="text/css"/>
         {%- endfor %}
+    {% endblock -%}
+
+    {% block head_scripts -%}
+        {% if faEnabled %}
+            {% if faVersion == 'fa5js' %}
+                <script type="text/javascript" src="{{ url('gantry-assets://js/font-awesome5-all.min.js') }}"></script>
+                {% if gantry.config.page.fontawesome.fa4_compatibility|default(1) %}
+                    <script type="text/javascript" src="{{ url('gantry-assets://js/font-awesome5-shim.min.js') }}"></script>
+                {% endif %}
+            {% elseif faVersion == 'manual' %}
+                {{ gantry.config.page.fontawesome.html_js_import|html|raw -}}
+            {% endif %}
+        {% endif %}
     {% endblock -%}
 
     {% block head_platform %}{% endblock %}
 
     {% block head_overrides -%}
-        {% for css in gantry.theme.configuration.css.overrides %}
-            {%- set url = url(gantry.theme.css(css)) %}{% if url %}
-            <link rel="stylesheet" href="{{ url(gantry.theme.css(css)) }}" type="text/css"/>
-        {% endif %}
+        {% for scss in gantry.theme.configuration.css.overrides %}
+        <link rel="stylesheet" href="{{ scss }}.scss" type="text/css"/>
         {%- endfor %}
     {% endblock -%}
 {% endassets -%}
 
-{%- set atoms %}
-    {% if gantry.config.page.head.atoms %}
-        {% for atom in gantry.config.page.head.atoms %}
-            {% try %}
-                {% include '@particles/' ~ atom.type ~ '.html.twig' with { particle: atom.attributes } %}
-            {% catch %}
-                {# TODO: Add message if atom is missing. #}
-            {% endtry %}
-        {% endfor %}
-    {% endif %}
-
-    {% if gantry.config.page.assets %}
-        {% include '@particles/assets.html.twig' with { particle: gantry.config.page.assets|merge({'enabled': 1 }) } %}
-    {% endif %}
-{% endset -%}
-
 <head>
+    {{ gantry.document.getHtml('head_top')|join("\n    ")|raw }}
     {% block head_meta %}
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         {% if gantry.config.page.head.meta -%}
             {% for attributes in gantry.config.page.head.meta -%}
                 {%- for key, value in attributes %}
-                    <meta name="{{ key|e }}" property="{{ key|e }}" content="{{ value|e }}" />
+                    {% if key starts with 'og:' %}
+                    <meta property="{{ key|e }}" content="{{ value|e }}" />
+                    {% else %}
+                    <meta name="{{ key|e }}" content="{{ value|e }}" />
+                    {% endif %}
                 {% endfor -%}
             {%- endfor -%}
         {%- endif -%}
+        {{ gantry.document.getHtml('head_meta')|join("\n    ")|raw }}
 
         {% if gantry.config.page.assets.favicon %}
         <link rel="icon" type="image/x-icon" href="{{ url(gantry.config.page.assets.favicon) }}" />
@@ -71,17 +86,13 @@
     {%- endblock %}
 
     {% block head_ie_stylesheets -%}
-        <!--[if (gte IE 8)&(lte IE 9)]>
-        <script type="text/javascript" src="{{ url('gantry-assets://js/html5shiv-printshiv.min.js') }}"></script>
-        <link rel="stylesheet" href="{{ url('gantry-engine://css/nucleus-ie9.css') }}" type="text/css"/>
-        <script type="text/javascript" src="{{ url('gantry-assets://js/matchmedia.polyfill.js') }}"></script>
-        <![endif]-->
     {% endblock -%}
 
-    {% block head %}{% endblock %}
+    {% block head %}{% endblock -%}
     {% block head_custom %}
         {% if gantry.config.page.head.head_bottom %}
         {{ gantry.config.page.head.head_bottom|raw }}
         {% endif %}
-    {% endblock %}
+    {% endblock -%}
+    {{ gantry.document.getHtml('head_bottom')|join("\n    ")|raw }}
 </head>

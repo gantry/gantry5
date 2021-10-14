@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -10,10 +11,13 @@
 
 namespace Gantry\Framework;
 
-use Gantry\Component\Layout\Layout;
-use Gantry\Framework\Base\Outlines as BaseOutlines;
+use Gantry\Component\Outline\OutlineCollection;
 
-class Outlines extends BaseOutlines
+/**
+ * Class Outlines
+ * @package Gantry\Framework
+ */
+class Outlines extends OutlineCollection
 {
     /**
      * Returns list of all menu locations defined in outsets.

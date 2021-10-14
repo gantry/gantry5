@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -11,7 +12,12 @@
 namespace Gantry\WordPress\Assignments;
 
 use Gantry\Component\Assignments\AssignmentsInterface;
+use Gantry\Framework\Gantry;
 
+/**
+ * Class AssignmentsPost
+ * @package Gantry\WordPress\Assignments
+ */
 class AssignmentsPost implements AssignmentsInterface
 {
     public $type = 'post';
@@ -26,10 +32,10 @@ class AssignmentsPost implements AssignmentsInterface
     {
         $rules = [];
 
-        $queried_object = get_queried_object();
+        $queried_object = \get_queried_object();
 
-        if($queried_object !== null) {
-            if(is_singular()) {
+        if ($queried_object !== null) {
+            if (\is_singular()) {
                 $post_type = $queried_object->post_type;
                 $id        = $queried_object->ID;
 
@@ -37,7 +43,7 @@ class AssignmentsPost implements AssignmentsInterface
                 $rules[$post_type]['is_singular'] = $this->priority;
 
                 // Get current post type taxonomies and its terms
-                $taxonomies = get_object_taxonomies($queried_object);
+                $taxonomies = \get_object_taxonomies($queried_object);
                 if (!empty($taxonomies)) {
                     foreach ($taxonomies as $tax) {
                         $args = [
@@ -46,14 +52,14 @@ class AssignmentsPost implements AssignmentsInterface
                             'fields'  => 'all'
                         ];
 
-                        $terms = wp_get_post_terms($id, $tax, $args);
+                        $terms = \wp_get_post_terms($id, $tax, $args);
 
                         foreach ($terms as $term) {
                             $rules[$post_type . '-terms'][$tax . '-' . $term->term_id] = $this->priority;
                         }
                     }
                 }
-            } elseif(is_post_type_archive()) {
+            } elseif(\is_post_type_archive()) {
                 $rules[$queried_object->name]['is_archive'] = $this->priority;
             }
         }
@@ -80,14 +86,14 @@ class AssignmentsPost implements AssignmentsInterface
         // Get label and items for each post types
         $list = [];
         foreach($post_types as $post_type) {
-            $post_type = apply_filters('g5_assignments_' . $post_type->name . '_object', $post_type);
+            $post_type = \apply_filters('g5_assignments_' . $post_type->name . '_object', $post_type);
 
             if($post_type) {
                 $list[$post_type->name]['label'] = $post_type->labels->name;
                 $list[$post_type->name]['items'] = $this->getItems($post_type);
 
                 // Get current post type taxonomies and its terms
-                $taxonomies = get_object_taxonomies($post_type->name);
+                $taxonomies = \get_object_taxonomies($post_type->name);
                 if(!empty($taxonomies)) {
                     $list[$post_type->name . '-terms']['label'] = $post_type->labels->name . ': Terms';
                     $list[$post_type->name . '-terms']['items'] = $this->getTerms($taxonomies, $post_type);
@@ -102,7 +108,6 @@ class AssignmentsPost implements AssignmentsInterface
      * Get all available Post Types
      *
      * @param array $args
-     *
      * @return array
      */
     protected function getPostTypes($args = [])
@@ -111,9 +116,9 @@ class AssignmentsPost implements AssignmentsInterface
             'show_ui' => true
         ];
 
-        $args = wp_parse_args($args, $defaults);
+        $args = \wp_parse_args($args, $defaults);
 
-        $post_types = get_post_types(apply_filters('g5_assignments_get_post_types_args', $args), 'object');
+        $post_types = \get_post_types(\apply_filters('g5_assignments_get_post_types_args', $args), 'object');
 
         return $post_types;
     }
@@ -121,13 +126,20 @@ class AssignmentsPost implements AssignmentsInterface
     /**
      * List all available Items
      *
-     * @param       $post_type
+     * @param object $post_type
      * @param array $args
-     *
-     * @return mixed|void
+     * @return mixed
      */
     protected function getItems($post_type, $args = [])
     {
+        $global = Gantry::instance()['global'];
+        if (!$global['assign_posts'] && $post_type->name === 'post') {
+            return [];
+        }
+        if (!$global['assign_pages'] && $post_type->name !== 'post') {
+            return [];
+        }
+
         $items = [];
 
         $defaults = [
@@ -140,7 +152,7 @@ class AssignmentsPost implements AssignmentsInterface
             'posts_per_page'         => -1
         ];
 
-        $args = wp_parse_args($args, $defaults);
+        $args = \wp_parse_args($args, $defaults);
 
         $wp_query = new \WP_Query;
         $posts = $wp_query->query($args);
@@ -173,16 +185,15 @@ class AssignmentsPost implements AssignmentsInterface
         }
 
         // Check if there are any posts
-        if(!$wp_query->post_count) {
-
+        if (!$wp_query->post_count) {
+            /*
             $items[] = [
                 'name'     => '',
                 'label'    => 'No items',
                 'disabled' => true
             ];
-
+            */
         } else {
-
             $walker = new AssignmentsWalker;
 
             $new_posts = [];
@@ -206,10 +217,16 @@ class AssignmentsPost implements AssignmentsInterface
 
         }
 
-        return apply_filters('g5_assignments_' . $post_type->name . '_list_items', $items, $post_type, $this->type);
+        return \apply_filters('g5_assignments_' . $post_type->name . '_list_items', $items, $post_type, $this->type);
 
     }
 
+    /**
+     * @param array $taxonomies
+     * @param string $post_type
+     * @param array $args
+     * @return mixed
+     */
     protected function getTerms($taxonomies, $post_type, $args = [])
     {
         $items = [];
@@ -226,48 +243,50 @@ class AssignmentsPost implements AssignmentsInterface
             'pad_counts'               => false,
         ];
 
-        $args = wp_parse_args($args, $defaults);
+        $args = \wp_parse_args($args, $defaults);
 
         foreach($taxonomies as $tax) {
-            $taxonomy = get_taxonomy($tax);
-            $terms    = get_terms($tax, $args);
+            $taxonomy = \get_taxonomy($tax);
+            $terms    = \get_terms($tax, $args);
 
-            $items[] = [
-                'name'     => $taxonomy->name,
-                'label'    => $taxonomy->label,
-                'section'  => true,
-                'disabled' => true
-            ];
-
-            if(empty($terms)) {
+            if ($terms) {
                 $items[] = [
-                    'name'     => '',
-                    'label'    => 'No items',
+                    'name'     => $taxonomy->name,
+                    'label'    => $taxonomy->label,
+                    'section'  => true,
                     'disabled' => true
                 ];
-            } else {
-                $walker = new AssignmentsWalker;
 
-                $new_terms = [];
-                foreach($terms as $new_term) {
-                    $new_term->id        = $new_term->term_id;
-                    $new_term->parent_id = $new_term->parent;
-                    $new_terms[]         = $new_term;
-                }
-
-                $terms = $walker->walk($new_terms, 0);
-
-                foreach($terms as $term) {
+                if(empty($terms)) {
                     $items[] = [
-                        'name'     => $term->taxonomy . '-' . $term->term_id,
-                        'label'    => $term->level > 0 ? str_repeat('—', max(0, $term->level + 1)) . ' ' . $term->name : '— ' . $term->name,
-                        'taxonomy' => $term->taxonomy,
-                        'disabled' => false
+                        'name'     => '',
+                        'label'    => 'No items',
+                        'disabled' => true
                     ];
+                } else {
+                    $walker = new AssignmentsWalker;
+
+                    $new_terms = [];
+                    foreach ($terms as $new_term) {
+                        $new_term->id = $new_term->term_id;
+                        $new_term->parent_id = $new_term->parent;
+                        $new_terms[] = $new_term;
+                    }
+
+                    $terms = $walker->walk($new_terms, 0);
+
+                    foreach ($terms as $term) {
+                        $items[] = [
+                            'name' => $term->taxonomy . '-' . $term->term_id,
+                            'label' => $term->level > 0 ? str_repeat('—', max(0, $term->level + 1)) . ' ' . $term->name : '— ' . $term->name,
+                            'taxonomy' => $term->taxonomy,
+                            'disabled' => false
+                        ];
+                    }
                 }
             }
         }
 
-        return apply_filters('g5_assignments_' . $post_type->name . '_terms_list_items', $items, $taxonomies, $post_type, $this->type);
+        return \apply_filters('g5_assignments_' . $post_type->name . '_terms_list_items', $items, $taxonomies, $post_type, $this->type);
     }
 }

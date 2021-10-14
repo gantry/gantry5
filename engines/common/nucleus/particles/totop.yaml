@@ -3,6 +3,10 @@ description: Scroll back to top.
 type: particle
 icon: fa-chevron-up
 
+configuration:
+  caching:
+    type: static
+
 form:
   fields:
     enabled:
@@ -27,3 +31,9 @@ form:
       label: Text
       description: The text to be displayed for the link. HTML is allowed.
       placeholder: To Top
+
+    title:
+      type: input.text
+      label: Title
+      description: The title to be applied on the link. If no title is set here but a text is defined above, the text is used automatically for the <code>title</code>.
+      placeholder: jump to top

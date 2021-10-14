@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -18,13 +19,19 @@ namespace Gantry\Component\Layout\Version;
  */
 class Format2
 {
+    /** @var array */
     protected $scopes = [0 => 'grid', 1 => 'block'];
+    /** @var array */
     protected $sections = ['wrapper', 'container', 'section', 'grid', 'block', 'offcanvas'];
+    /** @var array */
     protected $structures = ['div', 'section', 'aside', 'nav', 'article', 'header', 'footer', 'main'];
-
+    /** @var array */
     protected $data;
+    /** @var array */
     protected $structure;
+    /** @var array */
     protected $content;
+    /** @var array */
     protected $keys;
 
     /**
@@ -76,10 +83,11 @@ class Format2
             'layout' => $structure
         ];
 
-        if ($this->structure) {
+        if (!empty($this->structure)) {
             $result['structure'] = $this->structure;
         }
-        if ($this->content) {
+
+        if (!empty($this->content)) {
             $result['content'] = $this->content;
         }
 
@@ -91,7 +99,7 @@ class Format2
      * @param array $content
      * @param int $scope
      * @param object $parent
-     * @return array
+     * @return object
      */
     protected function parse($field, array &$content, $scope = 0, $parent = null)
     {
@@ -103,10 +111,10 @@ class Format2
         } else {
             list ($type, $subtype, $id, $size, $section_id, $boxed) = $this->parseSectionString($field);
 
-            if ($type == 'grid') {
+            if ($type === 'grid') {
                 $scope = 1;
             }
-            if ($type == 'block') {
+            if ($type === 'block') {
                 $scope = 0;
             }
 
@@ -168,7 +176,7 @@ class Format2
      * @param string $field
      * @param int $scope
      * @param object $parent
-     * @return array
+     * @return object
      */
     protected function resolve($field, $scope, $parent)
     {
@@ -203,7 +211,7 @@ class Format2
             }
         }
         if ($scope <= 1) {
-            $result = (object) ['id' => $this->id('block'), 'type' => 'block', 'subtype' => 'block', 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
+            $result = (object) ['id' => $this->id('block'), 'type' => 'block', 'subtype' => 'block', 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass()];
             if (!empty($block)) {
                 $result->attributes = (object) $block;
             }
@@ -211,8 +219,8 @@ class Format2
                 $result->attributes->size = $size;
             }
         }
-        if ($scope == 0) {
-            $result = (object) ['id' => $this->id('grid'), 'type' => 'grid', 'subtype' => 'grid', 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
+        if ($scope === 0) {
+            $result = (object) ['id' => $this->id('grid'), 'type' => 'grid', 'subtype' => 'grid', 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass()];
         }
 
         return $result;
@@ -257,7 +265,7 @@ class Format2
             $id = $child['id'];
             $type = $child['type'];
             $subtype = $child['subtype'];
-            $isSection = in_array($type, $this->sections);
+            $isSection = in_array($type, $this->sections, true);
 
             if (empty($child['inherit']['outline']) || empty($child['inherit']['include'])) {
                 unset ($child['inherit']);
@@ -270,7 +278,8 @@ class Format2
                         case 'block':
                             if ($ctype === 'block') {
                                 // Keep block size and fixed status.
-                                $content['attributes'] = array_intersect_key($content['attributes'], ['fixed' => 1, 'size' => 1]);
+                                $attributes = !empty($content['attributes']) ? $content['attributes'] : [];
+                                $content['attributes'] = array_intersect_key($attributes, ['fixed' => 1, 'size' => 1]);
                             }
                             break;
                         case 'children':
@@ -343,7 +352,7 @@ class Format2
             }
 
             // Special handling for grid and block elements.
-            if (in_array($type, ['grid', 'block']) && count($child) === 1 && isset($child['type'])) {
+            if (in_array($type, ['grid', 'block'], true) && count($child) === 1 && isset($child['type'])) {
                 $id = null;
             }
 
@@ -380,9 +389,10 @@ class Format2
                 $result[] = trim("{$value} {$size}");
             }
         }
+        unset($child);
 
         // TODO: maybe collapse grid as well?
-        if ($ctype && in_array($ctype, ['block']) && count($result) <= 1 && key($result) === 0) {
+        if ($ctype && $ctype === 'block' && count($result) <= 1 && key($result) === 0) {
             unset ($this->structure[$content['id']]);
             return reset($result) ?: null;
         }
@@ -412,11 +422,11 @@ class Format2
 
         // Get section and its type.
         $section = reset($list);
-        $type = (in_array($section, $this->sections)) ? $section : 'section';
-        $subtype = ($type !== 'section' || in_array($section, $this->structures)) ? $section : 'section';
+        $type = in_array($section, $this->sections, true) ? $section : 'section';
+        $subtype = ($type !== 'section' || in_array($section, $this->structures, true)) ? $section : 'section';
 
         // Extract id.
-        if ($type == 'section' && in_array($section, $this->structures)) {
+        if ($type === 'section' && in_array($section, $this->structures, true)) {
             $id = array_pop($list);
         } else {
             $id = $section_id;
@@ -462,11 +472,11 @@ class Format2
      * @param string $type
      * @param string $subtype
      * @param string $id
-     * @return string
+     * @return string|null
      */
     protected function getTitle($type, $subtype, $id)
     {
-        if (in_array($type, $this->sections)) {
+        if (in_array($type, $this->sections, true)) {
             if ($type === 'offcanvas') {
                 return 'Offcanvas';
             }
@@ -497,7 +507,7 @@ class Format2
     /**
      * @param string $type
      * @param string $subtype
-     * @param string $id
+     * @param string|int $id
      * @return string
      */
     protected function id($type, $subtype = null, $id = null)
@@ -512,11 +522,12 @@ class Format2
         $key = implode('-', $result);
 
         if (!$id || isset($this->keys[$key][$id])) {
-            while ($id = rand(1000, 9999)) {
+            do {
+                $id = mt_rand(1000, 9999);
                 if (!isset($this->keys[$key][$id])) {
                     break;
                 }
-            }
+            } while (true);
         }
 
         $this->keys[$key][$id] = true;

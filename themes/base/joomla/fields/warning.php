@@ -1,24 +1,38 @@
 <?php
+
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
+/**
+ * Class JFormFieldWarning
+ */
 class JFormFieldWarning extends JFormField
 {
+    /** @var string */
     protected $type = 'Warning';
 
+    /**
+     * @return string
+     * @throws \Exception
+     */
     protected function getInput()
     {
-        $app = JFactory::getApplication();
-        if ($app->isAdmin()) {
-            $app->enqueueMessage(JText::_('GANTRY5_THEME_INSTALL_GANTRY'), 'error');
+        $app = Factory::getApplication();
+        if ($app->isClient('administrator')) {
+            $app->enqueueMessage(Text::_('GANTRY5_THEME_INSTALL_GANTRY'), 'error');
         } else {
-            $app->enqueueMessage(JText::_('GANTRY5_THEME_FRONTEND_SETTINGS_DISABLED'), 'warning');
+            $app->enqueueMessage(Text::_('GANTRY5_THEME_FRONTEND_SETTINGS_DISABLED'), 'warning');
         }
+
+        return '';
     }
 }

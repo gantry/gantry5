@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,19 +14,19 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
-use Gantry\Component\Config\BlueprintsForm;
+use Gantry\Admin\Events\SettingsEvent;
+use Gantry\Admin\Particles;
+use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\Config;
-use Gantry\Component\Controller\HtmlController;
-use Gantry\Component\Filesystem\Folder;
-use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
-use Gantry\Framework\Base\Gantry;
 use Gantry\Framework\Services\ConfigServiceProvider;
-use RocketTheme\Toolbox\Blueprints\Blueprints;
-use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Settings
+ * @package Gantry\Admin\Controller\Html\Configurations
+ */
 class Settings extends HtmlController
 {
     protected $httpVerbs = [
@@ -58,11 +59,14 @@ class Settings extends HtmlController
         ]
     ];
 
+    /**
+     * @return string
+     */
     public function index()
     {
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
 
-        if ($outline == 'default') {
+        if ($outline === 'default') {
             $this->params['overrideable'] = false;
             $data = $this->container['config'];
         } else {
@@ -71,24 +75,33 @@ class Settings extends HtmlController
             $data = ConfigServiceProvider::load($this->container, $outline, false, false);
         }
 
+        /** @var Particles $particles */
+        $particles = $this->container['particles'];
         $this->params += [
             'data' => $data,
-            'particles' => $this->container['particles']->group(['atom']),
-            'route'  => "configurations.{$this->params['configuration']}.settings",
+            'particles' => $particles->group(['atom']),
+            'route'  => "configurations.{$outline}.settings",
             'page_id' => $outline
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/settings.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/settings/settings.html.twig', $this->params);
     }
 
+    /**
+     * @param string $id
+     * @return string
+     */
     public function display($id)
     {
-        $outline = $this->params['configuration'];
-        $particle = $this->container['particles']->get($id);
-        $blueprints = new BlueprintsForm($particle);
+        $outline = $this->params['outline'];
+
+        /** @var Particles $particles */
+        $particles = $this->container['particles'];
+
+        $blueprints = $particles->getBlueprintForm($id);
         $prefix = 'particles.' . $id;
 
-        if($outline == 'default') {
+        if($outline === 'default') {
             $this->params['overrideable'] = false;
             $data = $this->container['config'];
         } else {
@@ -102,14 +115,18 @@ class Settings extends HtmlController
             'particle' => $blueprints,
             'data' =>  ['particle' => $data->get($prefix)],
             'id' => $id,
-            'parent' => "configurations/{$this->params['configuration']}/settings",
-            'route'  => "configurations.{$this->params['configuration']}.settings.{$prefix}",
+            'parent' => "configurations/{$outline}/settings",
+            'route'  => "configurations.{$outline}.settings.{$prefix}",
             'skip' => ['enabled']
             ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/item.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/settings/item.html.twig', $this->params);
     }
 
+    /**
+     * @param string $id
+     * @return string
+     */
     public function formfield($id)
     {
         $path = func_get_args();
@@ -118,33 +135,36 @@ class Settings extends HtmlController
         if ($end === '') {
             array_pop($path);
         }
-        if (end($path) == 'validate') {
+        if (end($path) === 'validate') {
             return call_user_func_array([$this, 'validate'], $path);
         }
 
-        $particle = $this->container['particles']->get($id);
+        /** @var Particles $particles */
+        $particles = $this->container['particles'];
 
         // Load blueprints.
-        $blueprints = new BlueprintsForm($particle);
+        $blueprints = $particles->getBlueprintForm($id);
 
         list($fields, $path, $value) = $blueprints->resolve(array_slice($path, 1), '/');
-
         if (!$fields) {
             throw new \RuntimeException('Page Not Found', 404);
         }
 
         $data = $this->request->post->getJsonArray('data');
 
+        /** @var Config $config */
+        $config = $this->container['config'];
+
         $offset = "particles.{$id}." . implode('.', $path);
         if ($value !== null) {
             $parent = $fields;
             $fields = ['fields' => $fields['fields']];
             $offset .= '.' . $value;
-            $data = $data ?: $this->container['config']->get($offset);
+            $data = $data ?: $config->get($offset);
             $data = ['data' => $data];
             $scope = 'data.';
         } else {
-            $data = $data ?: $this->container['config']->get($offset);
+            $data = $data ?: $config->get($offset);
             $scope = 'data';
         }
 
@@ -152,17 +172,17 @@ class Settings extends HtmlController
 
         array_pop($path);
 
-        $configuration = "configurations/{$this->params['configuration']}";
+        $outline = $this->params['outline'];
+        $configuration = "configurations/{$outline}";
         $this->params = [
                 'configuration' => $configuration,
                 'blueprints' => $fields,
                 'data' => $data,
-                'prefix' => '',
                 'scope' => $scope,
                 'parent' => $path
                     ? "{$configuration}/settings/particles/{$id}/" . implode('/', $path)
                     : "{$configuration}/settings/particles/{$id}",
-                'route' => "configurations.{$this->params['configuration']}.settings.{$offset}",
+                'route' => "configurations.{$outline}.settings.{$offset}",
             ] + $this->params;
 
         if (isset($parent['key'])) {
@@ -172,9 +192,13 @@ class Settings extends HtmlController
             $this->params['title'] = $parent['value'];
         }
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
     }
 
+    /**
+     * @param string $particle
+     * @return JsonResponse
+     */
     public function validate($particle)
     {
         $path = implode('.', array_slice(func_get_args(), 1, -1));
@@ -184,8 +208,11 @@ class Settings extends HtmlController
             $this->undefined();
         }
 
+        /** @var Particles $particles */
+        $particles = $this->container['particles'];
+
         // Load particle blueprints.
-        $validator = $this->container['particles']->get($particle);
+        $validator = $particles->get($particle);
 
         // Create configuration from the defaults.
         $data = new Config(
@@ -202,6 +229,10 @@ class Settings extends HtmlController
         return new JsonResponse(['data' => $data->get($path)]);
     }
 
+    /**
+     * @param string|null $id
+     * @return string
+     */
     public function save($id = null)
     {
         if (!$this->request->post->get('_end')) {
@@ -214,7 +245,7 @@ class Settings extends HtmlController
         $locator = $this->container['locator'];
 
         // Save layout into custom directory for the current theme.
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
         $save_dir = $locator->findResource("gantry-config://{$outline}/particles", true, true);
 
         foreach ($data as $name => $values) {
@@ -223,7 +254,7 @@ class Settings extends HtmlController
         @rmdir($save_dir);
 
         // Fire save event.
-        $event = new Event;
+        $event = new SettingsEvent();
         $event->gantry = $this->container;
         $event->theme = $this->container['theme'];
         $event->controller = $this;
@@ -233,6 +264,11 @@ class Settings extends HtmlController
         return $id ? $this->display($id) : $this->index();
     }
 
+    /**
+     * @param string $id
+     * @param array $data
+     * @param string $save_dir
+     */
     protected function saveItem($id, $data, $save_dir)
     {
         $filename = "{$save_dir}/{$id}.yaml";
@@ -243,7 +279,10 @@ class Settings extends HtmlController
                 $file->delete();
             }
         } else {
-            $blueprints = new BlueprintsForm($this->container['particles']->get($id));
+            /** @var Particles $particles */
+            $particles = $this->container['particles'];
+
+            $blueprints = $particles->getBlueprintForm($id);
             $config = new Config($data, function() use ($blueprints) { return $blueprints; });
 
             $file->save($config->toArray());
@@ -251,6 +290,10 @@ class Settings extends HtmlController
         $file->free();
     }
 
+    /**
+     * @param string $id
+     * @return string
+     */
     public function reset($id)
     {
         $this->params += [

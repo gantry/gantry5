@@ -1,0 +1,10 @@
+{%- set ajax = page.header.ajax -%}
+{%- try -%}
+{%- set particle = gantry.theme.particle(page.header.particle, {ajax: ajax}) -%}
+{%- set json = {code: 200, props: ajax, html: particle.toString()}  -%}
+{%- catch -%}
+{%- set json = {code: e.code, message: e.message} -%}
+{%- endtry -%}
+{%- set debugbar = gantry.debugger.data -%}
+
+{{- json|merge(debugbar ? {_debugbar: debugbar} : [])|json_encode|raw -}}

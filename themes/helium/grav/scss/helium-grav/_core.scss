@@ -1,0 +1,28 @@
+#g-page-surround {
+	#grav-login {
+		.secondary-accent {
+			@include breakpoint(mobile-only) {
+				text-align: center;
+			}	
+
+			.forgot & {
+				text-align: center;
+			}	
+				
+			.button {
+				&.primary, &.secondary {
+					padding: 10px;
+					margin-top: 10px;
+				}
+			}
+			.rememberme {
+				padding-top: 12px;
+
+				@include breakpoint(mobile-only) {
+					float: none;
+					display: block;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,19 @@
+{
+    "name": "gantry/wordpress-compat",
+    "description": "Gantry Framework Library (PHP 5.6 compat)",
+    "license": "GPLv2",
+
+    "require": {
+        "php": ">=5.6.20",
+        "twig/twig": "~1.42",
+        "scssphp/scssphp": "1.6.0"
+    },
+    "replace": {
+        "symfony/polyfill-ctype": "*"
+    },
+    "config": {
+        "platform": {
+            "php": "5.6.20"
+        }
+    }
+}

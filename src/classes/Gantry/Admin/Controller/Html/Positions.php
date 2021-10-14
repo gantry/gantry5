@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,20 +14,20 @@
 
 namespace Gantry\Admin\Controller\Html;
 
-use Gantry\Component\Config\BlueprintsForm;
+use Gantry\Component\Admin\HtmlController;
+use Gantry\Component\Config\BlueprintSchema;
+use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
-use Gantry\Component\Controller\HtmlController;
-use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Position\Module;
-use Gantry\Component\Request\Request;
-use Gantry\Component\Response\HtmlResponse;
+use Gantry\Component\Position\Position;
 use Gantry\Component\Response\JsonResponse;
-use Gantry\Component\Response\Response;
 use Gantry\Framework\Assignments;
 use Gantry\Framework\Positions as PositionsObject;
-use RocketTheme\Toolbox\Blueprints\Blueprints;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Positions
+ * @package Gantry\Admin\Controller\Html
+ */
 class Positions extends HtmlController
 {
     protected $httpVerbs = [
@@ -50,13 +51,19 @@ class Positions extends HtmlController
         ]
     ];
 
+    /**
+     * @return string
+     */
     public function index()
     {
         $this->params['positions'] = $this->container['positions'];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/positions/positions.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/positions/positions.html.twig', $this->params);
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function create()
     {
         // Create only exists for JSON.
@@ -64,43 +71,71 @@ class Positions extends HtmlController
             $this->undefined();
         }
 
-        /** @var PositionsObject $position */
+        /** @var PositionsObject $positions */
         $positions = $this->container['positions'];
 
-        $title = $this->request->post->get('title', 'Untitled');
+        $title = (string) $this->request->post->get('title', 'Untitled');
+        $key = (string) $this->request->post['key'];
 
-        $id = $positions->create($title);
+        $id = $positions->create($title, $key);
 
-        $html = $this->container['admin.theme']->render(
-            '@gantry-admin/layouts/position.html.twig',
-            ['name' => $id, 'title' => $title]
-        );
+        $html = $this->render('@gantry-admin/layouts/position.html.twig', ['position' => ['name' => $id, 'title' => $title]]);
 
-        return new JsonResponse(['html' => sprintf("Position '%s' created.", $id), 'id' => "position-{$id}", 'position' => $html]);
+        return new JsonResponse(['html' => sprintf("Position '%s' created.", $id), 'id' => "position-{$id}", 'key' => $id, 'position' => $html]);
     }
 
-    public function rename($position)
+    /**
+     * @param string $old
+     * @return JsonResponse
+     */
+    public function rename($old)
     {
         // Rename only exists for JSON.
         if (empty($this->params['ajax'])) {
             $this->undefined();
         }
 
+        $title = (string) $this->request->post['title'];
+        $key = (string) $this->request->post['key'];
+        $data = (string) $this->request->post['data'];
+
         /** @var PositionsObject $positions */
         $positions = $this->container['positions'];
+        $position = $positions[$old];
+        $exists = isset($position);
 
-        $title = $this->request->post['title'];
-        $position = $positions[$position];
-        $position->rename($title);
+        if (!$exists) {
+            if (!$data) {
+                throw new \RuntimeException(sprintf("Position '%s' not found", $old), 404);
+            }
 
-        $html = $this->container['admin.theme']->render(
-            '@gantry-admin/layouts/position.html.twig',
-            ['name' => $position->name, 'title' => $title]
-        );
+            $position = new Position($key ?: $old);
+        }
 
-        return new JsonResponse(['html' => sprintf("Position title changed to '%s'.", $title), 'id' => "position-{$position->name}", 'position' => $html]);
+        if (strlen($title)) {
+            $position->title = (string) $title;
+        }
+        if ($exists && strlen($key)) {
+            $position = $position->rename($key);
+        } else {
+            $position->save();
+        }
+
+        if ($data) {
+            $data = ['title' => $position->title] + json_decode($data, true);
+
+            $position = new Position($position->name, $data);
+        }
+
+        $html = $this->render('@gantry-admin/layouts/position.html.twig', ['position' => $position]);
+
+        return new JsonResponse(['html' => sprintf("Position saved"), 'id' => "position-{$position->name}", 'key' => $position->name, 'position' => $html]);
     }
 
+    /**
+     * @param string $position
+     * @return JsonResponse
+     */
     public function duplicate($position)
     {
         // Duplicate only exists for JSON.
@@ -116,6 +151,10 @@ class Positions extends HtmlController
         return new JsonResponse(['html' => sprintf("Position duplicated as '%s'.", $id)]);
     }
 
+    /**
+     * @param string $position
+     * @return JsonResponse
+     */
     public function delete($position)
     {
         // Delete only exists for JSON.
@@ -131,6 +170,9 @@ class Positions extends HtmlController
         return new JsonResponse(['html' => sprintf("Position '%s' deleted.", $position), 'position' => $position]);
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function save()
     {
         // Save only exists for JSON.
@@ -140,13 +182,17 @@ class Positions extends HtmlController
 
         $data = $this->request->post->getJsonArray('positions');
 
-        /** @var PositionsObject $position */
+        /** @var PositionsObject $positions */
         $positions = $this->container['positions'];
         $positions->import($data);
 
         return new JsonResponse(['html' => sprintf("Positions saved.")]);
     }
 
+    /**
+     * @param string|null $position
+     * @return string
+     */
     public function particle($position = null)
     {
         if (!$position) {
@@ -160,11 +206,9 @@ class Positions extends HtmlController
         }
         $name = isset($data['options']['type']) ? $data['options']['type'] : (isset($data['particle']) ? $data['particle'] : null);
 
-        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $blueprints = $this->container['particles']->getBlueprintForm($name);
 
-        $file = CompiledYamlFile::instance("gantry-admin://blueprints/position/chrome.yaml");
-        $chromeBlueprints = new BlueprintsForm($file->content());
-        $file->free();
+        $chromeBlueprints = BlueprintForm::instance('position/chrome.yaml', 'gantry-admin://blueprints');
 
         $data['title'] = isset($data['title']) ? $data['title'] : $blueprints['name'];
         $data['chrome'] = isset($data['chrome']) ? $data['chrome'] : [];
@@ -189,10 +233,14 @@ class Positions extends HtmlController
             'action'        => "positions/{$position}/edit/particle/{$name}"
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/positions/particle.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/positions/particle.html.twig', $this->params);
     }
 
-
+    /**
+     * @param string $position
+     * @param string $name
+     * @return JsonResponse
+     */
     public function validateParticle($position, $name)
     {
         // Validate only exists for JSON.
@@ -205,10 +253,10 @@ class Positions extends HtmlController
         }
 
         // Load particle blueprints and default settings.
-        $validator = new Blueprints;
+        $validator = new BlueprintSchema;
         $validator->embed('options', $this->container['particles']->get($name));
 
-        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $blueprints = $this->container['particles']->getBlueprintForm($name);
 
         // Create configuration from the defaults.
         $data = new Config([],
@@ -226,9 +274,15 @@ class Positions extends HtmlController
         $data->set('options.attributes', $this->request->post->getArray("particles.{$name}"));
         $data->def('options.attributes.enabled', 1);
 
-        $assignments = (new Assignments())->filter($this->request->post->getArray('assignments'));
-        $assignments = $assignments ?: 'none';
-//        $assignments = 'all';
+        $assignments = (new Assignments())->filter($this->request->post->getArray('assignments'), true);
+
+        if (!$assignments) {
+            // Use special syntax for no assignments.
+            $assignments = 'none';
+        } elseif ($assignments === ['page' => [true]]) {
+            // Use special syntax for assigned to all pages. This is a special case and hardcoded for now.
+            $assignments = 'all';
+        }
 
         $data->set('assignments', $assignments);
 
@@ -239,11 +293,15 @@ class Positions extends HtmlController
         $this->params['item'] = (object) $data->toArray();
         $this->params['module'] = new Module($id, $position, $data->toArray());
 
-        $html = $this->container['admin.theme']->render('@gantry-admin/pages/positions/item.html.twig', $this->params);
+        $html = $this->render('@gantry-admin/pages/positions/item.html.twig', $this->params);
 
         return new JsonResponse(['item' => $data->toArray(), 'html' => $html, 'position' => $position]);
     }
 
+    /**
+     * @param string $position
+     * @return string
+     */
     public function selectParticle($position)
     {
         $groups = [
@@ -263,6 +321,7 @@ class Positions extends HtmlController
         foreach ($particles as &$group) {
             asort($group);
         }
+        unset($group);
 
         foreach ($groups as $section => $children) {
             foreach ($children as $key => $child) {
@@ -275,9 +334,12 @@ class Positions extends HtmlController
             'route' => "positions/{$position}/edit/particle",
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/modals/particle-picker.html.twig', $this->params);
+        return $this->render('@gantry-admin/modals/particle-picker.html.twig', $this->params);
     }
 
+    /**
+     * @return array
+     */
     protected function getParticles()
     {
         $particles = $this->container['particles']->all();

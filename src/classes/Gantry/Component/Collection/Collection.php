@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -17,15 +18,21 @@ use RocketTheme\Toolbox\ArrayTraits\ArrayAccess;
 use RocketTheme\Toolbox\ArrayTraits\Countable;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 
+/**
+ * Class Collection
+ * @package Gantry\Component\Collection
+ */
 class Collection implements CollectionInterface
 {
     use ArrayAccess, Countable, Export;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $items = [];
 
+    /**
+     * @param array $variables
+     * @return Collection
+     */
     public static function __set_state($variables)
     {
         $instance = new static();
@@ -45,7 +52,7 @@ class Collection implements CollectionInterface
     }
 
     /**
-     * @param $item
+     * @param mixed $item
      * @return $this
      */
     public function add($item)

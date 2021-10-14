@@ -1,13 +1,23 @@
 <?php
+
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Installer\InstallerAdapter;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Table\Table;
+use Joomla\Filesystem\Folder;
+use Joomla\Registry\Registry;
 
 /**
  * Gantry 5 package installer script.
@@ -20,35 +30,51 @@ class Pkg_Gantry5InstallerScript
      */
     protected $versions = array(
         'PHP' => array (
-            '5.4' => '5.4.0',
-            '0' => '5.6.15' // Preferred version
+            '5.6' => '5.6.20',
+            '0' => '7.4.16' // Preferred version
         ),
         'Joomla!' => array (
-            '3.4' => '3.4.1',
-            '0' => '3.4.5' // Preferred version
+            '3.9' => '3.9.0',
+            '0' => '3.9.25' // Preferred version
         )
     );
     /**
      * List of required PHP extensions.
      * @var array
      */
-    protected $extensions = array ('pcre');
+    protected $extensions = array('pcre');
 
+    /**
+     * @param InstallerAdapter $parent
+     * @return bool
+     */
     public function install($parent)
     {
         return true;
     }
 
+    /**
+     * @param InstallerAdapter $parent
+     * @return bool
+     */
     public function discover_install($parent)
     {
         return self::install($parent);
     }
 
+    /**
+     * @param InstallerAdapter $parent
+     * @return bool
+     */
     public function update($parent)
     {
         return self::install($parent);
     }
 
+    /**
+     * @param InstallerAdapter $parent
+     * @return bool
+     */
     public function uninstall($parent)
     {
         // Hack.. Joomla really doesn't give any information from the extension that's being uninstalled..
@@ -60,29 +86,36 @@ class Pkg_Gantry5InstallerScript
 
         // Clear cached files.
         if (is_dir(JPATH_CACHE . '/gantry5')) {
-            JFolder::delete(JPATH_CACHE . '/gantry5');
+            Folder::delete(JPATH_CACHE . '/gantry5');
         }
         if (is_dir(JPATH_SITE . '/cache/gantry5')) {
-            JFolder::delete(JPATH_SITE . '/cache/gantry5');
+            Folder::delete(JPATH_SITE . '/cache/gantry5');
         }
 
         return true;
     }
 
+    /**
+     * @param string $type
+     * @param InstallerAdapter $parent
+     * @return bool
+     */
     public function preflight($type, $parent)
     {
-        /** @var JInstallerAdapter $parent */
         $manifest = $parent->getManifest();
 
-        // Prevent installation if requirements are not met.
-        $errors = $this->checkRequirements($manifest->version);
-        if ($errors) {
-            $app = JFactory::getApplication();
+        if ($type !== 'uninstall') {
+            // Prevent installation if requirements are not met.
+            $errors = $this->checkRequirements($manifest->version);
+            if ($errors) {
+                /** @var CMSApplication $app */
+                $app = Factory::getApplication();
 
-            foreach ($errors as $error) {
-                $app->enqueueMessage($error, 'error');
+                foreach ($errors as $error) {
+                    $app->enqueueMessage($error, 'error');
+                }
+                return false;
             }
-            return false;
         }
 
         // Disable and unlock existing extensions to prevent fatal errors (in the site).
@@ -91,17 +124,22 @@ class Pkg_Gantry5InstallerScript
         return true;
     }
 
+    /**
+     * @param string $type
+     * @param InstallerAdapter $parent
+     * @return bool
+     */
     public function postflight($type, $parent)
     {
         // Clear Joomla system cache.
         /** @var JCache|JCacheController $cache */
-        $cache = JFactory::getCache();
+        $cache = Factory::getCache();
         $cache->clean('_system');
 
         // Clear Gantry5 cache.
-        $path = JFactory::getConfig()->get('cache_path', JPATH_SITE . '/cache') . '/gantry5';
+        $path = Factory::getConfig()->get('cache_path', JPATH_SITE . '/cache') . '/gantry5';
         if (is_dir($path)) {
-            JFolder::delete($path);
+            Folder::delete($path);
         }
 
         // Make sure that PHP has the latest data of the files.
@@ -114,11 +152,10 @@ class Pkg_Gantry5InstallerScript
             @apc_clear_cache();
         }
 
-        if ($type == 'uninstall') {
+        if ($type === 'uninstall') {
             return true;
         }
 
-        /** @var JInstallerAdapter $parent */
         $manifest = $parent->getManifest();
 
         // Enable and lock extensions to prevent uninstalling them individually.
@@ -127,11 +164,37 @@ class Pkg_Gantry5InstallerScript
         // Make sure that all file formats used by Gantry 5 are editable from template manager.
         $this->adjustTemplateSettings();
 
+        // Install sample data on first install.
+        if (in_array($type, array('install', 'discover_install'))) {
+            $this->renderSplash('install', $manifest);
+        } else {
+            $this->renderSplash('update', $manifest);
+        }
+
         return true;
     }
 
     // Internal functions
 
+        /**
+     * @param string $template
+     * @param \SimpleXMLElement $manifest
+     */
+    public function renderSplash($template, $manifest)
+    {
+        // Define variables for the template file.
+        $name = Text::sprintf($manifest->name);
+        $version = $manifest->version;
+        $date = $manifest->creationDate;
+        $edit_url = Route::_('index.php?option=com_gantry5', false);
+
+        include JPATH_ADMINISTRATOR . "/components/com_gantry5/install/templates/{$template}.php";
+    }
+
+    /**
+     * @param $manifest
+     * @param int $state
+     */
     protected function prepareExtensions($manifest, $state = 1)
     {
         foreach ($manifest->files->children() as $file) {
@@ -150,13 +213,14 @@ class Pkg_Gantry5InstallerScript
                 $search +=  array('folder' => $group);
             }
 
-            $extension = JTable::getInstance('extension');
+            $extension = Table::getInstance('extension');
 
             if (!$extension->load($search)) {
                 continue;
             }
 
-            $extension->protected = $state;
+            $extension->protected = 0;
+
             if (isset($attributes->enabled)) {
                 $extension->enabled = $state ? (int) $attributes->enabled : 0;
             }
@@ -167,12 +231,12 @@ class Pkg_Gantry5InstallerScript
 
     protected function adjustTemplateSettings()
     {
-        $extension = JTable::getInstance('extension');
+        $extension = Table::getInstance('extension');
         if (!$extension->load(array('type' => 'component', 'element' => 'com_templates'))) {
             return;
         }
 
-        $params = new Joomla\Registry\Registry($extension->params);
+        $params = new Registry($extension->params);
         $params->set('source_formats', $this->addParam($params->get('source_formats'), array('scss', 'yaml', 'twig')));
         $params->set('font_formats', $this->addParam($params->get('font_formats'), array('eot', 'svg')));
 
@@ -180,6 +244,11 @@ class Pkg_Gantry5InstallerScript
         $extension->store();
     }
 
+    /**
+     * @param string $string
+     * @param array $options
+     * @return string
+     */
     protected function addParam($string, array $options)
     {
         $items = array_flip(explode(',', $string)) + array_flip($options);
@@ -187,16 +256,25 @@ class Pkg_Gantry5InstallerScript
         return implode(',', array_keys($items));
     }
 
+    /**
+     * @param string $gantryVersion
+     * @return array
+     */
     protected function checkRequirements($gantryVersion)
     {
         $results = array();
-        $this->checkVersion($results, 'PHP', phpversion());
+        $this->checkVersion($results, 'PHP', PHP_VERSION);
         $this->checkVersion($results, 'Joomla!', JVERSION);
         $this->checkExtensions($results, $this->extensions);
 
         return $results;
     }
 
+    /**
+     * @param array $results
+     * @param string $name
+     * @param string $version
+     */
     protected function checkVersion(array &$results, $name, $version)
     {
         $major = $minor = 0;
@@ -238,6 +316,10 @@ class Pkg_Gantry5InstallerScript
         }
     }
 
+    /**
+     * @param array $results
+     * @param array $extensions
+     */
     protected function checkExtensions(array &$results, $extensions)
     {
         foreach ($extensions as $name) {

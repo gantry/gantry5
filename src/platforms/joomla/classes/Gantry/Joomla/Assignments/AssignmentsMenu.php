@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -11,10 +12,19 @@
 namespace Gantry\Joomla\Assignments;
 
 use Gantry\Component\Assignments\AssignmentsInterface;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Version;
 
+/**
+ * Class AssignmentsMenu
+ * @package Gantry\Joomla\Assignments
+ */
 class AssignmentsMenu implements AssignmentsInterface
 {
+    /** @var string */
     public $type = 'menu';
+    /** @var int */
     public $priority = 1;
 
     /**
@@ -26,12 +36,14 @@ class AssignmentsMenu implements AssignmentsInterface
     {
         $rules = [];
 
-        $app = \JFactory::getApplication();
-        if ($app->isSite()) {
-            $active = $app->getMenu()->getActive();
+        /** @var CMSApplication $application */
+        $application = Factory::getApplication();
+        if ($application->isClient('site')) {
+            $menu = $application->getMenu();
+            $active = $menu ? $menu->getActive() : null;
             if ($active) {
                 $menutype = $active->menutype;
-                $id = $active->itemId;
+                $id = $active->id;
                 $rules = [$menutype => [$id => $this->priority]];
             }
         }
@@ -47,12 +59,16 @@ class AssignmentsMenu implements AssignmentsInterface
      */
     public function listRules($configuration)
     {
-        require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
-        $data = \MenusHelper::getMenuLinks();
+        /** @var CMSApplication $application */
+        $application = Factory::getApplication();
 
-        $userid = \JFactory::getUser()->id;
+        $data = $this->getMenulinks();
+        $user = $application->getIdentity();
+        $userid = $user ? $user->id : 0;
 
         $list = [];
+
+        $checked_out_default = Version::MAJOR_VERSION < 4 ? '0' : null;
 
         foreach ($data as $menu) {
             $items = [];
@@ -61,7 +77,7 @@ class AssignmentsMenu implements AssignmentsInterface
                     'name' => $link->value,
                     'field' => ['id', 'link' . $link->value],
                     'value' => $link->template_style_id == $configuration,
-                    'disabled' => $link->type != 'component' || $link->checked_out && $link->checked_out != $userid,
+                    'disabled' => $link->type !== 'component' || ($link->checked_out !== $checked_out_default && $link->checked_out != $userid),
                     'label' => str_repeat('—', max(0, $link->level-1)) . ' ' . $link->text
                 ];
             }
@@ -74,5 +90,16 @@ class AssignmentsMenu implements AssignmentsInterface
         }
 
         return $list;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getMenulinks()
+    {
+        // Works also in Joomla 4
+        require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
+
+        return \MenusHelper::getMenuLinks();
     }
 }

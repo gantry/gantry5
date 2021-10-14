@@ -9,7 +9,7 @@ body {
 
 // Headings
 h1, h2, h3, h4, h5 {
-    font-family: get-font-family($font-family-default);
+    font-family: get-font-family($font-family-title);
     font-weight: $font-weight-regular;
 }
 

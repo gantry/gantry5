@@ -134,7 +134,7 @@ var LayoutManager = new prime({
             indicator  = save.find('.changes-indicator');
 
         if (equals && indicator) { save.hideIndicator(); }
-        if (!equals && !indicator) { save.showIndicator('changes-indicator fa fa-fw fa-circle-o') }
+        if (!equals && !indicator) { save.showIndicator('changes-indicator far fa-fw fa-circle') }
         flags.set('pending', !equals);
 
         // Emits the changed event for all particles

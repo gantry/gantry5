@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -24,21 +25,23 @@ class AssignmentFilter
     /**
      * Return all matching candidates with their score. Candidates are ordered by their scores.
      *
-     * @param array $candidates  In format of candidates[name][section][rule].
-     * @param array $page        In format of page[section][rule].
+     * @param array $candidates         In format of candidates[name][section][rule].
+     * @param array $page               In format of page[section][rule].
+    * @param callable|null $function    Matching function.
      * @return array
      */
-    public function scores(array &$candidates, array &$page)
+    public function scores(array &$candidates, array &$page, callable $function = null)
     {
-        $matches = $this->matches($candidates, $page);
+        $matches = $this->matches($candidates, $page, $function);
 
         $scores = [];
         foreach ($matches as $type => $candidate) {
-            $scores[$type] = $this->getScore($candidate);
+            $scores[$type] = $this->getScore($candidate) + (isset($candidate['language']) ? 0.01 : 0);
         }
 
+        // Always return matches by score in alphabetical order.
         ksort($scores, SORT_STRING);
-        arsort($scores);
+        arsort($scores, SORT_NUMERIC);
 
         return $scores;
     }
@@ -48,30 +51,41 @@ class AssignmentFilter
      *
      * @param array $candidates  In format of candidates[name][section][rule].
      * @param array $page        In format of page[section][rule].
+     * @param callable|null $function Matching function.
      * @return array
      */
-    public function matches(array &$candidates, array &$page)
+    public function matches(array $candidates, array &$page, callable $function = null)
     {
         $matches = [];
         foreach ($candidates as $type => $candidate) {
             if (!is_array($candidate)) {
+                if ($candidate === true && $page) {
+                    $matches[$type] = $page;
+                }
                 continue;
             }
             foreach ($candidate as $section => $list) {
                 if (!is_array($list)) {
+                    if ($list === true && !empty($page[$section])) {
+                        $matches[$type][$section] = $page[$section];
+                    }
                     continue;
                 }
                 foreach ($list as $name => $rules) {
-                    if (!is_array($rules)) {
-                        continue;
-                    }
-                    if (isset($page[$section][$name])) {
-                        $match =\array_intersect_key($page[$section][$name], $rules);
+                    if (!empty($page[$section][$name])) {
+                        if (!is_array($rules)) {
+                            $match = $rules === true ? $page[$section][$name] : [];
+                        } else {
+                            $match = \array_intersect_key($page[$section][$name], $rules);
+                        }
                         if ($match) {
                             $matches[$type][$section][$name] = $match;
                         }
                     }
                 }
+            }
+            if (isset($matches[$type]) && $function && $function($candidate, $matches[$type], $page) === false) {
+                unset($matches[$type]);
             }
         }
 
@@ -83,7 +97,7 @@ class AssignmentFilter
      *
      * @param array $matches
      * @param string $method
-     * @return int
+     * @return float
      */
     public function getScore(array &$matches, $method = 'max')
     {
@@ -93,13 +107,13 @@ class AssignmentFilter
             $this->method = 'calcMax';
         }
 
-        return $this->calcArray(null, $matches);
+        return $this->calcArray(0, $matches);
     }
 
     /**
-     * @param int|float $carry
-     * @param int|float|array $item
-     * @return int|float
+     * @param float $carry
+     * @param float|array $item
+     * @return float
      * @internal
      */
     protected function calcArray($carry, $item)
@@ -109,35 +123,35 @@ class AssignmentFilter
         }
 
         $method = $this->method;
-        return $this->{$method}($carry, $item);
+        return $this->{$method}($carry, (float) $item);
     }
 
     /**
-     * @param int|float $carry
-     * @param int|float $item
-     * @return int|float
+     * @param float $carry
+     * @param float $item
+     * @return float
      * @internal
      */
     protected function calcOr($carry, $item)
     {
-        return (int) ($carry || $item);
+        return (float) ($carry || $item);
     }
 
     /**
-     * @param int|float $carry
-     * @param int|float $item
-     * @return int|float
+     * @param float $carry
+     * @param float $item
+     * @return float
      * @internal
      */
     protected function calcMin($carry, $item)
     {
-        return isset($carry) ? min($carry, $item) : $item;
+        return $carry ? min($carry, $item) : $item;
     }
 
     /**
-     * @param int|float $carry
-     * @param int|float $item
-     * @return int|float
+     * @param float $carry
+     * @param float $item
+     * @return float
      * @internal
      */
     protected function calcMax($carry, $item)
@@ -146,9 +160,9 @@ class AssignmentFilter
     }
 
     /**
-     * @param int|float $carry
-     * @param int|float $item
-     * @return int|float
+     * @param float $carry
+     * @param float $item
+     * @return float
      * @internal
      */
     protected function calcSum($carry, $item)
@@ -157,13 +171,13 @@ class AssignmentFilter
     }
 
     /**
-     * @param int|float $carry
-     * @param int|float $item
-     * @return int|float
+     * @param float $carry
+     * @param float $item
+     * @return float
      * @internal
      */
     protected function calcMul($carry, $item)
     {
-        return isset($carry) ? $carry * $item : $item;
+        return $carry ? $carry * $item : $item;
     }
 }

@@ -3,6 +3,10 @@ description: Display Owl Carousel.
 type: particle
 icon: fa-sliders
 
+configuration:
+  caching:
+    type: static
+
 form:
   fields:
     enabled:
@@ -24,8 +28,8 @@ form:
 
     nav:
       type: select.select
-      label: Prev / Next
-      description: Enable or disable the Prev / Next navigation.
+      label: 'Prev / Next'
+      description: 'Enable or disable the Prev / Next navigation.'
       default: disable
       options:
         enable: Enable
@@ -73,6 +77,12 @@ form:
       ajax: true
 
       fields:
+        .class:
+          type: input.selectize
+          label: CSS Classes
+          description: CSS class names for the individual item.
+        .name:
+          type: input.text
         .image:
           type: input.imagepicker
           label: Image
@@ -99,3 +109,8 @@ form:
           label: Button Class
           description: Input the button class.
           default: 'button-outline'
+        .disable:
+          type: input.checkbox
+          label: Disable
+          description: Disables the item on the front end.
+          default: false

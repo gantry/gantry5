@@ -21,7 +21,7 @@ form:
       type: select.date
       label: Date Format
       description: Select preferred date format.
-      default: j F Y
+      default: 'j F Y'
       placeholder: 'Select...'
       selectize:
           allowEmptyOption: true

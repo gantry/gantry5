@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -10,15 +11,20 @@
 
 defined('_JEXEC') or die;
 
-// Bootstrap Gantry framework or fail gracefully (inside included file).
-$gantry = include __DIR__ . '/includes/gantry.php';
+use Gantry\Framework\Theme;
 
-/** @var \Gantry\Framework\Theme $theme */
+// Bootstrap Gantry framework or fail gracefully (inside included file).
+$className = __DIR__ . '/custom/includes/gantry.php';
+if (!is_file($className)) {
+    $className = __DIR__ . '/includes/gantry.php';
+}
+$gantry = include $className;
+
+/** @var Theme $theme */
 $theme = $gantry['theme'];
 
-/** @var \Gantry\Framework\Configurations $configurations */
-$configurations = $gantry['configurations'];
+// All the custom twig variables can be defined in here:
+$context = array();
 
 // Render the page.
-echo $theme
-    ->render('index.html.twig');
+echo $theme->render('index.html.twig', $context);

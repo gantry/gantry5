@@ -5,7 +5,7 @@
         <div class="menu-header">
         <span class="float-right">
             <button class="button button-back-to-conf" tabindex="0"
-                    aria-label="{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}"><i class="fa fa-fw fa-fw fa-arrow-left"></i>
+                    aria-label="{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}"><i class="fa fa-fw fa-fw fa-arrow-left" aria-hidden="true"></i>
                 <span>{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}</span></button>
         </span>
             <h2 class="page-title">
@@ -15,7 +15,7 @@
                    title="{{ 'GANTRY5_PLATFORM_ADD_NEW_OUTLINE'|trans }}"
                    aria-label="{{ 'GANTRY5_PLATFORM_ADD_NEW_OUTLINE'|trans }}"
                    data-g5-outline-create class="button button-primary">
-                    <i class="fa fa-fw fa-plus"></i>
+                    <i class="fa fa-fw fa-plus" aria-hidden="true"></i>
                 </a>
                 {% endif %}
             </h2>
@@ -38,7 +38,7 @@
                        title="{{ 'GANTRY5_PLATFORM_ADD_NEW_OUTLINE'|trans }}"
                        aria-label="{{ 'GANTRY5_PLATFORM_ADD_NEW_OUTLINE'|trans }}"
                        data-g5-outline-create tabindex="0">
-                        <i class="fa fa-fw fa-plus"></i>
+                        <i class="fa fa-fw fa-plus" aria-hidden="true"></i>
                     </a>
                 </div>
             </li>
@@ -56,13 +56,6 @@
                             <img src="{{ url(preset.image|default('gantry-admin://images/layouts/default.png')) }}" />
                         </div>
                         <div class="inner-params">
-                            {#<span class="float-left">
-                                <a href="{{ gantry.route('configurations', layout)|e }}" class="button">
-                                    <i class="fa fa-fw fa-pencil-square-o"></i>
-
-                                </a>
-                            </span>
-                            <span class="float-right">23 positions</span>#}
                             <div class="center">
                                 <a data-tip="{{ 'GANTRY5_PLATFORM_EDIT'|trans }}"
                                    title="{{ 'GANTRY5_PLATFORM_EDIT_X'|trans(title) }}"
@@ -70,9 +63,9 @@
                                    data-g5-ajaxify=""
                                    data-g5-ajaxify-target="[data-g5-content-wrapper]"
                                    data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"
-                                   href="{{ gantry.route('configurations', name, 'styles') }}"
+                                   href="{{ gantry.route('configurations', name, 'layout') }}"
                                    class="button button-primary">
-                                    <i class="fa fa-fw fa-pencil"></i>
+                                    <i class="fa fa-fw fa-pencil fa-pencil-alt" aria-hidden="true"></i>
                                 </a>
                                 {% if gantry.authorize('outline.create') %}
                                 <a href="{{ gantry.route('configurations', name, 'duplicate') }}"
@@ -80,7 +73,7 @@
                                    title="{{ 'GANTRY5_PLATFORM_DUPLICATE_X'|trans(title) }}"
                                    aria-label="{{ 'GANTRY5_PLATFORM_DUPLICATE_X'|trans(title) }}"
                                    data-g5-outline-duplicate class="button button-secondary">
-                                    <i class="fa fa-fw fa-copy"></i>
+                                    <i class="fa fa-fw fa-copy" aria-hidden="true"></i>
                                 </a>
                                 {% endif %}
                             </div>

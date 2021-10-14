@@ -1,27 +1,26 @@
 name: Gantry 5 Framework
 version: '@version@'
-description: Theme framework.
+description: Gantry 5 Theme framework
 icon: gantry
 author:
   name: RocketTheme
-  email: support@rockettheme.com
-  url: http://www.rockettheme.com
-homepage: http://gantry.org
+  email: 'support@rockettheme.com'
+  url: 'http://www.rockettheme.com'
+homepage: 'http://gantry.org'
+readme: 'https://github.com/gantry/gantry5/blob/master/README.md'
 keywords: gantry, gantry5, theme, framework
-bugs: https://github.com/gantry/gantry5/issues
+bugs: 'https://github.com/gantry/gantry5/issues'
 license: MIT
 dependencies:
-   - { name: grav, version: '>=1.1.6' }
-   - { name: admin, version: '~1.1' }
-   - { name: login, version: '~2.1' }
-   - { name: form, version: '~2.0' }
+   - { name: grav, version: '>=1.7.22' }
+   - { name: admin, version: '>=1.10.22' }
 
 form:
   validation: loose
   fields:
     enabled:
       type: toggle
-      label: Plugin status
+      label: Plugin Status
       highlight: 1
       default: 1
       options:
@@ -33,6 +32,7 @@ form:
     production:
       type: toggle
       label: Production Mode
+      description: Production mode makes Gantry faster by more aggressive caching and ignoring changed files in the filesystem. Most changes made from admin should still be detected.
       highlight: 1
       default: 1
       options:
@@ -42,8 +42,9 @@ form:
         type: bool
 
     use_media_folder:
+      type: toggle
       label: Use Grav Images Folder
-      description: By default Gantry media picker saves all files into the theme. If you want to save files into Grav images folder instead, please select this option. Files in the old location can still be used, but are overridden by the files in the selected folder.
+      description: 'By default Gantry media picker saves all files under the <strong>data://gantry5/themes/[theme]/images</strong> folder. If you want to save files into <strong>user://images</strong> folder instead, please select this option. Files in the old location can still be used, but are overridden by the files in the selected folder.'
       highlight: 1
       default: 0
       options:
@@ -52,9 +53,27 @@ form:
       validate:
         type: bool
 
+    offline:
+      type: toggle
+      label: Offline
+      description: "Set site to maintenance mode. When site is offline, it's only visible for logged in users."
+      highlight: 1
+      default: 0
+      options:
+        1: Yes
+        0: No
+      validate:
+        type: bool
+
+    offline_message:
+      type: textarea
+      label: Offline Message
+      description: Set your own offline message explaining why the site is offline. Field accepts Markdown and HTML.
+
     asset_timestamps:
       type: toggle
       label: Asset Timestamps
+      description: 'Adds timestamps on changed asset files, like images, css and js. The option makes browser to get fresh assets without forcing reload on the page.'
       highlight: 1
       default: 1
       options:
@@ -66,18 +85,15 @@ form:
     asset_timestamps_period:
       type: text
       label: Timestamp Period
+      description: 'Number of days which timestamp is kept after updating the file. Accepts also decimal numbers, eg. 0.5 = 12 hours. Set to 0 to add timestamps on every single asset file.'
       default: 7
       validate:
         type: float
 
-    route:
-      type: text
-      label: Route
-      default: '/admin/gantry5'
-
     debug:
       type: toggle
       label: Debug Mode
+      description: By enabling debugging mode, you will get more information what's going on inside Gantry.
       highlight: 1
       default: 0
       options:

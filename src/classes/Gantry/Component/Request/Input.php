@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,19 +14,20 @@
 
 namespace Gantry\Component\Request;
 
-use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccessWithGetters;
 
+/**
+ * Class Input
+ * @package Gantry\Component\Request
+ */
 class Input implements \ArrayAccess, \Iterator, ExportInterface
 {
     use NestedArrayAccessWithGetters, Iterator, Export;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $items;
 
     /**
@@ -96,7 +98,7 @@ class Input implements \ArrayAccess, \Iterator, ExportInterface
     }
 
     /**
-     * @param $current
+     * @param array|mixed $current
      * @return array|mixed
      * @internal
      */
@@ -105,6 +107,7 @@ class Input implements \ArrayAccess, \Iterator, ExportInterface
         if (!is_array($current)) {
             return $current;
         }
+
         $array = [];
         foreach ($current as $key => &$value) {
             if ($key === '_json') {

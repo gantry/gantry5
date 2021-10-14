@@ -8,7 +8,11 @@
     {% endif %}
 {% endif %}
 
-{% if particle.bootstrap3.enabled %}
+{% if particle.bootstrap5.enabled %}
+    {% do gantry.load('bootstrap.5') %}
+{% elseif particle.bootstrap4.enabled %}
+    {% do gantry.load('bootstrap.4') %}
+{% elseif particle.bootstrap3.enabled %}
     {% do gantry.load('bootstrap.3') %}
 {% elseif particle.bootstrap2.enabled %}
     {% do gantry.load('bootstrap.2') %}

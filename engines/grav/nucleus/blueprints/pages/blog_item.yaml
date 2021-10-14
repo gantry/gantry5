@@ -1,7 +1,7 @@
 title: Item
 extends@:
     type: default
-    context: blueprints://pages
+    context: 'blueprints://pages'
 
 form:
   fields:
@@ -19,53 +19,69 @@ form:
               title: Header Image
               underline: true
 
-            header.header_image:
+            header.image.summary.enabled:
               type: toggle
               toggleable: true
-              label: Display Header Image
-              help: Enabled displaying of a header image
+              label: Display Summary Image
+              help: Enabled displaying of a summary image
               highlight: 1
               options:
-                1: PLUGIN_ADMIN.ENABLED
                 0: PLUGIN_ADMIN.DISABLED
+                1: PLUGIN_ADMIN.ENABLED
 
-            header.header_image_file:
+            header.image.summary.file:
               type: text
               toggleable: true
-              label: Image File
+              label: Summary Image File
               help: image filename that exists in the page folder. If not provided, will use the first image found.
-              placeholder: For example: myimage.jpg
+              placeholder: 'For example: myimage.jpg'
 
-            header.header_image_width:
+            header.image.text.enabled:
+              type: toggle
+              toggleable: true
+              label: Display Blog Image
+              help: Enabled displaying of a blog image
+              highlight: 1
+              options:
+                0: PLUGIN_ADMIN.DISABLED
+                1: PLUGIN_ADMIN.ENABLED
+
+            header.image.text.file:
+              type: text
+              toggleable: true
+              label: Blog Image File
+              help: image filename that exists in the page folder. If not provided, will use the first image found.
+              placeholder: 'For example: myimage.jpg'
+
+
+            header.image.width:
               type: text
               toggleable: true
               label: Image Width
               size: small
-              help: Header width in px
+              help: Image width in px
               placeholder: Default is 900
               validate:
                 type: int
                 min: 0
                 max: 5000
 
-            header.header_image_height:
+            header.image.height:
               type: text
               toggleable: true
               label: Image Height
               size: small
-              help: Header height in px
+              help: Image height in px
               placeholder: Default is 300
               validate:
                 type: int
                 min: 0
                 max: 5000
 
-
             summary:
               type: section
               title: Summary
               underline: true
-
 
             header.summary.enabled:
               type: toggle
@@ -100,4 +116,20 @@ form:
               toggleable: true
               label: Summary delimiter
               classes: large
-              placeholder: ===
+              placeholder: '==='
+
+            readmore:
+              type: section
+              title: Read More
+              underline: true
+
+            header.continue_link:
+              type: toggle
+              toggleable: true
+              label: Read More
+              highlight: 1
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool

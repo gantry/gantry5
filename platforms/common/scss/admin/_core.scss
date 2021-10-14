@@ -91,6 +91,7 @@ body.g-prime {
 
         &.card .inner-params, &:not(.card) {
             overflow: hidden;
+            visibility: hidden;
             height: 0;
         }
     }

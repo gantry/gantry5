@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,6 +14,10 @@
 
 namespace Gantry\Component\Stylesheet;
 
+/**
+ * Interface CssCompilerInterface
+ * @package Gantry\Component\Stylesheet
+ */
 interface CssCompilerInterface
 {
     /**
@@ -61,11 +66,42 @@ interface CssCompilerInterface
      */
     public function getCssUrl($name);
 
+    /**
+     * @return array
+     */
     public function getVariables();
+
+    /**
+     * @param array $variables
+     * @return $this
+     */
     public function setVariables(array $variables);
+
+    /**
+     * @param string   $name       Name of function to register to the compiler.
+     * @param callable $callback   Function to run when called by the compiler.
+     * @return $this
+     */
     public function registerFunction($name, callable $callback);
+
+    /**
+     * @param string $name       Name of function to unregister.
+     * @return $this
+     */
     public function unregisterFunction($name);
+
+    /**
+     * @param string $in
+     * @param callable $variables
+     * @return bool
+     */
     public function needsCompile($in, $variables);
+
+    /**
+     * @param string $in    Filename without path or extension.
+     * @return bool         True if the output file was saved.
+     * @throws \RuntimeException
+     */
     public function compileFile($in);
 
     /**

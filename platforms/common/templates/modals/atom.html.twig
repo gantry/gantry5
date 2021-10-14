@@ -11,7 +11,7 @@
                 {# Settings Tab #}
                 <li class="active">
                     <a href="#" id="g-settings-atom-tab" role="presentation" aria-controls="g-settings-atom" role="tab" aria-expanded="true">
-                        {% if inheritable %}<i class="fa fa-fw fa-{{ (item.inherit and ('attributes' in item.inherit.include)) ? 'lock' : 'unlock' }}"></i>{% endif %}
+                        {% if inheritable %}<i class="fa fa-fw fa-{{ (item.inherit and ('attributes' in item.inherit.include)) ? 'lock' : 'unlock' }}" aria-hidden="true"></i>{% endif %}
                         {% block title %}
                             {{ 'GANTRY5_PLATFORM_ATOM'|trans }}
                         {% endblock %}
@@ -32,6 +32,7 @@
             {# Settings Pane #}
             <div class="g-pane active" role="tabpanel" id="g-settings-atom" aria-labelledby="g-settings-atom-tab" aria-expanded="true">
                 {% include '@gantry-admin/pages/configurations/layouts/particle-card.html.twig' with {
+                item: item,
                 title: item.title,
                 blueprints: blueprints.form,
                 overrideable: overrideable and (blueprints.form.overrideable is not defined or blueprints.form.overrideable),

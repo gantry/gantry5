@@ -256,6 +256,7 @@ fieldset.radio.btn-group {
   text-align: center;
   font-size: 0.8rem;
 }
+
 .btn.jmodedit [class^="icon-"], .btn.jmodedit [class*=" icon-"] {
   margin: 6px 8px;
   align: center;
@@ -359,7 +360,7 @@ input[type="color"], input[type="date"], input[type="datetime"], input[type="dat
   text-align: left;
 }
 
-.control-label .hasTooltip {
+.control-label .hasTooltip, .control-label .hasPopover {
   display: inline-block;
 }
 
@@ -378,6 +379,7 @@ input.invalid {
 #modules-form .btn-group {
   font-size: inherit;
 }
+
 #modules-form .radio.btn-group input[type=radio] {
   display: inherit;
   margin-left: inherit;
@@ -448,6 +450,7 @@ body.modal .manager .height-50 .icon-folder-2 {
   width: 35px;
   line-height: 35px;
 }
+
 body.modal .manager.thumbnails .small {
   font-size: 12px;
 }
@@ -551,9 +554,11 @@ th .tooltip-inner {
 .calendar .title {
   border: none;
 }
+
 .calendar thead .name {
   padding: 2px;
 }
+
 .calendar thead .button {
   color: #000 !important;
   font-weight: normal;
@@ -561,6 +566,7 @@ th .tooltip-inner {
   display: table-cell;
   background: inherit;
 }
+
 .calendar thead .hilite {
   border-radius: 0;
   padding: 2px;
@@ -681,7 +687,3 @@ th .tooltip-inner {
   margin: 0 auto;
   padding: 20px 0 0;
 }
-
-
-
-/*# sourceMappingURL=joomla.css.map */

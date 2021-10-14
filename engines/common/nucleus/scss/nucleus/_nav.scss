@@ -60,8 +60,9 @@
 						cursor: pointer;
 						width: 1.5rem;
 						opacity: 0.5;
-						font-family: FontAwesome, serif;
-						content: "\f078";
+						font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome;
+						font-weight: 900;
+						content: $fa-chevron-down;
 						text-align: right;
 					}
 				}
@@ -69,7 +70,7 @@
 					> .g-menu-item-container {
 						> .g-menu-parent-indicator {
 							&:after {
-								content: "\f00d";
+								content: $fa-times;
 							}
 						}
 					}
@@ -112,7 +113,7 @@
 	    			text-align: center;
 
 	    			&:after {
-						content: "\f054";
+						content: $fa-chevron-right;
 						text-align: center;
 					}
 				}
@@ -120,7 +121,7 @@
 					> .g-menu-item-container {
 						> .g-menu-parent-indicator {
 							&:after {
-								content: "\f00d";
+								content: $fa-times;
 							}
 						}
 					}
@@ -290,8 +291,9 @@
 			display: block;
 		    text-align: center;
 		    width: 1.28571em;
-			font-family: FontAwesome;
-			content: "\f053";
+			font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome;
+			font-weight: 900;
+			content: $fa-chevron-left;
 			opacity: 0.5;
 		}
 	}
@@ -366,8 +368,9 @@
 						opacity: 0.5;
 						width: 1.5rem;
 						line-height: normal;
-						font-family: FontAwesome;
-						content: "\f054";
+						font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome;
+						font-weight: 900;
+						content: $fa-chevron-right;
 					}
 				}
 	    	}

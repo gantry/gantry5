@@ -1,5 +1,5 @@
-name: Widget Position
-description: Display a widget position.
+name: Widget Block
+description: Display a widget block.
 type: position
 icon: fa-object-group
 hidden: false
@@ -9,18 +9,18 @@ form:
     enabled:
       type: input.checkbox
       label: Enabled
-      description: Globally enable widget positions.
+      description: Globally enable widget blocks.
       default: true
 
     key:
       type: input.text
-      label: Position Id
-      description: Widget position id.
+      label: Block Key
+      description: Widget key id.
       pattern: '[a-z0-9-]+'
       overridable: false
 
     chrome:
       type: input.text
       label: Chrome
-      description: Module chrome in this widget position.
+      description: Module chrome in this widget block.
       placeholder: gantry

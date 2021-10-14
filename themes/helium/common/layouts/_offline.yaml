@@ -2,12 +2,14 @@ version: 2
 preset:
   image: 'gantry-admin://images/layouts/default.png'
   name: _offline
-  timestamp: 1457546202
+  timestamp: 1468259562
 layout:
   /navigation/:
     -
+      - system-messages-9719
+    -
       - 'logo-9608 15'
-      - 'spacer-spacer-6015 65'
+      - 'spacer-6015 65'
       - 'social-3171 20'
   /header/:
     -
@@ -32,7 +34,7 @@ layout:
     -
       - 'logo-9571 10'
       - 'copyright-1736 30'
-      - 'spacer-spacer-8094 45'
+      - 'spacer-8094 45'
       - 'totop-8670 15'
   /offcanvas/: {  }
 structure:

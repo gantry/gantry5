@@ -35,13 +35,13 @@ var ColorPicker = new prime({
         var body = $('body');
 
         MOUSEDOWN.forEach(bind(function(mousedown) {
-            body.delegate(mousedown, '.g-colorpicker i', this.bound('iconClick'));
+            body.delegate(mousedown, '#g5-container .g-colorpicker i', this.bound('iconClick'));
         }, this));
 
-        body.delegate(FOCUSIN, '.g-colorpicker input', this.bound('show'), true);
+        body.delegate(FOCUSIN, '#g5-container .g-colorpicker input', this.bound('show'), true);
 
 
-        body.delegate('keydown', '.g-colorpicker input', bind(function(event, element) {
+        body.delegate('keydown', '#g5-container .g-colorpicker input', bind(function(event, element) {
             switch (event.keyCode) {
                 case 9: // tab
                     this.hide();
@@ -56,13 +56,13 @@ var ColorPicker = new prime({
         }, this));
 
         // Update on keyup
-        body.delegate('keyup', '.g-colorpicker input', bind(function(event, element) {
+        body.delegate('keyup', '#g5-container .g-colorpicker input', bind(function(event, element) {
             this.updateFromInput(true, element);
             return true;
         }, this));
 
         // Update on paste
-        body.delegate('paste', '.g-colorpicker input', bind(function(event, element) {
+        body.delegate('paste', '#g5-container .g-colorpicker input', bind(function(event, element) {
             setTimeout(bind(function() {
                 this.updateFromInput(true, element);
             }, this), 1);

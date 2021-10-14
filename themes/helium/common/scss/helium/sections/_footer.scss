@@ -30,8 +30,8 @@
             color: $footer-text-color;
 
             &:hover {
-                color: fadeout($footer-text-color, 40%);
-                box-shadow: 0 2px 0 fadeout($footer-text-color, 80%);
+                color: fade-out($footer-text-color, 0.4);
+                box-shadow: 0 2px 0 fade-out($footer-text-color, 0.8);
             }
         }
     }
@@ -44,7 +44,7 @@
             color: $footer-text-color;
 
             &:hover {
-                color: fadeout($footer-text-color, 40%);
+                color: fade-out($footer-text-color, 0.4);
             }
         }
     }

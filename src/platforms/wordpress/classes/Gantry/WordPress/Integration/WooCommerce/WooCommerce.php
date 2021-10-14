@@ -1,14 +1,16 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
 namespace Gantry\WordPress\Integration\WooCommerce;
+
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use RocketTheme\Toolbox\Event\Event;
@@ -26,8 +28,9 @@ class WooCommerce implements ServiceProviderInterface, EventSubscriberInterface
      *
      * @return bool
      */
-    public static function enabled() {
-        if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+    public static function enabled()
+    {
+        if (in_array('woocommerce/woocommerce.php', \apply_filters('active_plugins', \get_option('active_plugins')), true)) {
             return true;
         }
 
@@ -72,10 +75,10 @@ class WooCommerce implements ServiceProviderInterface, EventSubscriberInterface
      */
     public function onThemeInit(Event $event)
     {
-        add_theme_support('woocommerce');
+        \add_theme_support('woocommerce');
 
-        add_filter('g5_assignments_page_context_array', array('Gantry\\WordPress\\Assignments\\AssignmentsWoocommerce', 'addPageContextItem'));
-        add_filter('g5_assignments_page_context_rules', array('Gantry\\WordPress\\Assignments\\AssignmentsWoocommerce', 'addPageContextConditionals'), 10, 2);
+        \add_filter('g5_assignments_page_context_array', ['Gantry\\WordPress\\Assignments\\AssignmentsWoocommerce', 'addPageContextItem']);
+        \add_filter('g5_assignments_page_context_rules', ['Gantry\\WordPress\\Assignments\\AssignmentsWoocommerce', 'addPageContextConditionals'], 10, 2);
     }
 
     /**

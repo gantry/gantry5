@@ -111,11 +111,11 @@ $.implement({
                 element.attribute('style', element.gSlideStyle);
             };
 
-        callback = typeof animation == 'function' ? animation : (callback || function() {});
+        callback = typeof animation === 'function' ? animation : (callback || function() {});
         if (this.gSlideCollapsed === false) { return callback(); }
         callback = series(callbackStart, callback, callbackEnd);
 
-        animation = typeof animation == 'string' ? animation : {
+        animation = typeof animation === 'string' ? animation : {
             duration: '250ms',
             callback: callback
         };
@@ -125,7 +125,7 @@ $.implement({
     },
 
     slideUp: function(animation, callback) {
-        if (typeof this.gSlideCollapsed == 'undefined') {
+        if (typeof this.gSlideCollapsed === 'undefined') {
             this.gSlideStyle = this.attribute('style');
         }
 
@@ -137,11 +137,11 @@ $.implement({
                 element.style('visibility', 'hidden').attribute('aria-hidden', true);
             };
 
-        callback = typeof animation == 'function' ? animation : (callback || function() {});
+        callback = typeof animation === 'function' ? animation : (callback || function() {});
         if (this.gSlideCollapsed === true) { return callback(); }
         callback = series(callbackStart, callback, callbackEnd);
 
-        animation = typeof animation == 'string' ? animation : {
+        animation = typeof animation === 'string' ? animation : {
             duration: '250ms',
             callback: callback
         };
@@ -168,7 +168,7 @@ $.implement({
             height: parseInt(this.compute('height'), 10)
         };
 
-        this.attribute('style', style);
+        this[0].style = style;
 
         return size;
     },

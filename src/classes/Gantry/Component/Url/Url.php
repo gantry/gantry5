@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,6 +14,10 @@
 
 namespace Gantry\Component\Url;
 
+/**
+ * Class Url
+ * @package Gantry\Component\Url
+ */
 class Url
 {
     /**
@@ -25,44 +30,24 @@ class Url
     public static function parse($url, $queryArray = false)
     {
         $encodedUrl = preg_replace_callback(
-            '%[^:/@?&=#]+%usD',
-            function ($matches) { return urlencode($matches[0]); },
+            '%[^:/@?&=#]+%u',
+            static function ($matches) { return rawurlencode($matches[0]); },
             $url
         );
 
-        // PHP versions below 5.4.7 have troubles with URLs without scheme, so lets help by fixing that.
-        // TODO: This is not needed in PHP >= 5.4.7, but for now we need to test if the function works.
-        if ('/' === $encodedUrl[0] && false !== strpos($encodedUrl, '://')) {
-            $schemeless = true;
-
-            // Fix the path so that parse_url() will not return false.
-            $parts = parse_url('fake://fake.com' . $encodedUrl);
-
-            // Remove the fake values.
-            unset($parts['scheme'], $parts['host']);
-
-        } else {
-            $parts = parse_url($encodedUrl);
-        }
+        $parts = parse_url($encodedUrl);
 
         if (!$parts) {
             return false;
         }
 
-        // PHP versions below 5.4.7 do not understand schemeless URLs starting with // either.
-        if (isset($schemeless) && !isset($parts['host']) && '//' == substr($encodedUrl, 0, 2)) {
-            // Path is stored in format: //[host]/[path], so let's fix it.
-            list($parts['host'], $path) = explode('/', substr($parts['path'], 2), 2);
-            $parts['path'] = "/{$path}";
-        }
-
         foreach($parts as $name => $value) {
-            $parts[$name] = urldecode($value);
+            $parts[$name] = is_int($value) ? $value : rawurldecode($value);
         }
 
         // Return query string also as an array if requested.
         if ($queryArray) {
-            $parts['vars'] = isset($parts['query']) ? static::parseQuery($parts['query']) : [];
+            $parts['vars'] = isset($parts['query']) ? static::parseQuery((string)$parts['query']) : [];
         }
 
         return $parts;
@@ -71,7 +56,7 @@ class Url
     /**
      * Parse query string and return array.
      *
-     * @param $query
+     * @param string $query
      * @return mixed
      */
     public static function parseQuery($query)
@@ -119,7 +104,7 @@ class Url
     {
         $list = [];
         foreach ($vars as $key => $var) {
-            $list[] = $key . '=' . urlencode($var);
+            $list[] = $key . '=' . rawurlencode($var);
         }
 
         return $list ? implode('&', $list) : null;

@@ -1,6 +1,7 @@
 {%- do gantry.debugger.startTimer('render', 'Rendering page') %}
 {%- do gantry.theme.setLayout() -%}
-{%- set segments = gantry.theme.segments -%}
+{%- do gantry.theme.loadAtoms() -%}
+{%- set segments = gantry.theme.segments() -%}
 
 {%- set content %}
     {% if gantry.theme.hasContent() %}
@@ -36,12 +37,28 @@
 {%- set page_top %}
     {% block page_top %}
     {% endblock %}
+    {{ gantry.document.getHtml('top')|join("\n    ")|raw }}
 {% endset -%}
 
 {%- set page_bottom %}
     {% block page_bottom %}
     {% endblock %}
+    {{ gantry.document.getHtml('bottom')|join("\n    ")|raw }}
 {% endset -%}
+
+{%- set body_top %}
+    {% block body_top %}
+    {% endblock %}
+    {{ gantry.document.getHtml('body_top')|join("\n    ")|raw }}
+{% endset -%}
+
+{%- set body_bottom %}
+    {% block body_bottom %}
+    {% endblock %}
+    {{ gantry.document.getHtml('body_bottom')|join("\n    ")|raw }}
+{% endset -%}
+
+{%- do gantry.document.addScript(url('gantry-assets://js/main.js'), 11, 'footer') -%}
 
 {# Head and footer needs to come last because of any of the above blocks may have CSS or JavaScript in them #}
 
@@ -53,7 +70,8 @@
 
 {%- set page_footer %}
     {% block page_footer %}
-        {{ gantry.scripts('footer')|join("\n    ")|raw }}
+        {% do gantry.platform.finalize() -%}
+        {{ gantry.scripts('footer')|join("\n    ")|raw -}}
     {% endblock %}
 
     {{ gantry.debugger.render()|raw }}
@@ -66,16 +84,17 @@
     {% block page_body -%}
     <body{{ gantry.page.bodyAttributes({'class': [offcanvas_position, gantry.page.preset, 'g-style-' ~ gantry.theme.preset]})|raw }}>
         {{ gantry.config.page.body.body_top|raw }}
+        {{ body_top|raw }}
         {{ page_offcanvas|raw }}
         <div id="g-page-surround">
-            {% if page_offcanvas|trim %}
-            <div class="g-offcanvas-hide g-offcanvas-toggle" data-offcanvas-toggle><i class="fa fa-fw fa-bars"></i></div>
-            {% endif %}
+            {% if page_offcanvas|trim -%}
+            <div class="g-offcanvas-hide g-offcanvas-toggle" role="navigation" data-offcanvas-toggle aria-controls="g-offcanvas" aria-expanded="false"><i class="fa fa-fw fa-bars"></i></div>
+            {%- endif %}
             {{ page_top|raw }}
             {{ page_layout|raw }}
             {{ page_bottom|raw }}
         </div>
-        <script type="text/javascript" src="{{ url('gantry-assets://js/main.js') }}"></script>
+        {{ body_bottom|raw }}
         {{ page_footer|raw }}
         {{ gantry.config.page.body.body_bottom|raw }}
     </body>
@@ -83,4 +102,3 @@
 
 </html>
 {% endblock -%}
-{% do gantry.platform.finalize() -%}

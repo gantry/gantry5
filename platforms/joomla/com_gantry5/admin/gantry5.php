@@ -1,23 +1,34 @@
 <?php
+
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 defined('_JEXEC') or die;
 
-$user = JFactory::getUser();
-$app = JFactory::getApplication();
+use Gantry\Admin\Router;
+use Gantry\Framework\Gantry;
+use Gantry5\Loader;
+use Joomla\CMS\Application\AdministratorApplication;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
+/** @var AdministratorApplication $app */
+$app = Factory::getApplication();
+$user = $app->getIdentity();
 
 // ACL for Gantry admin access.
-if (!$user->authorise('core.manage', 'com_gantry5')
+if (!$user || (
+    !$user->authorise('core.manage', 'com_gantry5')
     && !$user->authorise('core.manage', 'com_templates')
-    // Editing particle module makes AJAX call to Gantry component, but has restricted access to a single view only.
-    && !($user->authorise('core.manage', 'com_modules') && strpos($app->input->request->getString('view'), 'particle/') === 0)) {
-    $app->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
+    // Editing particle module makes AJAX call to Gantry component, but has restricted access to json only.
+    && !($user->authorise('core.manage', 'com_modules') && strtolower($app->input->getCmd('format', 'html')) === 'json')
+)) {
+    $app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
 
     return false;
 }
@@ -29,7 +40,7 @@ if (!defined('GANTRYADMIN_PATH')) {
 // Detect Gantry Framework or fail gracefully.
 if (!class_exists('Gantry5\Loader')) {
     $app->enqueueMessage(
-        JText::sprintf('COM_GANTRY5_PLUGIN_MISSING', JText::_('COM_GANTRY5')),
+        Text::sprintf('COM_GANTRY5_PLUGIN_MISSING', Text::_('COM_GANTRY5')),
         'error'
     );
     return;
@@ -37,20 +48,20 @@ if (!class_exists('Gantry5\Loader')) {
 
 // Initialize administrator or fail gracefully.
 try {
-    Gantry5\Loader::setup();
+    Loader::setup();
 
-    $gantry = Gantry\Framework\Gantry::instance();
+    $gantry = Gantry::instance();
     $gantry['router'] = function ($c) {
-        return new \Gantry\Admin\Router($c);
+        return new Router($c);
     };
 
 } catch (Exception $e) {
-    $app->enqueueMessage(
-        JText::sprintf($e->getMessage()),
-        'error'
-    );
+    $app->enqueueMessage(Text::sprintf($e->getMessage()), 'error');
+
     return;
 }
 
 // Dispatch to the controller.
-$gantry['router']->dispatch();
+/** @var Router $router */
+$router = $gantry['router'];
+$router->dispatch();

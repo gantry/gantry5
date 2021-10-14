@@ -25,9 +25,13 @@
 
                 {# Begin Post Entries #}
                 <section class="entries">
-                    {% for post in posts %}
-                        {% include ['partials/content-' ~ scope ~ '.html.twig', (post.format) ? 'partials/content-' ~ post.format ~ '.html.twig' : '', 'partials/content.html.twig'] %}
-                    {% endfor %}
+                    <div class="g-grid">
+                        {% for post in posts %}
+                            <div class="g-block {% if pagination.current == 1 and 'sticky' in post.class %}size-100{% else %}{{ gantry.config.get('content.' ~ scope ~ '.content.columns')|default('size-100') }}{% endif %}">
+                                {% include ['partials/content-' ~ scope ~ '.html.twig', (post.format) ? 'partials/content-' ~ post.format ~ '.html.twig' : '', 'partials/content.html.twig'] %}
+                            </div>
+                        {% endfor %}
+                    </div>
                 </section>
                 {# End Post Entries #}
 

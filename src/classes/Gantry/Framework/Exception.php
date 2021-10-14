@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,6 +14,10 @@
 
 namespace Gantry\Framework;
 
+/**
+ * Class Exception
+ * @package Gantry\Framework
+ */
 class Exception extends \RuntimeException
 {
     protected $responseCodes = [
@@ -27,11 +32,19 @@ class Exception extends \RuntimeException
         503 => '503 Service Temporarily Unavailable'
     ];
 
-    public function getResponseCode() {
+    /**
+     * @return int
+     */
+    public function getResponseCode()
+    {
         return isset($this->responseCodes[$this->code]) ? (int) $this->code : 500;
     }
 
-    public function getResponseStatus() {
+    /**
+     * @return string
+     */
+    public function getResponseStatus()
+    {
         return $this->responseCodes[$this->getResponseCode()];
     }
 }

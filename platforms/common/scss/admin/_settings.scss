@@ -133,7 +133,6 @@
         }
 
         .input-group .g-reset-field {
-            display: table-cell;
             vertical-align: middle;
             padding-left: 4px; // 4px is the display: inline-block gap
         }
@@ -274,6 +273,7 @@
 
     .search, input, .button {
         font-size: 0.85rem;
+        display: inline-block;
     }
 }
 

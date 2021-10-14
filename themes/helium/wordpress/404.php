@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -17,8 +18,9 @@ use Timber\Timber;
  */
 
 $gantry = Gantry\Framework\Gantry::instance();
-$theme  = $gantry['theme'];
 
+/** @var \Gantry\Framework\Theme $theme */
+$theme  = $gantry['theme'];
 $theme->setLayout('_error', true);
 
 // We need to render contents of <head> before plugin content gets added.

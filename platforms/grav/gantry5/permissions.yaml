@@ -1,0 +1,8 @@
+actions:
+  admin.gantry:
+    type: default
+    label: Gantry
+
+  default:
+    type: access
+

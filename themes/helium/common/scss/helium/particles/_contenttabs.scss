@@ -4,6 +4,9 @@
     .ui-tabs-nav {
         margin: 0;
         @include display(flex);
+        @include breakpoint(mobile-only) {
+          flex-direction: column;
+        }
 
         li {
             list-style: none;
@@ -29,6 +32,10 @@
 
         .ui-tabs-anchor {
             text-decoration: none;
+
+            &:hover {
+                color: inherit;
+            }
         }
     }
 }
@@ -42,6 +49,9 @@
         list-style: none;
         margin: 0 0 1rem 0;
         border-bottom: 1px solid $base-border-color;
+        @include breakpoint(mobile-only) {
+          border: 0 none;
+        }
     }
 
     .g-contenttabs-tab {
@@ -50,14 +60,15 @@
 
     .g-contenttabs-tab-wrapper-head {
         display: block;
+        height: 100%;
         margin-bottom: -1px;
         margin-right: 3px;
         padding: $content-padding ($content-padding * 2);
         border-radius: $core-border-radius $core-border-radius 0 0;
-        background: fadeout($accent-color-1, 85%);
+        background: fade-out($accent-color-1, 0.85);
 
         @include breakpoint(mobile-only) {
-            padding: ($content-padding / 2) $content-padding;
+            border-radius: 0;
         }
 
         .g-contenttabs-tab-title {
@@ -81,6 +92,12 @@
                 @include display(flex);
                 @include flex-flow(row wrap);
                 @include flex-wrap(wrap);
+
+                a {
+                    &:hover {
+                        color: inherit;
+                    }
+                }
             }
         }
     }

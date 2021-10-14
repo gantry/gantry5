@@ -18,11 +18,11 @@ domready(function() {
             value = element.value(),
             size;
 
-        preview.find('i').attribute('class', value || 'fa fa-hand-o-up picker');
+        preview.find('i').attribute('class', value || 'far fa-hand-point-up picker');
 
         size = preview[0].offsetWidth;
 
-        if (!size) { preview.find('i').attribute('class', 'fa fa-hand-o-up picker'); }
+        if (!size) { preview.find('i').attribute('class', 'far fa-hand-point-up picker'); }
     });
 
     body.delegate('click', '[data-g5-iconpicker]', function(event, element) {
@@ -63,7 +63,7 @@ domready(function() {
                         });
                     }
 
-                    container.find('.g-icon-preview').html('<i class="fa ' + data.join(' ') + '"></i> <span>' + data[0] + '</span>');
+                    container.find('.g-icon-preview').html('<i class="' + data.join(' ') + '" aria-hidden="true"></i> <span>' + data[0] + '</span>');
                     container.find('[data-g-select]').disabled(container.find('[data-g-icon].active') ? null : true);
                 };
 
@@ -136,7 +136,7 @@ domready(function() {
 
                     for (var i = 5, l = 0; i > l; i--) {
                         large = (!i) ? 'lg' : i + 'x';
-                        html += '<i class="fa ' + icon.data('g-icon') + ' fa-' + large + '"></i> ';
+                        html += '<i class="' + icon.data('g-icon') + ' fa-' + large + '" aria-hidden="true"></i> ';
                     }
 
                     html += '<h3>' + icon.data('g-icon') + '</h3>';

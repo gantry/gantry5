@@ -3,7 +3,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,6 +13,8 @@
  */
 
 namespace Gantry5;
+
+use Composer\Autoload\ClassLoader;
 
 /**
  * Use \Gantry5\Loader::setup() or \Gantry5\Loader::get() instead.
@@ -24,7 +26,9 @@ namespace Gantry5;
  */
 abstract class RealLoader
 {
+    /** @var string */
     protected static $errorMessagePhpMin = 'You are running PHP %s, but Gantry 5 Framework needs at least PHP %s to run.';
+    /** @var string */
     protected static $errorMessageGantryLoaded = 'Attempting to load Gantry 5 Framework multiple times.';
 
     /**
@@ -36,9 +40,9 @@ abstract class RealLoader
      */
     public static function getClassLoader()
     {
-        // Fail safe version check for PHP <5.4.0.
-        if (version_compare($phpVersion = PHP_VERSION, '5.4.0', '<')) {
-            throw new \RuntimeException(sprintf(self::$errorMessagePhpMin, $phpVersion, '5.4.0'));
+        // Fail safe version check for PHP <5.6.20.
+        if (version_compare($phpVersion = PHP_VERSION, '5.6.20', '<')) {
+            throw new \RuntimeException(sprintf(self::$errorMessagePhpMin, $phpVersion, '5.6.20'));
         }
 
         if (defined('GANTRY5_VERSION')) {
@@ -68,37 +72,50 @@ abstract class RealLoader
         if (defined('JVERSION') && defined('JPATH_ROOT')) {
             define('GANTRY5_PLATFORM', 'joomla');
             define('GANTRY5_ROOT', JPATH_ROOT);
-        } elseif (defined('WP_DEBUG') && defined('ABSPATH')) {
+            define('GANTRY5_LIBRARY', JPATH_ROOT . '/libraries/gantry5');
+        } elseif (defined('WP_DEBUG') && defined('ABSPATH') && defined('WP_CONTENT_DIR')) {
             define('GANTRY5_PLATFORM', 'wordpress');
-            define('GANTRY5_ROOT', ABSPATH);
+            if (defined('CONTENT_DIR') && class_exists('Env')) {
+                // Bedrock support.
+                define('GANTRY5_ROOT', preg_replace('|' . preg_quote(CONTENT_DIR, '|'). '$|', '', WP_CONTENT_DIR));
+            } else {
+                // Plain WP support.
+                define('GANTRY5_ROOT', dirname(WP_CONTENT_DIR));
+            }
+            define('GANTRY5_LIBRARY', WP_CONTENT_DIR . '/plugins/gantry5');
         } elseif (defined('GRAV_VERSION') && defined('ROOT_DIR')) {
+            /** @var \RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator $locator */
+            $locator = \Grav\Common\Grav::instance()['locator'];
             define('GANTRY5_PLATFORM', 'grav');
             define('GANTRY5_ROOT', rtrim(ROOT_DIR, '/'));
-        } elseif (defined('PRIME_ROOT')) {
-            define('GANTRY5_PLATFORM', 'prime');
-            define('GANTRY5_ROOT', PRIME_ROOT);
+            define('GANTRY5_LIBRARY', $locator('plugin://gantry5'));
         } else {
             throw new \RuntimeException('Gantry: CMS not detected!');
         }
 
-        $base = __DIR__;
-        $vendor = "{$base}/platforms/" . GANTRY5_PLATFORM;
-        $dev = is_dir($vendor);
-        if (!$dev) {
-            $vendor = $base;
-        }
-        $autoload = "{$vendor}/vendor/autoload.php";
+        $lib = GANTRY5_LIBRARY;
+        $autoload = "{$lib}/vendor/autoload.php";
 
         // Initialize auto-loading.
         if (!file_exists($autoload)) {
             throw new \LogicException('Please run composer in Gantry 5 Library!');
         }
 
-        /** @var \Composer\Autoload\ClassLoader $loader */
-        $loader = require_once $autoload;
+        /** @var ClassLoader $loader */
+        $loader = require $autoload;
 
-        if ($dev) {
-            $loader->addPsr4('Gantry\\', "{$base}/classes/Gantry");
+        // In PHP <7.2.5 we need to use older version of Twig.
+        if (\PHP_VERSION_ID < 70205) {
+            $loader->setPsr4('Twig\\', "{$lib}/compat/vendor/twig/twig/src");
+            $loader->set('Twig_', "{$lib}/compat/vendor/twig/twig/lib");
+        }
+
+        // Skip registering SCSS compiler until it's needed.
+        $loader->setPsr4('ScssPhp\\ScssPhp\\', '');
+
+        // Support for development environments.
+        if (file_exists($lib . '/src/platforms')) {
+            $loader->addPsr4('Gantry\\', "{$lib}/src/platforms/" . GANTRY5_PLATFORM . '/classes/Gantry', true);
         }
 
         return $loader;

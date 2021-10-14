@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,30 +14,41 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Controller\JsonController;
+use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Response\JsonResponse;
 use RocketTheme\Toolbox\File\JsonFile;
 
+/**
+ * Class Fontpicker
+ * @package Gantry\Admin\Controller\Json
+ */
 class Fontpicker extends JsonController
 {
+    /** @var string */
     protected $google_fonts = 'gantry-admin://js/google-fonts.json';
-
+    /** @var array */
     protected $httpVerbs = [
         'GET' => [
             '/' => 'index'
         ]
     ];
 
+    /**
+     * @return JsonResponse|mixed
+     */
     public function index()
     {
         $this->params['fonts'] = $this->loadGoogleFonts();
         $this->params['variantsMap'] = $this->variantsMap();
         $response = [
-            'html' => $this->container['admin.theme']->render('@gantry-admin/ajax/fontpicker.html.twig', $this->params)
+            'html' => $this->render('@gantry-admin/ajax/fontpicker.html.twig', $this->params)
         ];
         return new JsonResponse($response);
     }
 
+    /**
+     * @return \stdClass
+     */
     public function loadGoogleFonts()
     {
         $data = new \stdClass();
@@ -70,6 +82,9 @@ class Fontpicker extends JsonController
         return $data;
     }
 
+    /**
+     * @return array
+     */
     public function loadLocalFonts()
     {
         $local_fonts = $this->container['theme']->details()->get('configuration.fonts', []);
@@ -88,6 +103,9 @@ class Fontpicker extends JsonController
         return $map;
     }
 
+    /**
+     * @return array
+     */
     protected function variantsMap()
     {
         return [

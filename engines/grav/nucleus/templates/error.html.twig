@@ -1,5 +1,7 @@
-{% extends "@nucleus/page.html.twig" %}
+{% extends "partials/page.html.twig" %}
 
 {% block content %}
+    <h1>{{ 'PLUGIN_ERROR.ERROR'|t }} {{ header.http_response_code }}</h1>
+
     {{ content|raw }}
 {% endblock %}

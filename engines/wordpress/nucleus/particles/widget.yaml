@@ -11,6 +11,11 @@ form:
       description: Globally enable widget particle.
       default: true
 
+    info:
+      type: separator.note
+      class: alert
+      content: 'DEPRECATED: WordPress 5.8+ uses new Widget Manager with Blocks.<br />Widgets adapted for blocks are not supported.<br />Such widgets can be used with Widget Block particle instead.'
+
     widget:
       type: gantry.widget
       label: Widget

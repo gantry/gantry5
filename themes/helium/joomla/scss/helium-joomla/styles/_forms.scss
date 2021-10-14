@@ -50,6 +50,24 @@ input[type="color"],
     }
 }
 
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+    height: 41px;
+}
+
 .input-prepend > .add-on, .input-append > .add-on {
     background: darken($base-background, 15%);
     border: 1px solid $base-border-color;
@@ -68,7 +86,6 @@ input[type="color"],
         }
     }
 }
-
 textarea {
     width: 100%;
 }
@@ -124,7 +141,11 @@ select {
         }
 
         .btn {
-            height: 35px;
+            height: 50px;
+            line-height: 33px;
+            background: #4db2b3;
+            color: #ffffff;
+            text-shadow: none;
         }
 
         .input-small {

@@ -1,0 +1,41 @@
+{% extends "@gantry-admin/partials/page.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/g-admin.css') }}" type="text/css" />
+    {% if not gantry.platform.has('fontawesome') %}
+    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css/font-awesome5-all.min.css') }}" type="text/css" />
+    {% endif %}
+    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css/font-awesome5-shim.min.css') }}" type="text/css" />
+    {{ parent() }}
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" defer="defer" src="{{ url('gantry-admin://assets/js/main.js') }}"></script>
+    {% include "@gantry-admin/partials/js-translations.html.twig" %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+<div id="g5-container">
+    <div class="inner-container">
+        {% block gantry_content_wrapper %}
+            <div data-g5-content-wrapper="">
+                <div class="g-grid">
+                    <div class="g-block main-block">
+                        <div id="g-main">
+                            <div class="g-content" data-g5-content="">
+                                {% block gantry %}
+                                    {{ content|raw }}
+                                {% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
+
+{% block footer_section %}
+{% endblock %}

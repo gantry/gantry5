@@ -1,6 +1,6 @@
 {% extends 'forms/fields/input/filepicker.html.twig' %}
 
 {% block input %}
-    {% set field = {'icon': 'fa-file-image-o', 'filter': '\.(jpe?g|gif|png|svg)$'}|merge(field) %}
+    {% set field = {'icon': 'fa-file-image', 'filter': '\.(jpe?g|gif|png|svg|webp)$'}|merge(field) %}
     {{ parent() }}
 {% endblock %}

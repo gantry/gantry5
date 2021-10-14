@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<extension version="3.4" type="package" method="upgrade">
+<extension version="3.9" type="package" method="upgrade">
     <name>pkg_gantry5</name>
     <packagename>gantry5</packagename>
     <version>@version@</version>
@@ -7,12 +7,13 @@
     <author>RocketTheme, LLC</author>
     <authorEmail>support@rockettheme.com</authorEmail>
     <authorUrl>http://www.rockettheme.com</authorUrl>
-    <copyright>(C) 2005 - 2016 RocketTheme, LLC. All rights reserved.</copyright>
+    <copyright>(C) 2005 - 2021 RocketTheme, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2</license>
     <description>PKG_GANTRY5_DESCRIPTION</description>
 
     <scriptfile>install.php</scriptfile>
 
+    <blockChildUninstall>true</blockChildUninstall>
     <files folder="packages">
         <!-- Mandatory system plugin -->
         <file type="plugin"    group="system"     id="gantry5"              enabled="1">plg_system_gantry5_v@version@.zip</file>

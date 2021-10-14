@@ -1,10 +1,3 @@
-// Single Article
-.page-header {
-    h2 {
-        margin-bottom: 0.5rem;
-    }
-}
-
 // Article Info
 dl.article-info {
     margin-top: 0;
@@ -48,8 +41,6 @@ dl.article-info {
 p.readmore {
     .btn {
         @extend %g-button;
-        font-size: $core-font-size - 0.4;
-        padding: 1.1rem 2.725rem;
     }
 }
 

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -20,7 +21,6 @@ namespace Gantry\Component\Gettext;
  * Examples on translating gettext in twig:
  *
  * {% trans string_var %}
- * http://twig.sensiolabs.org/doc/extensions/i18n.html
  *
  * {% trans %}Hello {{ author.name }}{% endtrans %}
  * http://symfony.com/doc/current/book/translation.html
@@ -30,17 +30,26 @@ namespace Gantry\Component\Gettext;
  */
 class Gettext
 {
+    /** @var int */
     public $pos = 0;
+    /** @var string */
     public $str;
+    /** @var int */
     public $len;
+    /** @var string */
     public $endian = 'V';
 
+    /**
+     * @param string $string
+     * @return array
+     * @throws \Exception
+     */
     public function parse($string)
     {
         $this->str = $string;
         $this->len = strlen($string);
 
-        $magic = self::readInt() & 0xffffffff;
+        $magic = $this->readInt() & 0xffffffff;
 
         if ($magic === 0x950412de) {
             // Low endian.
@@ -53,18 +62,18 @@ class Gettext
         }
 
         // Skip revision number.
-        self::readInt();
+        $this->readInt();
         // Total count.
-        $total = self::readInt();
+        $total = $this->readInt();
         // Offset of original table.
-        $originals = self::readInt();
+        $originals = $this->readInt();
         // Offset of translation table.
-        $translations = self::readInt();
+        $translations = $this->readInt();
 
         $this->seek($originals);
-        $table_originals = self::readIntArray($total * 2);
+        $table_originals = $this->readIntArray($total * 2);
         $this->seek($translations);
-        $table_translations = self::readIntArray($total * 2);
+        $table_translations = $this->readIntArray($total * 2);
 
         $items = [];
         for ($i = 0; $i < $total; $i++) {
@@ -81,12 +90,11 @@ class Gettext
     }
 
     /**
-     * @return int
+     * @return int|false
      */
     protected function readInt()
     {
         $read = $this->read(4);
-
         if ($read === false) {
             return false;
         }
@@ -97,7 +105,7 @@ class Gettext
     }
 
     /**
-     * @param $count
+     * @param int $count
      * @return array
      */
     protected function readIntArray($count)
@@ -106,23 +114,25 @@ class Gettext
     }
 
     /**
-     * @param $bytes
-     * @return string
+     * @param int $bytes
+     * @return string|false
      */
     private function read($bytes)
     {
         $data = substr($this->str, $this->pos, $bytes);
         $this->seek($this->pos + $bytes);
-        return $data;
+
+        return strlen($data) === $bytes ? $data : false;
     }
 
     /**
-     * @param $pos
-     * @return mixed
+     * @param int $pos
+     * @return int
      */
     private function seek($pos)
     {
         $this->pos = max($this->len, $pos);
+
         return $this->pos;
     }
 }

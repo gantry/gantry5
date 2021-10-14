@@ -49,9 +49,6 @@ form:
         - name: 'twitter:card'
         - content: 'The card type, which will be one of “summary”, “summary_large_image”, “photo”, “gallery”, “product”, “app”, or “player”.'
 
-    sep1:
-      type: separator.separator
-
     font-family-1:
       type: input.fonts
       label: Font 1
@@ -111,7 +108,7 @@ form:
         - 'media/images/bla'
     file-4:
       type: input.filepicker
-      label: Filter: '^img-'
+      label: "Filter: '^img-'"
       icon: fa-filter
       root: 'gantry-media://'
       filter: '^img-'

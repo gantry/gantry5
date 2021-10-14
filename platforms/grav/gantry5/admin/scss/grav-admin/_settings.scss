@@ -5,6 +5,15 @@
             &:focus {
                 border-color: rgba($core-accent, .5);
             }
+            &[disabled], &[readonly] {
+                cursor: not-allowed;
+                background-color: #eee;    
+            }
+            &[type="radio"], &[type="checkbox"] {
+                &[disabled], &[readonly] {
+                    background-color: transparent;
+                }    
+            }
         }
 
         .fa {

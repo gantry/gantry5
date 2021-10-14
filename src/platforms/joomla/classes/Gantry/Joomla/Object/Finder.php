@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -10,38 +11,28 @@
 
 namespace Gantry\Joomla\Object;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Service\Provider\Database;
+
 /**
  * Class Finder
  * @package Gantry\Joomla\Object
  */
 abstract class Finder
 {
-    /**
-     * Table associated with the model.
-     *
-     * @var string
-     */
+    /** @var string Table associated with the model. */
     protected $table;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $primaryKey = 'id';
-
-    /**
-     * @var \JDatabaseQuery
-     */
+    /** @var \JDatabaseQuery */
     protected $query;
-
-    /**
-     * @var \JDatabase
-     */
+    /** @var Database */
     protected $db;
-
+    /** @var int */
     protected $start = 0;
-
+    /** @var int */
     protected $limit = 20;
-
+    /** @var bool */
     protected $skip = false;
 
     /**
@@ -55,7 +46,7 @@ abstract class Finder
             throw new \DomainException('Table name missing from ' . get_class($this));
         }
 
-        $this->db = \JFactory::getDbo();
+        $this->db = Factory::getDbo();
         $this->query = $this->db->getQuery(true);
         $this->query->from($this->table . ' AS a');
 
@@ -64,11 +55,15 @@ abstract class Finder
         }
     }
 
+    /**
+     * @param array $options
+     * @return $this
+     */
     public function parse(array $options)
     {
-        foreach ($options as $func => $params) {
-            if (method_exists($this, $func)) {
-                call_user_func_array([$this, $func], (array) $params);
+        foreach ($options as $method => $params) {
+            if (method_exists($this, $method)) {
+                call_user_func_array([$this, $method], (array) $params);
             }
         }
 
@@ -79,12 +74,11 @@ abstract class Finder
      * Set limitstart for the query.
      *
      * @param int $limitstart
-     *
      * @return $this
      */
     public function start($limitstart = 0)
     {
-        $this->start = $limitstart;
+        $this->start = (int)$limitstart;
 
         return $this;
     }
@@ -92,17 +86,14 @@ abstract class Finder
     /**
      * Set limit to the query.
      *
-     * If this function isn't used, RokClub will use threads per page configuration setting.
-     *
      * @param int $limit
      *
      * @return $this
      */
     public function limit($limit = null)
     {
-        if (!is_null($limit))
-        {
-            $this->limit = $limit;
+        if (null !== $limit) {
+            $this->limit = (int)$limit;
         }
 
         return $this;
@@ -114,7 +105,7 @@ abstract class Finder
      * This function can be used more than once to chain order by.
      *
      * @param  string $by
-     * @param  int $direction
+     * @param  string|int $direction
      * @param  string $alias
      *
      * @return $this
@@ -124,7 +115,7 @@ abstract class Finder
         if (is_numeric($direction)) {
             $direction = $direction > 0 ? 'ASC' : 'DESC';
         } else {
-            $direction = strtolower((string)$direction) == 'desc' ? 'DESC' : 'ASC';
+            $direction = strtolower((string)$direction) === 'desc' ? 'DESC' : 'ASC';
         }
         $by = (string)$alias . '.' . $this->db->quoteName($by);
         $this->query->order("{$by} {$direction}");
@@ -135,9 +126,9 @@ abstract class Finder
     /**
      * Filter by field.
      *
-     * @param  string        $field       Field name.
-     * @param  string        $operation   Operation (>|>=|<|<=|=|IN|NOT IN)
-     * @param  string|array  $value       Value.
+     * @param  string           $field       Field name.
+     * @param  string           $operation   Operation (>|>=|<|<=|=|IN|NOT IN)
+     * @param  string|int|array $value       Value.
      *
      * @return $this
      */
@@ -191,9 +182,8 @@ abstract class Finder
      */
     public function find()
     {
-        if ($this->skip)
-        {
-            return array();
+        if ($this->skip) {
+            return [];
         }
 
         $baseQuery = clone $this->query;
@@ -203,9 +193,8 @@ abstract class Finder
 
         $query->select('a.' . $this->primaryKey);
         $this->db->setQuery($query, $this->start, $this->limit);
-        $results = (array) $this->db->loadColumn();
 
-        return $results;
+        return $this->db->loadColumn() ?: [];
     }
 
     /**
@@ -222,9 +211,8 @@ abstract class Finder
 
         $query->select('COUNT(*)');
         $this->db->setQuery($query);
-        $count = (int) $this->db->loadResult();
 
-        return $count;
+        return (int)$this->db->loadResult();
     }
 
     /**

@@ -1,28 +1,28 @@
 details:
   name: Helium
-  version: @version@
+  version: '@version@'
   icon: paper-plane
-  date: @versiondate@
+  date: '@versiondate@'
   author:
-    name: RocketTheme, LLC
-    email: support@rockettheme.com
-    link: http://www.rockettheme.com
+    name: 'RocketTheme, LLC'
+    email: 'support@rockettheme.com'
+    link: 'http://www.rockettheme.com'
 
   documentation:
-    link: http://docs.gantry.org/gantry5
+    link: 'http://docs.gantry.org/gantry5'
 
   support:
-    link: https://gitter.im/gantry/gantry5
+    link: 'https://gitter.im/gantry/gantry5'
 
   updates:
-    link: http://updates.rockettheme.com/themes/helium.yaml
+    link: 'http://updates.rockettheme.com/themes/helium.yaml'
 
-  copyright: (C) 2007 - 2016 RocketTheme, LLC. All rights reserved.
+  copyright: '(C) 2007 - 2021 RocketTheme, LLC. All rights reserved.'
   license: GPLv2
   description: Helium Theme
   images:
-    thumbnail: admin/images/preset1.png
-    preview: admin/images/preset1.png
+    thumbnail: 'admin/images/preset1.png'
+    preview: 'admin/images/preset1.png'
 
 configuration:
   gantry:
@@ -31,9 +31,9 @@ configuration:
 
   theme:
     parent: g5_helium
-    base: gantry-theme://common
-    file: gantry-theme://includes/theme.php
-    class: \Gantry\Framework\Theme
+    base: 'gantry-theme://common'
+    file: 'gantry-theme://includes/theme.php'
+    class: '\Gantry\Framework\Theme'
 
   fonts:
     Raleway:
@@ -60,11 +60,11 @@ configuration:
       200: 'gantry-theme://fonts/lato/lato-light/lato-light-webfont'
 
   css:
-    compiler: \Gantry\Component\Stylesheet\ScssCompiler
-    target: gantry-theme://css-compiled
+    compiler: '\Gantry\Component\Stylesheet\ScssCompiler'
+    target: 'gantry-theme://css-compiled'
     paths:
-      - gantry-theme://scss
-      - gantry-engine://scss
+      - 'gantry-theme://scss'
+      - 'gantry-engine://scss'
     files:
       - helium
       - helium-joomla
@@ -76,7 +76,19 @@ configuration:
       - custom
 
   dependencies:
-    gantry: 5.3.2
+    gantry: 5.5
+
+  section-variations:
+    Padding Variations:
+      section-vertical-paddings: Section Vertical Paddings
+      section-horizontal-paddings: Section Horizontal Paddings
+      section-vertical-paddings-large: Large Vertical Paddings
+      section-horizontal-paddings-large: Large Horizontal Paddings
+      section-vertical-paddings-small: Small Vertical Paddings
+      section-horizontal-paddings-small: Small Horizontal Paddings
+    Utility:
+      nomarginall: No Margin
+      nopaddingall: No Padding
 
   block-variations:
     Title Variations:

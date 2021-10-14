@@ -1,19 +1,28 @@
 <?php
+
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Installer\InstallerAdapter;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
+
 /**
  * Gantry 5 Nucleus installer script.
  */
 class Gantry5_NucleusInstallerScript
 {
+    /**
+     * @param InstallerAdapter $parent
+     * @return bool
+     */
     public function uninstall($parent)
     {
         // Remove all Nucleus files manually as file installer only uninstalls files.
@@ -28,17 +37,17 @@ class Gantry5_NucleusInstallerScript
             if (count($eFiles->children()) > 0) {
                 // Loop through all filenames elements
                 foreach ($eFiles->children() as $eFileName) {
-                    if ($eFileName->getName() == 'folder')
+                    if ($eFileName->getName() === 'folder')
                     {
                         $folder = $targetFolder . '/' . $eFileName;
 
-                        $files = JFolder::files($folder, '.', false, true);
+                        $files = Folder::files($folder, '.', false, true);
                         foreach ($files as $name) {
-                            JFile::delete($name);
+                            File::delete($name);
                         }
-                        $subFolders = JFolder::folders($folder, '.', false, true);
+                        $subFolders = Folder::folders($folder, '.', false, true);
                         foreach ($subFolders as $name) {
-                            JFolder::delete($name);
+                            Folder::delete($name);
                         }
                     }
                 }

@@ -16,7 +16,7 @@
             {% endif %}
             <option value="{{ name }}"
                     {% if name == configuration %}selected="selected"{% endif %}
-                    data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', name|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}"
+                    data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', name|e, configuration_page|default('layout'))}|json_encode|e('html_attr') }}"
             >
                 {{ title }}
             </option>
@@ -35,7 +35,7 @@
             {% endif %}
             <option value="{{ name }}"
                     {% if name == configuration %}selected="selected"{% endif %}
-                    data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', name|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}"
+                    data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', name|e, configuration_page|default('layout'))}|json_encode|e('html_attr') }}"
             >
                 {{ title }}
             </option>

@@ -2,8 +2,9 @@
 Contributors: gantry
 Author URI: http://gantry.org
 Tags: gantry, gantry5, framework, template, theme, yaml, twig, timber, scss, html5, css3, bourbon, layout, builder, widgets, flexible, extensible, configurable, flex, grid, columns, powerful, buddypress, woocommerce, bbpress
-Requires at least: 4.2+
-Tested up to: 4.6.1
+Requires at least: 5.2
+Tested up to: 5.6.0
+Requires PHP: 5.6.20
 Stable tag: @version@
 
 Gantry is a comprehensive set of building blocks to enable the rapid development and realization of a design into a flexible and powerful web platform
@@ -12,7 +13,7 @@ Gantry is a comprehensive set of building blocks to enable the rapid development
 
 Gantry 5 is a comprehensive set of building blocks to enable the rapid development and realization of a design into a flexible and powerful web platform theme.
 
-* Please visit http://gantry.org to download a FREE WordPress Gantry 5 default theme which can be used as a base for your own themes!
+> Please visit http://gantry.org to download a FREE WordPress Gantry 5 default theme which can be used as a base for your own themes!
 
 Gantry 5 is packed full of features created to empower the development of designs into fully functional layouts with the absolute minimum effort and fuss.
 
@@ -24,7 +25,7 @@ Gantry 5 uses the **Nucleus** grid system, built from scratch using Flexbox and 
 
 = Cross-platform Support =
 
-The new responsive Gantry 5 framework is available for **WordPress 4.2+**, **Joomla 3.4+** and **Grav 1.0+**.
+The new responsive Gantry 5 framework is available for **WordPress 5.2+**, **Joomla 3.9+** and **Grav 1.7+**.
 
 = Intuitive YAML-driven Configuration =
 
@@ -32,7 +33,7 @@ The new responsive Gantry 5 framework is available for **WordPress 4.2+**, **Joo
 
 = Twig Templating =
 
-Gantry 5 utilizes [Twig](http://twig.sensiolabs.org/) and [Timber](http://upstatement.com/timber/) to make creating powerful, dynamic themes quick and easy.
+Gantry 5 utilizes [Twig](https://twig.symfony.com/doc/1.x/) and [Timber](http://upstatement.com/timber/) to make creating powerful, dynamic themes quick and easy.
 
 = New Administrative Interface =
 
@@ -93,10 +94,8 @@ Please note that Gantry Framework plugin doesn't come up with the default theme.
 
 We try to ensure that any Gantry theme and the Gantry Plugin specifically will work with any modern and secure server environment. The recommended minimum requirements are :
 
-* WordPress 4.2 or higher
-* PHP 5.4+ (5.5+ recommended)
-* MySQL 3.23 (5+ recommended)
-* Apache 1.3 (2.2+ recommended)
+* WordPress 5.2 or higher
+* PHP 5.6.20+ (7.3+ recommended)
 
 = Is there any documentation available ? =
 

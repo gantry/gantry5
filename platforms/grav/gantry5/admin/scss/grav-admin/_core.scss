@@ -8,6 +8,12 @@ body #admin-main .admin-block {
     font-family: inherit;
     font-weight: inherit;
 
+    .g-colorpicker {
+        input {
+            flex-basis: auto;
+        }
+    }
+
     .button i {
         margin-right: 0 !important;
     }
@@ -37,18 +43,41 @@ body #admin-main .admin-block {
         top: 0;
         right: 0;
         left: 240px;
+        @include breakpoint(desktop-range) {
+            left: 50px;
+        }
+        @include breakpoint(tablet-range) {
+            left: 50px;
+        }
         height: $grav-header-height;
 
         .g-content {
             padding: 0 3em !important;
+            @include breakpoint(desktop-range) {
+                padding: 0 0.7em 0 3em !important;
+            }
+            @include breakpoint(tablet-range) {
+                padding: 0 0.7em 0 3em !important;
+            }
         }
 
         .theme-title {
             line-height: $grav-header-height;
+            small {
+                @include breakpoint(tablet-range) {
+                    display: none;
+                }
+            }
         }
 
         ul li a {
             padding: 1.33rem 0.938rem;
+            @include breakpoint(desktop-range) {
+                padding: 1.33rem 0.638rem;
+            }
+            @include breakpoint(tablet-range) {
+                padding: 1.33rem 0.638rem;
+            }
         }
     }
 
@@ -58,7 +87,6 @@ body #admin-main .admin-block {
         right: 1rem !important;
         left: inherit !important;
     }
-
 }
 
 .sidebar-closed #g5-container #main-header {

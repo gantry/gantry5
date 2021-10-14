@@ -27,7 +27,7 @@
     }
 
 	hr {
-		border-bottom: 1px solid fadeout($white, 50%);
+		border-bottom: 1px solid fade-out($white, 0.5);
 	}
 
 	.g-offcanvas-toggle {
@@ -46,7 +46,7 @@
 	z-index: 100001;
 
     .g-offcanvas-open & {
-        color: fadeout($white, 40%);
+        color: fade-out($white, 0.4);
     }
 
     @if $offcanvas-toggle-visibility == 1 {
@@ -55,7 +55,7 @@
             display: block;
         }
     } @else {
-        display: block;
+        display: block !important;
     }
 }
 

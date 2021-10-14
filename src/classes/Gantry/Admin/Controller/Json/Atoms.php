@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,15 +14,8 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Config\BlueprintsForm;
-use Gantry\Component\Controller\JsonController;
-use Gantry\Component\File\CompiledYamlFile;
-use Gantry\Component\Filesystem\Folder;
-use Gantry\Component\Layout\Layout;
+use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Response\JsonResponse;
-use Gantry\Framework\Base\Gantry;
-use RocketTheme\Toolbox\File\JsonFile;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
  * Class Atoms
@@ -29,6 +23,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class Atoms extends JsonController
 {
+    /** @var array */
     protected $httpVerbs = [
         'GET' => [
             '/' => 'index',
@@ -41,7 +36,10 @@ class Atoms extends JsonController
             '/instance' => 'atom'
         ]
     ];
-    
+
+    /**
+     * @return JsonResponse
+     */
     public function index()
     {
         $path = implode('/', func_get_args());
@@ -57,6 +55,7 @@ class Atoms extends JsonController
             throw new \RuntimeException('Outline not given', 400);
         }
 
+        $this->container['outline'] = $outline;
         $this->container['configuration'] = $outline;
 
         $atoms = new \Gantry\Framework\Atoms((array) $this->container['config']->get('page.head.atoms'));
@@ -77,8 +76,8 @@ class Atoms extends JsonController
         $type = isset($item->type) ? $item->type : $type;
         $item->attributes = isset($item->attributes) ? (array) $item->attributes : [];
 
-        $blueprints = new BlueprintsForm($this->container['particles']->get($type));
-        $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
+        $blueprints = $this->container['particles']->getBlueprintForm($type);
+        $blueprints->set('form/fields/_inherit', ['type' => 'gantry.inherit']);
 
         $params = [
             'gantry'        => $this->container,
@@ -95,7 +94,7 @@ class Atoms extends JsonController
             'skip'          => ['enabled']
         ];
 
-        $html['g-settings-atom'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle-card.html.twig',  $params);
+        $html['g-settings-atom'] = $this->render('@gantry-admin/pages/configurations/layouts/particle-card.html.twig',  $params);
         if (isset($list)) {
             $html['g-inherit-atom'] = $this->renderAtomsInput($inherit ? $outline : null, $type, $selected, $list);
         }
@@ -103,6 +102,9 @@ class Atoms extends JsonController
         return new JsonResponse(['json' => $item, 'html' => $html]);
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function atom()
     {
         $post = $this->request->request;
@@ -114,6 +116,7 @@ class Atoms extends JsonController
             throw new \RuntimeException('Outline not given', 400);
         }
 
+        $this->container['outline'] = $outline;
         $this->container['configuration'] = $outline;
 
         $atoms = new \Gantry\Framework\Atoms((array) $this->container['config']->get('page.head.atoms'));
@@ -126,8 +129,8 @@ class Atoms extends JsonController
 
         $prefix = "particles.{$name}";
 
-        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
-        $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
+        $blueprints = $this->container['particles']->getBlueprintForm($name);
+        $blueprints->set('form/fields/_inherit', ['type' => 'gantry.inherit']);
 
         $item->attributes = isset($item->attributes) ? (array) $item->attributes : [];
 
@@ -145,7 +148,7 @@ class Atoms extends JsonController
             'overrideable'  => false,
         ];
 
-        $html = $this->container['admin.theme']->render('@gantry-admin/modals/atom-preview.html.twig', $this->params);
+        $html = $this->render('@gantry-admin/modals/atom-preview.html.twig', $this->params);
 
         return new JsonResponse(['html' => $html]);
     }
@@ -175,6 +178,6 @@ class Atoms extends JsonController
             'value' => $selected
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/forms/fields/gantry/atoms.html.twig', $params);
+        return $this->render('@gantry-admin/forms/fields/gantry/atoms.html.twig', $params);
     }
 }

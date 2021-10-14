@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,21 +14,29 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Controller\JsonController;
+use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Response\JsonResponse;
 
+/**
+ * Class Confirmdeletion
+ * @package Gantry\Admin\Controller\Json
+ */
 class Confirmdeletion extends JsonController
 {
+    /** @var array */
     protected $httpVerbs = [
         'GET' => [
             '/' => 'index'
         ]
     ];
 
+    /**
+     * @return JsonResponse
+     */
     public function index()
     {
         $pageType = $this->request->get->get('page_type', 'OUTLINE');
-        $response = ['html' => $this->container['admin.theme']->render('@gantry-admin/ajax/confirm-deletion.html.twig', ['page_type' => $pageType])];
+        $response = ['html' => $this->render('@gantry-admin/ajax/confirm-deletion.html.twig', ['page_type' => $pageType])];
 
         return new JsonResponse($response);
     }

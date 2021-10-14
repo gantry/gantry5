@@ -1,0 +1,38 @@
+#!/usr/bin/env php
+<?php
+
+setlocale(LC_ALL, ['en_GB.utf8', 'en_GB']);
+date_default_timezone_set('America/Denver');
+chdir(__DIR__ . '/..');
+
+echo "# Running composer install for build script\n";
+composer_install('bin/builder', false);
+
+chdir('platforms');
+
+echo "# Running composer install for Grav\n";
+composer_install('grav/gantry5', true);
+composer_install('grav/gantry5/compat', false);
+
+echo "# Running composer install for Joomla\n";
+composer_install('joomla/lib_gantry5', true);
+composer_install('joomla/plg_system_gantry5_debugbar', false);
+composer_install('joomla/lib_gantry5/compat', false);
+
+echo "# Running composer install for WP\n";
+composer_install('wordpress/gantry5', true);
+composer_install('wordpress/gantry5_debugbar', false);
+composer_install('wordpress/gantry5/compat', false);
+
+function composer_install($folder, $link)
+{
+    chdir($folder);
+    if ($link && !file_exists('src')) {
+        symlink('../../../src', 'src');
+    }
+    if (false === exec('composer install --no-dev --no-progress', $output, $result) || $result) {
+        echo implode("\n", $output);
+        throw new \RuntimeException('Failed to run composer install in ' . $folder);
+    }
+    chdir(preg_replace('|[^/]+|', '..', $folder));
+}

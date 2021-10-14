@@ -13,4 +13,4 @@ form:
     _info:
       type: separator.note
       class: alert alert-info
-      content: Enables the wpautop WordPress core filter that auto adds paragraphs and break lines to your post/page content.
+      content: 'Enables the wpautop WordPress core filter that auto adds paragraphs and break lines to your post/page content.'

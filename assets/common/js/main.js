@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
 
 var ready     = require('domready'),
@@ -23,7 +23,7 @@ ready(function() {
 module.exports = window.G5 = instances;
 
 },{"./menu":2,"./offcanvas":3,"./totop":4,"./utils/dollar-extras":6,"domready":7}],2:[function(require,module,exports){
-(function (global){
+(function (global){(function (){
 "use strict";
 
 var ready   = require('domready'),
@@ -70,9 +70,14 @@ var Menu = new prime({
 
         this.selectors = this.options.selectors;
         this.states = this.options.states;
-        this.overlay = zen('div' + this.selectors.overlay).top('#g-page-surround');
+        this.overlay = zen('div' + this.selectors.overlay);
         this.active = null;
         this.location = [];
+
+        var pageSurround = $('#g-page-surround');
+        if (pageSurround) {
+            this.overlay.top(pageSurround);
+        }
 
         var mainContainer = $(this.selectors.mainContainer);
         if (!mainContainer) { return; }
@@ -104,7 +109,10 @@ var Menu = new prime({
 
         if (hasTouchEvents || !this.hoverExpand) {
             var linkedParent = $(selectors.linkedParent);
-            if (linkedParent) { linkedParent.on('touchend', this.bound('touchend')); }
+            if (linkedParent) {
+                linkedParent.on('touchmove', this.bound('touchmove'));
+                linkedParent.on('touchend', this.bound('touchend'));
+            }
             this.overlay.on('touchend', this.bound('closeAllDropdowns'));
         }
 
@@ -151,6 +159,11 @@ var Menu = new prime({
         this.closeDropdown(element);
     },
 
+    touchmove: function(event) {
+        var target      = $(event.target);
+        target.isMoving = true;
+    },
+
     touchend: function(event) {
         var selectors = this.selectors,
             states    = this.states;
@@ -160,6 +173,14 @@ var Menu = new prime({
             menuType    = target.parent('.g-standard') ? 'standard' : 'megamenu',
             isGoingBack = target.parent('.g-go-back'),
             parent, isSelected;
+
+        if (target.isMoving) {
+            target.isMoving = false;
+            return false;
+        }
+
+        target.off('touchmove', this.bound('touchmove'));
+        target.isMoving = false;
 
         if (indicator) {
             target = indicator;
@@ -273,18 +294,41 @@ var Menu = new prime({
 
     _fixHeights: function(parent, sublevel, isGoingBack, isNavMenu) {
         if (parent == sublevel) { return; }
-        if (isGoingBack) { parent.attribute('style', null); }
+        if (isGoingBack) {
+            parent.attribute('style', null);
+        }
 
-        var heights = {
+        var parents, heights = {
                 from: parent[0].getBoundingClientRect(),
                 to: (!isNavMenu ? sublevel.parent('.g-dropdown')[0] : sublevel[0]).getBoundingClientRect()
             },
             height  = Math.max(heights.from.height, heights.to.height);
 
+        if (isGoingBack) {
+            parents = parent.parents('[style^="height"]');
+            (parents || []).forEach(function(element) {
+                element = $(element);
+                if (element.parent('.g-toplevel')) {
+                    element[0].style.height = heights.from.height + 'px';
+                }
+            });
+        }
+
         if (!isGoingBack) {
             // if from height is < than to height set the parent height else, set the target
-            if (heights.from.height < heights.to.height) { parent[0].style.height = height + 'px'; }
-            else if (isNavMenu) { sublevel[0].style.height = height + 'px'; }
+            if (heights.from.height < heights.to.height) {
+                parent[0].style.height = height + 'px';
+
+                parents = parent.parents('[style^="height"]');
+                (parents || []).forEach(function(element) {
+                    element = $(element);
+                    if (element.parent('.g-toplevel')) {
+                        element[0].style.height = height + 'px';
+                    }
+                });
+            } else if (isNavMenu) {
+                sublevel[0].style.height = height + 'px';
+            }
 
             // fix sublevels heights in side menu (offcanvas etc)
             if (!isNavMenu) {
@@ -365,7 +409,7 @@ var Menu = new prime({
 
 module.exports = Menu;
 
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+}).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
 },{"../utils/dollar-extras":6,"domready":7,"elements/zen":36,"mout/function/bind":40,"mout/function/timeout":44,"prime":85,"prime-util/prime/bound":81,"prime-util/prime/options":82}],3:[function(require,module,exports){
 // Offcanvas slide with desktop, touch and all-in-one touch devices support that supports both left and right placement.
@@ -578,6 +622,8 @@ var Offcanvas = new prime({
             var panel = this.panel[0];
 
             this.htmlEl.removeClass(this.options.openingClass);
+            this.offcanvas.attribute('aria-expanded', true);
+            $('[data-offcanvas-toggle]').attribute('aria-expanded', true);
             panel.style.transition = panel.style[prefix.css + 'transition'] = '';
         }, this), this.options.duration);
 
@@ -600,6 +646,8 @@ var Offcanvas = new prime({
         this._setTransition();
         this._translateXTo(0);
         this.opened = false;
+        this.offcanvas.attribute('aria-expanded', false);
+        $('[data-offcanvas-toggle]').attribute('aria-expanded', false);
 
         setTimeout(bind(function() {
             var panel = this.panel[0];
@@ -762,7 +810,7 @@ var Offcanvas = new prime({
         timeout(function() {
             blocks = this.offcanvas.search('.g-block');
             mCtext = mobileContainer ? mobileContainer.text().length : 0;
-            var shouldCollapse = (blocks && blocks.length == 1) && mobileContainer && !trim(this.offcanvas.text()).length;
+            var shouldCollapse = (blocks && blocks.length === 1) && mobileContainer && (!trim(this.offcanvas.text()).length && !blocks.find('.g-menu-item'));
 
             togglers[shouldCollapse ? 'addClass' : 'removeClass']('g-offcanvas-hide');
             if (mobileContainer) {
@@ -2253,10 +2301,55 @@ module.exports = function(expression, doc){
 }
 
 },{"./base":9,"mout/array/forEach":16,"mout/array/map":18,"slick/parser":98}],37:[function(require,module,exports){
-arguments[4][16][0].apply(exports,arguments)
-},{"dup":16}],38:[function(require,module,exports){
-arguments[4][18][0].apply(exports,arguments)
-},{"../function/makeIterator_":42,"dup":18}],39:[function(require,module,exports){
+
+
+    /**
+     * Array forEach
+     */
+    function forEach(arr, callback, thisObj) {
+        if (arr == null) {
+            return;
+        }
+        var i = -1,
+            len = arr.length;
+        while (++i < len) {
+            // we iterate over sparse items since there is no way to make it
+            // work properly on IE 7-8. see #64
+            if ( callback.call(thisObj, arr[i], i, arr) === false ) {
+                break;
+            }
+        }
+    }
+
+    module.exports = forEach;
+
+
+
+},{}],38:[function(require,module,exports){
+var makeIterator = require('../function/makeIterator_');
+
+    /**
+     * Array map
+     */
+    function map(arr, callback, thisObj) {
+        callback = makeIterator(callback, thisObj);
+        var results = [];
+        if (arr == null){
+            return results;
+        }
+
+        var i = -1, len = arr.length;
+        while (++i < len) {
+            results[i] = callback(arr[i], i, arr);
+        }
+
+        return results;
+    }
+
+     module.exports = map;
+
+
+},{"../function/makeIterator_":42}],39:[function(require,module,exports){
 
 
     /**
@@ -2315,12 +2408,72 @@ var slice = require('../array/slice');
 
 
 },{"../array/slice":39}],41:[function(require,module,exports){
-arguments[4][20][0].apply(exports,arguments)
-},{"dup":20}],42:[function(require,module,exports){
-arguments[4][21][0].apply(exports,arguments)
-},{"../object/deepMatches":53,"./identity":41,"./prop":43,"dup":21}],43:[function(require,module,exports){
-arguments[4][22][0].apply(exports,arguments)
-},{"dup":22}],44:[function(require,module,exports){
+
+
+    /**
+     * Returns the first argument provided to it.
+     */
+    function identity(val){
+        return val;
+    }
+
+    module.exports = identity;
+
+
+
+},{}],42:[function(require,module,exports){
+var identity = require('./identity');
+var prop = require('./prop');
+var deepMatches = require('../object/deepMatches');
+
+    /**
+     * Converts argument into a valid iterator.
+     * Used internally on most array/object/collection methods that receives a
+     * callback/iterator providing a shortcut syntax.
+     */
+    function makeIterator(src, thisObj){
+        if (src == null) {
+            return identity;
+        }
+        switch(typeof src) {
+            case 'function':
+                // function is the first to improve perf (most common case)
+                // also avoid using `Function#call` if not needed, which boosts
+                // perf a lot in some cases
+                return (typeof thisObj !== 'undefined')? function(val, i, arr){
+                    return src.call(thisObj, val, i, arr);
+                } : src;
+            case 'object':
+                return function(val){
+                    return deepMatches(val, src);
+                };
+            case 'string':
+            case 'number':
+                return prop(src);
+        }
+    }
+
+    module.exports = makeIterator;
+
+
+
+},{"../object/deepMatches":53,"./identity":41,"./prop":43}],43:[function(require,module,exports){
+
+
+    /**
+     * Returns a function that gets a property of the passed object
+     */
+    function prop(name){
+        return function(obj){
+            return obj[name];
+        };
+    }
+
+    module.exports = prop;
+
+
+
+},{}],44:[function(require,module,exports){
 var slice = require('../array/slice');
 
     /**
@@ -2340,14 +2493,53 @@ var slice = require('../array/slice');
 
 
 },{"../array/slice":39}],45:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"./isKind":46,"dup":23}],46:[function(require,module,exports){
-arguments[4][24][0].apply(exports,arguments)
-},{"./kindOf":47,"dup":24}],47:[function(require,module,exports){
-arguments[4][25][0].apply(exports,arguments)
-},{"dup":25}],48:[function(require,module,exports){
-arguments[4][26][0].apply(exports,arguments)
-},{"dup":26}],49:[function(require,module,exports){
+var isKind = require('./isKind');
+    /**
+     */
+    var isArray = Array.isArray || function (val) {
+        return isKind(val, 'Array');
+    };
+    module.exports = isArray;
+
+
+},{"./isKind":46}],46:[function(require,module,exports){
+var kindOf = require('./kindOf');
+    /**
+     * Check if value is from a specific "kind".
+     */
+    function isKind(val, kind){
+        return kindOf(val) === kind;
+    }
+    module.exports = isKind;
+
+
+},{"./kindOf":47}],47:[function(require,module,exports){
+
+    /**
+     * Gets the "kind" of value. (e.g. "String", "Number", etc)
+     */
+    function kindOf(val) {
+        return Object.prototype.toString.call(val).slice(8, -1);
+    }
+    module.exports = kindOf;
+
+
+},{}],48:[function(require,module,exports){
+
+
+    /**
+     * Typecast a value to a String, using an empty string value for null or
+     * undefined.
+     */
+    function toString(val){
+        return val == null ? '' : val.toString();
+    }
+
+    module.exports = toString;
+
+
+
+},{}],49:[function(require,module,exports){
 
     /**
      * Clamps value inside range.
@@ -2458,24 +2650,279 @@ var isArray = require('../lang/isArray');
 
 
 },{"../lang/isArray":45,"./forOwn":55}],54:[function(require,module,exports){
-arguments[4][28][0].apply(exports,arguments)
-},{"./hasOwn":56,"dup":28}],55:[function(require,module,exports){
-arguments[4][29][0].apply(exports,arguments)
-},{"./forIn":54,"./hasOwn":56,"dup":29}],56:[function(require,module,exports){
-arguments[4][30][0].apply(exports,arguments)
-},{"dup":30}],57:[function(require,module,exports){
-arguments[4][31][0].apply(exports,arguments)
-},{"dup":31}],58:[function(require,module,exports){
-arguments[4][32][0].apply(exports,arguments)
-},{"../lang/toString":48,"./WHITE_SPACES":57,"dup":32}],59:[function(require,module,exports){
-arguments[4][33][0].apply(exports,arguments)
-},{"../lang/toString":48,"./WHITE_SPACES":57,"dup":33}],60:[function(require,module,exports){
-arguments[4][34][0].apply(exports,arguments)
-},{"../lang/toString":48,"./WHITE_SPACES":57,"./ltrim":58,"./rtrim":59,"dup":34}],61:[function(require,module,exports){
-arguments[4][39][0].apply(exports,arguments)
-},{"dup":39}],62:[function(require,module,exports){
-arguments[4][40][0].apply(exports,arguments)
-},{"../array/slice":61,"dup":40}],63:[function(require,module,exports){
+var hasOwn = require('./hasOwn');
+
+    var _hasDontEnumBug,
+        _dontEnums;
+
+    function checkDontEnum(){
+        _dontEnums = [
+                'toString',
+                'toLocaleString',
+                'valueOf',
+                'hasOwnProperty',
+                'isPrototypeOf',
+                'propertyIsEnumerable',
+                'constructor'
+            ];
+
+        _hasDontEnumBug = true;
+
+        for (var key in {'toString': null}) {
+            _hasDontEnumBug = false;
+        }
+    }
+
+    /**
+     * Similar to Array/forEach but works over object properties and fixes Don't
+     * Enum bug on IE.
+     * based on: http://whattheheadsaid.com/2010/10/a-safer-object-keys-compatibility-implementation
+     */
+    function forIn(obj, fn, thisObj){
+        var key, i = 0;
+        // no need to check if argument is a real object that way we can use
+        // it for arrays, functions, date, etc.
+
+        //post-pone check till needed
+        if (_hasDontEnumBug == null) checkDontEnum();
+
+        for (key in obj) {
+            if (exec(fn, obj, key, thisObj) === false) {
+                break;
+            }
+        }
+
+
+        if (_hasDontEnumBug) {
+            var ctor = obj.constructor,
+                isProto = !!ctor && obj === ctor.prototype;
+
+            while (key = _dontEnums[i++]) {
+                // For constructor, if it is a prototype object the constructor
+                // is always non-enumerable unless defined otherwise (and
+                // enumerated above).  For non-prototype objects, it will have
+                // to be defined on this object, since it cannot be defined on
+                // any prototype objects.
+                //
+                // For other [[DontEnum]] properties, check if the value is
+                // different than Object prototype value.
+                if (
+                    (key !== 'constructor' ||
+                        (!isProto && hasOwn(obj, key))) &&
+                    obj[key] !== Object.prototype[key]
+                ) {
+                    if (exec(fn, obj, key, thisObj) === false) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    function exec(fn, obj, key, thisObj){
+        return fn.call(thisObj, obj[key], key, obj);
+    }
+
+    module.exports = forIn;
+
+
+
+},{"./hasOwn":56}],55:[function(require,module,exports){
+var hasOwn = require('./hasOwn');
+var forIn = require('./forIn');
+
+    /**
+     * Similar to Array/forEach but works over object properties and fixes Don't
+     * Enum bug on IE.
+     * based on: http://whattheheadsaid.com/2010/10/a-safer-object-keys-compatibility-implementation
+     */
+    function forOwn(obj, fn, thisObj){
+        forIn(obj, function(val, key){
+            if (hasOwn(obj, key)) {
+                return fn.call(thisObj, obj[key], key, obj);
+            }
+        });
+    }
+
+    module.exports = forOwn;
+
+
+
+},{"./forIn":54,"./hasOwn":56}],56:[function(require,module,exports){
+
+
+    /**
+     * Safer Object.hasOwnProperty
+     */
+     function hasOwn(obj, prop){
+         return Object.prototype.hasOwnProperty.call(obj, prop);
+     }
+
+     module.exports = hasOwn;
+
+
+
+},{}],57:[function(require,module,exports){
+
+    /**
+     * Contains all Unicode white-spaces. Taken from
+     * http://en.wikipedia.org/wiki/Whitespace_character.
+     */
+    module.exports = [
+        ' ', '\n', '\r', '\t', '\f', '\v', '\u00A0', '\u1680', '\u180E',
+        '\u2000', '\u2001', '\u2002', '\u2003', '\u2004', '\u2005', '\u2006',
+        '\u2007', '\u2008', '\u2009', '\u200A', '\u2028', '\u2029', '\u202F',
+        '\u205F', '\u3000'
+    ];
+
+
+},{}],58:[function(require,module,exports){
+var toString = require('../lang/toString');
+var WHITE_SPACES = require('./WHITE_SPACES');
+    /**
+     * Remove chars from beginning of string.
+     */
+    function ltrim(str, chars) {
+        str = toString(str);
+        chars = chars || WHITE_SPACES;
+
+        var start = 0,
+            len = str.length,
+            charLen = chars.length,
+            found = true,
+            i, c;
+
+        while (found && start < len) {
+            found = false;
+            i = -1;
+            c = str.charAt(start);
+
+            while (++i < charLen) {
+                if (c === chars[i]) {
+                    found = true;
+                    start++;
+                    break;
+                }
+            }
+        }
+
+        return (start >= len) ? '' : str.substr(start, len);
+    }
+
+    module.exports = ltrim;
+
+
+},{"../lang/toString":48,"./WHITE_SPACES":57}],59:[function(require,module,exports){
+var toString = require('../lang/toString');
+var WHITE_SPACES = require('./WHITE_SPACES');
+    /**
+     * Remove chars from end of string.
+     */
+    function rtrim(str, chars) {
+        str = toString(str);
+        chars = chars || WHITE_SPACES;
+
+        var end = str.length - 1,
+            charLen = chars.length,
+            found = true,
+            i, c;
+
+        while (found && end >= 0) {
+            found = false;
+            i = -1;
+            c = str.charAt(end);
+
+            while (++i < charLen) {
+                if (c === chars[i]) {
+                    found = true;
+                    end--;
+                    break;
+                }
+            }
+        }
+
+        return (end >= 0) ? str.substring(0, end + 1) : '';
+    }
+
+    module.exports = rtrim;
+
+
+},{"../lang/toString":48,"./WHITE_SPACES":57}],60:[function(require,module,exports){
+var toString = require('../lang/toString');
+var WHITE_SPACES = require('./WHITE_SPACES');
+var ltrim = require('./ltrim');
+var rtrim = require('./rtrim');
+    /**
+     * Remove white-spaces from beginning and end of string.
+     */
+    function trim(str, chars) {
+        str = toString(str);
+        chars = chars || WHITE_SPACES;
+        return ltrim(rtrim(str, chars), chars);
+    }
+
+    module.exports = trim;
+
+
+},{"../lang/toString":48,"./WHITE_SPACES":57,"./ltrim":58,"./rtrim":59}],61:[function(require,module,exports){
+
+
+    /**
+     * Create slice of source array or array-like object
+     */
+    function slice(arr, start, end){
+        var len = arr.length;
+
+        if (start == null) {
+            start = 0;
+        } else if (start < 0) {
+            start = Math.max(len + start, 0);
+        } else {
+            start = Math.min(start, len);
+        }
+
+        if (end == null) {
+            end = len;
+        } else if (end < 0) {
+            end = Math.max(len + end, 0);
+        } else {
+            end = Math.min(end, len);
+        }
+
+        var result = [];
+        while (start < end) {
+            result.push(arr[start++]);
+        }
+
+        return result;
+    }
+
+    module.exports = slice;
+
+
+
+},{}],62:[function(require,module,exports){
+var slice = require('../array/slice');
+
+    /**
+     * Return a function that will execute in the given context, optionally adding any additional supplied parameters to the beginning of the arguments collection.
+     * @param {Function} fn  Function.
+     * @param {object} context   Execution context.
+     * @param {rest} args    Arguments (0...n arguments).
+     * @return {Function} Wrapped Function.
+     */
+    function bind(fn, context, args){
+        var argsArr = slice(arguments, 2); //curried args
+        return function(){
+            return fn.apply(context, argsArr.concat(slice(arguments)));
+        };
+    }
+
+    module.exports = bind;
+
+
+
+},{"../array/slice":61}],63:[function(require,module,exports){
 var kindOf = require('./kindOf');
 var isPlainObject = require('./isPlainObject');
 var mixIn = require('../object/mixIn');
@@ -2845,7 +3292,7 @@ var Options = prime({
 module.exports = Options
 
 },{"mout/object/merge":72,"prime":74}],83:[function(require,module,exports){
-(function (process,global){
+(function (process,global,setImmediate){(function (){
 /*
 defer
 */"use strict"
@@ -2961,9 +3408,9 @@ defer.timeout = function(callback, ms, context){
 
 module.exports = defer
 
-}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+}).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("timers").setImmediate)
 
-},{"_process":99,"mout/array/forEach":87,"mout/array/indexOf":88,"mout/lang/kindOf":90,"mout/time/now":95}],84:[function(require,module,exports){
+},{"_process":99,"mout/array/forEach":87,"mout/array/indexOf":88,"mout/lang/kindOf":90,"mout/time/now":95,"timers":100}],84:[function(require,module,exports){
 /*
 Emitter
 */"use strict"
@@ -4120,14 +4567,14 @@ slick.parse = parse;
 module.exports = slick
 
 },{"./parser":98}],97:[function(require,module,exports){
-(function (global){
+(function (global){(function (){
 /*
 slick
 */"use strict"
 
 module.exports = "document" in global ? require("./finder") : { parse: require("./parser") }
 
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+}).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
 },{"./finder":96,"./parser":98}],98:[function(require,module,exports){
 /*
@@ -4393,25 +4840,40 @@ var process = module.exports = {};
 var cachedSetTimeout;
 var cachedClearTimeout;
 
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
 (function () {
     try {
-        cachedSetTimeout = setTimeout;
-    } catch (e) {
-        cachedSetTimeout = function () {
-            throw new Error('setTimeout is not defined');
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
         }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
     }
     try {
-        cachedClearTimeout = clearTimeout;
-    } catch (e) {
-        cachedClearTimeout = function () {
-            throw new Error('clearTimeout is not defined');
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
         }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
     }
 } ())
 function runTimeout(fun) {
     if (cachedSetTimeout === setTimeout) {
         //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
         return setTimeout(fun, 0);
     }
     try {
@@ -4432,6 +4894,11 @@ function runTimeout(fun) {
 function runClearTimeout(marker) {
     if (cachedClearTimeout === clearTimeout) {
         //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
         return clearTimeout(marker);
     }
     try {
@@ -4532,6 +4999,10 @@ process.off = noop;
 process.removeListener = noop;
 process.removeAllListeners = noop;
 process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
 
 process.binding = function (name) {
     throw new Error('process.binding is not supported');
@@ -4543,7 +5014,86 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}]},{},[1])
+},{}],100:[function(require,module,exports){
+(function (setImmediate,clearImmediate){(function (){
+var nextTick = require('process/browser.js').nextTick;
+var apply = Function.prototype.apply;
+var slice = Array.prototype.slice;
+var immediateIds = {};
+var nextImmediateId = 0;
 
+// DOM APIs, for completeness
+
+exports.setTimeout = function() {
+  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
+};
+exports.setInterval = function() {
+  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
+};
+exports.clearTimeout =
+exports.clearInterval = function(timeout) { timeout.close(); };
+
+function Timeout(id, clearFn) {
+  this._id = id;
+  this._clearFn = clearFn;
+}
+Timeout.prototype.unref = Timeout.prototype.ref = function() {};
+Timeout.prototype.close = function() {
+  this._clearFn.call(window, this._id);
+};
+
+// Does not start the time, just sets up the members needed.
+exports.enroll = function(item, msecs) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = msecs;
+};
+
+exports.unenroll = function(item) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = -1;
+};
+
+exports._unrefActive = exports.active = function(item) {
+  clearTimeout(item._idleTimeoutId);
+
+  var msecs = item._idleTimeout;
+  if (msecs >= 0) {
+    item._idleTimeoutId = setTimeout(function onTimeout() {
+      if (item._onTimeout)
+        item._onTimeout();
+    }, msecs);
+  }
+};
+
+// That's not how node.js implements it but the exposed api is the same.
+exports.setImmediate = typeof setImmediate === "function" ? setImmediate : function(fn) {
+  var id = nextImmediateId++;
+  var args = arguments.length < 2 ? false : slice.call(arguments, 1);
+
+  immediateIds[id] = true;
+
+  nextTick(function onNextTick() {
+    if (immediateIds[id]) {
+      // fn.call() is faster so we optimize for the common use-case
+      // @see http://jsperf.com/call-apply-segu
+      if (args) {
+        fn.apply(null, args);
+      } else {
+        fn.call(null);
+      }
+      // Prevent ids from leaking
+      exports.clearImmediate(id);
+    }
+  });
+
+  return id;
+};
+
+exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
+  delete immediateIds[id];
+};
+}).call(this)}).call(this,require("timers").setImmediate,require("timers").clearImmediate)
+
+},{"process/browser.js":99,"timers":100}]},{},[1])
 
 //# sourceMappingURL=main.js.map

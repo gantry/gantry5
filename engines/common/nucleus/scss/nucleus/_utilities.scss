@@ -135,22 +135,6 @@
 	visibility: hidden;
 }
 
-.visible-phone {
-  	display: none !important;
-}
-
-.visible-tablet {
-  	display: none !important;
-}
-
-.hidden-desktop {
-  	display: none !important;
-}
-
-.visible-desktop {
-  	display: inherit !important;
-}
-
 @media print {
 	.visible-print {
 	   display: inherit !important;
@@ -168,6 +152,6 @@
     @include display(flex);
 
 	.g-content {
-		width: 100%;
+		flex-basis: 100%;
 	}
 }

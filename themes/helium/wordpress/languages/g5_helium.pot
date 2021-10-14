@@ -1,4 +1,4 @@
-# Copyright (C) 2016 RocketTheme, LLC
+# Copyright (C) 2017 RocketTheme, LLC
 # This file is distributed under the same license as the Helium package.
 msgid ""
 msgstr ""

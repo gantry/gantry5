@@ -47,7 +47,7 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
 
     if (!this.isNewParticle) {
         if (!deepEquals(map, current)) {
-            save.showIndicator('fa fa-fw changes-indicator fa-circle-o');
+            save.showIndicator('far fa-fw changes-indicator fa-circle');
             flags.set('pending', true);
         } else {
             save.hideIndicator();
@@ -197,12 +197,13 @@ var StepTwo = function(data, content, button) {
 
                         } else {
                             // case for Positions
-                            var position = $('[data-position-name="' + response.body.position + '"]'),
+                            var position = $('[data-g5-position-name="' + response.body.position + '"]'),
                                 dummy = zen('div').html(response.body.html);
 
                             position.find('> ul').appendChild(dummy.children());
 
                             Cards.serialize(position);
+                            Cards.updatePendingChanges();
 
                             toastr.success(translate('GANTRY5_PLATFORM_JS_POSITIONS_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                         }

@@ -12,12 +12,12 @@ form:
                 column1:
                   fields:
                     name:
-                      default: modular/showcase
+                      default: 'modular/showcase'
                       data-options@: '\Grav\Common\Page\Pages::modularTypes'
             overrides:
               fields:
                 header.template:
-                  default: modular/showcase
+                  default: 'modular/showcase'
                   data-options@: '\Grav\Common\Page\Pages::modularTypes'
         buttons:
           type: tab

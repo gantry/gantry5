@@ -13,8 +13,10 @@
 
             {# collect tabs and panes #}
             {% for tab, content in field.fields %}
-                {% set tabs = tabs|merge([content.label|default(tab)]) %}
-                {% set panes = panes|merge([content.fields|default([])]) %}
+                {% if not ignore_not_overrideable or (content.overridable is not defined or content.overridable) %}
+                    {% set tabs = tabs|merge([content.label|default(tab)|trans_key('GANTRY5_FORM_FIELD', scope, name, tab, 'LABEL')]) %}
+                    {% set panes = panes|merge([content.fields|default([])]) %}
+                {% endif %}
             {% endfor %}
 
             <div class="g-tabs" role="tablist">
@@ -40,19 +42,24 @@
                          aria-expanded="{{ not loop.index0 ? 'true' : 'false' }}">
                         {% for childName, child in pane %}
                             {% if childName starts with '.' %}
-                                {% set childName = childName|trim('.') %}
+                                {% set childKey = childName|trim('.') %}
+                                {% set childValue = nested(value, childKey) %}
+                                {% set childDefault = null %}
+                            {% else %}
+                                {% set container = child.type == 'container.tabs' %}
+                                {% set childKey = childName %}
+                                {% set childValue = container ? value : nested(data, scope ~ childKey) %}
+                                {% set childDefault = container ? defaults : nested(defaults, scope ~ childKey) %}
                             {% endif %}
-
-                            {% set childName = childName|trim('.') %}
-                            {% set childValue = nested(data, scope ~ childName) %}
-                            {% set childDefault = nested(defaults, scope ~ childName) %}
-                            {% set childPrefix = prefix ~ childName ~ '.' %}
+                            {% set childName = parent_field ~ childName|trim('.') %}
 
                             {% if child.type %}
-                                {% set child_overrideable = overrideable and (child.overridable is defined ? child.overridable : (child.overrideable is defined ? child.overrideable : true)) %}
+                                {% set child_overrideable = child.overridable is defined ? child.overridable : (child.overrideable is defined ? child.overrideable : true) %}
 
-                                {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
-                                with {name: childName, field: child, current_value: childValue, value: null, default_value: childDefault, prefix: childPrefix, overrideable: child_overrideable } %}
+                                {% if child.type and not child.skip and not(ignore_not_overrideable and not child_overrideable and childValue is null) and not(childValue is null and not_global_overrideable) %}
+                                    {% include ["forms/fields/" ~ child.type|replace({'.': '/'}) ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
+                                        with {name: childName, field: child, current_value: childValue, value: null, default_value: childDefault, overrideable: overrideable and child_overrideable } %}
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                     </div>

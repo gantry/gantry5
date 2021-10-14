@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<extension version="3.4" type="library" method="upgrade">
+<extension version="3.9" type="library" method="upgrade">
     <name>Gantry 5 Framework</name>
     <libraryname>gantry5</libraryname>
     <version>@version@</version>
@@ -7,18 +7,17 @@
     <author>RocketTheme, LLC</author>
     <authorEmail>support@rockettheme.com</authorEmail>
     <authorUrl>http://www.rockettheme.com</authorUrl>
-    <copyright>(C) 2005 - 2016 RocketTheme, LLC. All rights reserved.</copyright>
+    <copyright>(C) 2005 - 2021 RocketTheme, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <description>LIB_GANTRY5_DESCRIPTION</description>
 
-    <files folder="library">
-        <filename>bootstrap.php</filename>
-        <filename>Loader.php</filename>
-        <filename>RealLoader.php</filename>
+    <files>
         <filename>composer.json</filename>
         <filename>composer.lock</filename>
         <filename>MD5SUMS</filename>
-        <folder>classes</folder>
+        <folder>compat</folder>
+        <folder>src</folder>
+        <folder>language</folder>
         <folder>vendor</folder>
     </files>
 
@@ -27,6 +26,7 @@
         <folder>fonts</folder>
         <folder>images</folder>
         <folder>js</folder>
+        <folder>webfonts</folder>
     </media>
 
     <languages folder="language">
