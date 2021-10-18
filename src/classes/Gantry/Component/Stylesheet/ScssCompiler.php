@@ -185,18 +185,30 @@ class ScssCompiler extends CssCompiler
             $css = substr($css, 0, $pos) . '/*# sourceMappingURL=' . basename($out) . '.map */';
         }
 
-        $warnings = stream_get_contents($logfile, -1, 0);
+        $warnings = preg_replace('/\n +(\w)/mu', '\1', stream_get_contents($logfile, -1, 0));
         if ($warnings) {
-            $this->warnings[$in] = explode("\n", $warnings);
-
-            if (\GANTRY_DEBUGGER) {
-                foreach ($this->warnings[$in] as $warning) {
-                    if (strpos($warning, '[Bourbon] [Deprecation]') === false) {
-                        Debugger::addMessage("{$in}: {$warning}", 'warning');
-                    } elseif (!$this->compatMode) {
+            $warnings = explode("\n\n", $warnings);
+            foreach ($warnings as $i => $warning) {
+                if ($warning === '') {
+                    unset($warnings[$i]);
+                    continue;
+                }
+                if (strpos($warning, '[Bourbon] [Deprecation]') !== false) {
+                    if (\GANTRY_DEBUGGER) {
                         Debugger::addMessage("{$in}: {$warning}", 'deprecated');
                     }
+                    if ($this->compatMode) {
+                        unset($warnings[$i]);
+                    }
+                } else {
+                    if (\GANTRY_DEBUGGER) {
+                        Debugger::addMessage("{$in}: {$warning}", 'warning');
+                    }
                 }
+            }
+
+            if ($warnings) {
+                $this->warnings[$in] = array_values($warnings);
             }
         }
 

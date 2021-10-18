@@ -4,6 +4,7 @@
 1. [Common](#common)
    1. [](#bugfix)
         - Fixed incompatible units in breakpoint calculations (#2900)
+        - Fixed SCSS Bourbon deprecation warnings in older themes
 
 # 5.5.0
 ## 10/12/2021
