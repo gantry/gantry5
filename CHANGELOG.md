@@ -1,3 +1,10 @@
+# 5.5.1
+## mm/dd/2021
+
+1. [Common](#common)
+   1. [](#bugfix)
+        - Fixed incompatible units in breakpoint calculations (#2900)
+
 # 5.5.0
 ## 10/12/2021
 
