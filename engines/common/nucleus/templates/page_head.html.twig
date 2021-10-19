@@ -5,20 +5,6 @@
 {% set faVersion = gantry.config.page.fontawesome.version|default('fa4') %}
 {% assets with { priority: 10 } %}
     {% block head_stylesheets -%}
-        {% if faEnabled %}
-            {% if faVersion == 'fa4' %}
-                <link rel="stylesheet" href="gantry-assets://css/font-awesome.min.css" type="text/css"/>
-            {% elseif faVersion == 'fa5css' %}
-                <link rel="stylesheet" href="gantry-assets://css/font-awesome5-all.min.css" type="text/css">
-                {% if gantry.config.page.fontawesome.fa4_compatibility|default(1) %}
-                    <link rel="stylesheet" href="gantry-assets://css/font-awesome5-shim.min.css" type="text/css">
-                {% endif %}
-            {% elseif (faVersion == 'fa5js' or (faVersion == 'manual' and gantry.config.page.fontawesome.html_js_import)) and (gantry.config.page.fontawesome.content_compatibility|default(1)) %}
-                <link rel="stylesheet" href="gantry-assets://css/font-awesome5-pseudo.min.css" type="text/css">
-            {% elseif faVersion == 'manual' %}
-                {{ gantry.config.page.fontawesome.html_css_import|html|raw -}}
-            {% endif %}
-        {% endif %}
         <link rel="stylesheet" href="gantry-engine://css-compiled/nucleus.css" type="text/css"/>
         {% for scss in gantry.theme.configuration.css.persistent|default(gantry.theme.configuration.css.files) %}
         <link rel="stylesheet" href="{{ scss }}.scss" type="text/css"/>
@@ -41,6 +27,20 @@
     {% block head_platform %}{% endblock %}
 
     {% block head_overrides -%}
+        {% if faEnabled %}
+            {% if faVersion == 'fa4' %}
+                <link rel="stylesheet" href="gantry-assets://css/font-awesome.min.css" type="text/css"/>
+            {% elseif faVersion == 'fa5css' %}
+                <link rel="stylesheet" href="gantry-assets://css/font-awesome5-all.min.css" type="text/css">
+                {% if gantry.config.page.fontawesome.fa4_compatibility|default(1) %}
+                    <link rel="stylesheet" href="gantry-assets://css/font-awesome5-shim.min.css" type="text/css">
+                {% endif %}
+            {% elseif (faVersion == 'fa5js' or (faVersion == 'manual' and gantry.config.page.fontawesome.html_js_import)) and (gantry.config.page.fontawesome.content_compatibility|default(1)) %}
+                <link rel="stylesheet" href="gantry-assets://css/font-awesome5-pseudo.min.css" type="text/css">
+            {% elseif faVersion == 'manual' %}
+                {{ gantry.config.page.fontawesome.html_css_import|html|raw -}}
+            {% endif %}
+        {% endif %}
         {% for scss in gantry.theme.configuration.css.overrides %}
         <link rel="stylesheet" href="{{ scss }}.scss" type="text/css"/>
         {%- endfor %}
