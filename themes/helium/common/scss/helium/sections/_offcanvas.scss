@@ -162,7 +162,7 @@
         text-align: center;
 
         .g-block {
-            @include flex(0 0 auto);
+            flex: 0 0 auto;
             width: 50% !important;
         }
 

@@ -28,8 +28,8 @@ html.g5-dialog-open {
     }
 
     .g5-overlay {
-        @include animation(fadeIn 0.5s);
-        @include transform(translate3d(0, 0, 0));
+        animation: fadeIn 0.5s;
+        transform: translate3d(0, 0, 0);
         position: fixed;
         top: 0;
         right: 0;
@@ -40,17 +40,17 @@ html.g5-dialog-open {
     }
 
     .g5-content {
-        @include animation(fadeIn 0.5s);
+        animation: fadeIn 0.5s;
         background: $white;
         outline: transparent;
     }
 
     .g5-dialog.g5-closing .g5-content {
-        @include animation(fadeOut 0.3s);
+        animation: fadeOut 0.3s;
     }
 
     .g5-dialog.g5-closing .g5-overlay {
-        @include animation(fadeOut 0.3s);
+        animation: fadeOut 0.3s;
     }
 
     .g5-close:before {
@@ -61,10 +61,10 @@ html.g5-dialog-open {
     .g5-dialog.g5-dialog-theme-default {
 
         &.g5-closing .g5-content {
-            @include animation(flyOut 0.5s);
+            animation: flyOut 0.5s;
         }
         .g5-content {
-            @include animation(flyIn 0.5s);
+            animation: flyIn 0.5s;
         }
         .g5-content {
             border-radius: 5px;
@@ -158,7 +158,7 @@ html.g5-dialog-open {
     }
 
     .g5-dialog-loading-spinner {
-        @include animation(rotate 0.7s linear infinite);
+        animation: rotate 0.7s linear infinite;
         box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);
         position: fixed;
         z-index: 100000;

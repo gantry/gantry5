@@ -32,7 +32,7 @@ fieldset.input {
 	width: 100%;
 	line-height: $core-line-height;
     padding: 0.375rem 1.25rem;
-	@include transition(border-color 0.2s);
+	transition: border-color 0.2s;
 
     &:hover {
         box-shadow: $base-box-shadow;

@@ -39,7 +39,7 @@ h1, h2, h3, h4, h5, h6, strong {
 	font-size: $core-font-size;
 	vertical-align: middle;
 	text-shadow: none;
-	@include transition(background 0.1s);
+	transition: background 0.1s;
 
 	&:hover {
 		background: lighten($accent-color-1, 5%);

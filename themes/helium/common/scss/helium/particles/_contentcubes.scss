@@ -23,13 +23,13 @@
                 display: block;
                 height: auto;
 
-                @include transform(scale3d(1.8, 1.8, 1));
-                @include transition(transform 0.5s cubic-bezier(0.7, 0, 0.3, 1));
+                transform: scale3d(1.8, 1.8, 1);
+                transition: transform 0.5s cubic-bezier(0.7, 0, 0.3, 1);
             }
 
             &:hover {
                 img {
-                    @include transform(scale3d(1, 1, 1));
+                    transform: scale3d(1, 1, 1);
                 }
             }
 
@@ -43,7 +43,7 @@
                 content: "";
                 background-color: fade-out($white, 0.25);
                 opacity: 0.6;
-                @include transition(opacity 0.3s);
+                transition: opacity 0.3s;
             }
 
             &:hover {
@@ -103,12 +103,12 @@
                     .item-link-text {
                         display: inline-block;
                         margin-left: 0.25rem;
-                        @include transition(transform 0.3s);
+                        transition: transform 0.3s;
                     }
 
                     &:hover {
                         .item-link-text {
-                            @include transform(translate3d(15px, 0, 0));
+                            transform: translate3d(15px, 0, 0);
                         }
                     }
                 }

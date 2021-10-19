@@ -46,10 +46,10 @@
         @extend %list-reset;
         margin: -10px -1%;
         .size-1-4 {
-            @include flex(0 23%);
+            flex: 0 23%;
 
             @include breakpoint(small-mobile-range) {
-                @include flex(0 100%);
+                flex: 0 100%;
             }
         }
     }
@@ -71,7 +71,7 @@
         }
 
         i {
-            @include transform(translate(-50%, -50%));
+            transform: translate(-50%, -50%);
             position: absolute;
             top: 50%;
             left: 50%;

@@ -124,7 +124,7 @@
   background-color: transparent; // remove default button style
   border: $border-width solid transparent; // remove default button style
   @include border-radius($navbar-toggler-border-radius);
-  @include transition($navbar-toggler-transition);
+  transition: $navbar-toggler-transition;
 
   &:hover {
     text-decoration: none;

@@ -18,7 +18,7 @@
   font-weight: $nav-link-font-weight;
   color: $nav-link-color;
   text-decoration: if($link-decoration == none, null, none);
-  @include transition($nav-link-transition);
+  transition: $nav-link-transition;
 
   &:hover,
   &:focus {

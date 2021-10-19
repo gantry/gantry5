@@ -22,7 +22,7 @@
     content: "";
     display: block;
     height: $height;
-    @include background(cs-stripes(left, ($colors)));
+    background: cs-stripes(left, ($colors));
     position: relative;
     z-index: 999999999999;
   }

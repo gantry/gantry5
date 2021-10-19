@@ -14,7 +14,7 @@
     padding: 1.5rem 3.125rem;
     vertical-align: middle;
     text-shadow: none;
-    @include transition(all 0.2s);
+    transition: all 0.2s;
 
     &:hover, &:active, &:focus {
         background: darken($accent-color-1, 10%);
@@ -60,7 +60,7 @@
     border: 1px solid transparent;
     vertical-align: middle;
     text-shadow: none;
-    @include transition(all 0.2s);
+    transition: all 0.2s;
 
     &:hover, &:active, &:focus {
         background: darken($accent-color-1, 10%);

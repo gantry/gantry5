@@ -88,7 +88,7 @@ $atom: #9055AF;
 
                     .g-tooltip, i {
                         cursor: pointer;
-                        @include transition(color 0.2s);
+                        transition: color 0.2s;
                         &:hover {
                             color: darken($core-text, 10%);
                         }
@@ -142,11 +142,11 @@ $atom: #9055AF;
 
             .section-actions {
                 opacity: 0.5;
-                @include transition(opacity 0.2s ease-out);
+                transition: opacity 0.2s ease-out;
 
                 i {
                     cursor: pointer;
-                    @include transition(color 0.2s);
+                    transition: color 0.2s;
                     &:hover {
                         color: darken($core-text, 10%);
                     }
@@ -156,7 +156,7 @@ $atom: #9055AF;
             &:hover {
                 .section-actions {
                     opacity: 1;
-                    @include transition(opacity 0.2s ease-in);
+                    transition: opacity 0.2s ease-in;
                 }
             }
 
@@ -608,7 +608,7 @@ $atom: #9055AF;
             background-color: #ddd;
             border: 0;
             padding: 1px;
-            @include flex(0 1 100%);
+            flex: 0 1 100%;
 
             &.in-between {
                 display: block;
@@ -617,7 +617,7 @@ $atom: #9055AF;
                 padding: 1px;
                 text-indent: -10000px;
                 font-size: 0;
-                @include flex(0 1 0);
+                flex: 0 1 0;
                 background-color: #555;
             }
 
@@ -835,7 +835,7 @@ $atom: #9055AF;
         margin-bottom: 0.5rem;
 
         label {
-            @include user-select(none);
+            user-select: none;
             padding-left: 20px;
         }
 
@@ -855,11 +855,11 @@ $atom: #9055AF;
     }
 
     .particles-sidebar-block {
-        @include flex(0 200px);
+        flex: 0 200px;
         width: 200px;
 
         @include breakpoint(mobile-only) {
-            @include flex(0 100%);
+            flex: 0 100%;
             width: 100%;
             margin: 0;
             padding: 0;
@@ -1032,7 +1032,7 @@ $atom: #9055AF;
     }
 
     .g-inherit {
-        //@include background($section-stripes !important);
+        //background: $section-stripes !important;
         @include stripes-background(transparentize(#ccc, 0.4), 'auto' !important);
         z-index: 5;
         position: absolute;

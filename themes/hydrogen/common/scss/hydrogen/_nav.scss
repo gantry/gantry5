@@ -23,7 +23,7 @@
             border: none;
             text-decoration: none;
             color: $navigation-text-color;
-            @include transition(background 0.2s);
+            transition: background 0.2s;
 
             &:hover {
                 background: lighten($navigation-background, 6%);
@@ -36,8 +36,8 @@
         @include main-nav-colors($navigation-background, $navigation-text-color, $main-background, $main-text-color);
 
         .g-toplevel {
-            @include display(flex);
-            @include flex-flow(row wrap);
+            display: flex;
+            flex-flow: row wrap;
             justify-content: center;
             -webkit-justify-content: center;
         }

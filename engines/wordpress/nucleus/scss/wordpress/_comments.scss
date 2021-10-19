@@ -18,7 +18,7 @@
             margin: 20px 0 0;
 
             .comment-author {
-                @include display(flex);
+                display: flex;
                 height: 48px;
                 line-height: 45px;
 
@@ -27,13 +27,13 @@
                 }
 
                 .author-avatar {
-                    @include flex(0 48px);
+                    flex: 0 48px;
                     width: 48px;
                     margin-right: 10px;
                 }
 
                 .author-meta {
-                    @include flex(1);
+                    flex: 1;
 
                     .author-name {
                         font-size: 1.4rem;
@@ -67,7 +67,7 @@
 
     // Comments Pagination
     #comments-nav {
-        @include display(flex);
+        display: flex;
 
         .comments-next {
             margin-left: auto;

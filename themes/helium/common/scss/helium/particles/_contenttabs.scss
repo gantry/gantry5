@@ -3,7 +3,7 @@
 
     .ui-tabs-nav {
         margin: 0;
-        @include display(flex);
+        display: flex;
         @include breakpoint(mobile-only) {
           flex-direction: column;
         }
@@ -89,9 +89,9 @@
             padding: 0;
 
             .g-contenttabs-content {
-                @include display(flex);
-                @include flex-flow(row wrap);
-                @include flex-wrap(wrap);
+                display: flex;
+                flex-flow: row wrap;
+                flex-wrap: wrap;
 
                 a {
                     &:hover {

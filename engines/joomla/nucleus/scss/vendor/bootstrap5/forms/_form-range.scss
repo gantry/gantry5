@@ -32,7 +32,7 @@
     border: $form-range-thumb-border;
     @include border-radius($form-range-thumb-border-radius);
     @include box-shadow($form-range-thumb-box-shadow);
-    @include transition($form-range-thumb-transition);
+    transition: $form-range-thumb-transition;
     appearance: none;
 
     &:active {
@@ -58,7 +58,7 @@
     border: $form-range-thumb-border;
     @include border-radius($form-range-thumb-border-radius);
     @include box-shadow($form-range-thumb-box-shadow);
-    @include transition($form-range-thumb-transition);
+    transition: $form-range-thumb-transition;
     appearance: none;
 
     &:active {

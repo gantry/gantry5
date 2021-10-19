@@ -15,7 +15,7 @@
     padding: 1.5rem 3.125rem;
     vertical-align: middle;
     text-shadow: none;
-    @include transition(all 0.2s);
+    transition: all 0.2s;
 
     &:hover, &:active, &:focus {
         background: darken($accent-color-1, 10%);
@@ -76,7 +76,7 @@
     &.button-2 {
         background: $accent-color-2;
 
-        @include transition(all 0.2s);
+        transition: all 0.2s;
 
         &:hover, &:active, &:focus {
             background: darken($accent-color-2, 10%);
@@ -97,7 +97,7 @@
     }
 
     &.button-gradient {
-        @include linear-gradient(90deg, $accent-color-1, $accent-color-2);
+        background: linear-gradient(90deg, $accent-color-1, $accent-color-2);
         border: none;
 
         &:hover, &:active, &:focus {

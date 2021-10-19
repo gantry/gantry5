@@ -265,7 +265,7 @@
         text-align: center;
         cursor: pointer;
         border-radius: 50%;
-        @include transition(all 0.25s);
+        transition: all 0.25s;
 
         &:hover {
             text-decoration: none;
@@ -342,7 +342,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            @include transform-style(preserve-3d);
+            transform-style: preserve-3d;
 
             @include breakpoint(very-large-desktop-range) {
                 width: $breakpoints-very-large-desktop-container;
@@ -369,9 +369,9 @@
             }
 
             .g-owlcarousel-item-content-wrapper {
-                @include display(flex);
-                @include align-items(center);
-                @include justify-content(center);
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 height: 100%;
 
                 @include breakpoint(desktop-range) {
@@ -465,14 +465,14 @@
         button.owl-next {
             position: absolute;
             top: 50%;
-            @include transform(translateY(-50%));
+            transform: translateY(-50%);
             width: 42px;
             height: 42px;
             color: $white;
             border: 1px solid $white;
             border-radius: 50%;
             text-align: center;
-            @include transition(all 0.3s);
+            transition: all 0.3s;
 
             .fa {
                 position: relative;
@@ -538,7 +538,7 @@
             height: 15px;
             border-radius: 15px;
             opacity: 0.75;
-            @include transition(all 0.2s);
+            transition: all 0.2s;
 
             &.active,
             &:hover {
@@ -553,7 +553,7 @@
         .owl-stage > .owl-item:nth-child(even) {
             .g-owlcarousel-item-img:after {
                 background-color: $accent-color-1;
-                @include linear-gradient(40deg, $accent-color-1, $accent-color-2);
+                background: linear-gradient(40deg, $accent-color-1, $accent-color-2);
                 opacity: 0.9;
             }
         }
@@ -561,7 +561,7 @@
         .owl-stage > .owl-item:nth-child(odd) {
             .g-owlcarousel-item-img:after {
                 background-color: $accent-color-2;
-                @include linear-gradient(140deg, $accent-color-2, $accent-color-1);
+                background: linear-gradient(140deg, $accent-color-2, $accent-color-1);
                 opacity: 0.9;
             }
         }

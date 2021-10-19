@@ -1,7 +1,7 @@
 @mixin size-x {
 	@for $i from 5 through 95 {
 	    .size-#{$i} {
-            @include flex(0 $i * 1%);
+            flex: 0 $i * 1%;
             width: $i * 1%;
         }
 	}

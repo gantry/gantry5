@@ -1,17 +1,17 @@
 // Blog Columns
 .list-blog {
-    @include display(flex);
-    @include flex-direction(column);
+    display: flex;
+    flex-direction: column;
     &.cols-1, &.cols-2, &.cols-3, &.cols-4, &.cols-5, &.cols-6 {
         .list-blog-row {
-            @include display(flex);
+            display: flex;
             @include breakpoint(mobile-only) {
-              @include flex-direction(column);
+              flex-direction: column;
             }
             margin: -$content-padding;
             .list-item {
-                @include flex(1);
-                @include flex-basis(0);
+                flex: 1;
+                flex-basis: 0;
                 padding: $content-padding;
 
                 @include breakpoint(mobile-only) {

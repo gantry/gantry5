@@ -191,7 +191,7 @@
     $third-stop:    grayscale($third-stop);
   }
 
-  @include linear-gradient(top, $base-color 0%, $second-stop 50%, $third-stop 50%, $fourth-stop 100%);
+  background: linear-gradient(top, $base-color 0%, $second-stop 50%, $third-stop 50%, $fourth-stop 100%);
 
   border: 1px solid $border;
   border-bottom: 1px solid $border-bottom;
