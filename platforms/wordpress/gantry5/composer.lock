@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "altorouter/altorouter",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dannyvankooten/AltoRouter.git",
-                "reference": "127f6e96998708a31ef32252985bea82e3b03888"
+                "reference": "f6fede4f94ced7c22ba63a9b8af0bf2dc38e3cb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dannyvankooten/AltoRouter/zipball/127f6e96998708a31ef32252985bea82e3b03888",
-                "reference": "127f6e96998708a31ef32252985bea82e3b03888",
+                "url": "https://api.github.com/repos/dannyvankooten/AltoRouter/zipball/f6fede4f94ced7c22ba63a9b8af0bf2dc38e3cb2",
+                "reference": "f6fede4f94ced7c22ba63a9b8af0bf2dc38e3cb2",
                 "shasum": ""
             },
             "require": {
@@ -62,9 +62,9 @@
             ],
             "support": {
                 "issues": "https://github.com/dannyvankooten/AltoRouter/issues",
-                "source": "https://github.com/dannyvankooten/AltoRouter/tree/2.0.1"
+                "source": "https://github.com/dannyvankooten/AltoRouter/tree/2.0.2"
             },
-            "time": "2019-11-23T11:01:41+00:00"
+            "time": "2020-03-09T08:34:59+00:00"
         },
         {
             "name": "composer/installers",
@@ -320,21 +320,21 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.14.3",
+            "version": "2.14.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "89584ce67dd32307f1063cc43846674f4679feda"
+                "reference": "f056f1fe935d9ed86e698905a957334029899895"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/89584ce67dd32307f1063cc43846674f4679feda",
-                "reference": "89584ce67dd32307f1063cc43846674f4679feda",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/f056f1fe935d9ed86e698905a957334029899895",
+                "reference": "f056f1fe935d9ed86e698905a957334029899895",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.5.9 || ^7.0 || ^8.0",
-                "psr/log": "^1.0.1"
+                "psr/log": "^1.0.1 || ^2.0 || ^3.0"
             },
             "require-dev": {
                 "mockery/mockery": "^0.9 || ^1.0",
@@ -379,7 +379,7 @@
             ],
             "support": {
                 "issues": "https://github.com/filp/whoops/issues",
-                "source": "https://github.com/filp/whoops/tree/2.14.3"
+                "source": "https://github.com/filp/whoops/tree/2.14.4"
             },
             "funding": [
                 {
@@ -387,7 +387,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-09-19T12:00:00+00:00"
+            "time": "2021-10-03T12:00:00+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -548,16 +548,16 @@
         },
         {
             "name": "rockettheme/toolbox",
-            "version": "1.5.9",
+            "version": "1.5.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "2d6693235aaca2efaadb61c84dac927aaf4eabfa"
+                "reference": "d9738de013fa12df77754a0f11dded220b246efb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/2d6693235aaca2efaadb61c84dac927aaf4eabfa",
-                "reference": "2d6693235aaca2efaadb61c84dac927aaf4eabfa",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/d9738de013fa12df77754a0f11dded220b246efb",
+                "reference": "d9738de013fa12df77754a0f11dded220b246efb",
                 "shasum": ""
             },
             "archive": {
@@ -612,10 +612,10 @@
                 "rockettheme"
             ],
             "support": {
-                "source": "https://github.com/rockettheme/toolbox/tree/1.5.9",
+                "source": "https://github.com/rockettheme/toolbox/tree/1.5.10",
                 "issues": "https://github.com/rockettheme/toolbox/issues"
             },
-            "time": "2021-04-14T19:52:40+00:00"
+            "time": "2021-09-29T16:50:13+00:00"
         },
         {
             "name": "scssphp/scssphp",
@@ -919,16 +919,16 @@
         },
         {
             "name": "timber/timber",
-            "version": "1.19.0",
+            "version": "1.19.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/timber/timber.git",
-                "reference": "8dcb41667c8315b7051cdaffb328dfa59668e832"
+                "reference": "3e213fbd3587eb36adec2d5a081824c4722a0acf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/timber/timber/zipball/8dcb41667c8315b7051cdaffb328dfa59668e832",
-                "reference": "8dcb41667c8315b7051cdaffb328dfa59668e832",
+                "url": "https://api.github.com/repos/timber/timber/zipball/3e213fbd3587eb36adec2d5a081824c4722a0acf",
+                "reference": "3e213fbd3587eb36adec2d5a081824c4722a0acf",
                 "shasum": ""
             },
             "require": {
@@ -936,7 +936,7 @@
                 "php": ">=5.3.0|7.*",
                 "twig/cache-extension": "^1.5",
                 "twig/twig": "^1.41|^2.10",
-                "upstatement/routes": "0.8"
+                "upstatement/routes": "0.8.1"
             },
             "require-dev": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
@@ -945,7 +945,8 @@
                 "squizlabs/php_codesniffer": "3.*",
                 "wp-coding-standards/wpcs": "^2.0",
                 "wpackagist-plugin/advanced-custom-fields": "5.*",
-                "wpackagist-plugin/co-authors-plus": "3.2.*|3.4.*"
+                "wpackagist-plugin/co-authors-plus": "3.2.*|3.4.*",
+                "yoast/phpunit-polyfills": "^1.0"
             },
             "suggest": {
                 "satooshi/php-coveralls": "1.0.* for code coverage"
@@ -985,7 +986,7 @@
                 "issues": "https://github.com/timber/timber/issues",
                 "source": "https://github.com/timber/timber"
             },
-            "time": "2021-09-15T00:53:25+00:00"
+            "time": "2021-10-18T13:21:54+00:00"
         },
         {
             "name": "twig/cache-extension",
@@ -1139,20 +1140,20 @@
         },
         {
             "name": "upstatement/routes",
-            "version": "0.8",
+            "version": "0.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Upstatement/routes.git",
-                "reference": "9294660710ba5cab48a62002210f74889c511701"
+                "reference": "02eb866668f5478d794547aa79e73dd92a989ad9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Upstatement/routes/zipball/9294660710ba5cab48a62002210f74889c511701",
-                "reference": "9294660710ba5cab48a62002210f74889c511701",
+                "url": "https://api.github.com/repos/Upstatement/routes/zipball/02eb866668f5478d794547aa79e73dd92a989ad9",
+                "reference": "02eb866668f5478d794547aa79e73dd92a989ad9",
                 "shasum": ""
             },
             "require": {
-                "altorouter/altorouter": "^2.0",
+                "altorouter/altorouter": "^2.0.2",
                 "composer/installers": "~1.0",
                 "php": ">=5.6.0"
             },
@@ -1175,11 +1176,11 @@
                 {
                     "name": "Jared Novack",
                     "email": "jared@upstatement.com",
-                    "homepage": "http://upstatement.com"
+                    "homepage": "https://www.upstatement.com"
                 }
             ],
             "description": "Manage rewrites and routes in WordPress with this dead-simple plugin",
-            "homepage": "http://routes.upstatement.com",
+            "homepage": "https://www.upstatement.com",
             "keywords": [
                 "redirects",
                 "rewrite",
@@ -1187,11 +1188,11 @@
                 "routing"
             ],
             "support": {
-                "issues": "https://github.com/jarednova/routes/issues",
-                "source": "https://github.com/jarednova/routes",
-                "wiki": "https://github.com/jarednova/routes/wiki"
+                "issues": "https://github.com/Upstatement/routes/issues",
+                "source": "https://github.com/Upstatement/routes",
+                "wiki": "https://github.com/Upstatement/routes/wiki"
             },
-            "time": "2020-08-14T20:20:29+00:00"
+            "time": "2021-10-16T00:12:03+00:00"
         }
     ],
     "packages-dev": [

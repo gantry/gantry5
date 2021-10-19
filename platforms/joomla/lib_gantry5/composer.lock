@@ -109,21 +109,21 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.14.3",
+            "version": "2.14.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "89584ce67dd32307f1063cc43846674f4679feda"
+                "reference": "f056f1fe935d9ed86e698905a957334029899895"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/89584ce67dd32307f1063cc43846674f4679feda",
-                "reference": "89584ce67dd32307f1063cc43846674f4679feda",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/f056f1fe935d9ed86e698905a957334029899895",
+                "reference": "f056f1fe935d9ed86e698905a957334029899895",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.5.9 || ^7.0 || ^8.0",
-                "psr/log": "^1.0.1"
+                "psr/log": "^1.0.1 || ^2.0 || ^3.0"
             },
             "require-dev": {
                 "mockery/mockery": "^0.9 || ^1.0",
@@ -168,7 +168,7 @@
             ],
             "support": {
                 "issues": "https://github.com/filp/whoops/issues",
-                "source": "https://github.com/filp/whoops/tree/2.14.3"
+                "source": "https://github.com/filp/whoops/tree/2.14.4"
             },
             "funding": [
                 {
@@ -176,7 +176,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-09-19T12:00:00+00:00"
+            "time": "2021-10-03T12:00:00+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -337,16 +337,16 @@
         },
         {
             "name": "rockettheme/toolbox",
-            "version": "1.5.9",
+            "version": "1.5.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "2d6693235aaca2efaadb61c84dac927aaf4eabfa"
+                "reference": "d9738de013fa12df77754a0f11dded220b246efb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/2d6693235aaca2efaadb61c84dac927aaf4eabfa",
-                "reference": "2d6693235aaca2efaadb61c84dac927aaf4eabfa",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/d9738de013fa12df77754a0f11dded220b246efb",
+                "reference": "d9738de013fa12df77754a0f11dded220b246efb",
                 "shasum": ""
             },
             "archive": {
@@ -401,10 +401,10 @@
                 "rockettheme"
             ],
             "support": {
-                "source": "https://github.com/rockettheme/toolbox/tree/1.5.9",
+                "source": "https://github.com/rockettheme/toolbox/tree/1.5.10",
                 "issues": "https://github.com/rockettheme/toolbox/issues"
             },
-            "time": "2021-04-14T19:52:40+00:00"
+            "time": "2021-09-29T16:50:13+00:00"
         },
         {
             "name": "scssphp/scssphp",

@@ -48,6 +48,8 @@ abstract class CssCompiler implements CssCompilerInterface
     /** @var array */
     protected $paths;
     /** @var array */
+    protected $realPaths;
+    /** @var array */
     protected $files;
     /** @var bool */
     protected $production;
@@ -140,6 +142,14 @@ abstract class CssCompiler implements CssCompilerInterface
     {
         if ($paths !== null) {
             $this->paths = $paths;
+
+            /** @var UniformResourceLocator $locator */
+            $locator = Gantry::instance()['locator'];
+
+            $this->realPaths = [];
+            foreach ($paths as $path) {
+                $this->realPaths = array_merge($this->realPaths, $locator->findResources($path));
+            }
         }
 
         return $this;

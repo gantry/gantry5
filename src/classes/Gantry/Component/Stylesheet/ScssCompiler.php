@@ -16,6 +16,7 @@ namespace Gantry\Component\Stylesheet;
 
 use Composer\Autoload\ClassLoader;
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Stylesheet\Scss\Compiler;
 use Gantry\Component\Stylesheet\Scss\Functions;
 use Gantry\Debugger;
 use Gantry\Framework\Document;
@@ -23,7 +24,6 @@ use Gantry\Framework\Gantry;
 use Gantry\Framework\Theme;
 use Grav\Common\Plugins;
 use ScssPhp\ScssPhp\CompilationResult;
-use ScssPhp\ScssPhp\Compiler;
 use ScssPhp\ScssPhp\Exception\CompilerException;
 use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\File\JsonFile;
@@ -270,26 +270,52 @@ WARN;
      */
     public function findImport($url)
     {
-        $gantry = Gantry::instance();
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-
         // Ignore vanilla css and external requests.
         if (preg_match('/\.css$|^https?:\/\//', $url)) {
             return null;
         }
 
+        // Append current folder for the lookup
+        $currentDir = Compiler::$currentDir;
+        $current = null;
+        if ($currentDir) {
+            foreach ($this->realPaths as $base) {
+                if (strpos($currentDir . '/', $base . '/') === 0) {
+                    $current = substr($currentDir, strlen($base) + 1);
+
+                    break;
+                }
+            }
+        }
+
+        // Try both normal and the _partial filename against relative SCSS folder.
+        if ($current) {
+            $path = $this->tryImport("{$current}/{$url}");
+            if ($path) {
+                return $path;
+            }
+        }
+
+        // Try both normal and the _partial filename against root SCSS folder.
+        return $this->tryImport($url);
+    }
+
+    /**
+     * @param string $url
+     * @return string|null
+     */
+    protected function tryImport($url)
+    {
         // Try both normal and the _partial filename.
         $files = [$url, preg_replace('/[^\/]+$/', '_\0', $url)];
 
-        foreach ($this->paths as $base) {
+        foreach ($this->realPaths as $base) {
             foreach ($files as $file) {
                 if (!preg_match('|\.scss$|', $file)) {
                     $file .= '.scss';
                 }
-                $filepath = $locator->findResource($base . '/' . $file);
-                if ($filepath) {
+                $filepath = $base . '/' . $file;
+                if (is_file($filepath)) {
                     return $filepath;
                 }
             }
