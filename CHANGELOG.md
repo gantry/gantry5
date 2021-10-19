@@ -8,6 +8,7 @@
         - Fixed incompatible units in breakpoint calculations (#2900)
         - Fixed Bourbon deprecation warnings in shipped SCSS
         - Hide SCSS Bourbon deprecation warnings in older themes
+        - Fixed disappearing menu particles (#2892)
 
 # 5.5.0
 ## 10/12/2021

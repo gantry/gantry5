@@ -356,6 +356,7 @@ class Menu extends AbstractMenu
 
             $data['id'] = $path;
             $data['parent_id'] = $parent_id;
+            $data['path'] = $path;
 
             $item = $this->createMenuItem($data);
             $list[$item->id] = $item;
@@ -613,7 +614,7 @@ class Menu extends AbstractMenu
             $properties = $data;
 
             $route = $data['id'];
-            $level = substr_count($route, '/');
+            $level = substr_count($route, '/') + 1;
 
             $properties['enabled'] = !isset($properties['options']['particle']['enabled']) || !empty($properties['options']['particle']['enabled']);
             $properties['alias'] = basename($route);
