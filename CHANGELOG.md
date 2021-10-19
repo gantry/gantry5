@@ -4,11 +4,14 @@
 1. [Common](#common)
    1. [](#improved)
         - Officially removed support for IE 10 and 11 by removing workarounds for IE bugs
-   3. [](#bugfix)
+   1. [](#bugfix)
         - Fixed incompatible units in breakpoint calculations (#2900)
         - Fixed Bourbon deprecation warnings in shipped SCSS
         - Hide SCSS Bourbon deprecation warnings in older themes
-        - Fixed disappearing menu particles (#2892)
+        - Fixed disappearing menu particles when updating from older Gantry version (#2892)
+1. [WordPress](#wordpress)
+   1. [](#bugfix)
+        - Fixed `Undefined array key '\'` when saving menu with a new widget in it (#2889)
 
 # 5.5.0
 ## 10/12/2021

@@ -299,7 +299,7 @@ class Menu extends AbstractMenu
                 $id = reset($matches);
             } else {
                 // Try to match Gantry menu path to the menu item.
-                $route = trim(dirname("/{$path}"), '/');
+                $route = trim(dirname("/{$path}"), '/\\');
                 $slug = basename($path);
 
                 // We may already have parent path matched to WP menu item; using it allows us to narrow down choices.
