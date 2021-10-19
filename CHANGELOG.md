@@ -8,9 +8,9 @@
         - Fixed incompatible units in breakpoint calculations (#2900)
         - Fixed Bourbon deprecation warnings in shipped SCSS
         - Hide SCSS Bourbon deprecation warnings in older themes
-        - Fixed disappearing menu particles when updating from older Gantry version (#2892)
 1. [Joomla](#joomla)
     1. [](#bugfix)
+        - Fixed disappearing menu particles when updating from older Gantry version (#2892)
         - Fixed markup of the gantry module chrome in J4 (#2911)
 1. [WordPress](#wordpress)
    1. [](#bugfix)
