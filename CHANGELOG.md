@@ -9,6 +9,7 @@
         - Fixed Bourbon deprecation warnings in shipped SCSS
         - Hide SCSS Bourbon deprecation warnings in older themes
         - Fixed missing/broken custom SCSS overrides (#2893, #2901)
+        - Fixed wrong load order of fontawesome assets (#2914)
 1. [Joomla](#joomla)
     1. [](#bugfix)
         - Fixed disappearing menu particles when updating from older Gantry version (#2892)
