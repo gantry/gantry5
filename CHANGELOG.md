@@ -15,7 +15,7 @@
     1. [](#bugfix)
         - Fixed disappearing menu particles when updating from older Gantry version (#2892)
         - Fixed markup of the gantry module chrome in J4 (#2911)
-        - Fixed `Link Class` not being added to the menu (#2899)
+        - Fixed Joomla `Link Class` not being added to the menu items (#2899)
 1. [WordPress](#wordpress)
    1. [](#bugfix)
         - Fixed `Undefined array key '\'` when saving menu with a new widget in it (#2889)

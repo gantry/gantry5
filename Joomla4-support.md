@@ -27,3 +27,9 @@ Note that Joomla 4 removes support for:
 - Bootstrap 2.2
 
 Those still work, but I recommend those to be removed from the themes.
+
+## Errors
+
+### Incompatible units px and rem
+
+See [commit b16d10e](https://github.com/gantry/gantry5/commit/b16d10eb2b29a866628c3807ce31ad67b0141278) on how to fix it in your theme.
