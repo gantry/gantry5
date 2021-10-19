@@ -602,8 +602,7 @@ class Menu extends AbstractMenu
             // And if not available in configuration, default to Joomla.
             $properties += [
                 'title' => $menuItem->title,
-                // Disabled as the option has different meaning in Joomla than in Gantry, see issue #1656.
-                //'anchor_class' => $params->get('menu-anchor_css', ''),
+                'anchor_class' => $params->get('menu-anchor_css', ''),
                 'image' => $params->get('menu_image', ''),
                 'icon_only' => !$params->get('menu_text', 1),
                 'target' => $target

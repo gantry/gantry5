@@ -119,6 +119,11 @@ form:
           label: CSS Classes
           description: Enter CSS class names.
 
+        .anchor_class:
+          type: text
+          label: Link Class
+          description: Enter link class name.
+
         .icon:
           type: input.icon
           label: Icon

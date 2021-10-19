@@ -274,8 +274,7 @@ class EventListener implements EventSubscriberInterface
 
             // Joomla params.
             $options = [
-                // Disabled as the option has different meaning in Joomla than in Gantry, see issue #1656.
-                // 'menu-anchor_css' => $item['class'],
+                'menu-anchor_css' => $item['anchor_class'],
                 'menu_image' => $item['image'],
                 'menu_text' => (int)(!$item['icon_only']),
                 'menu_show' => (int)$item['enabled'],
