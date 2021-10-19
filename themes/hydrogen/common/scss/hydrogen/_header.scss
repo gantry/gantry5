@@ -16,8 +16,8 @@
 		@include main-nav-colors($header-background, $header-text-color, $main-background, $main-text-color);
 
 		.g-toplevel {
-			@include display(flex);
-			@include flex-flow(row wrap);
+			display: flex;
+			flex-flow: row wrap;
 		}
 	}
 

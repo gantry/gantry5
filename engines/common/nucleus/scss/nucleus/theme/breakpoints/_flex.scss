@@ -22,15 +22,15 @@
 // Grid Row and Column Setup
 .g-block {
 	@include breakpoint(mobile-only) {
-		@include flex-grow(0);
-		@include flex-basis(100%);
+		flex-grow: 0;
+		flex-basis: 100%;
 	}
 }
 
 body [class*="size-"] {
 	@include breakpoint(mobile-only) {
-        @include flex-grow(0);
-        @include flex-basis(100%);
+        flex-grow: 0;
+        flex-basis: 100%;
         max-width: 100%;
 	}
 }
@@ -40,11 +40,11 @@ body [class*="size-"] {
 	@supports not (flex-wrap: wrap) {
 		.g-grid {
 			display: block;
-			@include flex-wrap(inherit);
+			flex-wrap: inherit;
 		}
 		.g-block {
 			display: block;
-			@include flex(inherit);
+			flex: inherit;
 		}
 	}
 }

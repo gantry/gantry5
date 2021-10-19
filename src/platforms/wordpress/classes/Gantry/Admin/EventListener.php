@@ -204,7 +204,7 @@ class EventListener implements EventSubscriberInterface
                 $db_id = $wpItem->db_id;
 
                 // Set parent and position.
-                $parent_path = ltrim(dirname('/' . $key), '/');
+                $parent_path = ltrim(dirname('/' . $key), '/\\');
                 if ($parent_path) {
                     $parent = $items[$parent_path];
                     $parent_id = (int)$parent['id'];

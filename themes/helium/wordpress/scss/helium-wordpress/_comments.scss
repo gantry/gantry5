@@ -42,7 +42,7 @@
                 height: auto;
 
                 .author-avatar {
-                    @include flex(0 $avatar-size);
+                    flex: 0 $avatar-size;
                     width: $avatar-size;
                     height: $avatar-size;
                     margin-right: 20px;

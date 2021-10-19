@@ -49,15 +49,15 @@
             }
 
             li {
-                @include align-items(center);
-                @include display(flex);
-                @include flex-direction(row);
-                @include justify-content(flex-start);
+                align-items: center;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
 
                 &:hover {
                     .item-settings {
                         opacity: 1;
-                        @include transition(opacity 0.2s);
+                        transition: opacity 0.2s;
                     }
                 }
             }
@@ -95,7 +95,7 @@
             cursor: pointer;
             text-align: right;
             opacity: 0;
-            @include transition(opacity 0.2s);
+            transition: opacity 0.2s;
         }
     }
 }

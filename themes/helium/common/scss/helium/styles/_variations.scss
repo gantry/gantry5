@@ -190,7 +190,7 @@ $css_multipliers: 2, 3;
 // Title Gradient
 .title-gradient {
     .g-title {
-        @include linear-gradient(90deg, $accent-color-1, $accent-color-2);
+        background: linear-gradient(90deg, $accent-color-1, $accent-color-2);
         color: $white;
     }
 }
@@ -200,7 +200,7 @@ $css_multipliers: 2, 3;
     &.moduletable, &.widget,
     &.g-outer-box,
     > .g-content  {
-        @include linear-gradient(45deg, $accent-color-1, $accent-color-2);
+        background: linear-gradient(45deg, $accent-color-1, $accent-color-2);
     }
 
     &.moduletable, &.widget,
@@ -229,7 +229,7 @@ $css_multipliers: 2, 3;
 // Box Gradient, Title Gradient
 .box-gradient.title-gradient {
     .g-title {
-        @include linear-gradient(10deg, $accent-color-1, $accent-color-2);
+        background: linear-gradient(10deg, $accent-color-1, $accent-color-2);
     }
 }
 

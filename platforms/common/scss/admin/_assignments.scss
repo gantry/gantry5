@@ -18,7 +18,7 @@
             border-top: 1px solid #f4f4f4;
             margin: 0;
             padding: 10px 15px;
-            @include backface-visibility(hidden);
+            backface-visibility: hidden;
 
             .settings-param-title {
                 line-height: 1em;
@@ -71,7 +71,7 @@
             margin: 0 0 -10px;
 
             &.only-child {
-                @include column-count(1);
+                column-count: 1;
             }
         }
     }

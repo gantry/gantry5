@@ -31,7 +31,7 @@
                     display: block;
                     padding: $content-padding;
                     color: $main-header-text;
-                    @include transition(background 0.2s);
+                    transition: background 0.2s;
                     @include breakpoint(tablet-range) {
                         padding: $content-padding $content-padding - 0.3;
                     }
@@ -91,7 +91,7 @@
             font-weight: $font-weight-regular;
             opacity: 0.5;
             line-height: 1.2;
-            @include transition(opacity 0.1s ease-out);
+            transition: opacity 0.1s ease-out;
         }
 
         input:checked + label {
@@ -109,7 +109,7 @@
             height: 100%;
             border-radius: $core-border-radius;
             background: lighten($core-accent, 15%);
-            @include transition(all 0.1s ease-out);
+            transition: all 0.1s ease-out;
         }
 
         input:last-of-type:checked ~ a {

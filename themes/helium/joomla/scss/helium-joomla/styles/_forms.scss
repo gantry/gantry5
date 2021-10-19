@@ -42,7 +42,7 @@ input[type="color"],
     background-color: $base-background;
     border: 1px solid $base-border-color;
     box-sizing: border-box !important;
-    @include transition(border 0.2s linear, box-shadow 0.2s linear);
+    transition: border 0.2s linear, box-shadow 0.2s linear;
 
     .input-prepend &, .input-append & {
         padding: 0.35rem;

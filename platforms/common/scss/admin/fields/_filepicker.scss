@@ -12,7 +12,7 @@
 
     .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content {
         width: 80vw;
-        @include transform(translateZ(0));
+        transform: translateZ(0);
 
         .g-particles-header {
             input, label, select {
@@ -138,7 +138,7 @@
             li {
                 vertical-align: middle;
                 position: relative;
-                @include transition(transform 0.2s ease-out);
+                transition: transform 0.2s ease-out;
                 @extend .font-small;
 
                 .g-file-delete, .g-file-preview {
@@ -162,7 +162,7 @@
                 }
 
                 &.g-file-deleted {
-                    @include transform(scale(0));
+                    transform: scale(0);
                 }
 
                 > span {
@@ -262,7 +262,7 @@
                         background-color: rgba(255, 255, 255, 0.5);
                         border-radius: 50px;
                         line-height: 1em;
-                        @include transform(translate(-50%, -50%));
+                        transform: translate(-50%, -50%);
 
                         .g-file-progress-text {
                             position: absolute;

@@ -37,3 +37,4 @@ platforms/**/cache
 themes/**/cache
 npm-debug.log
 .vscode/launch.json
+sass-convert.sh

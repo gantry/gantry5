@@ -33,7 +33,7 @@
   width: 100%;
   margin-right: -100%;
   backface-visibility: hidden;
-  @include transition($carousel-transition);
+  transition: $carousel-transition;
 }
 
 .carousel-item.active,
@@ -78,7 +78,7 @@
   .active.carousel-item-end {
     z-index: 0;
     opacity: 0;
-    @include transition(opacity 0s $carousel-transition-duration);
+    transition: opacity 0s $carousel-transition-duration;
   }
 }
 
@@ -104,7 +104,7 @@
   background: none;
   border: 0;
   opacity: $carousel-control-opacity;
-  @include transition($carousel-control-transition);
+  transition: $carousel-control-transition;
 
   // Hover/focus state
   &:hover,
@@ -187,7 +187,7 @@
     border-top: $carousel-indicator-hit-area-height solid transparent;
     border-bottom: $carousel-indicator-hit-area-height solid transparent;
     opacity: $carousel-indicator-opacity;
-    @include transition($carousel-indicator-transition);
+    transition: $carousel-indicator-transition;
   }
 
   .active {

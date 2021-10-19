@@ -50,7 +50,7 @@ body.g-prime {
     .g-block {
         position: relative;
         @include breakpoint(mobile-only) {
-            @include flex(0 100%);
+            flex: 0 100%;
         }
     }
 
@@ -71,21 +71,21 @@ body.g-prime {
 
     // fast spin for fontawesome
     .fa-spin-fast {
-        @include animation(fa-spin 1s infinite linear);
+        animation: fa-spin 1s infinite linear;
     }
 
     // save indicator
     .changes-indicator {
         opacity: 0;
-        @include animation(pulsate 1s ease-out infinite);
+        animation: pulsate 1s ease-out infinite;
     }
 
     // collapse
     .g-collapsed {
         .g-collapse {
             i {
-                @include transform(rotate(180deg));
-                @include backface-visibility(hidden);
+                transform: rotate(180deg);
+                backface-visibility: hidden;
             }
         }
 
@@ -110,22 +110,22 @@ body.g-prime {
         margin: -10px 0;
         display: block;
         width: 100%;
-        @include column-count(2);
-        @include column-gap(20px);
+        column-count: 2;
+        column-gap: 20px;
 
         @include breakpoint(mobile-only) {
-            @include column-count(1);
+            column-count: 1;
         }
 
         .card h4, .card input {
-            @include transform(translateZ(0));
+            transform: translateZ(0);
         }
     }
 
     .themes {
         &.cards-wrapper {
-            @include column-count(initial);
-            @include column-gap(initial);
+            column-count: initial;
+            column-gap: initial;
         }
     }
 
@@ -138,9 +138,9 @@ body.g-prime {
         min-width: 250px;
         vertical-align: top;
         margin: 10px 0;
-        @include backface-visibility(hidden);
+        backface-visibility: hidden;
 
-        //@include transform(translateZ(0)); // FIXME : Causes z-index issue in selectize but fixes WebKit rendering issues with Columns
+        //transform: translateZ(0); // FIXME : Causes z-index issue in selectize but fixes WebKit rendering issues with Columns
 
         &.full-width {
             margin: 0;
@@ -273,9 +273,9 @@ body.g-prime {
 }
 
 // Keyframes
-@include keyframes(pulsate) {
+@keyframes pulsate {
     0% {
-        @include transform(scale(0.1, 0.1));
+        transform: scale(0.1, 0.1);
         opacity: 0;
     }
 
@@ -284,7 +284,7 @@ body.g-prime {
     }
 
     100% {
-        @include transform(scale(1.2, 1.2));
+        transform: scale(1.2, 1.2);
         opacity: 0;
     }
 }

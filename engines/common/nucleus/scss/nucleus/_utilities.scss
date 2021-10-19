@@ -121,11 +121,11 @@
 
 // Size Adjustment
 .full-width {
-	@include flex-grow(0);
-	@include flex-basis(100%);
+	flex-grow: 0;
+	flex-basis: 100%;
 	.g-block {
-		@include flex-grow(0);
-		@include flex-basis(100%);
+		flex-grow: 0;
+		flex-basis: 100%;
 	}
 }
 
@@ -149,7 +149,7 @@
 
 // Same Height for Box Variations
 .equal-height {
-    @include display(flex);
+    display: flex;
 
 	.g-content {
 		flex-basis: 100%;

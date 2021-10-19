@@ -31,7 +31,7 @@
         .g-icon-preview {
             padding: 0 2px;
             text-align: center;
-            @include transform(translateZ(0));
+            transform: translateZ(0);
 
             span {
                 color: lighten(#000, 70);

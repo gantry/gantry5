@@ -307,7 +307,7 @@ a img.aligncenter {
   display: inline-block;
 }
 
-@media only all and (max-width: 47.99rem) {
+@media only all and (max-width: calc(48rem - 0.01rem)) {
   .pagination p.counter, .page-links p.counter {
     display: none;
   }
@@ -326,7 +326,7 @@ a img.aligncenter {
   list-style: none;
 }
 
-@media only all and (max-width: 47.99rem) {
+@media only all and (max-width: calc(48rem - 0.01rem)) {
   #comments ol.commentlist ol.children {
     padding-left: 0.5rem;
   }
@@ -348,7 +348,7 @@ a img.aligncenter {
   line-height: 45px;
 }
 
-@media only all and (max-width: 47.99rem) {
+@media only all and (max-width: calc(48rem - 0.01rem)) {
   #comments ol.commentlist li.comment .comment-author {
     overflow: hidden;
   }
@@ -382,7 +382,7 @@ a img.aligncenter {
   margin-right: 5px;
 }
 
-@media only all and (max-width: 47.99rem) {
+@media only all and (max-width: calc(48rem - 0.01rem)) {
   #comments ol.commentlist li.comment .comment-author .author-meta .author-name {
     font-size: 1rem;
   }
@@ -392,7 +392,7 @@ a img.aligncenter {
   font-size: 0.8rem;
 }
 
-@media only all and (max-width: 47.99rem) {
+@media only all and (max-width: calc(48rem - 0.01rem)) {
   #comments ol.commentlist li.comment .comment-author .author-meta time, #comments ol.commentlist li.comment .comment-author .author-meta .edit-link {
     display: none;
   }
@@ -420,7 +420,7 @@ a img.aligncenter {
   margin-left: auto;
 }
 
-@media only all and (max-width: 47.99rem) {
+@media only all and (max-width: calc(48rem - 0.01rem)) {
   #comments #comments-nav a.button {
     font-size: 0.8rem;
   }

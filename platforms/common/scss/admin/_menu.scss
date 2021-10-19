@@ -16,7 +16,7 @@ $submenu-ratio:                 60px;
     .config-cog {
         opacity: 0;
         position: absolute;
-        @include transition(opacity 0.2s);
+        transition: opacity 0.2s;
         @include breakpoint(no-desktop) {
             opacity: 1;
         }
@@ -142,7 +142,7 @@ $submenu-ratio:                 60px;
     position: absolute;
     right: 10px;
     top: 50%;
-    @include transform(translateY(-50%));
+    transform: translateY(-50%);
     color: $core-text;
 }
 
@@ -156,7 +156,7 @@ $submenu-ratio:                 60px;
         display: flex;
         align-items: center;
         cursor: move;
-        @include transition(background-color 0.1s ease-out);
+        transition: background-color 0.1s ease-out;
 
         .parent-indicator {
             &:before {
@@ -216,7 +216,7 @@ $submenu-ratio:                 60px;
         padding: 5px;
         font-size: $core-font-size + 0.2;
         color: lighten($core-text, 20%);
-        @include transition(color 0.2s);
+        transition: color 0.2s;
         &:hover {
             color: $core-text;
         }
@@ -413,7 +413,7 @@ $submenu-ratio:                 60px;
                 opacity: 0.5;
                 width: 36px;
                 height: 36px;
-                @include transition(opacity 0.2s ease-in-out);
+                transition: opacity 0.2s ease-in-out;
                 margin: 0 !important;
                 text-align: center;
                 cursor: pointer;
@@ -529,7 +529,7 @@ $submenu-ratio:                 60px;
             top: 50%;
             left: $content-padding / 2;
             position: absolute;
-            @include transform(translate(0, -50%));
+            transform: translate(0, -50%);
         }
     }
 

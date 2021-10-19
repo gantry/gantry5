@@ -1,5 +1,5 @@
 @mixin stripes-background($color: #e3e3e3, $size: 50px, $deg: -45deg, $darkness: 3%){
-    @include background-image(linear-gradient($deg, $color 25%, darken($color, $darkness) 25%, darken($color, $darkness) 50%, $color 50%, $color 75%, darken($color, $darkness) 75%, darken($color, $darkness)));
+    background-image: linear-gradient($deg, $color 25%, darken($color, $darkness) 25%, darken($color, $darkness) 50%, $color 50%, $color 75%, darken($color, $darkness) 75%, darken($color, $darkness));
     background-size: $size $size;
 }
 

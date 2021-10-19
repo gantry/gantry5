@@ -33,7 +33,7 @@
 			background: darken($showcase-background, 6%);
 			border: none;
 			color: $showcase-text-color;
-			@include transition(background 0.2s);
+			transition: background 0.2s;
 			&:hover {
 				background: lighten($showcase-background, 6%);
 			}

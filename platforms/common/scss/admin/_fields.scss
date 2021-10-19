@@ -28,7 +28,7 @@
         .particle-search-wrapper {
             display: inline-block;
             position: relative;
-            @include transform(translateZ(0));
+            transform: translateZ(0);
 
             span {
                 position: absolute;

@@ -136,11 +136,11 @@
 }
 
 .g-block.navbar-icons {
-    @include flex(0 3%);
+    flex: 0 3%;
 }
 
 .g-block.navbar-closed {
-    @include flex(0);
+    flex: 0;
 }
 
 }//endwrapper

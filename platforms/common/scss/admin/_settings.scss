@@ -113,9 +113,9 @@
         background-color: transparentize(#f4f4f4, 0.5);
         z-index: 4;
         opacity: 1;
-        @include transition(opacity 0.3s ease-in-out, z-index 0.3s ease-in-out);
-        @include backface-visibility(hidden);
-        /*@include linear-gradient(90deg, transparentize($white, 0.7) 0%, transparentize($white, 0.7) 150px, transparentize($white, 0.4) 150px, transparentize($white, 0.4) 100%);*/
+        transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
+        backface-visibility: hidden;
+        /*background: linear-gradient(90deg, transparentize($white, 0.7) 0%, transparentize($white, 0.7) 150px, transparentize($white, 0.4) 150px, transparentize($white, 0.4) 100%);*/
     }
 
     .settings-param-field {
@@ -129,7 +129,7 @@
             margin: 0 5px;
             vertical-align: middle;
 
-            @include transition(opacity 0.2s ease-in-out);
+            transition: opacity 0.2s ease-in-out;
         }
 
         .input-group .g-reset-field {
@@ -145,7 +145,7 @@
             .g-reset-field {
                 opacity: 1;
 
-                @include transition(opacity 0.2s ease-in-out);
+                transition: opacity 0.2s ease-in-out;
             }
         }
     }
@@ -405,7 +405,7 @@
         opacity: 0;
         display: table-cell;
         padding-left: 0.4rem;
-        //@include transition(all 0.2s ease-in-out);
+        //transition: all 0.2s ease-in-out;
     }
 }
 

@@ -15,7 +15,7 @@
   border: 0;
   @include border-radius(0);
   overflow-anchor: none;
-  @include transition($accordion-transition);
+  transition: $accordion-transition;
 
   &:not(.collapsed) {
     color: $accordion-button-active-color;
@@ -38,7 +38,7 @@
     background-image: escape-svg($accordion-button-icon);
     background-repeat: no-repeat;
     background-size: $accordion-icon-width;
-    @include transition($accordion-icon-transition);
+    transition: $accordion-icon-transition;
   }
 
   &:hover {

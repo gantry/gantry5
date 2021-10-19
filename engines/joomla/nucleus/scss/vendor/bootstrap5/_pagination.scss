@@ -10,7 +10,7 @@
   text-decoration: if($link-decoration == none, null, none);
   background-color: $pagination-bg;
   border: $pagination-border-width solid $pagination-border-color;
-  @include transition($pagination-transition);
+  transition: $pagination-transition;
 
   &:hover {
     z-index: 2;

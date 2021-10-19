@@ -35,7 +35,7 @@
         }
 
         &.g-collapsed-main i {
-            @include transform(rotate(180deg));
+            transform: rotate(180deg);
         }
     }
 
@@ -58,7 +58,7 @@
 		}
 		@include breakpoint(mobile-only) {
 			.g-block {
-				@include flex(0 25%);
+				flex: 0 25%;
 			}
 		}
 		.swatch {
@@ -95,7 +95,7 @@
         border: none;
     	padding: 0.5rem;
     	border-radius: 0 0 0 $core-border-radius;
-    	@include transition(background 0.2s);
+    	transition: background 0.2s;
     	i {
     		font-size: $core-font-size + 0.2;
     	}
@@ -109,7 +109,7 @@
         left: 4px;
         cursor: default;
         color: $yellow;
-        @include transition(none);
+        transition: none;
 
         &:hover {
             background: rgba(0,0,0,0.4);

@@ -11,7 +11,7 @@
 
         @if $testimonials-background-overlay == 'enabled' {
             &:before {
-                @include linear-gradient(40deg, $accent-color-1, $accent-color-2);
+                background: linear-gradient(40deg, $accent-color-1, $accent-color-2);
                 opacity: 0.9;
                 position: absolute;
                 content: "";

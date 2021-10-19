@@ -24,7 +24,7 @@
                 z-index: -1;
                 opacity: 0.85;
 
-                @include linear-gradient(40deg, $accent-color-1, $accent-color-2);
+                background: linear-gradient(40deg, $accent-color-1, $accent-color-2);
             }
         }
     }
