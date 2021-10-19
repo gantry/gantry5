@@ -2,9 +2,12 @@
 ## mm/dd/2021
 
 1. [Common](#common)
-   1. [](#bugfix)
+   1. [](#improved)
+        - Officially removed support for IE 10 and 11 by removing workarounds for IE bugs
+   3. [](#bugfix)
         - Fixed incompatible units in breakpoint calculations (#2900)
-        - Fixed SCSS Bourbon deprecation warnings in older themes
+        - Fixed Bourbon deprecation warnings in shipped SCSS
+        - Hide SCSS Bourbon deprecation warnings in older themes
 
 # 5.5.0
 ## 10/12/2021

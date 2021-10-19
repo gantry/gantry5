@@ -14,11 +14,13 @@ We hope you enjoy Gantry 5 every bit as much as we have enjoyed making it.
 
 The back-end administration requirements of Gantry in order of preference are as follows:
 
-* Google Chrome 41+
-* Firefox 36+
-* Safari 8+
-* Opera 28+
-* Internet Explorer 11+
+* Google Chrome 60+
+* Firefox 60+
+* Safari 12+
+* Opera 47+
+* MS Edge
+
+**Note:** Internet Explorer is no longer supported
 
 ## Installing Gantry 5 and the Hydrogen Theme
 
