@@ -197,8 +197,21 @@ class Position extends Collection
      * Returns the value at specified offset.
      *
      * @param string $offset  The offset to retrieve.
+     * @return bool
+     */
+    #[\ReturnTypeWillChange]
+    public function offsetExists($offset)
+    {
+        return isset($this->items[$offset]);
+    }
+
+    /**
+     * Returns the value at specified offset.
+     *
+     * @param string $offset  The offset to retrieve.
      * @return Module|null
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         if (!isset($this->items[$offset])) {
@@ -220,6 +233,7 @@ class Position extends Collection
      * @param mixed $offset  The offset to assign the value to.
      * @param mixed $value   The value to set.
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         if (!$value instanceof Position) {
@@ -239,6 +253,7 @@ class Position extends Collection
      *
      * @param mixed $offset  The offset to unset.
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         parent::offsetUnset($offset);

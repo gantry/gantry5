@@ -11,6 +11,7 @@
         - Fixed missing/broken custom SCSS overrides (#2893, #2901)
         - Fixed wrong load order of fontawesome assets (#2914)
         - Fixed missing outline layout images (#2890)
+        - Fixed deprecated warnings on `ArrayAccess` in PHP 8.1
 1. [Joomla](#joomla)
     1. [](#bugfix)
         - Fixed disappearing menu particles when updating from older Gantry version (#2892)

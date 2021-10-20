@@ -39,23 +39,27 @@ interface CollectionInterface extends \IteratorAggregate, \ArrayAccess, \Countab
      * @param string|int $offset
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset);
 
     /**
      * @param string|int $offset
      * @param mixed $value
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value);
 
     /**
      * @param string|int $offset
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset);
 
     /**
      * @param string|int $offset
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset);
 
     /**
