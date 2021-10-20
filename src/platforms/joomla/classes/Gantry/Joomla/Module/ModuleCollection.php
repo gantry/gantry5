@@ -141,12 +141,11 @@ class ModuleCollection extends Collection
      */
     protected function values($values)
     {
-        $list = [];
+        $list = [[]];
         foreach ($values as $array) {
             $list[] = (array) $array;
         }
-        $list = array_merge([], ...$list);
 
-        return array_unique($list);
+        return array_unique(array_merge(...$list));
     }
 }

@@ -83,12 +83,12 @@ class ConfigFileFinder
      */
     public function listFiles(array $paths, $pattern = '|\.yaml$|', $levels = -1)
     {
-        $list = [];
+        $list = [[]];
         foreach ($paths as $folder) {
             $list[] = $this->detectAll($folder, $pattern, $levels);
         }
 
-        return array_merge_recursive([], ...$list);
+        return array_merge_recursive(...$list);
     }
 
     /**
@@ -106,6 +106,7 @@ class ConfigFileFinder
         foreach ($folders as $folder) {
             $list += $this->detectInFolder($folder, $filename);
         }
+
         return $list;
     }
 
@@ -123,6 +124,7 @@ class ConfigFileFinder
             $path = trim(Folder::getRelativePath($folder), '/');
             $list[$path] = $this->detectInFolder($folder, $filename);
         }
+
         return $list;
     }
 

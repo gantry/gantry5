@@ -114,11 +114,11 @@ class ConfigServiceProvider implements ServiceProviderInterface
         // Merge current configuration with the default.
         $uris = $combine ? ["gantry-config://{$name}", 'gantry-config://default'] : ["gantry-config://{$name}"];
 
-        $paths = [];
+        $paths = [[]];
         foreach ($uris as $uri) {
             $paths[] = $locator->findResources($uri);
         }
-        $paths = array_merge([], ...$paths);
+        $paths = array_merge(...$paths);
 
         // Locate all configuration files to be compiled.
         $files = (new ConfigFileFinder)->locateFiles($paths);

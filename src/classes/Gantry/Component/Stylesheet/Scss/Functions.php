@@ -206,12 +206,12 @@ class Functions
     {
         $args = $this->compileArgs($args);
 
-        $fonts = [];
+        $fonts = [[]];
         foreach ($args as $value) {
             // It's a local font, we need to load any of the mapped fonts from the theme
             $fonts[] = $this->decodeFonts($value, true);
         }
-        $fonts = array_merge([], ...$fonts);
+        $fonts = array_merge(...$fonts);
         $fonts = $this->getLocalFonts($fonts);
 
         // Create a basic list of strings so that SCSS parser can parse the list.
