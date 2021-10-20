@@ -1,5 +1,5 @@
 # 5.5.1
-## mm/dd/2021
+## 10/20/2021
 
 1. [Common](#common)
    1. [](#improved)
@@ -20,7 +20,7 @@
         - Fixed broken particle AJAX calls (#2902)
 1. [WordPress](#wordpress)
    1. [](#bugfix)
-        - Fixed `Undefined array key '\'` when saving menu with a new widget in it (#2889)
+        - Partial fix for `Undefined array key '\'` when saving menu with a new widget in Windows (#2889)
 
 # 5.5.0
 ## 10/12/2021
