@@ -165,6 +165,15 @@ class plgSystemGantry5 extends CMSPlugin
             return null;
         }
 
+        // AJAX calls do not load current user in Joomla 3.9, so do it manually.
+        $identity = $this->app->getIdentity();
+        if (!$identity) {
+            $identity = Factory::getUser();
+            if ($identity) {
+                $this->app->loadIdentity($identity);
+            }
+        }
+
         $input = $this->app->input;
         $format = strtolower($input->getCmd('format', 'html'));
 
