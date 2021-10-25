@@ -1,6 +1,9 @@
 # 5.5.2
 ## mm/dd/2021
 
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Fixed missing `Content Array` particle issues in Joomla 3 (#2917, #2910)
 1. [WordPress](#wordpress)
     1. [](#bugfix)
         - Fixed bug in PHP8 when adding a widget in the menu (#2889)

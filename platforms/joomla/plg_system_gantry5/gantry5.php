@@ -97,28 +97,28 @@ class plgSystemGantry5 extends CMSPlugin
         $global = $this->params->toArray();
     }
 
+    public function onAfterRoute()
+    {
+        if (version_compare(JVERSION, '4.0', '<')) {
+            // In Joomla 3.9 we need to make sure that user identity has been loaded.
+            $this->app->loadIdentity();
+        }
+
+        if ($this->app->isClient('site')) {
+            $this->onAfterRouteSite();
+
+        } elseif ($this->app->isClient('administrator')) {
+            $this->onAfterRouteAdmin();
+        }
+    }
+
     /**
      * Document gets set during dispatch, we need language and direction.
      */
     public function onAfterDispatch()
     {
         if (class_exists('Gantry\Framework\Gantry')) {
-            if (version_compare(JVERSION, '4.0', '<')) {
-                // In Joomla 3.9 we need to make sure that user identity has been loaded.
-                $this->app->loadIdentity();
-            }
-
             $this->onAfterDispatchSiteAdmin();
-        }
-    }
-
-    public function onAfterRoute()
-    {
-        if ($this->app->isClient('site')) {
-            $this->onAfterRouteSite();
-
-        } elseif ($this->app->isClient('administrator')) {
-            $this->onAfterRouteAdmin();
         }
     }
 
@@ -163,15 +163,6 @@ class plgSystemGantry5 extends CMSPlugin
     {
         if (!$this->app->isClient('site') || !class_exists('Gantry\Framework\Gantry')) {
             return null;
-        }
-
-        // AJAX calls do not load current user in Joomla 3.9, so do it manually.
-        $identity = $this->app->getIdentity();
-        if (!$identity) {
-            $identity = Factory::getUser();
-            if ($identity) {
-                $this->app->loadIdentity($identity);
-            }
         }
 
         $input = $this->app->input;
