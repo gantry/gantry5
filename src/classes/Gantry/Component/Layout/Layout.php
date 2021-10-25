@@ -378,12 +378,13 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         // Attempt to lock the file for writing.
         try {
+            $file->content();
             $file->lock(false);
         } catch (\Exception $e) {
             // Another process has locked the file; we will check this in a bit.
         }
 
-        $index = $index ? $index : $this->buildIndex();
+        $index = $index ?: $this->buildIndex();
 
         // If file wasn't already locked by another process, save it.
         if ($file->locked() !== false) {
