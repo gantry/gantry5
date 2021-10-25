@@ -149,7 +149,7 @@ function gantry5_wp_unique_post_slug($override_slug, $slug, $post_ID, $post_stat
 
     $sql = "SELECT * FROM $wpdb->posts WHERE post_type = %s AND ID = %d LIMIT 1";
     $post = $wpdb->get_row($wpdb->prepare($sql, $post_type, $post_ID));
-    if (strpos($post->post_excerpt, 'gantry-particle-') !== 0) {
+    if (!isset($post->content) || strpos($post->post_excerpt, 'gantry-particle-') !== 0) {
         return null;
     }
 

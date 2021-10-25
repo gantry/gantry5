@@ -254,7 +254,7 @@ class EventListener implements EventSubscriberInterface
                     $item['path'] = $key;
                     $item['route'] = (!empty($parent_item['route']) ? $parent_item['route'] . '/' : '') . $slug;
 
-                    $wpItem = isset($menu_items[$parent_item['id']]) ? $menu_items[$parent_item['id']] : null;
+                    $wpItem = isset($parent_item['id'], $menu_items[$parent_item['id']]) ? $menu_items[$parent_item['id']] : null;
                     $parent_id = !empty($wpItem->db_id) ? $wpItem->db_id : 0;
                 }
 

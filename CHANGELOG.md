@@ -1,3 +1,10 @@
+# 5.5.2
+## mm/dd/2021
+
+1. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - Fixed bug in PHP8 when adding a widget in the menu (#2889)
+
 # 5.5.1
 ## 10/20/2021
 
