@@ -3,6 +3,8 @@
 
 
 1. [Common](#common)
+   1. [](#new)
+        - Added `theme.yaml` options to better control SCSS backward compatibility
    1. [](#bugfix)
         - Fixed duplicate default outline causing permission error in `file_get_contents()` (#2915)
         - Helium: Fixed broken menu indicators if FA5 is being used (#2920)

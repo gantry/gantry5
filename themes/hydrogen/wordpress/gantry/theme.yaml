@@ -44,6 +44,9 @@ configuration:
 
   css:
     compiler: \Gantry\Component\Stylesheet\ScssCompiler
+    options:
+      compatibility: '5.5'
+      deprecations: true
     paths:
       - gantry-theme://scss
       - gantry-engine://scss
@@ -58,7 +61,7 @@ configuration:
       - custom
 
   dependencies:
-    gantry: 5.5
+    gantry: '5.5'
 
   block-variations:
     Box Variations:

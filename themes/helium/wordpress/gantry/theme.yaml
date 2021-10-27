@@ -62,6 +62,9 @@ configuration:
 
   css:
     compiler: '\Gantry\Component\Stylesheet\ScssCompiler'
+    options:
+      compatibility: '5.5'
+      deprecations: true
     target: 'gantry-theme://css-compiled'
     paths:
       - 'gantry-theme://scss'
@@ -77,7 +80,7 @@ configuration:
       - custom
 
   dependencies:
-    gantry: 5.5
+    gantry: '5.5'
 
   section-variations:
     Padding Variations:

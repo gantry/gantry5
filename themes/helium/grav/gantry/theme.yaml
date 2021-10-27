@@ -61,6 +61,9 @@ configuration:
 
   css:
     compiler: '\Gantry\Component\Stylesheet\ScssCompiler'
+    options:
+      compatibility: '5.5'
+      deprecations: true
     target: 'gantry-theme://css-compiled'
     paths:
       - 'gantry-theme://scss'

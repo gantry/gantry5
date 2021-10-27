@@ -48,23 +48,36 @@ class ScssCompiler extends CssCompiler
     protected $result;
     /** @var Functions */
     protected $functions;
-    protected $compatMode = false;
+
+    /** @var array|null */
+    static protected $options;
 
     /**
      * Constructor.
      */
     public function __construct()
     {
-        if (!class_exists(Compiler::class, false)) {
-            /** @var ClassLoader $loader */
-            $loader = static::gantry()['loader'];
-
+        if (null === static::$options) {
             /** @var Theme $theme */
             $theme = static::gantry()['theme'];
             $config = $theme->configuration();
+
             $version = preg_replace('/[^\d.]+/', '', (string)(isset($config['dependencies']['gantry']) ? $config['dependencies']['gantry'] : '5.0'));
-            if (version_compare($version, '5.5', '<')) {
-                $this->compatMode = true;
+
+            // Set compiler options.
+            $options = isset($config['css']['options']) ? (array)$config['css']['options'] : [];
+            $options += [
+                'compatibility' => $version,
+                'deprecations' => version_compare($version, '5.5', '>=') // true if 5.5+
+            ];
+
+            static::$options = $options;
+        }
+
+        if (!class_exists(Compiler::class, false)) {
+            /** @var ClassLoader $loader */
+            $loader = static::gantry()['loader'];
+            if (version_compare(static::$options['compatibility'], '5.5', '<')) {
                 /** @phpstan-ignore-next-line */
                 $loader->setPsr4('ScssPhp\\ScssPhp\\', GANTRY5_LIBRARY . '/compat/vendor/scssphp/scssphp/src');
             } else {
@@ -197,7 +210,7 @@ class ScssCompiler extends CssCompiler
                     if (\GANTRY_DEBUGGER) {
                         Debugger::addMessage("{$in}: {$warning}", 'deprecated');
                     }
-                    if ($this->compatMode) {
+                    if (static::$options['deprecations']) {
                         unset($warnings[$i]);
                     }
                 } else {
