@@ -302,6 +302,10 @@ abstract class CssCompiler implements CssCompilerInterface
         $this->variables = array_filter($variables);
 
         foreach($this->variables as &$value) {
+            if (is_numeric($value)) {
+                continue;
+            }
+
             // Check variable against colors and units.
             /* Test regex against these:
              * Should only match the ones marked as +
