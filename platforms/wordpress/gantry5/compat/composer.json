@@ -6,7 +6,8 @@
     "require": {
         "php": ">=5.6.20",
         "twig/twig": "~1.42",
-        "scssphp/scssphp": "1.6.0"
+        "scssphp/scssphp": "1.6.0",
+        "leafo/scssphp": "0.8.4"
     },
     "replace": {
         "symfony/polyfill-ctype": "*"

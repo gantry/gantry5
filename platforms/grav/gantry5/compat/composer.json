@@ -5,7 +5,8 @@
 
     "require": {
         "php": ">=7.3.6",
-        "scssphp/scssphp": "1.6.0"
+        "scssphp/scssphp": "1.6.0",
+        "leafo/scssphp": "0.8.4"
     },
     "config": {
         "platform": {

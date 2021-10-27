@@ -106,9 +106,28 @@ trait ThemeTrait
 
             $compiler->reset()->setConfiguration($outline)->setVariables($config->flatten('styles', '-'));
 
-            $results = $compiler->compileAll()->getWarnings();
-            if ($results) {
-                $warnings[$outline] = $results;
+            $warnings[$outline] = $compiler->compileAll()->getWarnings();
+        }
+
+        $check = [];
+        foreach ($warnings as $outline => $files) {
+            foreach ($files as $file => $list) {
+                if ($file === '__TITLE__') {
+                    unset($warnings[$outline][$file]);
+                    $warnings['__TITLE__'] = $list;
+                    continue;
+                }
+                $filter = isset($check[$file]) ? $check[$file] : [];
+                $filtered = array_diff($list, $filter);
+                $check[$file] = array_unique(array_merge($filter, $list));
+                if ($filtered) {
+                    $warnings[$outline][$file] = $filtered;
+                } else {
+                    unset($warnings[$outline][$file]);
+                }
+            }
+            if (empty($warnings[$outline])) {
+                unset($warnings[$outline]);
             }
         }
 

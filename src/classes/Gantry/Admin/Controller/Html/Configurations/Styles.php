@@ -192,12 +192,14 @@ class Styles extends HtmlController
         $warnings = $this->compileSettings();
 
         if ($warnings) {
+            $title = isset($warnings['__TITLE__']) ? $warnings['__TITLE__'] : 'CSS Compiled With Warnings';
+            unset($warnings['__TITLE__']);
             $this->params += ['warnings' => $warnings];
             return new JsonResponse(
                 [
                     'html'    => $this->render('@gantry-admin/layouts/css-warnings.html.twig', $this->params),
                     'warning' => true,
-                    'title'   => 'CSS Compiled With Warnings',
+                    'title'   => $title,
                 ]
             );
         }
