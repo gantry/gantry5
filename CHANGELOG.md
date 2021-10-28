@@ -1,7 +1,6 @@
 # 5.5.2
 ## mm/dd/2021
 
-
 1. [Common](#common)
    1. [](#new)
         - Added `theme.yaml` options to better control SCSS backward compatibility

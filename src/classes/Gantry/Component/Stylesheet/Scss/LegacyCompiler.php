@@ -417,7 +417,7 @@ class LegacyCompiler extends \Leafo\ScssPhp\Compiler
             $code   = file_get_contents($realPath);
 
             // Work around a bug in the compiler.
-            if (str_contains($realPath, '/_bourbon-deprecate.scss')) {
+            if (strpos($realPath, '/_bourbon-deprecate.scss') !== false) {
                 $code = preg_replace('/@content;/u', '', $code);
             }
 
