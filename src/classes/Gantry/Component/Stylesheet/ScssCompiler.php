@@ -184,14 +184,14 @@ class ScssCompiler extends CssCompiler
             if (version_compare(static::$options['compatibility'], '5.5', '<')) {
                 static::$options['legacy'][$in] = true;
                 $this->warnings['__TITLE__'] = 'Please update your theme!';
-                $this->warnings[$in] = [$e->getMessage()];
+                $this->warnings[$in] = ['WARNING: ' . $e->getMessage()];
 
                 return $this->compileLegacyFile($in);
             }
 
-            throw new \RuntimeException("CSS Compilation on file '{$in}.scss' failed on error: {$e->getMessage()}", 500, $e);
+            throw new \RuntimeException("ERROR: CSS Compilation on file '{$in}.scss' failed on error: {$e->getMessage()}", 500, $e);
         } catch (\Exception $e) {
-            throw new \RuntimeException("CSS Compilation on file '{$in}.scss' failed on fatal error: {$e->getMessage()}", 500, $e);
+            throw new \RuntimeException("ERROR: CSS Compilation on file '{$in}.scss' failed on fatal error: {$e->getMessage()}", 500, $e);
         }
         if (strpos($css, $scss) === 0) {
             $css = '/* ' . $scss . ' */';
