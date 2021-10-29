@@ -357,7 +357,7 @@
             }
 
             @include breakpoint(tablet-range) {
-                width: (calc(#{$breakpoints-tablet-container} - 8rem));
+                width: ($breakpoints-tablet-container - 8rem);
             }
 
             @include breakpoint(large-mobile-range) {
