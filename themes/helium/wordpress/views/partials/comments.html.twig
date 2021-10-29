@@ -49,13 +49,13 @@
 
                     {% set req = function('get_option', 'require_name_email') %}
 
-                    <form action="{{ site.url }}/wp-comments-post.php" method="post" id="commentform">
+                    <form action="{{ site.site_url }}/wp-comments-post.php" method="post" id="commentform">
 
                         {% do action('comment_form_top') %}
 
                         {% if is_user_logged_in %}
 
-                            <p>{{ __('Logged in as <a href="%s/wp-admin/profile.php">%s</a>.', 'g5_helium')|format(site.url, current_user.display_name) }} <a href="{{ function('wp_logout_url', post.link) }}" title="{{ __('Log out of this account', 'g5_helium') }}">{{ __('Log out &raquo;', 'g5_helium') }}</a></p>
+                            <p>{{ __('Logged in as <a href="%s/wp-admin/profile.php">%s</a>.', 'g5_helium')|format(site.site_url, current_user.display_name) }} <a href="{{ function('wp_logout_url', post.link) }}" title="{{ __('Log out of this account', 'g5_helium') }}">{{ __('Log out &raquo;', 'g5_helium') }}</a></p>
 
                             {% do action('comment_form_logged_in_after', 'current_user', 'current_user.display_name') %}
 

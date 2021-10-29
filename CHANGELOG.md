@@ -15,6 +15,7 @@
 1. [WordPress](#wordpress)
     1. [](#bugfix)
         - Fixed bug in PHP8 when adding a widget into the menu (#2889)
+        - Fixed comments and password forms when site is in a sub-directory (#2906)
 
 # 5.5.1
 ## 10/20/2021
