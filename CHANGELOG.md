@@ -1,3 +1,10 @@
+# 5.5.3
+## 10/29/2021
+
+1. [Common](#common)
+    2. [](#bugfix)
+        - Reverted breakpoint fix as it only works in FF (#2904)
+
 # 5.5.2
 ## 10/29/2021
 

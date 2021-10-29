@@ -44,6 +44,8 @@ Now fix the errors to clear badly written SCSS such as:
 
 SCSS compiler will also show a lot of deprecated warnings for features which will not be supported in the next version of Gantry anymore. We will soon release a script to automatically fix those.
 
+**NOTE:** There is still an issue with incompatible units if breakponts use `px`. We are looking to fix it.
+
 # Adding Joomla! 4 support for themes
 
 Themes designed to Joomla! 3 do not really work in Joomla! 4 without some changes. This document helps you to add Joomla! 4 support to your themes.
