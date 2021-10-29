@@ -74,3 +74,7 @@ Note that Joomla 4 removes support for:
 - Bootstrap 2.2
 
 Those still work, but I recommend those to be removed from the themes.
+
+# WordPress Fixes
+
+https://github.com/gantry/gantry5/commit/9d50df3808cf02973c022d885f6c4b96f3dc840e
