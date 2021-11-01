@@ -301,7 +301,18 @@ abstract class CssCompiler implements CssCompilerInterface
     {
         $this->variables = array_filter($variables);
 
-        foreach($this->variables as &$value) {
+        foreach($this->variables as $var => &$value) {
+            if (strpos($var, 'breakpoints-') === 0) {
+                // Breakpoints need to be in rem
+                $len = strlen($value);
+                if (strpos($value, 'px', $len - 2)) {
+                    $value = ((float)substr($value, 0, $len - 2) / 16.0) . 'rem';
+                } else {
+                    $value = preg_replace('/(\d+(\.\d+))em$/i', '\1rem', $value);
+                }
+
+            }
+
             if (is_numeric($value)) {
                 continue;
             }

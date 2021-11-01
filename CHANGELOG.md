@@ -1,3 +1,10 @@
+# 5.5.4
+## mm/dd/2021
+
+1. [Common](#common)
+    2. [](#bugfix)
+        - Fixed breakpoints when using em or px units (#2922)
+
 # 5.5.3
 ## 10/29/2021
 
