@@ -353,13 +353,8 @@ class Menu extends AbstractMenu
      */
     protected function calcBase($path, array $menuItems = [])
     {
-        if ($path === '/') {
-            return '';
-        }
-
         $path = trim($path, '/');
-
-        if (!$path || !isset($menuItems[$path])) {
+        if ($path === '' || !isset($menuItems[$path])) {
             // Use active menu item or fall back to default menu item.
             return $this->active ?: $this->default;
         }
@@ -388,14 +383,22 @@ class Menu extends AbstractMenu
 
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base'], $menuItems);
+        if ($start > 1) {
+            $parts = explode('/', $this->base);
+            $this->root = implode('/', array_splice($parts, 0, $start-1));
+        }
 
         foreach ($menuItems as $name => $item) {
-            $parent = $item->parent_id;
             $level = $item->level;
+
+            if ($name === $this->root) {
+                $this->add($item);
+                continue;
+            }
 
             if (($start && $start > $level)
                 || ($end && $level > $end)
-                || ($start > 1 && (!$this->base || strpos($parent, $this->base) !== 0))
+                || ($start > 1 && strpos($name, $this->root . '/') !== 0)
             ) {
                 continue;
             }

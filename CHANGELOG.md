@@ -4,6 +4,7 @@
 1. [Common](#common)
     2. [](#bugfix)
         - Fixed breakpoints when using em or px units (#2922)
+        - Fixed rendering of menu which starts at level 2 (#2921, #2181)
 
 # 5.5.3
 ## 10/29/2021

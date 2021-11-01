@@ -41,6 +41,8 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     /** @var string|int */
     protected $default;
     /** @var string */
+    protected $root = '';
+    /** @var string */
     protected $base;
     /** @var string */
     protected $active;
@@ -363,11 +365,11 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     }
 
     /**
-     * @return mixed // TOOD?
+     * @return Item|null
      */
     public function root()
     {
-        return $this->offsetGet('');
+        return $this->offsetGet($this->root);
     }
 
     /**

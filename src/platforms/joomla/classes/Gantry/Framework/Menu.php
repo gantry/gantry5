@@ -31,14 +31,9 @@ class Menu extends AbstractMenu
 {
     use GantryTrait;
 
-    /**
-     * @var CMSApplication
-     */
+    /** @var CMSApplication */
     protected $application;
-
-    /**
-     * @var \Joomla\CMS\Menu\AbstractMenu
-     */
+    /** @var \Joomla\CMS\Menu\AbstractMenu */
     protected $menu;
 
     public function __construct()
@@ -575,6 +570,7 @@ class Menu extends AbstractMenu
                 'id' => $id,
                 'parent_id' => $level !== 1 ? (int)$menuItem->parent_id : '',
                 'path' => $menuItem->route,
+                'tree' => $menuItem->tree,
                 'alias' => $menuItem->alias,
                 'type' => $type,
                 'link' => $link,
@@ -678,15 +674,10 @@ class Menu extends AbstractMenu
         $menu = $this->application->getMenu();
 
         // Get base menu item.
-        $base = $itemid ? $menu->getItem($itemid) : null;
+        $base = $itemid && $itemid !== '/' ? $menu->getItem($itemid) : null;
 
-        if (!$base) {
-            // Use active menu item or fall back to default menu item.
-            $base = $this->active ?: $this->default;
-        }
-
-        // Return base menu item.
-        return $base;
+        // Use active menu item or fall back to default menu item.
+        return $base ?: $this->active ?: $this->default;
     }
 
     /**
@@ -705,14 +696,20 @@ class Menu extends AbstractMenu
             return;
         }
 
-        $tree    = isset($this->base->tree) ? $this->base->tree : [];
-        $start   = $params['startLevel'];
-        $max     = $params['maxLevels'];
-        $end     = $max ? $start + $max - 1 : 0;
+        $tree = isset($this->base->tree) ? $this->base->tree : [];
+        $start = $params['startLevel'];
+        $max = $params['maxLevels'];
+        $end = $max ? $start + $max - 1 : 0;
+        $this->root = $start > 1 ? (int)$tree[$start - 2] : '';
 
         $menuItems = $this->createMenuItems($this->getItemsFromPlatform($params), $items);
         foreach ($menuItems as $item) {
             $level = $item->level;
+            if ($item->id === $this->root) {
+                $this->add($item);
+                continue;
+            }
+
             if (($start && $start > $level)
                 || ($end && $level > $end)
                 || ($start > 1 && !in_array($item->tree[$start - 2], $tree, false))) {

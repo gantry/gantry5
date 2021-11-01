@@ -173,6 +173,10 @@ class Menu extends AbstractMenu
      */
     protected function calcBase($itemid = null)
     {
+        if ($itemid !== '/') {
+            return $itemid;
+        }
+
         // Use current menu item or fall back to default menu item.
         $current = reset($this->current);
 
@@ -246,12 +250,12 @@ class Menu extends AbstractMenu
                 // Also mark all parent menu items active.
                 while (1) {
                     $parent_id = $item->parent_id;
-                    $parent = isset($list[$parent_id]) ? $list[$parent_id] : null;
+                    $item = isset($list[$parent_id]) ? $list[$parent_id] : null;
                     // Make the method safe against loops.
-                    if (!$parent || isset($this->active[$parent->id])) {
+                    if (!$item || isset($this->active[$parent->id])) {
                         break;
                     }
-                    $this->active[$parent->id] = $current;
+                    $this->active[$item->id] = $current;
                 }
             }
         }
@@ -519,9 +523,6 @@ class Menu extends AbstractMenu
     {
         $isAjax = !empty($params['POST']);
 
-        // Get base menu item for this menu (defaults to active menu item).
-        $this->base = $this->calcBase($params['base']);
-
         $menuItems = $this->getItemsFromPlatform($params);
         if ($menuItems === null) {
             return;
@@ -533,10 +534,26 @@ class Menu extends AbstractMenu
 
         $menuItems = $this->createMenuItems($menuItems, $items);
 
+        $start   = $params['startLevel'];
+        $max     = $params['maxLevels'];
+        $end     = $max ? $start + $max - 1 : 0;
+
+        // Get base menu item for this menu (defaults to active menu item).
+        $this->base = $this->calcBase($params['base']);
+        $keys = array_reverse(array_keys($this->active));
+        if ($start > 1) {
+            $this->root = isset($keys[$start - 2]) ? $keys[$start - 2] : -1;
+        }
+
         foreach ($menuItems as $item) {
+            $parent = $this->offsetGet($item->parent_id);
+            $level = $parent ? $parent->level + 1 : 100000;
+            if ($end && $level > $end) {
+                continue;
+            }
+
             // Add menu item into the menu.
             $this->add($item);
-
             if ($item->link) {
                 $item->url($item->link);
             }
