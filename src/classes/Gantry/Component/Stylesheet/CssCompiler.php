@@ -146,10 +146,12 @@ abstract class CssCompiler implements CssCompilerInterface
             /** @var UniformResourceLocator $locator */
             $locator = Gantry::instance()['locator'];
 
-            $this->realPaths = [];
+            $list = [[]];
             foreach ($paths as $path) {
-                $this->realPaths = array_merge($this->realPaths, $locator->findResources($path));
+                $list[] = $locator->findResources($path);
             }
+
+            $this->realPaths = array_merge(...$list);
         }
 
         return $this;
@@ -284,7 +286,11 @@ abstract class CssCompiler implements CssCompilerInterface
         }
 
         foreach ($imports as $resource => $timestamp) {
-            $import = $locator->isStream($resource) ? $locator->findResource($resource) : realpath($resource);
+            if ($locator->isStream($resource)) {
+                $import = $locator->findResource($resource);
+            } else {
+                $import = $this->tryImport($resource);
+            }
             if (!$import || filemtime($import) !== $timestamp) {
                 return true;
             }

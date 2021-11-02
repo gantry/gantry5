@@ -542,7 +542,12 @@ WARN;
             Folder::create($cacheDir);
         }
 
-        $compiler = new Compiler(['cacheDir' => $cacheDir]);
+        $options = [
+            'cacheDir' => $cacheDir,
+            //'prefix' => '',
+            'forceRefresh' => true
+        ];
+        $compiler = new Compiler($options);
 
         $this->functions->setCompiler($compiler);
 
@@ -599,7 +604,15 @@ WARN;
         if ($this->result) {
             $list = [];
             foreach ($this->result->getIncludedFiles() as $filename) {
-                $list[$filename] = filemtime($filename);
+                $time = filemtime($filename);
+                // Convert real paths back to relative paths.
+                foreach ($this->realPaths as $base) {
+                    if (strpos($filename, $base) === 0) {
+                        $filename = substr($filename, strlen($base) + 1);
+                        break;
+                    }
+                }
+                $list[$filename] = $time;
             }
         } else {
             $list = $this->includedFiles;
