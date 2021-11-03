@@ -1,17 +1,21 @@
 # 5.5.4
-## mm/dd/2021
+## 11/03/2021
 
 1. [Common](#common)
-    2. [](#bugfix)
-        - Fixed breakpoints when using em or px units (#2922)
-        - Fixed rendering of menu which starts at level 2 (#2921, #2181)
-        - Fixed SCSS compiler not detecting new files in development mode (#2926)
+   1. [](#bugfix)
+       - Fixed breakpoints when using em or px units (#2922)
+       - Fixed rendering of menu which starts at level 2 (#2921, #2181)
+       - Fixed SCSS compiler not detecting new files in development mode (#2926)
+       - Recompiled CSS without browser prefixes
+1. [Joomla](#joomla)
+   1. [](#bugfix)
+       - Fixed wide checkbox field on Section Inheritance (#2916)
 
 # 5.5.3
 ## 10/29/2021
 
 1. [Common](#common)
-    2. [](#bugfix)
+    1. [](#bugfix)
         - Reverted breakpoint fix as it only works in FF (#2904)
 
 # 5.5.2
@@ -20,7 +24,7 @@
 1. [Common](#common)
    1. [](#new)
         - Added `theme.yaml` options to better control SCSS backward compatibility
-   2. [](#bugfix)
+   1. [](#bugfix)
         - Fixed duplicate default outline causing permission error in `file_get_contents()` (#2915)
         - Helium: Fixed broken menu indicators if FA5 is being used (#2920)
         - Fixed SCSS compiler quoting numeric variables
