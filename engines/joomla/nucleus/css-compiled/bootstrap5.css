@@ -1419,12 +1419,6 @@
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .form-control {
-    transition: none;
-  }
-}
-
 .form-control[type="file"] {
   overflow: hidden;
 }
@@ -1470,12 +1464,6 @@
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .form-control::file-selector-button {
-    transition: none;
-  }
-}
-
 .form-control:hover:not(:disabled):not([readonly])::file-selector-button {
   background-color: #dde0e3;
 }
@@ -1493,12 +1481,6 @@
   border-inline-end-width: 1px;
   border-radius: 0;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .form-control::-webkit-file-upload-button {
-    transition: none;
-  }
 }
 
 .form-control:hover:not(:disabled):not([readonly])::-webkit-file-upload-button {
@@ -1610,12 +1592,6 @@ textarea.form-control-lg {
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   appearance: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .form-select {
-    transition: none;
-  }
 }
 
 .form-select:focus {
@@ -1737,12 +1713,6 @@ textarea.form-control-lg {
   transition: background-position 0.15s ease-in-out;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .form-switch .form-check-input {
-    transition: none;
-  }
-}
-
 .form-switch .form-check-input:focus {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%2386b7fe'/%3e%3c/svg%3e");
 }
@@ -1804,12 +1774,6 @@ textarea.form-control-lg {
   appearance: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .form-range::-webkit-slider-thumb {
-    transition: none;
-  }
-}
-
 .form-range::-webkit-slider-thumb:active {
   background-color: #b6d4fe;
 }
@@ -1832,12 +1796,6 @@ textarea.form-control-lg {
   border-radius: 1rem;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   appearance: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .form-range::-moz-range-thumb {
-    transition: none;
-  }
 }
 
 .form-range::-moz-range-thumb:active {
@@ -1886,12 +1844,6 @@ textarea.form-control-lg {
   border: 1px solid transparent;
   transform-origin: 0 0;
   transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .form-floating > label {
-    transition: none;
-  }
 }
 
 .form-floating > .form-control {
@@ -2225,12 +2177,6 @@ textarea.form-control-lg {
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .btn {
-    transition: none;
-  }
-}
-
 .btn:hover {
   color: #212529;
 }
@@ -2276,12 +2222,6 @@ fieldset:disabled .btn {
   transition: opacity 0.15s linear;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .fade {
-    transition: none;
-  }
-}
-
 .fade:not(.show) {
   opacity: 0;
 }
@@ -2294,12 +2234,6 @@ fieldset:disabled .btn {
   height: 0;
   overflow: hidden;
   transition: height 0.35s ease;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .collapsing {
-    transition: none;
-  }
 }
 
 .dropup,
@@ -2758,12 +2692,6 @@ fieldset:disabled .btn {
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .nav-link {
-    transition: none;
-  }
-}
-
 .nav-link:hover, .nav-link:focus {
   color: #0a58ca;
 }
@@ -2911,12 +2839,6 @@ fieldset:disabled .btn {
   border: 1px solid transparent;
   border-radius: 0.25rem;
   transition: box-shadow 0.15s ease-in-out;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .navbar-toggler {
-    transition: none;
-  }
 }
 
 .navbar-toggler:hover {
@@ -3383,12 +3305,6 @@ fieldset:disabled .btn {
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, border-radius 0.15s ease;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .accordion-button {
-    transition: none;
-  }
-}
-
 .accordion-button:not(.collapsed) {
   color: #0c63e4;
   background-color: #e7f1ff;
@@ -3410,12 +3326,6 @@ fieldset:disabled .btn {
   background-repeat: no-repeat;
   background-size: 1.25rem;
   transition: transform 0.2s ease-in-out;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .accordion-button::after {
-    transition: none;
-  }
 }
 
 .accordion-button:hover {
@@ -3530,12 +3440,6 @@ fieldset:disabled .btn {
   background-color: #fff;
   border: 1px solid #dee2e6;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .page-link {
-    transition: none;
-  }
 }
 
 .page-link:hover {
@@ -3770,12 +3674,6 @@ fieldset:disabled .btn {
   white-space: nowrap;
   background-color: #0d6efd;
   transition: width 0.6s ease;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .progress-bar {
-    transition: none;
-  }
 }
 
 .progress-bar-striped {
@@ -4273,12 +4171,6 @@ fieldset:disabled .btn {
 .modal.fade .modal-dialog {
   transition: transform 0.3s ease-out;
   transform: translate(0, -50px);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .modal.fade .modal-dialog {
-    transition: none;
-  }
 }
 
 .modal.show .modal-dialog {
@@ -4834,12 +4726,6 @@ fieldset:disabled .btn {
   transition: transform 0.6s ease-in-out;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .carousel-item {
-    transition: none;
-  }
-}
-
 .carousel-item.active,
 .carousel-item-next,
 .carousel-item-prev {
@@ -4878,13 +4764,6 @@ fieldset:disabled .btn {
   transition: opacity 0s 0.6s;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .carousel-fade .active.carousel-item-start,
-  .carousel-fade .active.carousel-item-end {
-    transition: none;
-  }
-}
-
 .carousel-control-prev,
 .carousel-control-next {
   position: absolute;
@@ -4902,13 +4781,6 @@ fieldset:disabled .btn {
   border: 0;
   opacity: 0.5;
   transition: opacity 0.15s ease;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .carousel-control-prev,
-  .carousel-control-next {
-    transition: none;
-  }
 }
 
 .carousel-control-prev:hover, .carousel-control-prev:focus,
@@ -4986,12 +4858,6 @@ fieldset:disabled .btn {
   border-bottom: 10px solid transparent;
   opacity: 0.5;
   transition: opacity 0.6s ease;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .carousel-indicators [data-bs-target] {
-    transition: none;
-  }
 }
 
 .carousel-indicators .active {
@@ -5090,12 +4956,6 @@ fieldset:disabled .btn {
   background-clip: padding-box;
   outline: 0;
   transition: transform 0.3s ease-in-out;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .offcanvas {
-    transition: none;
-  }
 }
 
 .offcanvas-header {

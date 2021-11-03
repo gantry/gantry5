@@ -259,7 +259,7 @@ fieldset.radio.btn-group {
 
 .btn.jmodedit [class^="icon-"], .btn.jmodedit [class*=" icon-"] {
   margin: 6px 8px;
-  align: center;
+  text-align: center;
 }
 
 .filters.btn-toolbar .btn-group, .filters.btn-toolbar {

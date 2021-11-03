@@ -746,7 +746,7 @@ body.gantry5.admin-color-sunrise #wpfooter a {
   }
 }
 
-@media only all and (min-width: 48rem) and (max-width: calc(60rem - 0.01rem)) {
+@media only all and (min-width: 48rem) and (max-width: 59.99rem) {
   body.gantry5 #g5-container .g5-dialog {
     padding-left: 36px;
   }
@@ -762,13 +762,13 @@ body.gantry5 #g5-container .g5-dialog-loading-spinner.g5-dialog-theme-default {
   }
 }
 
-@media only all and (min-width: 48rem) and (max-width: calc(60rem - 0.01rem)) {
+@media only all and (min-width: 48rem) and (max-width: 59.99rem) {
   body.gantry5 #g5-container .g5-dialog-loading-spinner.g5-dialog-theme-default {
     left: 36px;
   }
 }
 
-@media only all and (max-width: calc(48rem - 0.01rem)) {
+@media only all and (max-width: 47.99rem) {
   body.gantry5 #g5-container .g5-dialog-loading-spinner.g5-dialog-theme-default {
     top: 4em;
   }

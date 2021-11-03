@@ -114,13 +114,13 @@ body #admin-main .admin-block {
   height: 4.2rem;
 }
 
-@media only all and (min-width: 60rem) and (max-width: calc(75rem - 0.01rem)) {
+@media only all and (min-width: 60rem) and (max-width: 74.99rem) {
   #g5-container #main-header {
     left: 50px;
   }
 }
 
-@media only all and (min-width: 48rem) and (max-width: calc(60rem - 0.01rem)) {
+@media only all and (min-width: 48rem) and (max-width: 59.99rem) {
   #g5-container #main-header {
     left: 50px;
   }
@@ -130,13 +130,13 @@ body #admin-main .admin-block {
   padding: 0 3em !important;
 }
 
-@media only all and (min-width: 60rem) and (max-width: calc(75rem - 0.01rem)) {
+@media only all and (min-width: 60rem) and (max-width: 74.99rem) {
   #g5-container #main-header .g-content {
     padding: 0 0.7em 0 3em !important;
   }
 }
 
-@media only all and (min-width: 48rem) and (max-width: calc(60rem - 0.01rem)) {
+@media only all and (min-width: 48rem) and (max-width: 59.99rem) {
   #g5-container #main-header .g-content {
     padding: 0 0.7em 0 3em !important;
   }
@@ -146,7 +146,7 @@ body #admin-main .admin-block {
   line-height: 4.2rem;
 }
 
-@media only all and (min-width: 48rem) and (max-width: calc(60rem - 0.01rem)) {
+@media only all and (min-width: 48rem) and (max-width: 59.99rem) {
   #g5-container #main-header .theme-title small {
     display: none;
   }
@@ -156,13 +156,13 @@ body #admin-main .admin-block {
   padding: 1.33rem 0.938rem;
 }
 
-@media only all and (min-width: 60rem) and (max-width: calc(75rem - 0.01rem)) {
+@media only all and (min-width: 60rem) and (max-width: 74.99rem) {
   #g5-container #main-header ul li a {
     padding: 1.33rem 0.638rem;
   }
 }
 
-@media only all and (min-width: 48rem) and (max-width: calc(60rem - 0.01rem)) {
+@media only all and (min-width: 48rem) and (max-width: 59.99rem) {
   #g5-container #main-header ul li a {
     padding: 1.33rem 0.638rem;
   }
@@ -404,7 +404,7 @@ body #admin-main .admin-block {
   margin-bottom: 0;
 }
 
-@media only all and (min-width: 60rem) and (max-width: calc(75rem - 0.01rem)) {
+@media only all and (min-width: 60rem) and (max-width: 74.99rem) {
   #g5-container .navbar-block #navbar ul li:not(.config-select-wrap) a {
     padding: 0.938rem 0.538rem;
   }
