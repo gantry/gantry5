@@ -493,7 +493,7 @@ class Menu extends AbstractMenu
     protected function createMenuItem($data, $menuItem = null)
     {
         if ($menuItem) {
-            // This logic was originally copied from Joomla 3.4 mod_menu/helper.php (joomla-cms/staging, 2014-11-12).
+            // This logic was originally copied from Joomla 3.10 mod_menu/helper.php (joomla-cms/staging, 2021-11-09).
             // We should keep the contents of the function similar to Joomla in order to review it against any changes.
 
             $id = (int)$menuItem->id;
@@ -506,7 +506,7 @@ class Menu extends AbstractMenu
                 case 'heading':
                 case 'separator':
                     // Check if menu item contains a particle.
-                    if (!empty($params['gantry-particle'])) {
+                    if (!empty($params->get('gantry-particle'))) {
                         $type = 'particle';
                     }
 
@@ -525,23 +525,24 @@ class Menu extends AbstractMenu
                     // If this is an alias use the item id stored in the parameters to make the link.
                     $link = 'index.php?Itemid=' . $params->get('aliasoptions', 0);
 
-                    // FIXME: Joomla 4: missing multilanguage support
+                    // Get the language of the target menu item when site is multilingual
+                    if (Multilanguage::isEnabled()) {
+                        $menu = $this->application->getMenu();
+                        $newItem = $menu ? $menu->getItem((int) $params->get('aliasoptions')) : null;
+
+                        // Use language code if not set to ALL
+                        if ($newItem && $newItem->language && $newItem->language !== '*') {
+                            $link .= '&lang=' . $newItem->language;
+                        }
+                    }
                     break;
 
                 case 'component':
                 default:
-                    $application = $this->application;
-                    $router = $application::getRouter();
+                    $link = 'index.php?Itemid=' . $menuItem->id;
 
-                    // FIXME: Joomla 4: do we need anything else?
-                    if (version_compare(JVERSION, 4, '<') && $router->getMode() !== JROUTER_MODE_SEF) {
-                        $link .= '&Itemid=' . $menuItem->id;
-                    } else {
-                        $link = 'index.php?Itemid=' . $menuItem->id;
-
-                        if (isset($menuItem->query['format']) && $application->get('sef_suffix')) {
-                            $link .= '&format=' . $menuItem->query['format'];
-                        }
+                    if (isset($menuItem->query['format']) && $this->application->get('sef_suffix')) {
+                        $link .= '&format=' . $menuItem->query['format'];
                     }
 
                     break;
@@ -631,8 +632,8 @@ class Menu extends AbstractMenu
         }
         if (!$link) {
             $url = false;
-        } elseif (strcasecmp(substr($link, 0, 4), 'http') && strpos($link, 'index.php?') !== false) {
-            $url = Route::_($link, false, $menuItem->getParams()->get('secure'));
+        } elseif ((strpos($link, 'index.php?') !== false) && strcasecmp(substr($link, 0, 4), 'http')) {
+            $url = Route::_($link, false, $params->get('secure'));
         } else {
             $url = Route::_($link, false);
         }

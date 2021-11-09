@@ -1,3 +1,10 @@
+# 5.5.5
+## mm/dd/2021
+
+1. [Joomla](#joomla)
+   1. [](#bugfix)
+      - Fixed some SEF URLs being broken/ugly (#2935)
+
 # 5.5.4
 ## 11/03/2021
 
