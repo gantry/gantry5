@@ -4,6 +4,7 @@
 1. [Joomla](#joomla)
    1. [](#bugfix)
       - Fixed some SEF URLs being broken/ugly (#2935)
+      - Fixed `Identifier "errors" is not defined` instead of error page (#2936)
 
 # 5.5.4
 ## 11/03/2021
