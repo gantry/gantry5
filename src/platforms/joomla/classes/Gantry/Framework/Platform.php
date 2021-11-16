@@ -46,6 +46,8 @@ class Platform extends BasePlatform
     public $module_wrapper;
     /** @var string */
     public $component_wrapper;
+    /** @var HtmlDocument|null */
+    public $document;
 
     /** @var string */
     protected $name = 'joomla';

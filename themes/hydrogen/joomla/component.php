@@ -11,6 +11,7 @@
 
 defined('_JEXEC') or die;
 
+use Gantry\Framework\Platform;
 use Gantry\Framework\Theme;
 use Joomla\CMS\Factory;
 
@@ -20,6 +21,10 @@ if (!is_file($className)) {
     $className = __DIR__ . '/includes/gantry.php';
 }
 $gantry = include $className;
+
+/** @var Platform $joomla */
+$joomla = $gantry['platform'];
+$joomla->document = $this;
 
 /** @var Theme $theme */
 $theme = $gantry['theme'];

@@ -95,7 +95,7 @@ class Page extends Base\Page
         $this->baseUrl = Uri::base(true);
 
         // Document doesn't exist in error page if modern routing is being used.
-        $document = $application->getDocument();
+        $document = isset($container['platform']->document) ? $container['platform']->document : $application->getDocument();
         if ($document) {
             $this->title = $document->title;
             $this->description = $document->description;
