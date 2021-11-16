@@ -69,7 +69,6 @@ class Page extends Base\Page
 
         /** @var CMSApplication $application */
         $application = Factory::getApplication();
-        $document = $application->getDocument();
         $input = $application->input;
 
         $this->tmpl     = $input->getCmd('tmpl', '');
@@ -94,15 +93,20 @@ class Page extends Base\Page
         $this->sitename = $application->get('sitename');
         $this->theme = $templateParams->template;
         $this->baseUrl = Uri::base(true);
-        $this->title = $document->title;
-        $this->description = $document->description;
 
-        // Document has lower case language code, which causes issues with some JS scripts (Snipcart). Use tag instead.
-        $code = explode('-', $document->getLanguage(), 2);
-        $language =  array_shift($code);
-        $country = strtoupper(array_shift($code));
-        $this->language = $language . ($country ? '-' . $country : '');
-        $this->direction = $document->direction;
+        // Document doesn't exist in error page if modern routing is being used.
+        $document = $application->getDocument();
+        if ($document) {
+            $this->title = $document->title;
+            $this->description = $document->description;
+
+            // Document has lower case language code, which causes issues with some JS scripts (Snipcart). Use tag instead.
+            $code = explode('-', $document->getLanguage(), 2);
+            $language =  array_shift($code);
+            $country = strtoupper(array_shift($code));
+            $this->language = $language . ($country ? '-' . $country : '');
+            $this->direction = $document->direction;
+        }
     }
 
     /**
