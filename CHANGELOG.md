@@ -4,6 +4,7 @@
 1. [Joomla](#joomla)
    1. [](#improved)
       - Themes: Pass Joomla document to Gantry when rendering php template files
+        - Update `component.php`, `error.php`, `index.php`, `offline.php` in your theme!
    2. [](#bugfix)
       - Fixed some SEF URLs being broken/ugly (#2935)
       - Fixed `Identifier "errors" is not defined` instead of error page (#2936)
