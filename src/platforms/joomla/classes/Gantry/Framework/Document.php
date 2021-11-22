@@ -350,7 +350,7 @@ class Document extends HtmlDocument
                     static::addHeaderTag(
                         [
                             'tag' => 'script',
-                            'src' => $asset->getUri(true)
+                            'src' => $asset->getUri(true) . '?' . $asset->getVersion()
                         ],
                         'head',
                         100
