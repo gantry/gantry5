@@ -30,14 +30,12 @@
                 <field
                     name="moduleclass_sfx"
                     type="text"
-                    label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
-                    description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+                    label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" />
 
                 <field
                         name="owncache"
                         type="list"
                         label="COM_MODULES_FIELD_CACHING_LABEL"
-                        description="COM_MODULES_FIELD_CACHING_DESC"
                         default="0"
                 >
                     <option value="1">JGLOBAL_USE_GLOBAL</option>
@@ -48,8 +46,7 @@
                         name="cache_time"
                         type="text"
                         default="900"
-                        label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
-                        description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+                        label="COM_MODULES_FIELD_CACHE_TIME_LABEL" />
             </fieldset>
         </fields>
     </config>
