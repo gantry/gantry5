@@ -17,6 +17,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Version as JVersion;
+use Joomla\CMS\WebAsset\WebAssetManager;
 
 /**
  * Class Document
@@ -172,7 +173,31 @@ class Document extends HtmlDocument
     protected static function registerJquery()
     {
         if (version_compare(JVERSION, '4.0', '>')) {
-            HTMLHelper::_('jquery.framework');
+            if (!static::errorPage()) {
+                HTMLHelper::_('jquery.framework');
+
+                return;
+            }
+
+            /** @var WebAssetManager $wa */
+            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+
+            array_map(
+                static function ($script) use ($wa) {
+                    $asset = $wa->getAsset('script', $script);
+
+                    // Workaround for error document type.
+                    static::addHeaderTag(
+                        [
+                            'tag' => 'script',
+                            'src' => $asset->getUri(true)
+                        ],
+                        'head',
+                        100
+                    );
+                },
+                ['jquery', 'jquery-noconflict']
+            );
 
             return;
         }
@@ -308,7 +333,31 @@ class Document extends HtmlDocument
     protected static function registerBootstrap5()
     {
         if (version_compare(JVERSION, '4.0', '>')) {
-            HTMLHelper::_('bootstrap.framework');
+            if (!static::errorPage()) {
+                HTMLHelper::_('bootstrap.framework');
+
+                return;
+            }
+
+            /** @var WebAssetManager $wa */
+            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+
+            array_map(
+                static function ($script) use ($wa) {
+                    $asset = $wa->getAsset('script', 'bootstrap.' . $script);
+
+                    // Workaround for error document type.
+                    static::addHeaderTag(
+                        [
+                            'tag' => 'script',
+                            'src' => $asset->getUri(true)
+                        ],
+                        'head',
+                        100
+                    );
+                },
+                ['alert', 'button', 'carousel', 'collapse', 'dropdown', 'modal', 'offcanvas', 'popover', 'scrollspy', 'tab', 'toast']
+            );
 
             return;
         }
