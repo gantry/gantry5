@@ -112,6 +112,7 @@ form:
               options:
                 ASC: Ascending
                 DESC: Descending
+                RANDOM: Random
               overridable: false
 
         _tab_display:

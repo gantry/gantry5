@@ -112,6 +112,12 @@ abstract class Finder
      */
     public function order($by, $direction = 1, $alias = 'a')
     {
+        if ($direction === 'RANDOM') {
+            $this->query->order('RAND()');
+
+            return $this;
+        }
+
         if (is_numeric($direction)) {
             $direction = $direction > 0 ? 'ASC' : 'DESC';
         } else {
