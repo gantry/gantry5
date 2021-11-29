@@ -412,27 +412,29 @@ class Menu extends AbstractMenu
         $defaults = Item::$defaults;
         $item = static::normalizeMenuItem($item + $defaults, $ignoreList, true);
         foreach ($item as $var => $value) {
-            // Joomla has different format for lists than Gantry, convert to Joomla supported version.
-            if (is_array($value) && in_array($var, ['attributes', 'link_attributes'], true)) {
-                $i = $version < 4 ? 0 : 10;
-                $list = [];
-                foreach ($value as $k => $v) {
-                    if (is_array($v)) {
-                        if ($version < 4) {
-                            // Joomla 3: Save lists as {"fieldname0":{"key":"key","value":"value"}, ...}
-                            $list["{$var}{$i}"] = ['key' => key($v), 'value' => current($v)];
+            if (is_array($value)) {
+                // Joomla has different format for lists than Gantry, convert to Joomla supported version.
+                if (in_array($var, ['attributes', 'link_attributes'], true)) {
+                    $i = $version < 4 ? 0 : 10;
+                    $list = [];
+                    foreach ($value as $k => $v) {
+                        if (is_array($v)) {
+                            if ($version < 4) {
+                                // Joomla 3: Save lists as {"fieldname0":{"key":"key","value":"value"}, ...}
+                                $list["{$var}{$i}"] = ['key' => key($v), 'value' => current($v)];
+                            } else {
+                                // Joomla 4: Save lists as {"__field10":{"key":"key","value":"value"}, ...}
+                                $list["__field{$i}"] = ['key' => key($v), 'value' => current($v)];
+                            }
                         } else {
-                            // Joomla 4: Save lists as {"__field10":{"key":"key","value":"value"}, ...}
-                            $list["__field{$i}"] = ['key' => key($v), 'value' => current($v)];
+                            $list[$k] = $v;
                         }
-                    } else {
-                        $list[$k] = $v;
+                        $i++;
                     }
-                    $i++;
+                    $value = $list;
+                } elseif (in_array($var, ['options', 'columns', 'columns_count'])) {
+                    $value = json_encode($value);
                 }
-                $value = $list;
-            } elseif ($var === 'options') {
-                $value = json_encode($value);
             }
 
             // Prefix gantry parameters and save them.
@@ -471,10 +473,14 @@ class Menu extends AbstractMenu
                     foreach ($value as $v) {
                         if (is_object($v) && isset($v->key, $v->value)) {
                             $list[] = [$v->key => $v->value];
+                        } elseif (is_array($v) && isset($v['key'], $v['value'])) {
+                            $list[] = [$v['key'] => $v['value']];
                         }
                     }
                     $value = $list;
                 } elseif ($param === 'options') {
+                    $value = $value ? json_decode($value, true) : [];
+                } elseif (!is_array($value) && in_array($param, ['columns', 'columns_count'], true)) {
                     $value = $value ? json_decode($value, true) : [];
                 }
 

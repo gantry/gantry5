@@ -89,6 +89,17 @@
             <field name="gantry-subtitle"
                    type="text"
                    label="Subtitle"/>
+            <field name="gantry-layout"
+                   type="hidden"/>
+            <field name="gantry-visible"
+                   type="hidden"
+                   filter="bool"/>
+            <field name="gantry-columns"
+                   type="hidden"
+                   filter="raw"/>
+            <field name="gantry-columns_count"
+                   type="hidden"
+                   filter="raw"/>
             <field name="gantry-particle"
                    type="hidden"/>
             <field name="gantry-options"

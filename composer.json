@@ -6,7 +6,8 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.6.20",
-        "ext-zip": "*"
+        "ext-zip": "*",
+        "ext-json": "*"
     },
     "scripts": {
         "install-deps": "bin/composer-install",
