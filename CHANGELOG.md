@@ -1,3 +1,10 @@
+# 5.5.6
+## mm/dd/2021
+
+1. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - Fixed menu error `Undefined variable: parent` (#2946)
+
 # 5.5.5
 ## 11/22/2021
 
