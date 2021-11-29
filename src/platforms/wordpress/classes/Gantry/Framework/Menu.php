@@ -252,7 +252,7 @@ class Menu extends AbstractMenu
                     $parent_id = $item->parent_id;
                     $item = isset($list[$parent_id]) ? $list[$parent_id] : null;
                     // Make the method safe against loops.
-                    if (!$item || isset($this->active[$parent_id])) {
+                    if (!$item || isset($this->active[$item->id])) {
                         break;
                     }
                     $this->active[$item->id] = $current;
