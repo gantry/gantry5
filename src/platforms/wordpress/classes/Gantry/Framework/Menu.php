@@ -168,7 +168,7 @@ class Menu extends AbstractMenu
      * If there is no active menu item, fall back to home page for the current language.
      * If there is no home page, return null.
      *
-     * @param   int|null $itemid
+     * @param   string|int|null $itemid
      * @return  int|null
      */
     protected function calcBase($itemid = null)
@@ -539,10 +539,15 @@ class Menu extends AbstractMenu
         $end     = $max ? $start + $max - 1 : 0;
 
         // Get base menu item for this menu (defaults to active menu item).
-        $this->base = $this->calcBase($params['base']);
-        $keys = array_reverse(array_keys($this->active));
-        if ($start > 1) {
-            $this->root = isset($keys[$start - 2]) ? $keys[$start - 2] : -1;
+        $base = $params['base'];
+        $this->base = $this->calcBase($base);
+        if ($this->base && $base === $this->base) {
+            $this->root = $this->base;
+        } else {
+            $keys = array_reverse(array_keys($this->active));
+            if ($start > 1) {
+                $this->root = isset($keys[$start - 2]) ? $keys[$start - 2] : -1;
+            }
         }
 
         foreach ($menuItems as $item) {

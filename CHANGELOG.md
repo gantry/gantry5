@@ -4,6 +4,7 @@
 1. [WordPress](#wordpress)
     1. [](#bugfix)
         - Fixed menu error `Undefined variable: parent` (#2946)
+        - Fixed fixed child menus not using the correct submenu
 
 # 5.5.5
 ## 11/22/2021
