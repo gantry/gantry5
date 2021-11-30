@@ -43,11 +43,18 @@ abstract class AbstractObject extends \JObject
     /**
      * Class constructor, overridden in descendant classes.
      *
-     * @param int $identifier Identifier.
+     * @param int|array $properties Identifier.
      */
-    public function __construct($identifier = null)
+    public function __construct($properties = null)
     {
-        parent::__construct();
+        if (null === $properties || is_array($properties)) {
+            $identifier = null;
+        } else {
+            $identifier = $properties;
+            $properties = null;
+        }
+
+        parent::__construct($properties);
 
         if ($identifier) {
             $this->load($identifier);
@@ -194,7 +201,7 @@ abstract class AbstractObject extends \JObject
         if (!empty($fields)) {
             $src = $include ? array_intersect_key($src, array_flip($fields)) : array_diff_key($src, array_flip($fields));
         }
-        $this->setProperties ($src);
+        $this->setProperties($src);
 
         return true;
     }

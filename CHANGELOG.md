@@ -4,6 +4,7 @@
 1. [Joomla](#joomla)
     1. [](#bugfix)
         - Fixed menu columns disappearing when saving the menu item from Joomla (#2954)
+        - Fixed Joomla object initialization in particles (#2948)
 1. [WordPress](#wordpress)
     1. [](#bugfix)
         - Fixed menu error `Undefined variable: parent` (#2946)
