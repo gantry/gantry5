@@ -4,6 +4,9 @@
 1. [Common](#common)
     1. [](#improved)
         - Improved PHP 8.1 compatibility
+1. [Grav](#grav)
+    1. [](#improved)
+        - Do not use deprecated `$page->modular()` method
 
 # 5.5.6
 ## 12/03/2021

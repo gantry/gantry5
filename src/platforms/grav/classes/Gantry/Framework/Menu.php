@@ -224,7 +224,7 @@ class Menu extends AbstractMenu
      */
     public function getItemsFromPlatformRecurse(PageInterface $page, $levels)
     {
-        if (!$page->visible() || $page->modular()) {
+        if (!$page->visible() || $page->isModule()) {
             return [];
         }
 
