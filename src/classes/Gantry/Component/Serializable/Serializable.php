@@ -17,7 +17,7 @@ namespace Gantry\Component\Serializable;
 /**
  * Serializable trait
  *
- * Adds backwards compatibility to PHP 7.3 Serializable interface.
+ * Adds backwards compatibility to PHP 5/7 Serializable interface.
  *
  * Note: Remember to add: `implements \Serializable` to the classes which use this trait.
  */
