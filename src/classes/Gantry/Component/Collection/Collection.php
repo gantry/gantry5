@@ -65,6 +65,7 @@ class Collection implements CollectionInterface
     /**
      * @return \ArrayIterator
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new \ArrayIterator($this->items);

@@ -33,6 +33,7 @@ interface CollectionInterface extends \IteratorAggregate, \ArrayAccess, \Countab
     /**
      * @return \ArrayIterator
      */
+    #[\ReturnTypeWillChange]
     public function getIterator();
 
     /**
@@ -65,5 +66,6 @@ interface CollectionInterface extends \IteratorAggregate, \ArrayAccess, \Countab
     /**
      * @return int
      */
+    #[\ReturnTypeWillChange]
     public function count();
 }

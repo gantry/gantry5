@@ -208,6 +208,7 @@ abstract class Finder
      *
      * @return int
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         $baseQuery = clone $this->query;

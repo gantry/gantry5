@@ -14,6 +14,7 @@
 
 namespace Gantry\Component\Menu;
 
+use Gantry\Component\Serializable\Serializable;
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccessWithGetters;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 
@@ -52,7 +53,7 @@ use RocketTheme\Toolbox\ArrayTraits\Export;
  */
 class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonSerializable
 {
-    use ArrayAccessWithGetters, Export;
+    use ArrayAccessWithGetters, Export, Serializable;
 
     const VERSION = 2;
 
@@ -130,6 +131,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
     /**
      * @return array|mixed
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return [
@@ -176,36 +178,36 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function serialize()
+    #[\ReturnTypeWillChange]
+    public function __serialize()
     {
         // TODO: need to create collection class to gather the sibling data.
-        return serialize([
+        return [
             'version' => static::VERSION,
             'items' => $this->items,
             'groups' => $this->groups,
             'children' => $this->children,
             'url' => $this->url
-        ]);
+        ];
     }
 
     /**
-     * @param string $serialized
+     * @param array $serialized
      */
-    public function unserialize($serialized)
+    #[\ReturnTypeWillChange]
+    public function __unserialize($serialized)
     {
         // TODO: need to create collection class to gather the sibling data.
-        $data = unserialize($serialized);
-
-        if (!isset($data['version']) && $data['version'] === static::VERSION) {
+        if (!isset($serialized['version']) && $serialized['version'] === static::VERSION) {
             throw new \UnexpectedValueException('Serialized data is not valid');
         }
 
-        $this->items = $data['items'];
-        $this->groups =  $data['groups'];
-        $this->children = $data['children'];
-        $this->url = $data['url'];
+        $this->items = $serialized['items'];
+        $this->groups =  $serialized['groups'];
+        $this->children = $serialized['children'];
+        $this->url = $serialized['url'];
     }
 
     /**
@@ -472,6 +474,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
      *
      * @return Item
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         $current = key($this->children);
@@ -484,6 +487,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
      *
      * @return mixed  Returns scalar on success, or NULL on failure.
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return current($this->children);
@@ -494,6 +498,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function next()
     {
         next($this->children);
@@ -504,6 +509,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         reset($this->children);
@@ -514,6 +520,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
      *
      * @return int
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return count($this->children);
@@ -524,6 +531,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
      *
      * @return bool  Returns TRUE on success or FALSE on failure.
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return key($this->children) !== null;

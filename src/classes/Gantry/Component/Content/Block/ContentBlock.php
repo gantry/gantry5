@@ -14,6 +14,8 @@
 
 namespace Gantry\Component\Content\Block;
 
+use Gantry\Component\Serializable\Serializable;
+
 /**
  * Class to create nested blocks of content.
  *
@@ -29,6 +31,8 @@ namespace Gantry\Component\Content\Block;
  */
 class ContentBlock implements ContentBlockInterface
 {
+    use Serializable;
+
     /** @var int */
     protected $version = 1;
     /** @var string */
@@ -209,22 +213,23 @@ class ContentBlock implements ContentBlockInterface
     }
 
     /**
-     * @return string
+     * @return array
      * @since 5.4.3
      */
-    public function serialize()
+    #[\ReturnTypeWillChange]
+    public function __serialize()
     {
-        return serialize($this->toArray());
+        return $this->toArray();
     }
 
     /**
-     * @param string $serialized
+     * @param array $serialized
      * @since 5.4.3
      */
-    public function unserialize($serialized)
+    #[\ReturnTypeWillChange]
+    public function __unserialize($serialized)
     {
-        $array = unserialize($serialized);
-        $this->build($array);
+        $this->build($serialized);
     }
 
     /**
