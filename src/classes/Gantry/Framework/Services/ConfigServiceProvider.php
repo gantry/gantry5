@@ -142,8 +142,10 @@ class ConfigServiceProvider implements ServiceProviderInterface
             $config->set('page.head.atoms', (new Atoms($atoms))->init()->toArray());
         }
 
-        // Set FA default
-        $config->def('page.fontawesome.version', Version::MAJOR_VERSION < 4 ? 'fa4' : 'fa5css');
+        // Set FA default in Joomla
+        if (class_exists(Version::class)) {
+            $config->def('page.fontawesome.version', Version::MAJOR_VERSION < 4 ? 'fa4' : 'fa5css');
+        }
 
         return $config;
     }
