@@ -4,14 +4,16 @@
 1. [Common](#common)
     1. [](#improved)
         - Improved PHP 8.1 compatibility
-    1. [](#bugfix)
+    2. [](#bugfix)
         - Fixed menu dropdown not working if you start at level 2 (#2947)
         - Fixed icon picker showing FA5 icons when FA4 icons have been selected (#2952)
-1. [Joomla](#joomla)
-    1. [](#bugfix)
+2. [Joomla](#joomla)
+   1. [](#improved)
+        - Select FA5 icons by default in Joomla 4
+   2. [](#bugfix)
         - Fixed Joomla modules rendering only once or not at all (#2958, #2962)
         - Fixed menu items appearing in incorrect columns when there are hidden menu items (#2957)
-1. [Grav](#grav)
+3. [Grav](#grav)
    1. [](#improved)
        - Do not use deprecated `$page->modular()` method
 
