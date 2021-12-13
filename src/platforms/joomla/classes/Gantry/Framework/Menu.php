@@ -259,7 +259,7 @@ class Menu extends AbstractMenu
      * Get menu items from the platform.
      *
      * @param array $params
-     * @return MenuItem[] List of routes to the pages.
+     * @return array<string,object|MenuItem> List of routes to the pages.
      */
     protected function getItemsFromPlatform($params)
     {
@@ -273,14 +273,14 @@ class Menu extends AbstractMenu
             $attributes = ['menutype'];
             $values = [$params['menu']];
 
-            $items = $this->menu->getItems($attributes, $values);
+            $items = array_merge($this->getMenuItemIds($params['menu']), $this->menu->getItems($attributes, $values));
         }
 
         return $items;
     }
 
     /**
-     * @param MenuItem[] $menuItems
+     * @param array<string,object|MenuItem> $menuItems
      * @param array[] $items
      * @return Item[]
      */
@@ -505,14 +505,14 @@ class Menu extends AbstractMenu
             $id = (int)$menuItem->id;
             $type = $menuItem->type;
             $link = $menuItem->link;
-            $params = $menuItem->getParams();
+            $params = method_exists($menuItem, 'getParams') ? $menuItem->getParams() : null;
 
             // Figure out menu link.
             switch ($type) {
                 case 'heading':
                 case 'separator':
                     // Check if menu item contains a particle.
-                    if (!empty($params->get('gantry-particle'))) {
+                    if ($params && !empty($params->get('gantry-particle'))) {
                         $type = 'particle';
                     }
 
@@ -534,7 +534,7 @@ class Menu extends AbstractMenu
                     // Get the language of the target menu item when site is multilingual
                     if (Multilanguage::isEnabled()) {
                         $menu = $this->application->getMenu();
-                        $newItem = $menu ? $menu->getItem((int) $params->get('aliasoptions')) : null;
+                        $newItem = $menu && $params ? $menu->getItem((int) $params->get('aliasoptions')) : null;
 
                         // Use language code if not set to ALL
                         if ($newItem && $newItem->language && $newItem->language !== '*') {
@@ -581,13 +581,13 @@ class Menu extends AbstractMenu
                 'alias' => $menuItem->alias,
                 'type' => $type,
                 'link' => $link,
-                'enabled' => (bool)$params->get('menu_show', 1),
+                'enabled' => $params ? (bool)$params->get('menu_show', 1) : false,
                 'level' => $level,
-                'link_title' => $params->get('menu-anchor_title', ''),
-                'rel' => $params->get('menu-anchor_rel', ''),
+                'link_title' => $params ? $params->get('menu-anchor_title', '') : '',
+                'rel' => $params ? $params->get('menu-anchor_rel', '') : '',
             ];
 
-            $props = static::decodeJParams($params);
+            $props = $params ? static::decodeJParams($params) : null;
             if (null !== $props) {
                 $paramsEmbedded = true;
                 foreach ($props as $param => $value) {
@@ -605,9 +605,9 @@ class Menu extends AbstractMenu
             // And if not available in configuration, default to Joomla.
             $properties += [
                 'title' => $menuItem->title,
-                'anchor_class' => $params->get('menu-anchor_css', ''),
-                'image' => $params->get('menu_image', ''),
-                'icon_only' => !$params->get('menu_text', 1),
+                'anchor_class' => $params ? $params->get('menu-anchor_css', '') : '',
+                'image' => $params ? $params->get('menu_image', '') : '',
+                'icon_only' => $params ? !$params->get('menu_text', 1) : false,
                 'target' => $target
             ];
 
@@ -725,6 +725,34 @@ class Menu extends AbstractMenu
 
             $this->add($item);
         }
+    }
+
+    /**
+     * @param string $menutype
+     * @return array
+     */
+    private function getMenuItemIds($menutype)
+    {
+        $db = \JFactory::getDbo();
+        $query = $db->getQuery(true)
+            ->select('m.id, m.alias, m.path AS route, m.level, m.parent_id')
+            ->from('#__menu AS m')
+            ->where('m.menutype = ' . $db->quote($menutype))
+            ->where('m.parent_id > 0')
+            ->where('m.client_id = 0')
+            ->where('m.published >= 0')
+            ->order('m.lft');
+
+        // Set the query
+        $db->setQuery($query);
+
+        $list = [];
+        foreach ($db->loadAssocList('id') as $id => $data) {
+            $data += ['type' => 'separator', 'tree' => [], 'title' => '', 'link' => null, 'browserNav' => null];
+            $list[$id] = (object)$data;
+        }
+
+        return $list;
     }
 
     /**
