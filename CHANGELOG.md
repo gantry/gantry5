@@ -4,6 +4,8 @@
 1. [Common](#common)
     1. [](#improved)
         - Improved PHP 8.1 compatibility
+    1. [](#bugfix)
+        - Fixed menu dropdown not working if you start at level 2 (#2947)
 1. [Joomla](#joomla)
     1. [](#bugfix)
         - Fixed Joomla modules rendering only once or not at all (#2958, #2962)
