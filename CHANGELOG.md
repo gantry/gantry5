@@ -4,9 +4,12 @@
 1. [Common](#common)
     1. [](#improved)
         - Improved PHP 8.1 compatibility
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Fixed Joomla modules rendering only once or not at all (#2958, #2962)
 1. [Grav](#grav)
-    1. [](#improved)
-        - Do not use deprecated `$page->modular()` method
+   1. [](#improved)
+       - Do not use deprecated `$page->modular()` method
 
 # 5.5.6
 ## 12/03/2021
