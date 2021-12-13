@@ -208,6 +208,7 @@ class EventListener implements EventSubscriberInterface
         foreach ($items as $key => &$item) {
             // Make sure we have all the default values.
             $item = (new Item($menuObject, $item))->toArray(true);
+            $type = $item['type'];
 
             $id = !empty($item['id']) ? (int)$item['id'] : 0;
             if ($id && $table->load($item['id'], true)) {
@@ -216,7 +217,7 @@ class EventListener implements EventSubscriberInterface
                 $params = new Registry($table->params);
 
                 // Move particles.
-                if ($item['type'] === 'particle') {
+                if ($type === 'particle') {
                     $parentKey = dirname($key);
                     $parent = isset($items[$parentKey]) ? $items[$parentKey] : null;
                     $parentId = $parent ? $parent['id'] : null;
@@ -227,7 +228,7 @@ class EventListener implements EventSubscriberInterface
 
             } else {
                 // Add missing particles into the menu.
-                if ($item['type'] !== 'particle') {
+                if ($type !== 'particle') {
                     throw new \RuntimeException("Failed to save /{$key}: New menu item is not a particle");
                 }
                 $modified = true;
@@ -273,11 +274,12 @@ class EventListener implements EventSubscriberInterface
             }
 
             // Joomla params.
+            $enabled = $type !== 'particle' ? (int)$item['enabled'] : 0; // Hide particles from other menus.
             $options = [
                 'menu-anchor_css' => $item['anchor_class'],
                 'menu_image' => $item['image'],
                 'menu_text' => (int)(!$item['icon_only']),
-                'menu_show' => (int)$item['enabled'],
+                'menu_show' => $enabled,
             ];
             foreach ($options as $var => $value) {
                 $orig_value = $params->get($var);

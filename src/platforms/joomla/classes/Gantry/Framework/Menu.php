@@ -506,6 +506,7 @@ class Menu extends AbstractMenu
             $type = $menuItem->type;
             $link = $menuItem->link;
             $params = method_exists($menuItem, 'getParams') ? $menuItem->getParams() : null;
+            $enabled = $params && $params->get('menu_show', 1);
 
             // Figure out menu link.
             switch ($type) {
@@ -514,6 +515,8 @@ class Menu extends AbstractMenu
                     // Check if menu item contains a particle.
                     if ($params && !empty($params->get('gantry-particle'))) {
                         $type = 'particle';
+                        $options = $params->get('gantry-options');
+                        $enabled = isset($options['particle']['enabled']) ? $options['particle']['enabled'] : true;
                     }
 
                     // These types have no link.
@@ -581,7 +584,7 @@ class Menu extends AbstractMenu
                 'alias' => $menuItem->alias,
                 'type' => $type,
                 'link' => $link,
-                'enabled' => $params ? (bool)$params->get('menu_show', 1) : false,
+                'enabled' => $enabled,
                 'level' => $level,
                 'link_title' => $params ? $params->get('menu-anchor_title', '') : '',
                 'rel' => $params ? $params->get('menu-anchor_rel', '') : '',
