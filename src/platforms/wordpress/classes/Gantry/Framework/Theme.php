@@ -422,6 +422,24 @@ class Theme extends AbstractTheme
         return $locator->mergeResources(['gantry-theme://views', 'gantry-engine://views']);
     }
 
+    /**
+     * Remove particles from the WP menus.
+     *
+     * @param \WP_Post[] $menuItems
+     * @param array $args
+     * @return mixed
+     */
+    public function filterMenuObjects($menuItems, $args)
+    {
+        foreach ($menuItems as $k => $item) {
+            if (strpos($item->post_excerpt, 'gantry-particle-') === 0) {
+                unset($menuItems[$k]);
+            }
+        }
+
+        return $menuItems;
+    }
+
     public function addMenuMeta($menu_item)
     {
         $meta = \get_post_meta($menu_item->ID, '_menu_item_gantry5', true);
@@ -486,6 +504,7 @@ class Theme extends AbstractTheme
         \add_filter('dynamic_sidebar_params', [Widgets::class, 'widgetCustomClassesSidebarParams'], 9);
 
         // Menu
+        \add_filter('wp_nav_menu_objects', [$this, 'filterMenuObjects'], 0, 2);
         \add_filter('wp_setup_nav_menu_item', [$this, 'addMenuMeta']);
 
         \add_action('init', [$this, 'register_post_types']);

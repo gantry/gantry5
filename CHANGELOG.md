@@ -14,7 +14,10 @@
         - Fixed Joomla modules rendering only once or not at all (#2958, #2962)
         - Fixed menu items appearing in incorrect columns when there are hidden menu items (#2957)
         - Fixed `particle` and `module` menu items being rendered by third-party menu modules (#2932)
-3. [Grav](#grav)
+3. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - Fixed `particle` and `widget` menu items being rendered by third-party menu widgets (#2932)
+4. [Grav](#grav)
    1. [](#improved)
        - Do not use deprecated `$page->modular()` method
 
