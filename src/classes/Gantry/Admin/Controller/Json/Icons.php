@@ -15,6 +15,7 @@
 namespace Gantry\Admin\Controller\Json;
 
 use Gantry\Component\Admin\JsonController;
+use Gantry\Component\Config\Config;
 use Gantry\Component\Response\JsonResponse;
 
 /**
@@ -30,8 +31,17 @@ class Icons extends JsonController
     {
         $response = [];
 
-        $list = include __DIR__ . '/Icons/FontAwesome5.php';
-        //$list = include __DIR__ . '/Icons/FontAwesome4.php';
+        $this->container['configuration'] = 'default';
+
+        /** @var Config $config */
+        $config = $this->container['config'];
+
+        $version = $config->get('page.fontawesome.version');
+        if ($version === 'fa4') {
+            $list = include __DIR__ . '/Icons/FontAwesome4.php';
+        } else {
+            $list = include __DIR__ . '/Icons/FontAwesome5.php';
+        }
 
         $options = [
             'fw' => 'Fixed Width',
