@@ -163,7 +163,7 @@ var Modal = new prime({
                 elements.content.html(response.body.html || response.body);
 
                 if (!response.body.success) {
-                    if (!response.body.html) { elements.content.style({ width: '90%' }); }
+                    if (!response.body.html && !response.body.message) { elements.content.style({ width: '90%' }); }
                 }
 
                 this.hideLoading();

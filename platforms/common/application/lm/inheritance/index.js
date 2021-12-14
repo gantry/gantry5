@@ -85,9 +85,9 @@ ready(function() {
 
             if (!response.body.success) {
                 modal.open({
-                    content: response.body.html || response.body,
+                    content: response.body.html || response.body.message || response.body,
                     afterOpen: function(container) {
-                        if (!response.body.html) { container.style({ width: '90%' }); }
+                        if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                     }
                 });
 

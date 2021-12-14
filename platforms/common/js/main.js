@@ -618,9 +618,9 @@ ready(function() {
                 request('post', parseAjaxURI(href + getAjaxSuffix()), { title: title }, function(error, response) {
                     if (!response.body.success) {
                         modal.open({
-                            content: response.body.html || response.body,
+                            content: response.body.html || response.body.message || response.body,
                             afterOpen: function(container) {
-                                if (!response.body.html) { container.style({ width: '90%' }); }
+                                if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                             }
                         });
 
@@ -729,9 +729,9 @@ ready(function() {
 
                         if (!response.body.success) {
                             modal.open({
-                                content: response.body.html || response.body,
+                                content: response.body.html || response.body.message || response.body,
                                 afterOpen: function(container) {
-                                    if (!response.body.html) { container.style({ width: '90%' }); }
+                                    if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                                 }
                             });
                         } else {
@@ -824,9 +824,9 @@ ready(function() {
         request(method, parseAjaxURI((hrefConfirm || href) + getAjaxSuffix()), {}, function(error, response) {
             if (!response.body.success) {
                 modal.open({
-                    content: response.body.html || response.body,
+                    content: response.body.html || response.body.message || response.body,
                     afterOpen: function(container) {
-                        if (!response.body.html) { container.style({ width: '90%' }); }
+                        if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                     }
                 });
             } else {
@@ -875,9 +875,9 @@ ready(function() {
             request(method, parseAjaxURI(href + getAjaxSuffix()), { title: trim(title) }, function(error, response) {
                 if (!response.body.success) {
                     modal.open({
-                        content: response.body.html || response.body,
+                        content: response.body.html || response.body.message || response.body,
                         afterOpen: function(container) {
-                            if (!response.body.html) { container.style({ width: '90%' }); }
+                            if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                         }
                     });
 
@@ -3272,9 +3272,9 @@ ready(function() {
 
             if (!response.body.success) {
                 modal.open({
-                    content: response.body.html || response.body,
+                    content: response.body.html || response.body.message || response.body,
                     afterOpen: function(container) {
-                        if (!response.body.html) { container.style({ width: '90%' }); }
+                        if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                     }
                 });
                 return;
@@ -3462,9 +3462,9 @@ ready(function() {
                     request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&') || {}, function(error, response) {
                         if (!response.body.success) {
                             modal.open({
-                                content: response.body.html || response.body,
+                                content: response.body.html || response.body.message || response.body,
                                 afterOpen: function(container) {
-                                    if (!response.body.html) { container.style({ width: '90%' }); }
+                                    if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                                 }
                             });
                         } else {
@@ -3643,9 +3643,9 @@ ready(function() {
 
             if (!response.body.success) {
                 modal.open({
-                    content: response.body.html || response.body,
+                    content: response.body.html || response.body.message || response.body,
                     afterOpen: function(container) {
-                        if (!response.body.html) { container.style({ width: '90%' }); }
+                        if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                     }
                 });
 
@@ -4755,9 +4755,9 @@ ready(function() {
         request('post', saveURL, data, function(error, response) {
             if (!response.body.success) {
                 modal.open({
-                    content: response.body.html || response.body,
+                    content: response.body.html || response.body.message || response.body,
                     afterOpen: function(container) {
-                        if (!response.body.html) { container.style({ width: '90%' }); }
+                        if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                     }
                 });
             } else {
@@ -4868,9 +4868,9 @@ ready(function() {
         request(method, parseAjaxURI(href + getAjaxSuffix()), function(error, response) {
             if (!response.body.success) {
                 modal.open({
-                    content: response.body.html || response.body,
+                    content: response.body.html || response.body.message || response.body,
                     afterOpen: function(container) {
-                        if (!response.body.html) { container.style({ width: '90%' }); }
+                        if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                     }
                 });
 
@@ -4990,7 +4990,7 @@ var Resizer = new prime({
         if (!parent) { return false; }
 
         parent.addClass('moving');
-        
+
         this.siblings = {
             occupied: 0,
             elements: siblings,
@@ -5307,9 +5307,9 @@ var StepTwo = function(data, content, button) {
     request('post', parseAjaxURI(uri + getAjaxSuffix()), data, function(error, response) {
         if (!response.body.success) {
             modal.open({
-                content: response.body.html || response.body,
+                content: response.body.html || response.body.message || response.body,
                 afterOpen: function(container) {
-                    if (!response.body.html) { container.style({ width: '90%' }); }
+                    if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                 }
             });
 
@@ -5346,9 +5346,9 @@ var StepTwo = function(data, content, button) {
             request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&') || {}, function(error, response) {
                 if (!response.body.success) {
                     modal.open({
-                        content: response.body.html || response.body,
+                        content: response.body.html || response.body.message || response.body,
                         afterOpen: function(container) {
-                            if (!response.body.html) { container.style({ width: '90%' }); }
+                            if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                         }
                     });
                 } else {
@@ -5708,7 +5708,7 @@ ready(function() {
                     modal.enableCloseByOverlay();
                     return;
                 }
-                
+
                 var form       = content.elements.content.find('form'),
                     fakeDOM    = zen('div').html(response.body.html).find('form'),
                     submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
@@ -5787,9 +5787,9 @@ ready(function() {
                     request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&'), function(error, response) {
                         if (!response.body.success) {
                             modal.open({
-                                content: response.body.html || response.body,
+                                content: response.body.html || response.body.message || response.body,
                                 afterOpen: function(container) {
-                                    if (!response.body.html) { container.style({ width: '90%' }); }
+                                    if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                                 }
                             });
                         } else {
@@ -6562,9 +6562,9 @@ var AttachSettings = function() {
                     request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&') || {}, function(error, response) {
                         if (!response.body.success) {
                             modal.open({
-                                content: response.body.html || response.body,
+                                content: response.body.html || response.body.message || response.body,
                                 afterOpen: function(container) {
-                                    if (!response.body.html) { container.style({ width: '90%' }); }
+                                    if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                                 }
                             });
                         } else {
@@ -6722,7 +6722,7 @@ ready(function() {
 
         if (last) { clone.after(last); }
         else { clone.top(list); }
-        
+
         if (items.length && editall) { editall.style('display', 'inline-block'); }
 
         title = clone.find('a');
@@ -6842,7 +6842,7 @@ ready(function() {
                     modal.enableCloseByOverlay();
                     return;
                 }
-                
+
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
                     submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
@@ -6883,9 +6883,9 @@ ready(function() {
                     request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&') || {}, function(error, response) {
                         if (!response.body.success) {
                             modal.open({
-                                content: response.body.html || response.body,
+                                content: response.body.html || response.body.message || response.body,
                                 afterOpen: function(container) {
-                                    if (!response.body.html) { container.style({ width: '90%' }); }
+                                    if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                                 }
                             });
                         } else {
@@ -7932,9 +7932,9 @@ var FilePicker = new prime({
 
                 if (!response.body.success) {
                     modal.open({
-                        content: response.body.html || response.body,
+                        content: response.body.html || response.body.message || response.body,
                         afterOpen: function(container) {
-                            if (!response.body.html) { container.style({ width: '90%' }); }
+                            if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                         }
                     });
                 } else {
@@ -7986,9 +7986,9 @@ var FilePicker = new prime({
             request('delete', deleteURI, function(error, response) {
                 if (!response.body.success) {
                     modal.open({
-                        content: response.body.html || response.body,
+                        content: response.body.html || response.body.message || response.body,
                         afterOpen: function(container) {
-                            if (!response.body.html) { container.style({ width: '90%' }); }
+                            if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                         }
                     });
                 } else {
@@ -9217,9 +9217,9 @@ ready(function() {
                         request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&') || {}, function(error, response) {
                             if (!response.body.success) {
                                 modal.open({
-                                    content: response.body.html || response.body,
+                                    content: response.body.html || response.body.message || response.body,
                                     afterOpen: function(container) {
-                                        if (!response.body.html) { container.style({ width: '90%' }); }
+                                        if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                                     }
                                 });
                             } else {
@@ -9741,9 +9741,9 @@ ready(function() {
         request(method, parseAjaxURI(href + getAjaxSuffix()), {}, function(error, response) {
             if (!response.body.success) {
                 modal.open({
-                    content: response.body.html || response.body,
+                    content: response.body.html || response.body.message || response.body,
                     afterOpen: function(container) {
-                        if (!response.body.html) { container.style({ width: '90%' }); }
+                        if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                     }
                 });
             } else {
@@ -9906,9 +9906,9 @@ ready(function() {
                     request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&'), function(error, response) {
                         if (!response.body.success) {
                             modal.open({
-                                content: response.body.html || response.body,
+                                content: response.body.html || response.body.message || response.body,
                                 afterOpen: function(container) {
-                                    if (!response.body.html) { container.style({ width: '90%' }); }
+                                    if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                                 }
                             });
                         } else {
@@ -9962,9 +9962,9 @@ ready(function() {
             request(method, parseAjaxURI(href + getAjaxSuffix()), data, function(error, response) {
                 if (!response.body.success) {
                     modal.open({
-                        content: response.body.html || response.body,
+                        content: response.body.html || response.body.message || response.body,
                         afterOpen: function(container) {
-                            if (!response.body.html) { container.style({ width: '90%' }); }
+                            if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                         }
                     });
 
@@ -10942,7 +10942,7 @@ var Modal = new prime({
                 elements.content.html(response.body.html || response.body);
 
                 if (!response.body.success) {
-                    if (!response.body.html) { elements.content.style({ width: '90%' }); }
+                    if (!response.body.html && !response.body.message) { elements.content.style({ width: '90%' }); }
                 }
 
                 this.hideLoading();
@@ -14705,9 +14705,9 @@ ready(function() {
         request('post', URI, { mode: value }, function(error, response) {
             if (!response.body.success) {
                 modal.open({
-                    content: response.body.html || response.body,
+                    content: response.body.html || response.body.message || response.body,
                     afterOpen: function(container) {
-                        if (!response.body.html) { container.style({ width: '90%' }); }
+                        if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                     }
                 });
 
@@ -14853,9 +14853,9 @@ History.Adapter.bind(window, 'statechange', function() {
             if (!ERROR) {
                 ERROR = true;
                 modal.open({
-                    content: response.body.html || response.body,
+                    content: response.body.html || response.body.message || response.body,
                     afterOpen: function(container) {
-                        if (!response.body.html) { container.style({ width: '90%' }); }
+                        if (!response.body.html && !response.body.message) { container.style({ width: '90%' }); }
                     }
                 });
 
@@ -26476,7 +26476,7 @@ $({ global: true, forced: !USE_NATIVE_URL, sham: !DESCRIPTORS }, {
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -26489,14 +26489,14 @@ $({ global: true, forced: !USE_NATIVE_URL, sham: !DESCRIPTORS }, {
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	!function() {
@@ -26509,7 +26509,7 @@ $({ global: true, forced: !USE_NATIVE_URL, sham: !DESCRIPTORS }, {
 /******/ 			}
 /******/ 		};
 /******/ 	}();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/global */
 /******/ 	!function() {
 /******/ 		__webpack_require__.g = (function() {
@@ -26521,12 +26521,12 @@ $({ global: true, forced: !USE_NATIVE_URL, sham: !DESCRIPTORS }, {
 /******/ 			}
 /******/ 		})();
 /******/ 	}();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	!function() {
 /******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
 /******/ 	}();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	!function() {
 /******/ 		// define __esModule on exports
@@ -26537,7 +26537,7 @@ $({ global: true, forced: !USE_NATIVE_URL, sham: !DESCRIPTORS }, {
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	}();
-/******/ 	
+/******/
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
