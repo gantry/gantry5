@@ -2,11 +2,13 @@
 ## mm/dd/2021
 
 1. [Common](#common)
-    1. [](#improved)
-        - Improved PHP 8.1 compatibility
-    2. [](#bugfix)
-        - Fixed menu dropdown not working if you start at level 2 (#2947)
-        - Fixed icon picker showing FA5 icons when FA4 icons have been selected (#2952)
+   1. [](#new)
+       - Updated SCSS compiler to v1.9
+   2. [](#improved)
+       - Improved PHP 8.1 compatibility
+   3. [](#bugfix)
+       - Fixed menu dropdown not working if you start at level 2 (#2947)
+       - Fixed icon picker showing FA5 icons when FA4 icons have been selected (#2952)
 2. [Joomla](#joomla)
    1. [](#improved)
         - Select FA5 icons by default in Joomla 4
@@ -21,7 +23,7 @@
         - Fixed `particle` and `widget` menu items being rendered by third-party menu widgets (#2932)
 4. [Grav](#grav)
    1. [](#improved)
-       - Do not use deprecated `$page->modular()` method
+        - Do not use deprecated `$page->modular()` method
 
 # 5.5.6
 ## 12/03/2021
