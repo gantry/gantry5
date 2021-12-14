@@ -91,6 +91,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
         'anchor_class' => '',
         'yaml_path' => null,
         'yaml_alias' => null,
+        'tree' => []
     ];
 
     /** @var array */

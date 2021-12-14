@@ -353,6 +353,10 @@ class Menu extends AbstractMenu
             $data['parent_id'] = $parent_id;
             $data['path'] = $path;
 
+            $tree = isset($list[$parent_id]) ? $list[$parent_id]->tree : [];
+            $tree[] = $item->id;
+            $data['tree'] = $tree;
+
             $item = $this->createMenuItem($data);
             $list[$item->id] = $item;
         }
@@ -710,7 +714,7 @@ class Menu extends AbstractMenu
         $start = $params['startLevel'];
         $max = $params['maxLevels'];
         $end = $max ? $start + $max - 1 : 0;
-        $this->root = $start > 1 ? (int)$tree[$start - 2] : '';
+        $this->root = $start > 1 && isset($tree[$start - 2]) ? (int)$tree[$start - 2] : '';
 
         $menuItems = $this->createMenuItems($this->getItemsFromPlatform($params), $items);
         foreach ($menuItems as $item) {
@@ -722,7 +726,7 @@ class Menu extends AbstractMenu
 
             if (($start && $start > $level)
                 || ($end && $level > $end)
-                || ($start > 1 && !in_array($item->tree[$start - 2], $tree, false))) {
+                || ($start > 1 && !in_array($this->root, $item->tree, false))) {
                 continue;
             }
 
@@ -749,20 +753,32 @@ class Menu extends AbstractMenu
         // Set the query
         $db->setQuery($query);
 
-        $list = [];
+        $items = [];
         foreach ($db->loadAssocList('id') as $id => $data) {
             $data += ['type' => 'separator', 'tree' => [], 'title' => '', 'link' => null, 'browserNav' => null];
-            $list[$id] = (object)$data;
+            $items[$id] = (object)$data;
         }
 
-        return $list;
+        foreach ($items as &$item) {
+            // Get parent information.
+            $parent_tree = [];
+            if (isset($items[$item->parent_id])) {
+                $parent_tree = $items[$item->parent_id]->tree;
+            }
+
+            // Create tree.
+            $parent_tree[] = $item->id;
+            $item->tree = $parent_tree;
+        }
+
+        return $items;
     }
 
     /**
      * This code is taken from Joomla\CMS\Menu\SiteMenu::load()
      *
      * @param string $menutype
-     * @return array|null
+     * @return array
      */
     private function getMenuItemsInAdmin($menutype)
     {
@@ -809,7 +825,6 @@ class Menu extends AbstractMenu
         foreach ($items as &$item) {
             // Get parent information.
             $parent_tree = [];
-
             if (isset($items[$item->parent_id])) {
                 $parent_tree = $items[$item->parent_id]->tree;
             }
