@@ -68,6 +68,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
             new TwigFilter('html', [$this, 'htmlFilter']),
             new TwigFilter('url', [$this, 'urlFunc']),
             new TwigFilter('trans_key', [$this, 'transKeyFilter']),
+            new TwigFilter('substr', 'substr'),
             new TwigFilter('trans', [$this, 'transFilter']),
             new TwigFilter('repeat', [$this, 'repeatFilter']),
             new TwigFilter('values', [$this, 'valuesFilter']),
