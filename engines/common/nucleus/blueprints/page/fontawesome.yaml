@@ -5,6 +5,11 @@ type: global
 form:
   fields:
 
+    _info:
+      type: separator.note
+      condition: override
+      content: Set your Font Awesome settings in the <strong>Base Outline</strong>. These settings should not be overriden <strong>here</strong>.
+
     enable:
       type: enable.enable
       label: Enable
@@ -20,7 +25,6 @@ form:
         fa4: Font Awesome 4 (legacy)
         fa5css: Font Awesome 5 Free (Webfont / CSS)
         fa5js: Font Awesome 5 Free (SVG / JS)
-        manual: Load Manually
 
     fa4_compatibility:
       type: enable.enable
@@ -36,10 +40,10 @@ form:
 
     html_css_import:
       type: textarea.textarea
-      label: HTML CSS Import (Manual)
-      description: Enter your HTML to manually load the CSS files of the Font Awesome library. This is only necessary if you selected the option to manually load the library from the dropdown field above.
+      label: CSS Link HTML (Manual Override)
+      description: Enter your HTML to manually load the CSS files of the Font Awesome library. This option replaces the Gantry version of the library.
 
     html_js_import:
       type: textarea.textarea
-      label: HTML JS Import (Manual)
-      description: Enter your HTML to manually load the JS files of the Font Awesome library. This is only necessary if you selected the option to manually load the library from the dropdown field above.
+      label: JS Script HTML (Manual Override)
+      description: Enter your HTML to manually load the JS files of the Font Awesome library. This option replaces the Gantry version of the library.

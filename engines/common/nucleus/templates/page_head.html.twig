@@ -13,13 +13,13 @@
 
     {% block head_scripts -%}
         {% if faEnabled %}
-            {% if faVersion == 'fa5js' %}
+            {% if faVersion == 'manual' or gantry.config.page.fontawesome.html_js_import|trim %}
+                {{ gantry.config.page.fontawesome.html_js_import|html|raw -}}
+            {% elseif faVersion == 'fa5js' %}
                 <script type="text/javascript" src="{{ url('gantry-assets://js/font-awesome5-all.min.js') }}"></script>
                 {% if gantry.config.page.fontawesome.fa4_compatibility|default(1) %}
                     <script type="text/javascript" src="{{ url('gantry-assets://js/font-awesome5-shim.min.js') }}"></script>
                 {% endif %}
-            {% elseif faVersion == 'manual' %}
-                {{ gantry.config.page.fontawesome.html_js_import|html|raw -}}
             {% endif %}
         {% endif %}
     {% endblock -%}
@@ -28,7 +28,9 @@
 
     {% block head_overrides -%}
         {% if faEnabled %}
-            {% if faVersion == 'fa4' %}
+            {% if faVersion == 'manual' or gantry.config.page.fontawesome.html_css_import|trim %}
+                {{ gantry.config.page.fontawesome.html_css_import|html|raw -}}
+            {% elseif faVersion == 'fa4' %}
                 <link rel="stylesheet" href="gantry-assets://css/font-awesome.min.css" type="text/css"/>
             {% elseif faVersion == 'fa5css' %}
                 <link rel="stylesheet" href="gantry-assets://css/font-awesome5-all.min.css" type="text/css">
@@ -37,8 +39,6 @@
                 {% endif %}
             {% elseif (faVersion == 'fa5js' or (faVersion == 'manual' and gantry.config.page.fontawesome.html_js_import)) and (gantry.config.page.fontawesome.content_compatibility|default(1)) %}
                 <link rel="stylesheet" href="gantry-assets://css/font-awesome5-pseudo.min.css" type="text/css">
-            {% elseif faVersion == 'manual' %}
-                {{ gantry.config.page.fontawesome.html_css_import|html|raw -}}
             {% endif %}
         {% endif %}
         {% for scss in gantry.theme.configuration.css.overrides %}

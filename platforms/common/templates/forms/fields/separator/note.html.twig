@@ -1,5 +1,12 @@
 {% extends 'forms/' ~ layout|default('field') ~ '.html.twig' %}
 
 {% block field %}
+    {% set enabled = true %}
+    {% if field.condition %}
+        {% set enabled = field.condition == 'override' and overrideable and (field.overridable ?? (field.overrideable ?? true)) %}
+    {% endif %}
+
+    {% if enabled %}
     <div class="{{ field.class|default("alert alert-warning") }}">{{ field.content|trans|raw }}</div>
+    {% endif %}
 {% endblock %}
