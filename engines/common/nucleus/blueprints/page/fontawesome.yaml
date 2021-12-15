@@ -8,7 +8,7 @@ form:
     _info:
       type: separator.note
       condition: override
-      content: Set your Font Awesome settings in the <strong>Base Outline</strong>. These settings should not be overriden <strong>here</strong>.
+      content: Set your Font Awesome settings in the <strong>Base Outline</strong>. These settings should not be overridden <strong>here</strong>.
 
     enable:
       type: enable.enable
