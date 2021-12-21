@@ -153,7 +153,7 @@
     {% import _self as self %}
     {% for item in items %}
         {% set start_level = start_level ?? root_level ?? item.level %}
-        {% set dropdown = dropdown_type ? item.dropdown %}
+        {% set dropdown = dropdown_type ?? item.dropdown %}
         {{ self.displayItem(item, menu, context, dropdown, start_level) }}
     {% endfor %}
 {% endmacro %}

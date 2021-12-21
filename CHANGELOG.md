@@ -3,7 +3,8 @@
 
 1. [Common](#common)
     1. [](#bugfix)
-       - Fixed regression: downdown direction classes not being rendered (#2972)
+       - Fixed regression in menu: downdown submenu is not rendered properly if it is inside a column (#2972)
+       - Fixed regression in menu: downdown direction classes not being rendered (#2972)
 
 # 5.5.7
 ## 12/15/2021
