@@ -1,3 +1,10 @@
+# 5.5.8
+## mm/dd/2021
+
+1. [Common](#common)
+    1. [](#bugfix)
+       - Fixed regression: downdown direction classes not being rendered (#2972)
+
 # 5.5.7
 ## 12/15/2021
 
