@@ -2,7 +2,9 @@
 ## mm/dd/2021
 
 1. [Common](#common)
-    1. [](#bugfix)
+    2. [](#improved)
+        - Removed CSS hacks for IE6-9 (#2979)
+    4. [](#bugfix)
        - Fixed regression in menu: downdown submenu is not rendered properly if it is inside a column (#2972)
        - Fixed regression in menu: downdown direction classes not being rendered (#2972)
 
