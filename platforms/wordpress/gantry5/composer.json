@@ -30,6 +30,9 @@
         }
     },
     "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        },
         "platform": {
             "php": "7.1.3"
         }

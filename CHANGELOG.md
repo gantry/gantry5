@@ -2,6 +2,8 @@
 ## mm/dd/2021
 
 1. [Common](#common)
+    1. [](#new)
+        - Updated SCSS compiler to v1.10
     2. [](#improved)
         - Removed CSS hacks for IE6-9 (#2979)
     4. [](#bugfix)
