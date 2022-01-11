@@ -9,6 +9,9 @@
     4. [](#bugfix)
        - Fixed regression in menu: downdown submenu is not rendered properly if it is inside a column (#2972)
        - Fixed regression in menu: downdown direction classes not being rendered (#2972)
+3. [WordPress](#wordpress)
+    1. [](#bugfix)
+       - Fixed `Invalid argument supplied for foreach()` if the menu item has been orphaned
 
 # 5.5.7
 ## 12/15/2021
