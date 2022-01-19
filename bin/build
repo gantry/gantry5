@@ -149,7 +149,7 @@ if (false === $hasVersion) {
 }
 
 
-$GLOBALS['_composer_bin_dir'] = __DIR__;
-$GLOBALS['_composer_autoload_path'] = __DIR__ . '/..'.'/autoload.php';
+$GLOBALS['_composer_bin_dir'] = __DIR__ . '/builder/vendor/bin';
+$GLOBALS['_composer_autoload_path'] = __DIR__ . '/builder/vendor/autoload.php';
 
 include __DIR__ . '/builder/vendor/phing/phing/bin/phing';
