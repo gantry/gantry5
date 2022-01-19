@@ -3,7 +3,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2022 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -11,6 +11,97 @@
  *
  * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
  */
+
+namespace Composer;
+
+if (PHP_VERSION_ID < 80000) {
+    if (!class_exists('Composer\BinProxyWrapper')) {
+        /**
+         * @internal
+         */
+        final class BinProxyWrapper
+        {
+            private $handle;
+            private $position;
+            private $realpath;
+
+            public function stream_open($path, $mode, $options, &$opened_path)
+            {
+                // get rid of phpvfscomposer:// prefix for __FILE__ & __DIR__ resolution
+                $opened_path = substr($path, 17);
+                $this->realpath = realpath($opened_path) ?: $opened_path;
+                $opened_path = $this->realpath;
+                $this->handle = fopen($this->realpath, $mode);
+                $this->position = 0;
+
+                return (bool) $this->handle;
+            }
+
+            public function stream_read($count)
+            {
+                $data = fread($this->handle, $count);
+
+                if ($this->position === 0) {
+                    $data = preg_replace('{^#!.*\r?\n}', '', $data);
+                }
+
+                $this->position += strlen($data);
+
+                return $data;
+            }
+
+            public function stream_cast($castAs)
+            {
+                return $this->handle;
+            }
+
+            public function stream_close()
+            {
+                fclose($this->handle);
+            }
+
+            public function stream_lock($operation)
+            {
+                return $operation ? flock($this->handle, $operation) : true;
+            }
+
+            public function stream_tell()
+            {
+                return $this->position;
+            }
+
+            public function stream_eof()
+            {
+                return feof($this->handle);
+            }
+
+            public function stream_stat()
+            {
+                return array();
+            }
+
+            public function stream_set_option($option, $arg1, $arg2)
+            {
+                return true;
+            }
+
+            public function url_stat($path, $flags)
+            {
+                $path = substr($path, 17);
+                if (file_exists($path)) {
+                    return stat($path);
+                }
+
+                return false;
+            }
+        }
+    }
+
+    if (function_exists('stream_wrapper_register') && stream_wrapper_register('phpvfscomposer', 'Composer\BinProxyWrapper')) {
+        include("phpvfscomposer://" . __DIR__ . '/builder/vendor/phing/phing/bin/phing');
+        exit(0);
+    }
+}
 
 setlocale(LC_ALL, ['en_GB.utf8', 'en_GB']);
 date_default_timezone_set('America/Denver');
@@ -57,4 +148,8 @@ if (false === $hasVersion) {
     $argv[] = '-Dxml.version=' . $version;
 }
 
-require_once __DIR__ . '/builder/vendor/bin/phing';
+
+$GLOBALS['_composer_bin_dir'] = __DIR__;
+$GLOBALS['_composer_autoload_path'] = __DIR__ . '/..'.'/autoload.php';
+
+include __DIR__ . '/builder/vendor/phing/phing/bin/phing';
