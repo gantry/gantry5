@@ -1,8 +1,14 @@
 {
     "require": {
-        "phing/phing": "2.*"
+        "phing/phing": "3.0.0-RC3"
     },
+    "minimum-stability": "dev",
     "autoload": {
         "classmap": ["classes/"]
+    },
+    "config": {
+        "allow-plugins": {
+            "phing/phing-composer-configurator": true
+        }
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-use Task;
+use Phing\Task;
 
 class JsonMapTask extends Task {
 
