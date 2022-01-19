@@ -112,7 +112,7 @@ class Streams
         }
 
         if (!stream_wrapper_register($scheme, $type)) {
-            throw new \InvalidArgumentException("Stream '{$type}' could not be initialized.");
+            throw new \InvalidArgumentException("Stream `{$scheme}` ({$type}) could not be initialized.");
         }
     }
 }

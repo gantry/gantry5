@@ -6,6 +6,7 @@
         - Updated SCSS compiler to v1.10
     2. [](#improved)
         - Removed CSS hacks for IE6-9 (#2979)
+        - Improved error when stream cannot be registered (#2984)
     4. [](#bugfix)
        - Fixed regression in menu: downdown submenu is not rendered properly if it is inside a column (#2972)
        - Fixed regression in menu: downdown direction classes not being rendered (#2972)
