@@ -626,7 +626,7 @@ class Menu extends AbstractMenu
             $level = substr_count($route, '/') + 1;
 
             $properties['enabled'] = !isset($properties['options']['particle']['enabled']) || !empty($properties['options']['particle']['enabled']);
-            $properties['alias'] = basename($route);
+            $properties['alias'] = Gantry::basename($route);
             $properties['level'] = $level;
 
             // Deal with special types which do not have link.

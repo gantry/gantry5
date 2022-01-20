@@ -303,7 +303,7 @@ class Menu extends AbstractMenu
         $properties = [
             'id' => $name,
             'parent_id' => $dirname !== '.' ? $dirname : '',
-            'alias' => basename($name),
+            'alias' => Gantry::basename($name),
             'type' => $page && $page->isPage() && $page->routable() ? 'link' : 'separator',
             'link' => $page ? $page->url() : null,
             'visible' => $page ? $page->visible() : true,

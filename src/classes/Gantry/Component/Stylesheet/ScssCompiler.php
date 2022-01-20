@@ -214,7 +214,7 @@ class ScssCompiler extends CssCompiler
             $mapFile->save($map);
             $mapFile->free();
 
-            $css = substr($css, 0, $pos) . '/*# sourceMappingURL=' . basename($out) . '.map */';
+            $css = substr($css, 0, $pos) . '/*# sourceMappingURL=' . Gantry::basename($out) . '.map */';
         }
 
         $warnings = preg_replace('/\n +(\w)/mu', '\1', stream_get_contents($logfile, -1, 0));
@@ -331,7 +331,7 @@ WARN;
             $mapFile->save($map);
             $mapFile->free();
 
-            $css = substr($css, 0, $pos) . '/*# sourceMappingURL=' . basename($out) . '.map */';
+            $css = substr($css, 0, $pos) . '/*# sourceMappingURL=' . Gantry::basename($out) . '.map */';
         }
 
 

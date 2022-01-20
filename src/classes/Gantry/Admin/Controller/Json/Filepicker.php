@@ -17,6 +17,7 @@ namespace Gantry\Admin\Controller\Json;
 use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Response\JsonResponse;
+use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -352,7 +353,7 @@ class Filepicker extends JsonController
             header('Expires: 0');
             header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
             header('Content-type: ' . $fileType);
-            header('Content-Disposition: inline; filename="' . basename($path) . '"');
+            header('Content-Disposition: inline; filename="' . Gantry::basename($path) . '"');
         } else {
             // Force file download.
             header('Expires: 0');
@@ -361,7 +362,7 @@ class Filepicker extends JsonController
             header('Content-Type: application/force-download');
             header('Content-Type: application/octet-stream');
             header('Content-Type: application/download');
-            header('Content-Disposition: attachment; filename="' . basename($path) . '"');
+            header('Content-Disposition: attachment; filename="' . Gantry::basename($path) . '"');
         }
 
         header('Content-Transfer-Encoding: binary');
@@ -428,7 +429,7 @@ class Filepicker extends JsonController
         }
 
         // Check extension
-        $fileParts = pathinfo($_FILES['file']['name']);
+        $fileParts = Gantry::pathinfo($_FILES['file']['name']);
         $fileExt   = strtolower($fileParts['extension']);
 
         // TODO: check if download is of supported type.

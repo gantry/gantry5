@@ -239,7 +239,7 @@ abstract class CssCompiler implements CssCompilerInterface
             return false;
         }
 
-        $uri = basename($out);
+        $uri = Gantry::basename($out);
         $metaFile = PhpFile::instance($locator->findResource("gantry-cache://theme/scss/{$uri}.php", true, true));
 
         // Check if meta file exists.
@@ -402,7 +402,7 @@ abstract class CssCompiler implements CssCompilerInterface
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $uri = basename($out);
+        $uri = Gantry::basename($out);
         $metaFile = PhpFile::instance($locator->findResource("gantry-cache://theme/scss/{$uri}.php", true, true));
         $data = [
             'file' => $out,

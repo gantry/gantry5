@@ -14,6 +14,7 @@ namespace Gantry\Admin;
 use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\File\CompiledYamlFile;
+use Gantry\Framework\Gantry;
 use Gantry\Framework\Theme as SiteTheme;
 use Grav\Common\Grav;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -70,7 +71,7 @@ class Content
         $list = [];
         foreach ($content as $name => $item) {
             $type = dirname($name);
-            $name = basename($name);
+            $name = Gantry::basename($name);
             $type = isset($item['type']) ? $item['type'] : ($type !== '.' ? $type : 'content');
             $list[$type][$name] = $item;
         }

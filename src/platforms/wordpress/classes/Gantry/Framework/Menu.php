@@ -304,7 +304,7 @@ class Menu extends AbstractMenu
             } else {
                 // Try to match Gantry menu path to the menu item.
                 $route = trim(dirname("/{$path}"), '/\\');
-                $slug = basename($path);
+                $slug = Gantry::basename($path);
 
                 // We may already have parent path matched to WP menu item; using it allows us to narrow down choices.
                 $parent = isset($lookup[$route]) ? $lookup[$route] : null;
@@ -353,7 +353,7 @@ class Menu extends AbstractMenu
                     $alias = $aliases[$alias]['name'];
                 }
                 unset($alias);
-                $slug = basename($path);
+                $slug = Gantry::basename($path);
                 $tree[$slug] = $slug;
             } else {
                 // Unknown menu item.

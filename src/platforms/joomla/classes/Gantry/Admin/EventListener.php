@@ -232,7 +232,7 @@ class EventListener implements EventSubscriberInterface
                     throw new \RuntimeException("Failed to save /{$key}: New menu item is not a particle");
                 }
                 $modified = true;
-                $item['alias'] = strtolower($item['alias'] ?: basename($key));
+                $item['alias'] = strtolower($item['alias'] ?: Gantry::basename($key));
                 $parentKey = dirname($key);
                 $parentId = !empty($items[$parentKey]['id']) ? (int)$items[$parentKey]['id'] : $table->getRootId();
                 $model = isset($stored[$parentId]) ? $stored[$parentId] : $first;

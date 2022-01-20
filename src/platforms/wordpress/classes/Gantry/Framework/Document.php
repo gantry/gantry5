@@ -62,7 +62,7 @@ class Document extends HtmlDocument
                     $array = explode('?', $style['href']);
                     $href = array_shift($array);
                     $version = array_shift($array) ?: false;
-                    $name = isset($style['id']) ? $style['id'] : basename($href, '.css');
+                    $name = isset($style['id']) ? $style['id'] : Gantry::basename($href, '.css');
                     if (strpos($version, '=')) {
                         $href .= '?' . $version;
                         $version = null;
@@ -93,7 +93,7 @@ class Document extends HtmlDocument
                     $array = explode('?', $script['src']);
                     $src = array_shift($array);
                     $version = array_shift($array) ?: false;
-                    $name = basename($src, '.js');
+                    $name = Gantry::basename($src, '.js');
                     if (!empty($script['handle'])) {
                         $name = $script['handle'];
                     }

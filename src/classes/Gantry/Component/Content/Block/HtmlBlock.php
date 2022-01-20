@@ -83,7 +83,7 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
                 $url = $style['href'];
                 if ($theme && preg_match('|\.scss$|', $url)) {
                     // Compile SCSS files.
-                    $url = $theme->css(basename($url, '.scss'));
+                    $url = $theme->css(Gantry::basename($url, '.scss'));
                 }
                 // Deal with streams and relative paths.
                 $url = $document::url($url, false, null, false);

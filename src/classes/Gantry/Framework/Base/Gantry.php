@@ -337,6 +337,39 @@ abstract class Gantry extends Container
     }
 
     /**
+     * Unicode-safe version of PHP’s pathinfo() function.
+     *
+     * @link  https://www.php.net/manual/en/function.pathinfo.php
+     *
+     * @param string $path
+     * @param int $options
+     * @return array|string
+     */
+    public static function pathinfo($path, $options = PATHINFO_ALL)
+    {
+        $info = pathinfo(str_replace(['%2F', '%5C'], ['/', '\\'], rawurlencode($path)), $options);
+        if (is_array($info)) {
+            return array_map('rawurldecode', $info);
+        }
+
+        return rawurldecode($info);
+    }
+
+    /**
+     * Unicode-safe version of the PHP basename() function.
+     *
+     * @link  https://www.php.net/manual/en/function.basename.php
+     *
+     * @param string $path
+     * @param string $suffix
+     * @return string
+     */
+    public static function basename($path, $suffix = '')
+    {
+        return rawurldecode(basename(str_replace(['%2F', '%5C'], '/', rawurlencode($path)), $suffix));
+    }
+
+    /**
      * Check if Gantry is compatible with your theme / extension.
      *
      * This function can be used to make sure that user has installed Gantry version

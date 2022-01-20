@@ -14,6 +14,7 @@
 
 namespace Gantry\Component\File;
 
+use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\File\PhpFile;
 
 /**
@@ -123,7 +124,7 @@ trait CompiledFile
             }
 
         } catch (\Exception $e) {
-            throw new \RuntimeException(sprintf('Failed to read %s: %s', basename($this->filename), $e->getMessage()), 500, $e);
+            throw new \RuntimeException(sprintf('Failed to read %s: %s', Gantry::basename($this->filename), $e->getMessage()), 500, $e);
         }
 
         return parent::content($var);
