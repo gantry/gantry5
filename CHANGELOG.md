@@ -1,3 +1,10 @@
+# 5.5.9
+## mm/dd/2021
+
+1. [Common](#common)
+    1. [](#bugfix)
+        - Fixed `Use of undefined constant PATHINFO_ALL`
+
 # 5.5.8
 ## 01/24/2021
 

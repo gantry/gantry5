@@ -342,12 +342,19 @@ abstract class Gantry extends Container
      * @link  https://www.php.net/manual/en/function.pathinfo.php
      *
      * @param string $path
-     * @param int $options
+     * @param int|null $flags
      * @return array|string
      */
-    public static function pathinfo($path, $options = PATHINFO_ALL)
+    public static function pathinfo($path, $flags = null)
     {
-        $info = pathinfo(str_replace(['%2F', '%5C'], ['/', '\\'], rawurlencode($path)), $options);
+        $path = str_replace(['%2F', '%5C'], ['/', '\\'], rawurlencode($path));
+
+        if (null === $flags) {
+            $info = pathinfo($path);
+        } else {
+            $info = pathinfo($path, (int)$flags);
+        }
+
         if (is_array($info)) {
             return array_map('rawurldecode', $info);
         }
