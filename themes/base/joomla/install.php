@@ -15,6 +15,8 @@ use Gantry\Framework\Gantry;
 use Gantry\Framework\ThemeInstaller;
 use Gantry5\Loader;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Installer\Adapter\TemplateAdapter;
 use Joomla\CMS\Language\Text;
 
 /**
@@ -22,6 +24,7 @@ use Joomla\CMS\Language\Text;
  */
 class G5_BaseInstallerScript
 {
+    /** @var string */
     public $requiredGantryVersion = '5.5';
 
     /**
@@ -65,7 +68,7 @@ class G5_BaseInstallerScript
 
     /**
      * @param string $type
-     * @param object $parent
+     * @param TemplateAdapter $parent
      * @return bool
      * @throws Exception
      */
@@ -73,6 +76,12 @@ class G5_BaseInstallerScript
     {
         if ($type === 'uninstall') {
             return true;
+        }
+
+        // Delete previous jQuery overrides, those just break things.
+        $search = JPATH_ROOT . "/templates/{$parent->getName()}/js/jui";
+        if (Folder::exists($search)) {
+            Folder::delete($search);
         }
 
         $installer = new ThemeInstaller($parent);

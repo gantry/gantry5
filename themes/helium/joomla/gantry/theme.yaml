@@ -19,7 +19,7 @@ details:
 
   copyright: '(C) 2007 - 2022 RocketTheme, LLC. All rights reserved.'
   license: GPLv2
-  description: Helium Theme
+  description: 'Helium Theme'
   images:
     thumbnail: 'admin/images/preset1.png'
     preview: 'admin/images/preset1.png'
@@ -83,40 +83,40 @@ configuration:
 
   section-variations:
     Padding Variations:
-      section-vertical-paddings: Section Vertical Paddings
-      section-horizontal-paddings: Section Horizontal Paddings
-      section-vertical-paddings-large: Large Vertical Paddings
-      section-horizontal-paddings-large: Large Horizontal Paddings
-      section-vertical-paddings-small: Small Vertical Paddings
-      section-horizontal-paddings-small: Small Horizontal Paddings
+      section-vertical-paddings: 'Section Vertical Paddings'
+      section-horizontal-paddings: 'Section Horizontal Paddings'
+      section-vertical-paddings-large: 'Large Vertical Paddings'
+      section-horizontal-paddings-large: 'Large Horizontal Paddings'
+      section-vertical-paddings-small: 'Small Vertical Paddings'
+      section-horizontal-paddings-small: 'Small Horizontal Paddings'
     Utility:
-      nomarginall: No Margin
-      nopaddingall: No Padding
+      nomarginall: 'No Margin'
+      nopaddingall: 'No Padding'
 
   block-variations:
     Title Variations:
-      title1: Title 1
-      title2: Title 2
-      title-gradient: Title Gradient
-      title-outline: Title Outline
+      title1: 'Title 1'
+      title2: 'Title 2'
+      title-gradient: 'Title Gradient'
+      title-outline: 'Title Outline'
     Box Variations:
-      box1: Box 1
-      box2: Box 2
-      box-gradient: Box Gradient
-      box-outline: Box Outline
+      box1: 'Box 1'
+      box2: 'Box 2'
+      box-gradient: 'Box Gradient'
+      box-outline: 'Box Outline'
     Effects:
-      spaced : Spaced
-      shadow : Shadow
-      rounded : Rounded
+      spaced : 'Spaced'
+      shadow : 'Shadow'
+      rounded : 'Rounded'
     Utility:
-      center: Center
-      title-center: Centered Title
-      equal-height: Equal Height
-      disabled: Disabled
-      align-right: Align Right
-      align-left: Align Left
-      nomarginall: No Margin
-      nopaddingall: No Padding
+      center: 'Center'
+      title-center: 'Centered Title'
+      equal-height: 'Equal Height'
+      disabled: 'Disabled'
+      align-right: 'Align Right'
+      align-left: 'Align Left'
+      nomarginall: 'No Margin'
+      nopaddingall: 'No Padding'
 
 admin:
   styles:
