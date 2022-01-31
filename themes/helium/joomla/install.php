@@ -69,6 +69,7 @@ class G5_HeliumInstallerScript
     /**
      * @param string $type
      * @param TemplateAdapter $parent
+     * @return bool
      * @throws Exception
      */
     public function postflight($type, $parent)
@@ -110,6 +111,7 @@ class G5_HeliumInstallerScript
      * Called by TemplateInstaller to customize post-installation.
      *
      * @param ThemeInstaller $installer
+     * @return void
      */
     public function installDefaults(ThemeInstaller $installer)
     {
@@ -121,6 +123,7 @@ class G5_HeliumInstallerScript
      * Called by TemplateInstaller to customize sample data creation.
      *
      * @param ThemeInstaller $installer
+     * @return void
      */
     public function installSampleData(ThemeInstaller $installer)
     {

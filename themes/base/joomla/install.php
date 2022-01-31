@@ -111,6 +111,7 @@ class G5_BaseInstallerScript
      * Called by TemplateInstaller to customize post-installation.
      *
      * @param ThemeInstaller $installer
+     * @return void
      */
     public function installDefaults(ThemeInstaller $installer)
     {
@@ -122,6 +123,7 @@ class G5_BaseInstallerScript
      * Called by TemplateInstaller to customize sample data creation.
      *
      * @param ThemeInstaller $installer
+     * @return void
      */
     public function installSampleData(ThemeInstaller $installer)
     {
