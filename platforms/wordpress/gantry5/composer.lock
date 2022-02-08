@@ -387,7 +387,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-03-06T18:09:13+00:00"
+            "time": "2022-01-07T12:00:00+00:00"
         },
         {
             "name": "leafo/scssphp",
@@ -607,23 +607,23 @@
         },
         {
             "name": "rockettheme/toolbox",
-            "version": "1.6.4",
+            "version": "1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "4d1021492385117323b50e3370626da613dd6c16"
+                "reference": "fdf0195ced25b83525d3b084c3e81f05de96ac8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/4d1021492385117323b50e3370626da613dd6c16",
-                "reference": "4d1021492385117323b50e3370626da613dd6c16",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/fdf0195ced25b83525d3b084c3e81f05de96ac8c",
+                "reference": "fdf0195ced25b83525d3b084c3e81f05de96ac8c",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "php": ">=5.6.0",
                 "pimple/pimple": "^3.0",
-                "symfony/event-dispatcher": "^3.4|^4.0",
+                "symfony/event-dispatcher": "^3.4|^4.0|^5.0",
                 "symfony/yaml": "^3.4|^4.0|^5.0"
             },
             "type": "library",
@@ -669,10 +669,10 @@
                 "rockettheme"
             ],
             "support": {
-                "source": "https://github.com/rockettheme/toolbox/tree/1.6.4",
+                "source": "https://github.com/rockettheme/toolbox/tree/1.6.1",
                 "issues": "https://github.com/rockettheme/toolbox/issues"
             },
-            "time": "2023-03-24T18:58:25+00:00"
+            "time": "2022-02-08T08:36:03+00:00"
         },
         {
             "name": "scssphp/scssphp",
