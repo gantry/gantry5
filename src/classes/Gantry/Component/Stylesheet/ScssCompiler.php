@@ -83,10 +83,10 @@ class ScssCompiler extends CssCompiler
             $loader = static::gantry()['loader'];
             if (version_compare(static::$options['compatibility'], '5.5', '<')) {
                 /** @phpstan-ignore-next-line */
-                $loader->setPsr4('ScssPhp\\ScssPhp\\', GANTRY5_LIBRARY . '/compat/vendor/scssphp/scssphp/src');
+                $loader->setPsr4('ScssPhp\\ScssPhp\\', GANTRY5_LIBRARY . '/vendor/scssphp/scssphp/src');
             } else {
                 /** @phpstan-ignore-next-line */
-                $loader->setPsr4('ScssPhp\\ScssPhp\\', GANTRY5_LIBRARY . '/vendor/scssphp/scssphp/src');
+                $loader->setPsr4('ScssPhp\\ScssPhp\\', GANTRY5_LIBRARY . '/compat/vendor/scssphp/scssphp/src');
             }
 
             // Do not use SCSS compiler from Grav Admin.
@@ -574,7 +574,7 @@ WARN;
         // Autoload legacy compiler classes
         /** @var ClassLoader $loader */
         $loader = static::gantry()['loader'];
-        $loader->setPsr4('Leafo\\ScssPhp\\', [GANTRY5_LIBRARY . '/src/classes/Leafo/ScssPhp', GANTRY5_LIBRARY . '/compat/vendor/leafo/scssphp/src']);
+        $loader->setPsr4('Leafo\\ScssPhp\\', [GANTRY5_LIBRARY . '/src/classes/Leafo/ScssPhp', GANTRY5_LIBRARY . '/vendor/leafo/scssphp/src']);
 
         $compiler = new LegacyCompiler();
         $compiler->setFormatter('Leafo\ScssPhp\Formatter\Expanded');

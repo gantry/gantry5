@@ -1,20 +1,16 @@
 {
     "name": "gantry/joomla-compat",
-    "description": "Gantry Framework Library (PHP 5.6 compat)",
+    "description": "Gantry Framework Library (PHP 7.2+ compat)",
     "license": "GPLv2",
 
     "require": {
-        "php": ">=5.6.20",
-        "twig/twig": "~1.42",
-        "scssphp/scssphp": "1.6.0",
-        "leafo/scssphp": "0.8.4"
-    },
-    "replace": {
-        "symfony/polyfill-ctype": "*"
+        "php": ">=7.2.5",
+        "twig/twig": "~1.44",
+        "scssphp/scssphp": "~1.10"
     },
     "config": {
         "platform": {
-            "php": "5.6.20"
+            "php": "7.2.5"
         }
     }
 }

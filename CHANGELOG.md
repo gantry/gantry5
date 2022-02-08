@@ -1,3 +1,16 @@
+# 5.5.10
+## mm/dd/2021
+
+1. [Common](#common)
+    1. [](#improved)
+        - Reworked backwards compatibility code
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Fixed platform check to be PHP >= 5.6.20 (#2998)
+1. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - Fixed platform check to be PHP >= 5.6.20 (#2998)
+
 # 5.5.9
 ## 01/26/2021
 

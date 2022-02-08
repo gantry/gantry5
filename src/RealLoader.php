@@ -101,17 +101,26 @@ abstract class RealLoader
             throw new \LogicException('Please run composer in Gantry 5 Library!');
         }
 
+        // In PHP >=7.2.5 we need to use newer version of ctype library.
+        $useNewLibraries = \PHP_VERSION_ID >= 70205 && GANTRY5_PLATFORM !== 'grav';
+        if ($useNewLibraries) {
+            /** @var ClassLoader $loader */
+            $loader = require "{$lib}/compat/vendor/autoload.php";
+            $loader->unregister();
+        }
+
         /** @var ClassLoader $loader */
         $loader = require $autoload;
 
-        // In PHP <7.2.5 we need to use older version of Twig.
-        if (\PHP_VERSION_ID < 70205) {
+        // In PHP >=7.2.5 we need to use newer version of Twig.
+        if ($useNewLibraries) {
             $loader->setPsr4('Twig\\', "{$lib}/compat/vendor/twig/twig/src");
             $loader->set('Twig_', "{$lib}/compat/vendor/twig/twig/lib");
         }
 
         // Skip registering SCSS compiler until it's needed.
         $loader->setPsr4('ScssPhp\\ScssPhp\\', '');
+        $loader->setPsr4('Leafo\\ScssPhp\\', '');
 
         // Support for development environments.
         if (file_exists($lib . '/src/platforms')) {
