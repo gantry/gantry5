@@ -5,7 +5,9 @@
     1. [](#improved)
         - Reworked backwards compatibility code
 1. [Joomla](#joomla)
-    1. [](#bugfix)
+    1. [](#new)
+        - Added Joomla 4.1 support
+    2. [](#bugfix)
         - Fixed platform check to be PHP >= 5.6.20 (#2998)
 1. [WordPress](#wordpress)
     1. [](#bugfix)
