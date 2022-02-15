@@ -28,7 +28,7 @@
                 <exclude name="scss.sh"/>
                 <exclude name="**/*.js.map"/>
                 <exclude name="**/*.css.map"/>
-                <!-- PHP 5.6 compatibility -->
+                <!-- PHP 8 compatibility -->
                 <exclude name="compat/" />
             </fileset>
         </copy>
@@ -134,12 +134,10 @@
             </fileset>
         </copy>
 
-        <!-- PHP 5.6 compatibility -->
+        <!-- PHP 8 compatibility -->
         <copy todir="${tmp_dir}/wordpress/packages/plugin/gantry5/compat" overwrite="true">
             <fileset dir="${path.platforms}/wordpress/gantry5/compat">
                 <exclude name="vendor/bin/"/>
-                <exclude name="vendor/composer/"/>
-                <exclude name="vendor/autoload.php"/>
                 <exclude name="**/doc/"/>
                 <exclude name="**/ext/"/>
                 <exclude name="**/.*"/>
