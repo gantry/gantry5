@@ -259,25 +259,35 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
      */
     public function groups()
     {
-        $children = $this->children();
-
         // Grouped by column counts.
         if ($this->items['columns_count']) {
+            $children = $this->children;
+
             $i = 0; $start = 0;
             $list = [];
             foreach ($this->items['columns_count'] as $i => $count) {
-                $list[$i] = array_slice($children, $start, $count);
+                $list[$i] = array_slice($children, $start, $count, true);
                 $start += $count;
             }
             // Add missing items into the end of the list.
             if (count($children) > $start) {
-                $list[$i] = array_merge($list[$i], array_slice($children, $start));
+                $list[$i] = array_merge($list[$i], array_slice($children, $start, null, true));
             }
+
+            foreach ($list as &$items) {
+                foreach ($items as $id => &$item) {
+                    $item = $this->menu()[$id];
+                }
+                unset($item);
+
+                $items = array_filter($items);
+            }
+            unset($items);
 
             return $list;
         }
 
-        // Grouped by explisit list.
+        // Grouped by explicit list.
         if ($this->groups) {
             $list = [];
             foreach ($this->groups as $i => $group) {
@@ -293,8 +303,8 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
             return $list;
         }
 
-        // No grouping (use first group).
-        return [$children];
+        // No grouping.
+        return [$this->children()];
     }
 
     /**
@@ -315,7 +325,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
      */
     public function hasChildren()
     {
-        return !empty($this->children);
+        return !empty($this->children());
     }
 
     /**
@@ -502,7 +512,11 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
     #[\ReturnTypeWillChange]
     public function next()
     {
-        next($this->children);
+        while (false !== next($this->children)) {
+            if ($this->current()) {
+                break;
+            }
+        }
     }
 
     /**
@@ -514,6 +528,10 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
     public function rewind()
     {
         reset($this->children);
+        $current = key($this->children);
+        if (!$this->menu()[$current]) {
+            $this->next();
+        }
     }
 
     /**
@@ -524,7 +542,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
     #[\ReturnTypeWillChange]
     public function count()
     {
-        return count($this->children);
+        return count($this->children());
     }
 
     /**

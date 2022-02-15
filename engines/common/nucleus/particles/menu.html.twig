@@ -49,7 +49,7 @@
         {% set label = item.icon_only and (item.image or item.icon) ? ' aria-label="' ~ item.title|e ~'"' %}
         {% set active = menu.isActive(item) ? ' active' %}
         {% set dropdown = item.level == start_level ? ' g-' ~ item.getDropdown() %}
-        {% set parent = item.children|length ? ' g-parent' %}
+        {% set parent = item.hasChildren() and not item.dropdown_hide ? ' g-parent' %}
         {% set target = (item.target != '_self' or context.particle.forceTarget) ? ' target="' ~ item.target|e ~ '"' %}
         {% set rel = item.rel %}
 
@@ -92,7 +92,7 @@
 
         {% set rel = rel ? ' rel="' ~ rel|e('html_attr') ~ '"' %}
 
-        <li class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{% if not item.dropdown_hide %}{{ parent }}{% endif %}{{ active }}{{ dropdown }} {% if item.url and item.children|length %}{% if not item.dropdown_hide %}g-menu-item-link-parent{% endif %}{% endif %} {{ item.class|default('') }}"
+        <li class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{% if not item.dropdown_hide %}{{ parent }}{% endif %}{{ active }}{{ dropdown }} {% if item.url and parent %}{% if not item.dropdown_hide %}g-menu-item-link-parent{% endif %}{% endif %} {{ item.class|default('') }}"
                 {{- self.getCustomWidth(item, menu, 'item', dropdown) }}
                 {%- if context.particle.renderTitles|default(0) %} title="{{ item.title }}"{% endif %}{{listAttributes|raw}}>
             {% if item.url %}
@@ -108,7 +108,7 @@
                     <span class="g-menu-item-content">
                         {{ self.displayTitle(item) }}
                     </span>
-                    {% if item.children|length and not item.dropdown_hide -%}
+                    {% if parent and not item.dropdown_hide -%}
                         <span class="g-menu-parent-indicator" data-g-menuparent=""></span>
                     {%- endif %}
                 {% else %}
@@ -119,13 +119,13 @@
                     {% else %}
                         <span class="g-separator g-menu-item-content"{{ title|raw }}>{{ self.displayTitle(item) }}</span>
                     {% endif %}
-                    {% if item.children|length and not item.dropdown_hide -%}
+                    {% if parent and not item.dropdown_hide -%}
                         <span class="g-menu-parent-indicator"></span>
                     {%- endif %}
                 {% endif %}
             {% if item.url %}</a>
             {% else %}</div>{% endif %}
-            {% if item.children|length -%}
+            {% if parent -%}
                 {{ self.displaySubmenu(item, menu, context, dropdown_type, start_level) }}
             {%- endif %}
         </li>

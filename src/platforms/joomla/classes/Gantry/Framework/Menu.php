@@ -31,6 +31,8 @@ class Menu extends AbstractMenu
 {
     use GantryTrait;
 
+    /** @var bool */
+    protected $isAdmin;
     /** @var CMSApplication */
     protected $application;
     /** @var \Joomla\CMS\Menu\AbstractMenu */
@@ -41,8 +43,10 @@ class Menu extends AbstractMenu
         /** @var CMSApplication $app */
         $app = Factory::getApplication();
         if ($app->isClient('administrator')) {
+            $this->isAdmin = true;
             $this->application = CMSApplication::getInstance('site');
         } else {
+            $this->isAdmin = false;
             $this->application = $app;
         }
 
@@ -56,6 +60,31 @@ class Menu extends AbstractMenu
         $this->menu = $this->application->getMenu();
         $this->default = $this->menu->getDefault($tag);
         $this->active  = $this->menu->getActive();
+    }
+
+    /**
+     * @param string|int $offset
+     * @return bool
+     */
+    #[\ReturnTypeWillChange]
+    public function offsetExists($offset)
+    {
+        return $this->offsetGet($offset) !== null;
+    }
+
+    /**
+     * @param string|int $offset
+     * @return Item|null
+     */
+    #[\ReturnTypeWillChange]
+    public function offsetGet($offset)
+    {
+        $item = isset($this->items[$offset]) ? $this->items[$offset] : null;
+        if (!$this->isAdmin) {
+            return $item && $item->enabled ? $item : null;
+        }
+
+        return $item;
     }
 
     /**
@@ -273,7 +302,12 @@ class Menu extends AbstractMenu
             $attributes = ['menutype'];
             $values = [$params['menu']];
 
-            $items = array_merge($this->getMenuItemIds($params['menu']), $this->menu->getItems($attributes, $values));
+            $items = [];
+            foreach ($this->menu->getItems($attributes, $values) as $item) {
+                $items[$item->id] = $item;
+            }
+
+            $items = array_replace($this->getMenuItemIds($params['menu']), $items);
         }
 
         return $items;
@@ -497,7 +531,7 @@ class Menu extends AbstractMenu
 
     /**
      * @param array $data
-     * @param MenuItem|null $menuItem
+     * @param MenuItem|object|null $menuItem
      * @return Item
      */
     protected function createMenuItem($data, $menuItem = null)

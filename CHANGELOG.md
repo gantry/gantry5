@@ -9,6 +9,7 @@
         - Added Joomla 4.1 support
     2. [](#bugfix)
         - Fixed platform check to be PHP >= 5.6.20 (#2998)
+        - Fixed parent menu item showing dropdown icon and empty dropdown if all children disabled (#2968, #2997)
 1. [WordPress](#wordpress)
     1. [](#bugfix)
         - Fixed platform check to be PHP >= 5.6.20 (#2998)
