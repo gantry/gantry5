@@ -1,4 +1,4 @@
-# 5.5.10
+# 5.5.10.1
 ## 02/15/2021
 
 1. [Common](#common)
@@ -13,6 +13,13 @@
 1. [WordPress](#wordpress)
     1. [](#bugfix)
         - Fixed platform check to be PHP >= 5.6.20 (#2998)
+
+# 5.5.10
+## 02/15/2021
+
+1. [Common](#common)
+    1. [](#new)
+        - Broken release (build script issues)
 
 # 5.5.9
 ## 01/26/2021
