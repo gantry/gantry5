@@ -1,5 +1,5 @@
 # 5.5.11
-## 02/15/2021
+## 02/15/2022
 
 1. [Common](#common)
     1. [](#improved)
@@ -15,21 +15,21 @@
         - Fixed platform check to be PHP >= 5.6.20 (#2998)
 
 # 5.5.10
-## 02/15/2021
+## 02/15/2022
 
 1. [Common](#common)
     1. [](#new)
         - Broken release (build script issues)
 
 # 5.5.9
-## 01/26/2021
+## 01/26/2022
 
 1. [Common](#common)
     1. [](#bugfix)
         - Fixed `Use of undefined constant PATHINFO_ALL`
 
 # 5.5.8
-## 01/24/2021
+## 01/24/2022
 
 1. [Common](#common)
     1. [](#new)
