@@ -14,6 +14,7 @@
 
 namespace Gantry\Component\Twig\Node;
 
+use LogicException;
 use Twig\Compiler;
 use Twig\Node\Node;
 
@@ -30,12 +31,8 @@ class TwigNodeTryCatch extends Node
      * @param int $lineno
      * @param string|null $tag
      */
-    public function __construct(
-        Node $try,
-        Node $catch = null,
-        $lineno = 0,
-        $tag = null
-    ) {
+    public function __construct(Node $try, Node $catch = null, $lineno = 0, $tag = null)
+    {
         $nodes = ['try' => $try, 'catch' => $catch];
         $nodes = array_filter($nodes);
 
@@ -46,31 +43,27 @@ class TwigNodeTryCatch extends Node
      * Compiles the node to PHP.
      *
      * @param Compiler $compiler A Twig Compiler instance
-     * @throws \LogicException
+     * @return void
+     * @throws LogicException
      */
     public function compile(Compiler $compiler)
     {
         $compiler->addDebugInfo($this);
 
-        $compiler
-            ->write('try {')
-        ;
+        $compiler->write('try {');
 
         $compiler
             ->indent()
             ->subcompile($this->getNode('try'))
-        ;
+            ->outdent()
+            ->write('} catch (\Exception $e) {' . "\n")
+            ->indent()
+            ->write('if ($context[\'gantry\']->debug()) throw $e;' . "\n")
+            ->write('if (\GANTRY_DEBUGGER) \Gantry\Debugger::addException($e);' . "\n")
+            ->write('$context[\'e\'] = $e;' . "\n");
 
         if ($this->hasNode('catch')) {
-            $compiler
-                ->outdent()
-                ->write('} catch (\Exception $e) {' . "\n")
-                ->indent()
-                ->write('if ($context[\'gantry\']->debug()) throw $e;' . "\n")
-                ->write('if (\GANTRY_DEBUGGER) \Gantry\Debugger::addException($e);' . "\n")
-                ->write('$context[\'e\'] = $e;' . "\n")
-                ->subcompile($this->getNode('catch'))
-            ;
+            $compiler->subcompile($this->getNode('catch'));
         }
 
         $compiler

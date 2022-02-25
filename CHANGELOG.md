@@ -1,3 +1,10 @@
+# 5.5.12
+## mm/dd/2022
+
+1. [Common](#common)
+    1. [](#bugfix)
+        - Fixed `try/catch` twig tag if there's no catch
+
 # 5.5.11
 ## 02/15/2022
 
