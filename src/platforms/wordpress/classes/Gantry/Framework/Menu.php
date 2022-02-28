@@ -346,7 +346,7 @@ class Menu extends AbstractMenu
                 $item['id'] = $id;
                 $item['parent_id'] = $aliases[$id]['parent'];
                 $item['object_id'] = $aliases[$id]['object'];
-            } elseif (isset($paths[$item['parent_id']])) {
+            } elseif (isset($item['parent_id'], $paths[$item['parent_id']])) {
                 // Custom with existing parent.
                 $tree = $paths[$item['parent_id']];
                 foreach ($tree as &$alias) {
