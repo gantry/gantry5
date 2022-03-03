@@ -351,6 +351,13 @@ class Platform extends BasePlatform
      */
     public function displaySystemMessages($params = [])
     {
+        if ($this->document && version_compare(JVERSION, '4.0', '>')) {
+            // Alerts progressive enhancement
+            $this->document->getWebAssetManager()
+                ->useStyle('webcomponent.joomla-alert')
+                ->useScript('messages');
+        }
+
         // We cannot use DocumentHtml renderer here as it fires too early to display any messages.
         return '<jdoc:include type="message" />';
     }

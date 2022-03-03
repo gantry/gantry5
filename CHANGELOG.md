@@ -6,7 +6,8 @@
         - Fixed `try/catch` twig tag if there's no catch
 2. [Joomla](#joomla)
    1. [](#bugfix)
-        - Fixed Bootstrap5 RTL CSS is not being loaded (#3007)
+        - Fixed Bootstrap5 RTL CSS is not being loaded in Joomla 4 (#3007)
+        - Fixed not able to close system messages in Joomla 4 (#2983)
 3. [WordPress](#wordpress)
    1. [](#bugfix)
        - Menu error: `Undefined index: parent_id` (#3012)
