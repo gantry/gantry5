@@ -4,9 +4,12 @@
 1. [Common](#common)
     1. [](#bugfix)
         - Fixed `try/catch` twig tag if there's no catch
-1. [WordPress](#wordpress)
-    1. [](#bugfix)
-        - Menu error: `Undefined index: parent_id` (#3012)
+2. [Joomla](#joomla)
+   1. [](#bugfix)
+        - Fixed Bootstrap5 RTL CSS is not being loaded (#3007)
+3. [WordPress](#wordpress)
+   1. [](#bugfix)
+       - Menu error: `Undefined index: parent_id` (#3012)
 
 # 5.5.11
 ## 02/15/2022
