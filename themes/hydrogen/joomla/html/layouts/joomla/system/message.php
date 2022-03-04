@@ -12,6 +12,11 @@
 
 defined('_JEXEC') or die;
 
+if (version_compare(JVERSION, 4.0, '>')) {
+    include JPATH_ROOT . '/layouts/joomla/system/message.php';
+    return;
+}
+
 /**
  * Joomla 3 version of the system messages.
  */
