@@ -237,7 +237,7 @@ class Content extends AbstractObject
      */
     public function toArray()
     {
-        return $this->getProperties(true) + [
+        $properties = $this->getProperties(true) + [
             'category' => [
                 'alias' => $this->category()->alias,
                 'title' => $this->category()->title
@@ -247,5 +247,13 @@ class Content extends AbstractObject
                 'fullname' => $this->author()->name
             ],
         ];
+
+        foreach ($properties as $key => $val) {
+            if (str_starts_with($key, '_')) {
+                unset($properties[$key]);
+            }
+        }
+
+        return $properties;
     }
 }
