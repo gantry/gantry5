@@ -8,6 +8,7 @@
 		<client>site</client>
 		<version>@version@</version>
 		<infourl title="Helium @version@">http://docs.gantry.org/gantry5</infourl>
+        <sha512>@sha512_joomla_helium@</sha512>
 		<downloads>
 			<downloadurl type="full" format="zip">http://updates.gantry.org/download/@version@/joomla-tpl_g5_helium_v@version@.zip</downloadurl>
 		</downloads>

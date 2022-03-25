@@ -182,6 +182,25 @@
             <istrue value="${update_versions}" />
             <then>
                 <echo message="Updating versions in ${project_dir} ..." />
+
+                <!-- Set SHA512 values -->
+                <httpget url="https://github.com/gantry/gantry5/releases/download/${xml.version}/joomla-pkg_gantry5_v${xml.version}.zip" dir="${package_dir}"/>
+                <httpget url="https://github.com/gantry/gantry5/releases/download/${xml.version}/joomla-tpl_g5_helium_v${xml.version}.zip" dir="${package_dir}"/>
+                <httpget url="https://github.com/gantry/gantry5/releases/download/${xml.version}/joomla-tpl_g5_hydrogen_v${xml.version}.zip" dir="${package_dir}"/>
+                <filehash file="${package_dir}/joomla-pkg_gantry5_v${xml.version}.zip" algorithm="sha512" propertyname="sha512_joomla_package" />
+                <filehash file="${package_dir}/joomla-tpl_g5_helium_v${xml.version}.zip" algorithm="sha512" propertyname="sha512_joomla_helium" />
+                <filehash file="${package_dir}/joomla-tpl_g5_hydrogen_v${xml.version}.zip" algorithm="sha512" propertyname="sha512_joomla_hydrogen" />
+
+                <!-- Add version information to all xml files -->
+                <filterchain id="filter_sha">
+                    <replacetokens>
+                        <token key="version" value="${xml.version}"/>
+                        <token key="versiondate" value="${version.date}" />
+                        <token key="sha512_joomla_package" value="${sha512_joomla_package}" />
+                        <token key="sha512_joomla_helium" value="${sha512_joomla_helium}" />
+                        <token key="sha512_joomla_hydrogen" value="${sha512_joomla_hydrogen}" />
+                    </replacetokens>
+                </filterchain>
                 <reflexive>
                     <fileset dir="${project_dir}">
                         <include pattern="VERSION"/>
@@ -195,7 +214,7 @@
                         <exclude pattern="**/node_modules/**"/>
                         <exclude pattern="**/vendor/**"/>
                     </fileset>
-                    <filterchain refid="filter"/>
+                    <filterchain refid="filter_sha"/>
                 </reflexive>
             </then>
             <else>
