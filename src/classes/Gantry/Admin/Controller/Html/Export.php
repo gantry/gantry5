@@ -42,7 +42,7 @@ class Export extends HtmlController
         $exported = $exporter->all();
 
         $zipname = $exported['export']['theme']['name'] . '-export.zip';
-        $tmpname = tempnam(sys_get_temp_dir(), 'zip');
+        $tmpname = tempnam(sys_get_temp_dir(), 'zip') . '.zip';
 
         $zip = new \ZipArchive();
         $zip->open($tmpname, \ZipArchive::CREATE);

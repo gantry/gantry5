@@ -286,7 +286,7 @@ class Exporter
         // Works also in Joomla 4
         require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
 
-        $data = (array)\MenusHelper::getMenuTypes();
+        $data = (array)\MenusHelper::getMenuLinks();
 
         $items = [];
         foreach ($data as $item) {

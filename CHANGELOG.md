@@ -4,15 +4,17 @@
 1. [Common](#common)
     1. [](#bugfix)
         - Fixed `try/catch` twig tag if there's no catch
-        - Minified CSS and JS files, fixes missing sourcemap files (#3005)
+        - Minified CSS and JS files, fixes missing source map files (#3005)
 2. [Joomla](#joomla)
-   1. [](#bugfix)
-        - Fixed Bootstrap5 RTL CSS is not being loaded in Joomla 4 (#3007)
-        - Fixed not able to close system messages in Joomla 4 (#2983)
-          - ALL THEMES should update `html/layouts/joomla/system/message.php` file
+    1. [](#improved)
+        - Added SHA512 checksums to Joomla packages (#3004)
+    2. [](#bugfix)
+         - Fixed Bootstrap5 RTL CSS is not being loaded in Joomla 4 (#3007)
+         - Fixed not able to close system messages in Joomla 4 (#2983)
+           - ALL THEMES should update `html/layouts/joomla/system/message.php` file
 3. [WordPress](#wordpress)
-   1. [](#bugfix)
-       - Menu error: `Undefined index: parent_id` (#3012)
+    1. [](#bugfix)
+        - Menu error: `Undefined index: parent_id` (#3012)
 
 # 5.5.11
 ## 02/15/2022
