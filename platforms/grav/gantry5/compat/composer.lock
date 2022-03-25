@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "scssphp/scssphp",
-            "version": "v1.10.0",
+            "version": "v1.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scssphp/scssphp.git",
-                "reference": "9699a52a862da4efb43985943afa17150155dd3d"
+                "reference": "387f4f4abf5d99f16be16314c5ab856f81c82f46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/scssphp/scssphp/zipball/9699a52a862da4efb43985943afa17150155dd3d",
-                "reference": "9699a52a862da4efb43985943afa17150155dd3d",
+                "url": "https://api.github.com/repos/scssphp/scssphp/zipball/387f4f4abf5d99f16be16314c5ab856f81c82f46",
+                "reference": "387f4f4abf5d99f16be16314c5ab856f81c82f46",
                 "shasum": ""
             },
             "require": {
@@ -76,9 +76,9 @@
             ],
             "support": {
                 "issues": "https://github.com/scssphp/scssphp/issues",
-                "source": "https://github.com/scssphp/scssphp/tree/v1.10.0"
+                "source": "https://github.com/scssphp/scssphp/tree/v1.10.2"
             },
-            "time": "2022-01-06T18:16:18+00:00"
+            "time": "2022-03-02T21:15:09+00:00"
         }
     ],
     "packages-dev": [],

@@ -1,6 +1,7 @@
 {
     "require": {
-        "phing/phing": "3.0.0-RC3"
+        "phing/phing": "dev-main",
+        "phing/task-apigen": "dev-main"
     },
     "minimum-stability": "dev",
     "autoload": {
