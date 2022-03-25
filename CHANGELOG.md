@@ -4,6 +4,7 @@
 1. [Common](#common)
     1. [](#bugfix)
         - Fixed `try/catch` twig tag if there's no catch
+        - Minified CSS and JS files, fixes missing sourcemap files (#3005)
 2. [Joomla](#joomla)
    1. [](#bugfix)
         - Fixed Bootstrap5 RTL CSS is not being loaded in Joomla 4 (#3007)
