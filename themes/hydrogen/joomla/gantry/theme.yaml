@@ -15,7 +15,8 @@ details:
     link: https://gitter.im/gantry/gantry5
 
   updates:
-    link: http://updates.rockettheme.com/themes/hydrogen.yaml
+    link: 'https://gantry.org/downloads#joomla'
+    server: 'https://updates.gantry.org/5.0/joomla/tpl_g5_hydrogen.xml'
 
   copyright: (C) 2005 - 2022 RocketTheme, LLC. All rights reserved.
   license: GPLv2

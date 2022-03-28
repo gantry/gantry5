@@ -79,6 +79,6 @@
     </config>
 
     <updateservers>
-        <server type="extension" priority="1" name="Helium Template">http://updates.gantry.org/5.0/joomla/tpl_g5_helium.xml</server>
+        <server type="extension" priority="1" name="Helium Template">https://updates.gantry.org/5.0/joomla/tpl_g5_helium.xml</server>
     </updateservers>
 </extension>

@@ -48,6 +48,6 @@
     </config>
 
     <updateservers>
-        <server type="extension" priority="1" name="Hydrogen Template">http://updates.gantry.org/5.0/joomla/tpl_g5_hydrogen.xml</server>
+        <server type="extension" priority="1" name="Hydrogen Template">https://updates.gantry.org/5.0/joomla/tpl_g5_hydrogen.xml</server>
     </updateservers>
 </extension>
