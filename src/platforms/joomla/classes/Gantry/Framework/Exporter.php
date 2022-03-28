@@ -23,7 +23,6 @@ use Gantry\Joomla\Module\ModuleFinder;
 use Gantry\Joomla\StyleHelper;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Version;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -455,35 +454,22 @@ class Exporter
         $themeName = $theme['name'];
         $themeTitle = $theme['title'];
 
-        $version = Version::MAJOR_VERSION;
-        if ($version >= 4) {
-            $nullUser = 'NULL';
-            $nullTime = 'NULL';
-        } else {
-            $nullUser = 0;
-            $nullTime = "'0000-00-00 00:00:00'";
-        }
-
         # Install Gantry package and theme.
         $out = <<<EOS
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+
+# SQL generated for Joomla 3.10 and 4.x
+
+SELECT @theme_name := '{$themeName}';
+SELECT @theme_title := '{$themeTitle} Template';
+SELECT @theme_server := '{$theme['updates']}';
 
 TRUNCATE `#__menu`;
 TRUNCATE `#__menu_types`;
 TRUNCATE `#__categories`;
 TRUNCATE `#__content`;
 TRUNCATE `#__contact_details`;
-
-SELECT @theme_name := '{$themeName}';
-SELECT @theme_title := '{$themeTitle} Template';
-SELECT @theme_server := '{$theme['updates']}';
-
-# Joomla {$version}
-
-SELECT @null_user := {$nullUser};
-SELECT @null_time := {$nullTime};
-
 
 EOS;
 
