@@ -503,37 +503,37 @@ EOS;
     protected $installSql = <<<EOS
 # Install Gantry package
 
-INSERT INTO `#__extensions` (`package_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `access`, `protected`, `manifest_cache`, `params`, `custom_data`, `checked_out`, `checked_out_time`, `ordering`, `state`, `locked`) VALUES
-(0,'pkg_gantry5','package','pkg_gantry5','',0,1,1,0,'','{}','',@null_user,@null_time,0,0,0);
+INSERT INTO `#__extensions` (`package_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `access`, `protected`, `manifest_cache`, `params`, `custom_data`) VALUES
+(0,'pkg_gantry5','package','pkg_gantry5','',0,1,1,0,'','{}','');
 
 SELECT @package_id := LAST_INSERT_ID();
 
 # Install Gantry extensions
 
-INSERT INTO `#__extensions` (`package_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `access`, `protected`, `manifest_cache`, `params`, `custom_data`, `checked_out`, `checked_out_time`, `ordering`, `state`, `locked`) VALUES
-(@package_id,'plg_system_gantry5','plugin','gantry5','system',0,1,1,0,'','{}','',@null_user,@null_time,0,0,0),
-(@package_id,'plg_quickicon_gantry5','plugin','gantry5','quickicon',0,1,1,0,'','{}','',@null_user,@null_time,0,0,0),
-(@package_id,'plg_gantry5_preset','plugin','preset','gantry5',0,1,1,0,'','{\"preset\":\"presets\",\"reset\":\"reset-settings\"}','',@null_user,@null_time,0,0,0),
-(@package_id,'mod_gantry5_particle','module','mod_gantry5_particle','',0,1,0,0,'','{\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"static\"}','',@null_user,@null_time,0,0,0),
-(@package_id,'gantry5_nucleus','file','gantry5_nucleus','',0,1,0,0,'','{}','',@null_user,@null_time,0,0,0),
-(@package_id,'com_gantry5','component','com_gantry5','',1,1,0,0,'','{}','',@null_user,@null_time,0,0,0),
-(@package_id,'Gantry 5 Framework','library','gantry5','',0,1,1,0,'','{}','',@null_user,@null_time,0,0,0);
+INSERT INTO `#__extensions` (`package_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `access`, `protected`, `manifest_cache`, `params`, `custom_data`) VALUES
+(@package_id,'plg_system_gantry5','plugin','gantry5','system',0,1,1,0,'','{}',''),
+(@package_id,'plg_quickicon_gantry5','plugin','gantry5','quickicon',0,1,1,0,'','{}',''),
+(@package_id,'plg_gantry5_preset','plugin','preset','gantry5',0,1,1,0,'','{\"preset\":\"presets\",\"reset\":\"reset-settings\"}',''),
+(@package_id,'mod_gantry5_particle','module','mod_gantry5_particle','',0,1,0,0,'','{\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"static\"}',''),
+(@package_id,'gantry5_nucleus','file','gantry5_nucleus','',0,1,0,0,'','{}',''),
+(@package_id,'com_gantry5','component','com_gantry5','',1,1,0,0,'','{}',''),
+(@package_id,'Gantry 5 Framework','library','gantry5','',0,1,1,0,'','{}','');
 
 # Install Gantry theme
 
-INSERT INTO `#__extensions` (`package_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `access`, `protected`, `manifest_cache`, `params`, `custom_data`, `checked_out`, `checked_out_time`, `ordering`, `state`, `locked`) VALUES
-(0,@theme_name,'template',@theme_name,'',0,1,1,0,'','{}','',@null_user,@null_time,0,0,0);
+INSERT INTO `#__extensions` (`package_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `access`, `protected`, `manifest_cache`, `params`, `custom_data`) VALUES
+(0,@theme_name,'template',@theme_name,'',0,1,1,0,'','{}','');
 
 SELECT @theme_id := LAST_INSERT_ID();
 
 # Update sites
 
-INSERT INTO `#__update_sites` (`name`, `type`, `location`, `enabled`, `last_check_timestamp`, `extra_query`, `checked_out`, `checked_out_time`) VALUES
-('Gantry 5','extension','http://updates.gantry.org/5.0/joomla/pkg_gantry5.xml',1,0,'',@null_user,@null_time);
+INSERT INTO `#__update_sites` (`name`, `type`, `location`, `enabled`,  `extra_query`) VALUES
+('Gantry 5','extension','http://updates.gantry.org/5.0/joomla/pkg_gantry5.xml',1,'');
 INSERT INTO `#__update_sites_extensions` (`update_site_id`, `extension_id`) VALUES (LAST_INSERT_ID(),@package_id);
 
-INSERT INTO `#__update_sites` (`name`, `type`, `location`, `enabled`, `last_check_timestamp`, `extra_query`, `checked_out`, `checked_out_time`) VALUES
-('Gantry 5','collection','http://updates.gantry.org/5.0/joomla/list.xml',1,0,'',@null_user,@null_time);
+INSERT INTO `#__update_sites` (`name`, `type`, `location`, `enabled`, `extra_query`) VALUES
+('Gantry 5','collection','http://updates.gantry.org/5.0/joomla/list.xml',1,'');
 INSERT INTO `#__update_sites_extensions` (`update_site_id`, `extension_id`) VALUES (LAST_INSERT_ID(),@package_id);
 
 EOS;
@@ -541,8 +541,8 @@ EOS;
     protected $themeUpdateSql = <<<EOS
 # Update site for theme
 
-INSERT INTO `#__update_sites` (`name`, `type`, `location`, `enabled`, `last_check_timestamp`, `extra_query`, `checked_out`, `checked_out_time`) VALUES
-(@theme_title,'extension',@theme_server,1,0,'',@null_user,@null_time);
+INSERT INTO `#__update_sites` (`name`, `type`, `location`, `enabled`, `extra_query`) VALUES
+(@theme_title,'extension',@theme_server,1,'');
 INSERT INTO `#__update_sites_extensions` (`update_site_id`, `extension_id`) VALUES (LAST_INSERT_ID(),@theme_id);
 
 EOS;
