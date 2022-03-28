@@ -22,7 +22,8 @@ class ContactDetails extends AbstractObject
     /** @var array */
     static protected $instances = [];
     /** @var string */
-    static protected $table = 'ContactDetails';
+    static protected $table = 'ContactTable';
+    static protected $tablePrefix = 'Joomla\Component\Contact\Administrator\Table\\';
     /** @var string */
     static protected $order = 'id';
 

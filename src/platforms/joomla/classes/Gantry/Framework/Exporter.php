@@ -488,10 +488,14 @@ SELECT @null_time := {$nullTime};
 EOS;
 
         $out .= $this->installSql;
+        if ($theme['updates']) {
+            $out .= $this->themeUpdateSql;
+        }
         $out .= $this->dumpOutlinesSql($export, $themeTitle);
         $out .= $this->dumpMenusSql($export);
         $out .= $this->dumpModulesSql();
         $out .= $this->dumpContentSql();
+        $out .= "\n";
 
         return $out;
     }
@@ -532,11 +536,14 @@ INSERT INTO `#__update_sites` (`name`, `type`, `location`, `enabled`, `last_chec
 ('Gantry 5','collection','http://updates.gantry.org/5.0/joomla/list.xml',1,0,'',@null_user,@null_time);
 INSERT INTO `#__update_sites_extensions` (`update_site_id`, `extension_id`) VALUES (LAST_INSERT_ID(),@package_id);
 
-IF @theme_server != '' THEN
-  INSERT INTO `#__update_sites` (`name`, `type`, `location`, `enabled`, `last_check_timestamp`, `extra_query`, `checked_out`, `checked_out_time`) VALUES
-  (@theme_title,'extension',@theme_server,1,0,'',@null_user,@null_time);
-  INSERT INTO `#__update_sites_extensions` (`update_site_id`, `extension_id`) VALUES (LAST_INSERT_ID(),@theme_id);
-END IF;
+EOS;
+
+    protected $themeUpdateSql = <<<EOS
+# Update site for theme
+
+INSERT INTO `#__update_sites` (`name`, `type`, `location`, `enabled`, `last_check_timestamp`, `extra_query`, `checked_out`, `checked_out_time`) VALUES
+(@theme_title,'extension',@theme_server,1,0,'',@null_user,@null_time);
+INSERT INTO `#__update_sites_extensions` (`update_site_id`, `extension_id`) VALUES (LAST_INSERT_ID(),@theme_id);
 
 EOS;
 

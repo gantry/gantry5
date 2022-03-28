@@ -35,7 +35,7 @@ class MenuItem extends AbstractObject
             $component = $components[$component]->name;
 
             $array = $this->getFieldValues(['asset_id']);
-            $array['component_id'] = '`extension_id`';
+            $array['`component_id`'] = '`extension_id`';
 
             $keys = implode(',', array_keys($array));
             $values = implode(',', array_values($array));
