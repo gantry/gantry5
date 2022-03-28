@@ -15,6 +15,7 @@ use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
+use Joomla\Database\DatabaseQuery;
 
 /**
  * Abstract base class for database objects.
@@ -353,6 +354,85 @@ abstract class AbstractObject extends \JObject
         $application->triggerEvent('onContentAfterDelete', ['com_gantry5.' . static::class, $table]);
 
         return true;
+    }
+
+    /**
+     * Returns SQL on how to create the object.
+     *
+     * @param array $ignore
+     * @return DatabaseQuery
+     */
+    public function getCreateSql(array $ignore = ['asset_id'])
+    {
+        // Initialize table object.
+        $table = self::getTable();
+        $table->bind($this->getProperties());
+        $dbo = $table->getDbo();
+
+        $values = $this->getFieldValues($ignore);
+
+        // Create the base insert statement.
+        $query = $dbo->getQuery(true)
+            ->insert($dbo->quoteName($table->getTableName()))
+            ->columns(array_keys($values))
+            ->values(implode(',', array_values($values)));
+
+        return $query;
+    }
+
+
+    /**
+     * Returns SQL on how to create the object.
+     *
+     * @param array $ignore
+     * @return array
+     */
+    public function getFieldValues(array $ignore = ['asset_id'])
+    {
+        // Initialize table object.
+        $table = self::getTable();
+        $table->bind($this->getProperties());
+        $dbo = $table->getDbo();
+
+        $values       = [];
+        $tableColumns = $table->getFields();
+
+        // Iterate over the object variables to build the query fields and values.
+        foreach (get_object_vars($this) as $k => $v) {
+            // Ignore any internal or ignored fields.
+            if ($k[0] === '_' || in_array($k, $ignore, true) || $v === null) {
+                continue;
+            }
+
+            // Skip columns that don't exist in the table.
+            if (!\array_key_exists($k, $tableColumns)) {
+                continue;
+            }
+
+            $field = $tableColumns[$k];
+            if (strpos($field->Type, 'int(') === 0) {
+                $v = (int)$v;
+            }
+
+            // Convert arrays and objects into JSON.
+            if (\is_array($v) || \is_object($v)) {
+                $v = json_encode($v);
+            }
+
+            // Prepare and sanitize the fields and values for the database query.
+            if (in_array($k, ['checked_out', 'created_user_id', 'modified_user_id', 'created_by', 'modified_by'], true) && !$v) {
+                $v = '@null_user';
+            } elseif (in_array($k, ['checked_out_time', 'publish_up', 'publish_down', 'created', 'created_time', 'modified_time'], true) && ($v === null || $v === '0000-00-00 00:00:00')) {
+                $v = '@null_time';
+            } elseif (is_string($v)) {
+                $v = $dbo->quote($v);
+            }
+
+            $k = $dbo->quoteName($k);
+            $values[$k] = $v;
+        }
+
+        return $values;
     }
 
     /**

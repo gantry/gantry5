@@ -256,4 +256,9 @@ class Content extends AbstractObject
 
         return $properties;
     }
+
+    public function exportSql()
+    {
+        return $this->getCreateSql(['asset_id']) . ';';
+    }
 }

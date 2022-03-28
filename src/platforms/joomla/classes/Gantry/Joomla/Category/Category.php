@@ -120,6 +120,19 @@ class Category extends AbstractObject
      */
     public function toArray()
     {
-        return $this->getProperties(true);
+        $properties = $this->getProperties(true);
+
+        foreach ($properties as $key => $val) {
+            if (str_starts_with($key, '_')) {
+                unset($properties[$key]);
+            }
+        }
+
+        return $properties;
+    }
+
+    public function exportSql()
+    {
+        return $this->getCreateSql(['asset_id']) . ';';
     }
 }

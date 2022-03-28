@@ -69,6 +69,23 @@ class ModuleCollection extends Collection
         return $positions;
     }
 
+    public function exportSql()
+    {
+        $modules = [];
+        foreach ($this as $module) {
+            // Initialize table object.
+            $modules[] = $module->exportSql();
+        }
+
+        $out = '';
+        if ($modules) {
+            $out .= "\n\n# Modules\n";
+            $out .= implode("\n", $modules);
+        }
+
+        return $out;
+    }
+
     /**
      * @return array
      */

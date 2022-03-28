@@ -105,6 +105,10 @@ class Export extends HtmlController
 
         }
 
+        if (!empty($exported['joomla']['mysql'])) {
+            $zip->addFromString('joomla/mysql/custom.sql', $exported['joomla']['mysql']);
+        }
+
         $zip->close();
 
         header('Content-Type: application/zip');

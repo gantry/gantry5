@@ -139,7 +139,23 @@ class Module extends AbstractObject implements ExportInterface
         return array_filter($array, [$this, 'is_not_null']);
     }
 
-    /**
+    public function exportSql()
+    {
+        $assignments = $this->assignments();
+        foreach ($assignments as &$assignment) {
+            $assignment = "(@module_id, $assignment)";
+        }
+        unset($assignment);
+
+        $out = $this->getCreateSql(['id', 'asset_id']) . ';';
+        $out .= "\nSELECT @module_id := LAST_INSERT_ID();\n";
+        $out .= 'INSERT INTO `#__modules_menu` (`moduleid`, `menuid`) VALUES' . "\n";
+        $out .= implode(",\n", $assignments) . ';';
+
+        return $out;
+    }
+
+        /**
      * @param array $array
      * @return Module|null
      */

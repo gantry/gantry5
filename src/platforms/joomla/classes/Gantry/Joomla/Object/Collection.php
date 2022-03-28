@@ -62,4 +62,20 @@ class Collection extends BaseCollection
 
         return $list;
     }
+
+    public function exportSql()
+    {
+        $objects = [];
+        foreach ($this as $object) {
+            // Initialize table object.
+            $objects[] = trim($object->exportSql());
+        }
+
+        $out = '';
+        if ($objects) {
+            $out .= implode("\n", $objects);
+        }
+
+        return $out;
+    }
 }

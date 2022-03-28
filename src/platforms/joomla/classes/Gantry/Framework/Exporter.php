@@ -15,12 +15,15 @@ use Gantry\Component\Layout\Layout;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Joomla\Category\Category;
 use Gantry\Joomla\Category\CategoryFinder;
+use Gantry\Joomla\ContactDetails\ContactDetailsFinder;
 use Gantry\Joomla\Content\Content;
 use Gantry\Joomla\Content\ContentFinder;
+use Gantry\Joomla\MenuItem\MenuItemFinder;
 use Gantry\Joomla\Module\ModuleFinder;
 use Gantry\Joomla\StyleHelper;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Version;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -39,7 +42,7 @@ class Exporter
         $theme = Gantry::instance()['theme'];
         $details = $theme->details();
 
-        return [
+        $export = [
             'export' => [
                 'gantry' => [
                     'version' => GANTRY5_VERSION !== '@version@' ? GANTRY5_VERSION : 'GIT',
@@ -57,6 +60,7 @@ class Exporter
                     'author' => $details->get('details.author'),
                     'copyright' => $details->get('details.copyright'),
                     'license' => $details->get('details.license'),
+                    'updates' => $details->get('details.updates.server'),
                 ]
             ],
             'outlines' => $this->outlines(),
@@ -64,8 +68,12 @@ class Exporter
             'menus' => $this->menus(),
             'content' => $this->articles(),
             'categories' => $this->categories(),
-            'files' => $this->files,
+            'files' => $this->files
         ];
+
+        $export['joomla']['mysql'] = $this->customSql($export);
+
+        return $export;
     }
 
     /**
@@ -86,7 +94,7 @@ class Exporter
 
         foreach ($styles as $style) {
             $name = $base = strtolower(trim(preg_replace('|[^a-z\d_-]+|ui', '_', $style->title), '_'));
-            $i = 0;
+            $i = 1;
             while (isset($list[$name])) {
                 $i++;
                 $name = "{$base}-{$i}";
@@ -158,7 +166,7 @@ class Exporter
             $finder->particle();
         }
         /** @var array $modules */
-        $modules = $finder->find()->export();
+        $modules = $finder->limit(0)->find()->export();
         $list = [];
         /** @var array $items */
         foreach ($modules as $position => &$items) {
@@ -271,6 +279,15 @@ class Exporter
         return $list;
     }
 
+    /**
+     * @param array $details
+     * @return string
+     */
+    public function customSql(array $details)
+    {
+        //return str_replace('#__', 'jos_', $this->dumpInstallSql($details));
+        return $this->dumpInstallSql($details);
+    }
 
     /**
      * List all the rules available.
@@ -426,5 +443,179 @@ class Exporter
         unset($data['joomla']['content'], $data['joomla']['params']['prepare_content']);
 
         return $data;
+    }
+
+    /**
+     * @param array $export
+     * @return string
+     */
+    protected function dumpInstallSql(array $export)
+    {
+        $theme = $export['export']['theme'];
+        $themeName = $theme['name'];
+        $themeTitle = $theme['title'];
+
+        $version = Version::MAJOR_VERSION;
+        if ($version >= 4) {
+            $nullUser = 'NULL';
+            $nullTime = 'NULL';
+        } else {
+            $nullUser = 0;
+            $nullTime = "'0000-00-00 00:00:00'";
+        }
+
+        # Install Gantry package and theme.
+        $out = <<<EOS
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+TRUNCATE `#__menu`;
+TRUNCATE `#__menu_types`;
+TRUNCATE `#__categories`;
+TRUNCATE `#__content`;
+TRUNCATE `#__contact_details`;
+
+SELECT @theme_name := '{$themeName}';
+SELECT @theme_title := '{$themeTitle} Template';
+SELECT @theme_server := '{$theme['updates']}';
+
+# Joomla {$version}
+
+SELECT @null_user := {$nullUser};
+SELECT @null_time := {$nullTime};
+
+
+EOS;
+
+        $out .= $this->installSql;
+        $out .= $this->dumpOutlinesSql($export, $themeTitle);
+        $out .= $this->dumpMenusSql($export);
+        $out .= $this->dumpModulesSql();
+        $out .= $this->dumpContentSql();
+
+        return $out;
+    }
+
+    protected $installSql = <<<EOS
+# Install Gantry package
+
+INSERT INTO `#__extensions` (`package_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `access`, `protected`, `manifest_cache`, `params`, `custom_data`, `checked_out`, `checked_out_time`, `ordering`, `state`, `locked`) VALUES
+(0,'pkg_gantry5','package','pkg_gantry5','',0,1,1,0,'','{}','',@null_user,@null_time,0,0,0);
+
+SELECT @package_id := LAST_INSERT_ID();
+
+# Install Gantry extensions
+
+INSERT INTO `#__extensions` (`package_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `access`, `protected`, `manifest_cache`, `params`, `custom_data`, `checked_out`, `checked_out_time`, `ordering`, `state`, `locked`) VALUES
+(@package_id,'plg_system_gantry5','plugin','gantry5','system',0,1,1,0,'','{}','',@null_user,@null_time,0,0,0),
+(@package_id,'plg_quickicon_gantry5','plugin','gantry5','quickicon',0,1,1,0,'','{}','',@null_user,@null_time,0,0,0),
+(@package_id,'plg_gantry5_preset','plugin','preset','gantry5',0,1,1,0,'','{\"preset\":\"presets\",\"reset\":\"reset-settings\"}','',@null_user,@null_time,0,0,0),
+(@package_id,'mod_gantry5_particle','module','mod_gantry5_particle','',0,1,0,0,'','{\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"static\"}','',@null_user,@null_time,0,0,0),
+(@package_id,'gantry5_nucleus','file','gantry5_nucleus','',0,1,0,0,'','{}','',@null_user,@null_time,0,0,0),
+(@package_id,'com_gantry5','component','com_gantry5','',1,1,0,0,'','{}','',@null_user,@null_time,0,0,0),
+(@package_id,'Gantry 5 Framework','library','gantry5','',0,1,1,0,'','{}','',@null_user,@null_time,0,0,0);
+
+# Install Gantry theme
+
+INSERT INTO `#__extensions` (`package_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `access`, `protected`, `manifest_cache`, `params`, `custom_data`, `checked_out`, `checked_out_time`, `ordering`, `state`, `locked`) VALUES
+(0,@theme_name,'template',@theme_name,'',0,1,1,0,'','{}','',@null_user,@null_time,0,0,0);
+
+SELECT @theme_id := LAST_INSERT_ID();
+
+# Update sites
+
+INSERT INTO `#__update_sites` (`name`, `type`, `location`, `enabled`, `last_check_timestamp`, `extra_query`, `checked_out`, `checked_out_time`) VALUES
+('Gantry 5','extension','http://updates.gantry.org/5.0/joomla/pkg_gantry5.xml',1,0,'',@null_user,@null_time);
+INSERT INTO `#__update_sites_extensions` (`update_site_id`, `extension_id`) VALUES (LAST_INSERT_ID(),@package_id);
+
+INSERT INTO `#__update_sites` (`name`, `type`, `location`, `enabled`, `last_check_timestamp`, `extra_query`, `checked_out`, `checked_out_time`) VALUES
+('Gantry 5','collection','http://updates.gantry.org/5.0/joomla/list.xml',1,0,'',@null_user,@null_time);
+INSERT INTO `#__update_sites_extensions` (`update_site_id`, `extension_id`) VALUES (LAST_INSERT_ID(),@package_id);
+
+IF @theme_server != '' THEN
+  INSERT INTO `#__update_sites` (`name`, `type`, `location`, `enabled`, `last_check_timestamp`, `extra_query`, `checked_out`, `checked_out_time`) VALUES
+  (@theme_title,'extension',@theme_server,1,0,'',@null_user,@null_time);
+  INSERT INTO `#__update_sites_extensions` (`update_site_id`, `extension_id`) VALUES (LAST_INSERT_ID(),@theme_id);
+END IF;
+
+EOS;
+
+    protected function dumpOutlinesSql(array $export, $themeTitle)
+    {
+        $outlines = [];
+        foreach ($export['outlines'] as $outline) {
+            $id = isset($outline['id']) ? $outline['id'] : null;
+            if (!$id) {
+                continue;
+            }
+
+            $home = !empty($outline['home']) ? '1' : '0';
+            $outlineTitle = $outline['title'];
+            $outlinePreset = $outline['preset'];
+
+            $outlines[] = "({$id},@theme_name,0,'{$home}','{$themeTitle} - {$outlineTitle}',0,'','{\"configuration\":\"{$id}\",\"preset\":\"{$outlinePreset}\"}')";
+        }
+
+        $out = '';
+        if ($outlines) {
+            $out .= "\n# Template styles\n\n";
+            $out .= 'INSERT INTO `#__template_styles` (`id`, `template`, `client_id`, `home`, `title`, `inheritable`, `parent`, `params`) VALUES';
+            $out .= "\n" . implode(",\n", $outlines) . ';';
+        }
+
+        return $out;
+    }
+
+    protected function dumpMenusSql(array $export)
+    {
+        $menus = [];
+        foreach ($export['menus'] as $menuType => $menu) {
+            $id = isset($menu['id']) ? $menu['id'] : null;
+            if (!$id) {
+                continue;
+            }
+
+            $menuTitle = $menu['title'];
+            $menuDescription = $menu['description'];
+
+            $menus[] = "({$id},0,'{$menuType}','{$menuTitle}','{$menuDescription}',0)";
+        }
+
+        $out = '';
+        if ($menus) {
+            $out .= "\n\n# Menus\n\n";
+            $out .= 'INSERT INTO `#__menu_types` (`id`, `asset_id`, `menutype`, `title`, `description`, `client_id`) VALUES';
+            $out .= "\n" . implode(",\n", $menus) . ';';
+            $out .= "\n\n# Menu Items\n\n";
+
+            $finder = new MenuItemFinder();
+
+            $out .= $finder->limit(0)->find()->exportSql();
+        }
+
+        return $out;
+    }
+
+    protected function dumpModulesSql()
+    {
+        $finder = new ModuleFinder();
+
+        return $finder->limit(0)->find()->exportSql();
+    }
+
+    protected function dumpContentSql()
+    {
+        $categories = new CategoryFinder();
+        $content = new ContentFinder();
+        $contacts = new ContactDetailsFinder();
+
+        $out = "\n\n# Categories\n";
+        $out .= $categories->limit(0)->find()->exportSql();
+        $out .= "\n\n# Articles\n";
+        $out .= $content->limit(0)->find()->exportSql();
+        $out .= "\n\n# Contacts\n";
+        $out .= $contacts->limit(0)->find()->exportSql();
+
+        return $out;
     }
 }
