@@ -16,6 +16,7 @@ namespace Gantry\Admin\Controller\Html;
 
 use Gantry\Component\Admin\HtmlController;
 use Gantry\Framework\Exporter;
+use Joomla\CMS\Version;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use Symfony\Component\Yaml\Yaml;
 
@@ -106,7 +107,11 @@ class Export extends HtmlController
         }
 
         if (!empty($exported['joomla']['mysql'])) {
-            $zip->addFromString('joomla/mysql/custom.sql', $exported['joomla']['mysql']);
+            if (Version::MAJOR_VERSION >= 4) {
+                $zip->addFromString('joomla/mysql/custom.sql', $exported['joomla']['mysql']);
+            } else {
+                $zip->addFromString('joomla/mysql/sample_data.sql', $exported['joomla']['mysql']);
+            }
         }
 
         $zip->close();
