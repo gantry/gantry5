@@ -107,11 +107,7 @@ class Export extends HtmlController
         }
 
         if (!empty($exported['joomla']['mysql'])) {
-            if (Version::MAJOR_VERSION >= 4) {
-                $zip->addFromString('joomla/mysql/custom.sql', $exported['joomla']['mysql']);
-            } else {
-                $zip->addFromString('joomla/mysql/sample_data.sql', $exported['joomla']['mysql']);
-            }
+            $zip->addFromString('joomla/mysql/custom.sql', $exported['joomla']['mysql']);
         }
 
         $zip->close();
