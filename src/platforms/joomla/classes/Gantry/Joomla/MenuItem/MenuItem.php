@@ -34,7 +34,7 @@ class MenuItem extends AbstractObject
             $components = static::getComponents();
             $component = $components[$component]->name;
 
-            $array = $this->getFieldValues(['asset_id']);
+            $array = $this->getFieldValues(['asset_id', 'checked_out', 'checked_out_time']);
             $array['`component_id`'] = '`extension_id`';
 
             $keys = implode(',', array_keys($array));
@@ -44,21 +44,6 @@ class MenuItem extends AbstractObject
         }
 
         return $this->getCreateSql(['asset_id']) . ';';
-    }
-
-    protected function fixValue($table, $k, $v)
-    {
-        // Prepare and sanitize the fields and values for the database query.
-        if (in_array($k, ['checked_out', 'created_by', 'modified_by'], true) && !$v) {
-            $v = '@null_user';
-        } elseif (in_array($k, ['checked_out_time', 'publish_up', 'publish_down', 'created', 'created_time', 'modified_time'], true) && ($v === null || $v === '0000-00-00 00:00:00')) {
-            $v = '@null_time';
-        } elseif (is_string($v)) {
-            $dbo = $table->getDbo();
-            $v = $dbo->quote($v);
-        }
-
-        return $v;
     }
 
     protected static function getComponents()

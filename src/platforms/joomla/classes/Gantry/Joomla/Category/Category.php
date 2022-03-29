@@ -133,6 +133,6 @@ class Category extends AbstractObject
 
     public function exportSql()
     {
-        return $this->getCreateSql(['asset_id']) . ';';
+        return $this->getCreateSql(['asset_id', 'checked_out', 'checked_out_time', 'created_user_id', 'modified_user_id', 'hits', 'version']) . ';';
     }
 }

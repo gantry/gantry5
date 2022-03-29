@@ -9,7 +9,7 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-namespace Gantry\Joomla\ContactDetails;
+namespace Gantry\Joomla\Contact;
 
 use Gantry\Joomla\Object\Collection;
 use Gantry\Joomla\Object\Finder;
@@ -17,10 +17,10 @@ use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 
 /**
- * Class ContactDetailsFinder
- * @package Gantry\Joomla\ContactDetails
+ * Class ContactFinder
+ * @package Gantry\Joomla\Contact
  */
-class ContactDetailsFinder extends Finder
+class ContactFinder extends Finder
 {
     /** @var string */
     protected $table = '#__contact_details';
@@ -54,7 +54,7 @@ class ContactDetailsFinder extends Finder
             return $ids;
         }
 
-        return ContactDetails::getInstances($ids, $this->readonly);
+        return Contact::getInstances($ids, $this->readonly);
     }
 
     /**

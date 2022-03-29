@@ -80,6 +80,7 @@ class ModuleCollection extends Collection
         $out = '';
         if ($modules) {
             $out .= "\n\n# Modules\n";
+            $out .= "\nDELETE FROM `#__modules` WHERE `client_id` = 0;\n";
             $out .= implode("\n", $modules);
         }
 

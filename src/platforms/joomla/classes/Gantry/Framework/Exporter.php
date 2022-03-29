@@ -15,7 +15,7 @@ use Gantry\Component\Layout\Layout;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Joomla\Category\Category;
 use Gantry\Joomla\Category\CategoryFinder;
-use Gantry\Joomla\ContactDetails\ContactDetailsFinder;
+use Gantry\Joomla\Contact\ContactFinder;
 use Gantry\Joomla\Content\Content;
 use Gantry\Joomla\Content\ContentFinder;
 use Gantry\Joomla\MenuItem\MenuItemFinder;
@@ -552,6 +552,7 @@ EOS;
         $out = '';
         if ($outlines) {
             $out .= "\n# Template styles\n\n";
+            $out .= 'UPDATE `#__template_styles` SET `home` = 0 WHERE `client_id` = 0;' . "\n";
             $out .= 'INSERT INTO `#__template_styles` (`id`, `template`, `client_id`, `home`, `title`, `inheritable`, `parent`, `params`) VALUES';
             $out .= "\n" . implode(",\n", $outlines) . ';';
         }
@@ -600,7 +601,7 @@ EOS;
     {
         $categories = new CategoryFinder();
         $content = new ContentFinder();
-        $contacts = new ContactDetailsFinder();
+        $contacts = new ContactFinder();
 
         $out = "\n\n# Categories\n";
         $out .= $categories->limit(0)->find()->exportSql();
