@@ -135,4 +135,16 @@ class Category extends AbstractObject
     {
         return $this->getCreateSql(['asset_id', 'checked_out', 'checked_out_time', 'created_user_id', 'modified_user_id', 'hits', 'version']) . ';';
     }
+
+    protected function fixValue($table, $k, $v)
+    {
+        if ($k === '`created_time`' || $k === '`modified_time`') {
+            $v = 'NOW()';
+        } elseif (is_string($v)) {
+            $dbo = $table->getDbo();
+            $v = $dbo->quote($v);
+        }
+
+        return $v;
+    }
 }

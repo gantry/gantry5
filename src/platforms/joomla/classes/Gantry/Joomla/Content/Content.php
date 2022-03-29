@@ -261,4 +261,16 @@ class Content extends AbstractObject
     {
         return $this->getCreateSql(['asset_id', 'created_by', 'modified_by', 'checked_out', 'checked_out_time', 'publish_up', 'publish_down', 'version', 'xreference']) . ';';
     }
+
+    protected function fixValue($table, $k, $v)
+    {
+        if ($k === '`created`' || $k === '`modified`') {
+            $v = 'NOW()';
+        } elseif (is_string($v)) {
+            $dbo = $table->getDbo();
+            $v = $dbo->quote($v);
+        }
+
+        return $v;
+    }
 }
