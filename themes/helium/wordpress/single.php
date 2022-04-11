@@ -11,15 +11,17 @@
 
 defined('ABSPATH') or die;
 
+use Gantry\Framework\Gantry;
+use Gantry\Framework\Theme;
 use Timber\Timber;
 
 /*
  * The Template for displaying all single posts
  */
 
-$gantry = Gantry\Framework\Gantry::instance();
+$gantry = Gantry::instance();
 
-/** @var \Gantry\Framework\Theme $theme */
+/** @var Theme $theme */
 $theme  = $gantry['theme'];
 
 // We need to render contents of <head> before plugin content gets added.

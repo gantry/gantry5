@@ -11,15 +11,17 @@
 
 defined('ABSPATH') or die;
 
+use Gantry\Framework\Gantry;
+use Gantry\Framework\Theme;
 use Timber\Timber;
 
 /*
  * The template to display when page is offline
  */
 
-$gantry = Gantry\Framework\Gantry::instance();
+$gantry = Gantry::instance();
 
-/** @var \Gantry\Framework\Theme $theme */
+/** @var Theme $theme */
 $theme  = $gantry['theme'];
 $theme->setLayout('_offline', true);
 

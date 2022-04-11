@@ -11,6 +11,9 @@
 
 defined('ABSPATH') or die;
 
+use Gantry\Component\Config\Config;
+use Gantry\Framework\Gantry;
+use Gantry\Framework\Theme;
 use Timber\Timber;
 
 /*
@@ -21,12 +24,12 @@ use Timber\Timber;
  * E.g., it puts together the home page when no home.php file exists
  */
 
-$gantry = Gantry\Framework\Gantry::instance();
+$gantry = Gantry::instance();
 
-/** @var \Gantry\Framework\Theme $theme */
+/** @var Theme $theme */
 $theme  = $gantry['theme'];
 
-/** @var \Gantry\Component\Config\Config $config */
+/** @var Config $config */
 $config = $gantry['config'];
 
 global $paged;
@@ -57,7 +60,7 @@ if ($cat_include) {
 
 // Override the main query only when $cat variable is not empty
 if ($cat) {
-    \query_posts(['cat' => $cat, 'paged' => $paged]);
+    query_posts(['cat' => $cat, 'paged' => $paged]);
 }
 
 $context['posts']      = Timber::get_posts();
@@ -65,7 +68,7 @@ $context['pagination'] = Timber::get_pagination();
 
 $templates = ['index.html.twig'];
 
-if (\is_home()) {
+if (is_home()) {
     array_unshift($templates, 'home.html.twig');
 }
 

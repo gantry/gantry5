@@ -11,6 +11,8 @@
 
 defined('ABSPATH') or die;
 
+use Gantry\Framework\Gantry;
+use Gantry\Framework\Theme;
 use Timber\Timber;
 
 /*
@@ -18,9 +20,9 @@ use Timber\Timber;
  * We use this to start our output buffer and render into the views/page-plugin.html.twig template in footer.php
  */
 
-$gantry = Gantry\Framework\Gantry::instance();
+$gantry = Gantry::instance();
 
-/** @var \Gantry\Framework\Theme $theme */
+/** @var Theme $theme */
 $theme  = $gantry['theme'];
 
 // We need to render contents of <head> before plugin content gets added.

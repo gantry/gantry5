@@ -9,15 +9,20 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
+use Gantry\Framework\Platform;
+use Gantry\Framework\Theme;
+
 class_exists('\\Gantry\\Framework\\Gantry') or die;
 
 /**
  * Define the template.
  */
-class GantryTheme extends \Gantry\Framework\Theme {}
+class GantryTheme extends Theme
+{
+}
 
 // Initialize theme stream.
-/** @var \Gantry\Framework\Platform $platform */
+/** @var Platform $platform */
 $platform = $gantry['platform'];
 $platform->set(
     'streams.gantry-theme.prefixes',

@@ -9,6 +9,8 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
+use Gantry\Framework\ThemeInstaller;
+
 defined('ABSPATH') or die;
 
 /**
@@ -19,9 +21,9 @@ class G5_HydrogenInstallerScript
     /**
      * Called by TemplateInstaller to customize post-installation.
      *
-     * @param \Gantry\Framework\ThemeInstaller $installer
+     * @param ThemeInstaller $installer
      */
-    public function installDefaults(Gantry\Framework\ThemeInstaller $installer)
+    public function installDefaults(ThemeInstaller $installer)
     {
         // Create default outlines etc.
         $installer->createDefaults();
@@ -30,9 +32,9 @@ class G5_HydrogenInstallerScript
     /**
      * Called by TemplateInstaller to customize sample data creation.
      *
-     * @param \Gantry\Framework\ThemeInstaller $installer
+     * @param ThemeInstaller $installer
      */
-    public function installSampleData(Gantry\Framework\ThemeInstaller $installer)
+    public function installSampleData(ThemeInstaller $installer)
     {
         // Create sample data.
         $installer->createSampleData();

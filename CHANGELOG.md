@@ -5,6 +5,9 @@
    1. [](#bugfix)
         - Fixed fatal error if menu item child cannot be accessed from the menu (#3025)
         - Fixed missing translation for Prev/Next in Content Array particle (#3023)
+2. [WordPress](#wordpress)
+    1. [](#improved)
+        - Improved Helium and Hydrogen themes
 
 # 5.5.12
 ## 03/29/2022

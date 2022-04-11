@@ -9,6 +9,8 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
+use Gantry\Framework\Theme;
+
 defined('ABSPATH') or die;
 
 // Note: This file must be PHP 5.2 compatible.
@@ -29,19 +31,19 @@ if (!$gantry) {
 }
 
 if (!$gantry->isCompatible($requiredGantryVersion)) {
-    $current_theme = \wp_get_theme();
-    $error = sprintf(\__('Please upgrade Gantry 5 Framework to v%s (or later) before using %s theme!', $translationDomain), strtoupper($requiredGantryVersion), $current_theme->get('Name'));
+    $current_theme = wp_get_theme();
+    $error = sprintf(__('Please upgrade Gantry 5 Framework to v%s (or later) before using %s theme!', $translationDomain), strtoupper($requiredGantryVersion), $current_theme->get('Name'));
 
-    if(\is_admin()) {
-        \add_action('admin_notices', static function () use ($error) {
+    if(is_admin()) {
+        add_action('admin_notices', static function () use ($error) {
             echo '<div class="error"><p>' . $error . '</p></div>';
         });
     } else {
-        \wp_die($error);
+        wp_die($error);
     }
 }
 
-/** @var \Gantry\Framework\Theme $theme */
+/** @var Theme $theme */
 $theme = $gantry['theme'];
 
 // Theme helper files that can contain useful methods or filters
@@ -55,8 +57,8 @@ if ($customInclude = locate_template('custom/functions.php')) {
 }
 
 foreach ($helpers as $file) {
-    if (!$filepath = \locate_template($file)) {
-        trigger_error(sprintf(\__('Error locating %s for inclusion', $translationDomain), $file), E_USER_ERROR);
+    if (!$filepath = locate_template($file)) {
+        trigger_error(sprintf(__('Error locating %s for inclusion', $translationDomain), $file), E_USER_ERROR);
     }
 
     require $filepath;

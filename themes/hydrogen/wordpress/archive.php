@@ -11,6 +11,8 @@
 
 defined('ABSPATH') or die;
 
+use Gantry\Framework\Gantry;
+use Gantry\Framework\Theme;
 use Timber\Timber;
 
 /*
@@ -22,9 +24,9 @@ use Timber\Timber;
  * Learn more: http://codex.wordpress.org/Template_Hierarchy
  */
 
-$gantry = Gantry\Framework\Gantry::instance();
+$gantry = Gantry::instance();
 
-/** @var \Gantry\Framework\Theme $theme */
+/** @var Theme $theme */
 $theme  = $gantry['theme'];
 
 // We need to render contents of <head> before plugin content gets added.
@@ -33,21 +35,21 @@ $context['page_head'] = $theme->render('partials/page_head.html.twig', $context)
 
 $templates = ['archive.html.twig', 'index.html.twig'];
 
-$context['title'] = \__('Archive', 'g5_hydrogen');
-if (\is_day()) {
-    $context['title'] = \__('Archive:', 'g5_hydrogen') . ' ' . \get_the_date('j F Y');
-} else if (\is_month()) {
-    $context['title'] = \__('Archive:', 'g5_hydrogen') . ' ' . \get_the_date('F Y');
-} else if (\is_year()) {
-    $context['title'] = \__('Archive:', 'g5_hydrogen') . ' ' . \get_the_date('Y');
-} else if (\is_tag()) {
-    $context['title'] = \single_tag_title('', false);
-} else if (\is_category()) {
-    $context['title'] = \single_cat_title('', false);
-    array_unshift($templates, 'archive-' . \get_query_var('cat') . '.html.twig');
-} else if (\is_post_type_archive()) {
-    $context['title'] = \post_type_archive_title('', false);
-    array_unshift($templates, 'archive-' . \get_post_type() . '.html.twig');
+$context['title'] = __('Archive', 'g5_hydrogen');
+if (is_day()) {
+    $context['title'] = __('Archive:', 'g5_hydrogen') . ' ' . get_the_date('j F Y');
+} else if (is_month()) {
+    $context['title'] = __('Archive:', 'g5_hydrogen') . ' ' . get_the_date('F Y');
+} else if (is_year()) {
+    $context['title'] = __('Archive:', 'g5_hydrogen') . ' ' . get_the_date('Y');
+} else if (is_tag()) {
+    $context['title'] = single_tag_title('', false);
+} else if (is_category()) {
+    $context['title'] = single_cat_title('', false);
+    array_unshift($templates, 'archive-' . get_query_var('cat') . '.html.twig');
+} else if (is_post_type_archive()) {
+    $context['title'] = post_type_archive_title('', false);
+    array_unshift($templates, 'archive-' . get_post_type() . '.html.twig');
 }
 
 $context['posts'] = Timber::get_posts();
