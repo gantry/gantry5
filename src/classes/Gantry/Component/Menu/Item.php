@@ -259,6 +259,8 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
      */
     public function groups()
     {
+        $menu = $this->menu();
+
         // Grouped by column counts.
         if ($this->items['columns_count']) {
             $children = $this->children;
@@ -276,7 +278,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
 
             foreach ($list as &$items) {
                 foreach ($items as $id => &$item) {
-                    $item = $this->menu()[$id];
+                    $item = $menu[$id];
                 }
                 unset($item);
 
@@ -293,7 +295,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
             foreach ($this->groups as $i => $group) {
                 $list[$i] = [];
                 foreach ($group as $id => $value) {
-                    $item = $this->menu()[$id];
+                    $item = $menu[$id];
                     if ($item) {
                         $list[$i][] = $item;
                     }
@@ -449,7 +451,9 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
 
                         // Assign each menu items to the group.
                         $item = $menu[$key];
-                        $item->group = $i;
+                        if ($item) {
+                            $item->group = $i;
+                        }
                     }
                 }
 
