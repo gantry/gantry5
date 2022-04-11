@@ -218,11 +218,11 @@ $parameters = array(
 );
 $options = getopt(implode('', array_keys($parameters)), $parameters);
 
-$input_file = $options['input'];
-$output_file = $options['output'];
+$input_file = isset($options['input']) ? $options['input'] : null;
+$output_file = isset($options['output']) ? $options['output'] : null;
 $compile = isset($options['compile']);
 
-if (!file_exists($input_file) || !is_file($input_file)) {
+if (!is_file($input_file)) {
     echo sprintf("No file %s exists\n", $input_file);
     die;
 }

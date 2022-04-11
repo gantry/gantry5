@@ -125,3 +125,9 @@ msgstr "yrs"
 
 msgid "GANTRY5_ENGINE_NICETIME_DEC_PLURAL"
 msgstr "decs"
+
+msgid "GANTRY5_ENGINE_PREV"
+msgstr "Prev"
+
+msgid "GANTRY5_ENGINE_NEXT"
+msgstr "Next"

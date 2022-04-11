@@ -150,8 +150,8 @@
 
         {% if total > limit.total and display.pagination_buttons %}
             <div class="g-content-array-pagination">
-                <button class="button float-left contentarray-button pagination-button pagination-button-prev" data-id="{{ id }}" data-start="{{ max(0, start - limit.total) }}"{{ start - limit.total < 0 ? ' disabled' }}>Prev</button>
-                <button class="button float-right contentarray-button pagination-button pagination-button-next" data-id="{{ id }}" data-start="{{ start + limit.total }}"{{ start + limit.total >= total ? ' disabled' }}>Next</button>
+                <button class="button float-left contentarray-button pagination-button pagination-button-prev" data-id="{{ id }}" data-start="{{ max(0, start - limit.total) }}"{{ start - limit.total < 0 ? ' disabled' }}>{{ 'GANTRY5_ENGINE_PREV'|trans }}</button>
+                <button class="button float-right contentarray-button pagination-button pagination-button-next" data-id="{{ id }}" data-start="{{ start + limit.total }}"{{ start + limit.total >= total ? ' disabled' }}>{{ 'GANTRY5_ENGINE_NEXT'|trans }}</button>
                 <div class="clearfix"></div>
             </div>
         {% endif %}
