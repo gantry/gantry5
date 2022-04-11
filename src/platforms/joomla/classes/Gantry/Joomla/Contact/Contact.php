@@ -12,6 +12,7 @@
 namespace Gantry\Joomla\Contact;
 
 use Gantry\Joomla\Object\AbstractObject;
+use Joomla\CMS\Table\Table;
 
 /**
  * Class Contact
@@ -30,5 +31,22 @@ class Contact extends AbstractObject
     public function exportSql()
     {
         return $this->getCreateSql(['asset_id', 'checked_out', 'checked_out_time', 'created_by', 'modified_by', 'publish_up', 'publish_down', 'version', 'hits']) . ';';
+    }
+
+    /**
+     * Method to get the table object.
+     *
+     * @return  Table  The table object.
+     */
+    protected static function getTable()
+    {
+        if (\JVersion::MAJOR_VERSION === 3) {
+            require_once JPATH_ADMINISTRATOR . '/components/com_contact/tables/contact.php';
+
+            static::$table = 'Contact';
+            static::$tablePrefix = 'ContactTable';
+        }
+
+        return parent::getTable();
     }
 }
