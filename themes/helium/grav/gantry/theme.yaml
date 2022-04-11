@@ -32,7 +32,7 @@ configuration:
   theme:
     parent: g5_helium
     base: 'gantry-theme://common'
-    file: 'gantry-theme://include/theme.php'
+    file: 'gantry-theme://includes/theme.php'
     class: '\Gantry\Framework\Theme'
 
   fonts:

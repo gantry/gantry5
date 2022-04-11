@@ -487,6 +487,7 @@ EOS;
     }
 
     protected $installSql = <<<EOS
+
 # Install Gantry package
 
 INSERT INTO `#__extensions` (`package_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `access`, `protected`, `manifest_cache`, `params`, `custom_data`) VALUES
