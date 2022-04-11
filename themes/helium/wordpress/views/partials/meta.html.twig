@@ -52,11 +52,11 @@
                 {% endif %}
 
                 {% if post.comment_count == '0' %}
-                    {% set comment_count = __('No comments', 'g5_helium') %}
+                    {% set comment_count = __('No comments', textdomain) %}
                 {% elseif post.comment_count == '1' %}
-                    {% set comment_count = post.comment_count ~ ' ' ~ __('Comment', 'g5_helium') %}
+                    {% set comment_count = post.comment_count ~ ' ' ~ __('Comment', textdomain) %}
                 {% else %}
-                    {% set comment_count = post.comment_count ~ ' ' ~ __('Comments', 'g5_helium') %}
+                    {% set comment_count = post.comment_count ~ ' ' ~ __('Comments', textdomain) %}
                 {% endif %}
 
                 {% if gantry.config.get('content.' ~ scope ~ '.meta-comments.link', '0') %}

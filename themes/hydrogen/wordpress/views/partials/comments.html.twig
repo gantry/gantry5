@@ -13,7 +13,7 @@
 
         {% if post.comments %}
             <div id="responses">
-                <h3>{{ __('Comments', 'g5_hydrogen') }}</h3>
+                <h3>{{ __('Comments', textdomain) }}</h3>
 
                 <ol class="commentlist">
                     {{ function('wp_list_comments', {style: 'ol', type: 'comment', callback: ['G5ThemeHelper', 'comments']}) }}
@@ -21,8 +21,8 @@
 
                 <footer>
                     <nav id="comments-nav">
-                        <div class="comments-previous">{{ function('previous_comments_link', '<i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i> ' ~ __( 'Older comments', 'g5_hydrogen')) }}</div>
-                        <div class="comments-next">{{ function('next_comments_link', __( 'Newer comments', 'g5_hydrogen') ~ ' <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>') }}</div>
+                        <div class="comments-previous">{{ function('previous_comments_link', '<i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i> ' ~ __( 'Older comments', textdomain)) }}</div>
+                        <div class="comments-next">{{ function('next_comments_link', __( 'Newer comments', textdomain) ~ ' <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>') }}</div>
                     </nav>
                 </footer>
             </div>
@@ -33,14 +33,14 @@
             {% do action('comment_form_before') %}
 
             <div id="respond">
-                <h3>{{ function('comment_form_title', __('Leave a Reply', 'g5_hydrogen'), __('Leave a Reply to %s', 'g5_hydrogen')) }}</h3>
+                <h3>{{ function('comment_form_title', __('Leave a Reply', textdomain), __('Leave a Reply to %s', textdomain)) }}</h3>
 
                 <p class="cancel-comment-reply">{{ function('cancel_comment_reply_link') }}</p>
 
                 {% if site.comment_registration and not is_user_logged_in %}
 
                     <div class="notice">
-                        <p class="alert-info">{{ __('You must be <a href="%s">logged in</a> to post a comment.', 'g5_hydrogen')|format(function('wp_login_url', post.link)) }}</p>
+                        <p class="alert-info">{{ __('You must be <a href="%s">logged in</a> to post a comment.', textdomain)|format(function('wp_login_url', post.link)) }}</p>
                     </div>
 
                     {% do action('comment_form_must_log_in_after') %}
@@ -55,7 +55,7 @@
 
                         {% if is_user_logged_in %}
 
-                            <p>{{ __('Logged in as <a href="%s/wp-admin/profile.php">%s</a>.', 'g5_hydrogen')|format(site.site_url, current_user.display_name) }} <a href="{{ function('wp_logout_url', post.link) }}" title="{{ __('Log out of this account', 'g5_hydrogen') }}">{{ __('Log out &raquo;', 'g5_hydrogen') }}</a></p>
+                            <p>{{ __('Logged in as <a href="%s/wp-admin/profile.php">%s</a>.', textdomain)|format(site.site_url, current_user.display_name) }} <a href="{{ function('wp_logout_url', post.link) }}" title="{{ __('Log out of this account', textdomain) }}">{{ __('Log out &raquo;', textdomain) }}</a></p>
 
                             {% do action('comment_form_logged_in_after', 'current_user', 'current_user.display_name') %}
 
@@ -64,13 +64,13 @@
                             {% do action('comment_form_before_fields') %}
 
                             <p>
-                                <input type="text" class="inputbox respond-author" name="author" id="author" placeholder="{{ __('Name', 'g5_hydrogen') }} {{ req ? __('(required)', 'g5_hydrogen') : '' }}" value="{{ comment_author|e }}" size="40" tabindex="1" aria-required='true' />
+                                <input type="text" class="inputbox respond-author" name="author" id="author" placeholder="{{ __('Name', textdomain) }} {{ req ? __('(required)', textdomain) : '' }}" value="{{ comment_author|e }}" size="40" tabindex="1" aria-required='true' />
                             </p>
                             <p>
-                                <input type="text" class="inputbox respond-email" name="email" id="email" placeholder="{{ __('Email', 'g5_hydrogen') }} {{ req ? __('(required)', 'g5_hydrogen') : '' }}" value="{{ comment_author_email|e }}" size="40" tabindex="2" aria-required='true' />
+                                <input type="text" class="inputbox respond-email" name="email" id="email" placeholder="{{ __('Email', textdomain) }} {{ req ? __('(required)', textdomain) : '' }}" value="{{ comment_author_email|e }}" size="40" tabindex="2" aria-required='true' />
                             </p>
                             <p>
-                                <input type="text" class="inputbox respond-website" name="url" id="url" placeholder="{{ __( 'Website', 'g5_hydrogen') }}" value="{{ comment_author_url|e }}" size="40" tabindex="3">
+                                <input type="text" class="inputbox respond-website" name="url" id="url" placeholder="{{ __( 'Website', textdomain) }}" value="{{ comment_author_url|e }}" size="40" tabindex="3">
                             </p>
 
                             {% do action('comment_form_after_fields') %}
@@ -78,11 +78,11 @@
                         {% endif %}
 
                         <p>
-                            <textarea  class="inputbox respond-textarea" name="comment" id="comment" placeholder="{{ __( 'Your comment goes here.', 'g5_hydrogen') }}" tabindex="4"></textarea>
+                            <textarea  class="inputbox respond-textarea" name="comment" id="comment" placeholder="{{ __( 'Your comment goes here.', textdomain) }}" tabindex="4"></textarea>
                         </p>
 
-                        <p id="allowed_tags" class="small"><strong>XHTML:</strong> {{ __('You can use these tags:', 'g5_hydrogen') }} <code>{{ function('allowed_tags') }}</code></p>
-                        <p><input name="submit" class="button" type="submit" id="submit" tabindex="5" value="{{ __('Submit Comment', 'g5_hydrogen')|e }}"></p>
+                        <p id="allowed_tags" class="small"><strong>XHTML:</strong> {{ __('You can use these tags:', textdomain) }} <code>{{ function('allowed_tags') }}</code></p>
+                        <p><input name="submit" class="button" type="submit" id="submit" tabindex="5" value="{{ __('Submit Comment', textdomain)|e }}"></p>
 
                         {{ function('comment_id_fields') }}
                         {% do action('comment_form', post.id) %}

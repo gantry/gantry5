@@ -55,6 +55,7 @@ class Theme extends AbstractTheme
 
         $context['site'] = $gantry['site'];
         $context['wordpress'] = $gantry['platform'];
+        $context['textdomain'] = $this->details()->get('configuration.theme.textdomain');
 
         if (!$this->user) {
             $this->user = new User;

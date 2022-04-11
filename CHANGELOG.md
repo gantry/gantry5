@@ -8,6 +8,7 @@
 2. [WordPress](#wordpress)
     1. [](#improved)
         - Improved Helium and Hydrogen themes
+        - Added `textdomain` variable to theme context
 
 # 5.5.12
 ## 03/29/2022
