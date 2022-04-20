@@ -38,7 +38,7 @@ class Page extends Base\Page
 
         $this->home = \is_front_page();
         $this->outline = $container['configuration'];
-        $this->language = (string) $site->language;
+        $this->language = str_replace('_', '-', (string)$site->language);
         $this->direction = function_exists('is_rtl') && is_rtl() ? 'rtl' : 'ltr';
     }
 
