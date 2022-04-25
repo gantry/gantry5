@@ -144,7 +144,9 @@ class ConfigServiceProvider implements ServiceProviderInterface
 
         // Set FA default in Joomla
         if (class_exists(Version::class)) {
-            $config->def('page.fontawesome.version', Version::MAJOR_VERSION < 4 ? 'fa4' : 'fa5css');
+            $config->def('page.fontawesome.default_version', Version::MAJOR_VERSION < 4 ? 'fa4' : 'fa5css');
+        } else {
+            $config->def('page.fontawesome.default_version', 'fa4');
         }
 
         return $config;

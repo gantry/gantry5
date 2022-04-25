@@ -2,7 +2,7 @@
 {%- do gantry.theme.loadAtoms() -%}
 
 {% set faEnabled = gantry.config.page.fontawesome.enable|default(1) %}
-{% set faVersion = gantry.config.page.fontawesome.version|default('fa4') %}
+{% set faVersion = gantry.config.page.fontawesome.version ?? gantry.config.page.fontawesome.default_version ?? 'fa4' %}
 {% assets with { priority: 10 } %}
     {% block head_stylesheets -%}
         <link rel="stylesheet" href="gantry-engine://css-compiled/nucleus.css" type="text/css"/>

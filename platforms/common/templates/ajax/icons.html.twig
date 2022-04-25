@@ -26,7 +26,7 @@
     </ul>
 </div>
 
-{% set faVersion = gantry.config.page.fontawesome.version|default('fa4')|substr(0, 3)|upper %}
+{% set faVersion = (gantry.config.page.fontawesome.version ?? gantry.config.page.fontawesome.default_version ?? 'fa4')|substr(0, 3)|upper %}
 
 <div class="alert alert-info">{{ 'Displaying %s icons (see <strong>Base Outline</strong> &gt; <strong>Page Settings</strong> &gt; <strong>Font Awesome</strong>).'|trans(faVersion)|raw }}</div>
 
