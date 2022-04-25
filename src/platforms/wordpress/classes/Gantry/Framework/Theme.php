@@ -561,7 +561,13 @@ class Theme extends AbstractTheme
         if (!file_exists(GANTRY5_PATH . $lookup)) {
             $lookup = '/engines/wordpress/' . $domain . '/languages';
         }
-        \load_plugin_textdomain($domain, false, basename(GANTRY5_PATH) . $lookup);
+        $lookup = basename(GANTRY5_PATH) . $lookup;
+
+        if (\load_plugin_textdomain($domain, false, $lookup) === false) {
+            \add_filter('plugin_locale', 'modify_gantry5_locale', 10, 2);
+            \load_plugin_textdomain($domain, false, $lookup);
+            \remove_filter('plugin_locale', 'modify_gantry5_locale', 10);
+        }
 
         $domain = $this->details()->get('configuration.theme.textdomain', $this->name);
         \load_theme_textdomain($domain, $this->path . '/languages');

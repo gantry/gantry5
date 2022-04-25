@@ -9,8 +9,9 @@
     1. [](#improved)
         - Improved Helium and Hydrogen themes
         - Added `textdomain` variable to theme context
-    1. [](#bugfix)
+    2. [](#bugfix)
         - Fixed incorrect language code (#3029)
+        - Fixed loading default language file for nucleus
 
 # 5.5.12
 ## 03/29/2022

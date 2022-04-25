@@ -103,14 +103,14 @@ $languages_path = basename(GANTRY5_PATH) . '/admin/languages';
 
 if (load_plugin_textdomain($domain, false, $languages_path) === false) {
     add_filter('plugin_locale', 'modify_gantry5_locale', 10, 2);
+    load_plugin_textdomain($domain, false, $languages_path);
+    remove_filter('plugin_locale', 'modify_gantry5_locale', 10);
 }
-
-load_plugin_textdomain($domain, false, $languages_path);
 
 function modify_gantry5_locale($locale, $domain = null)
 {
     // Revert the gantry5 domain locale to en_US
-    if (isset($domain) && $domain === 'gantry5') {
+    if ($domain === 'gantry5' || $domain === 'nucleus') {
         $locale = 'en_US';
     }
 
