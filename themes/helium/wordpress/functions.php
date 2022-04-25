@@ -13,7 +13,13 @@ use Gantry\Framework\Theme;
 
 defined('ABSPATH') or die;
 
-// Note: This file must be PHP 5.2 compatible.
+/*
+ * WARNING: This file will be overridden during theme update. Do not change this file!
+ *
+ * If you want to add your custom functions, put your code into `custom/functions.php` instead!
+ */
+
+// Note: This file must be PHP 5.6 compatible.
 
 // Check min. required version of Gantry 5
 $requiredGantryVersion = '5.5';

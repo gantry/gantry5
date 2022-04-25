@@ -64,7 +64,7 @@
                 {% endif %}
 
                 {% if gantry.config.get('content.' ~ scope ~ '.read-more.mode', 'auto') == 'always' or (gantry.config.get('content.' ~ scope ~ '.read-more.mode', 'auto') == 'auto' and (readmore or post.post_excerpt is not empty or gantry.config.get('content.' ~ scope ~ '.content.type', 'content') == 'gexcerpt') )  %}
-                    <a href="{{ post.link }}" class="read-more button">
+                    <a href="{{ post.link }}" class="read-more button button-xsmall">
                         {% if readmore[1] is not empty %}
                             {{- readmore[1] -}}
                         {% else %}

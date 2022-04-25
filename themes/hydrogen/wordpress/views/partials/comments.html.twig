@@ -13,7 +13,7 @@
 
         {% if post.comments %}
             <div id="responses">
-                <h3>{{ __('Comments', textdomain) }}</h3>
+                <h2 class="g-title">{{ post.comment_count ~ ' ' ~ __('Comments', textdomain) }}</h2>
 
                 <ol class="commentlist">
                     {{ function('wp_list_comments', {style: 'ol', type: 'comment', callback: ['G5ThemeHelper', 'comments']}) }}
@@ -21,8 +21,8 @@
 
                 <footer>
                     <nav id="comments-nav">
-                        <div class="comments-previous">{{ function('previous_comments_link', '<i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i> ' ~ __( 'Older comments', textdomain)) }}</div>
-                        <div class="comments-next">{{ function('next_comments_link', __( 'Newer comments', textdomain) ~ ' <i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>') }}</div>
+                        <div class="comments-previous">{{ function('previous_comments_link', '<i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i><span> ' ~ __( 'Older comments', textdomain) ~ '</span>') }}</div>
+                        <div class="comments-next">{{ function('next_comments_link', '<span>' ~ __( 'Newer comments', textdomain) ~ ' </span><i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>') }}</div>
                     </nav>
                 </footer>
             </div>
@@ -40,7 +40,7 @@
                 {% if site.comment_registration and not is_user_logged_in %}
 
                     <div class="notice">
-                        <p class="alert-info">{{ __('You must be <a href="%s">logged in</a> to post a comment.', textdomain)|format(function('wp_login_url', post.link)) }}</p>
+                        <p class="alert alert-info">{{ __('You must be <a href="%s">logged in</a> to post a comment.', textdomain)|format(function('wp_login_url', post.link)) }}</p>
                     </div>
 
                     {% do action('comment_form_must_log_in_after') %}
@@ -78,7 +78,7 @@
                         {% endif %}
 
                         <p>
-                            <textarea  class="inputbox respond-textarea" name="comment" id="comment" placeholder="{{ __( 'Your comment goes here.', textdomain) }}" tabindex="4"></textarea>
+                            <textarea class="inputbox respond-textarea" name="comment" id="comment" placeholder="{{ __( 'Your comment goes here.', textdomain) }}" tabindex="4"></textarea>
                         </p>
 
                         <p id="allowed_tags" class="small"><strong>XHTML:</strong> {{ __('You can use these tags:', textdomain) }} <code>{{ function('allowed_tags') }}</code></p>
