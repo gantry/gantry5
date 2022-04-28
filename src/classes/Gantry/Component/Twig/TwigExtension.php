@@ -468,12 +468,12 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
      * @example {{ url('theme://images/logo.png')|default('http://www.placehold.it/150x100/f4f4f4') }}
      *
      * @param  string $input       Resource to be located.
-     * @param  bool $domain        True to include domain name.
+     * @param  bool|null $domain   True to include domain name.
      * @param  int $timestamp_age  Append timestamp to files that are less than x seconds old. Defaults to a week.
      *                             Use value <= 0 to disable the feature.
      * @return string|null         Returns url to the resource or null if resource was not found.
      */
-    public function urlFunc($input, $domain = false, $timestamp_age = null)
+    public function urlFunc($input, $domain = null, $timestamp_age = null)
     {
         $gantry = Gantry::instance();
 

@@ -115,10 +115,10 @@ class Document extends HtmlDocument
     }
 
     /**
-     * @param bool $addDomain
+     * @param bool|null $addDomain
      * @return string
      */
-    public static function domain($addDomain = false)
+    public static function domain($addDomain = null)
     {
         static $domain;
 
@@ -135,8 +135,8 @@ class Document extends HtmlDocument
             $domain = $scheme . $user . $pass . $host . $port;
         }
 
-        // Always append domain in WP.
-        return $addDomain !== null ? $domain : '';
+        // Always append domain in WP (unless told otherwise).
+        return $addDomain !== false ? $domain : '';
     }
 
     /**
