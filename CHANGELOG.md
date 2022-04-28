@@ -15,7 +15,7 @@
     2. [](#bugfix)
         - Fixed incorrect language code (#3029)
         - Fixed loading default language file for nucleus
-        - Fixed CSS to use relative paths for assets
+        - Fixed CSS not to include schema and domain name
 
 # 5.5.12
 ## 03/29/2022
