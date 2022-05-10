@@ -1,6 +1,9 @@
 #g-page-surround {
 	background: $pagesurround-background;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     .g-bodyonly & {
 		color: $base-text-color;
