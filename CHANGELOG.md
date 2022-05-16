@@ -3,7 +3,7 @@
 
 1. [Common](#common)
    1. [](#new)
-       - Implemented possibility to replace `gantry/theme.yaml` with your own in `custom/` folder (#782, #904, #2572, #3032)
+       - Implemented possibility to replace `gantry/theme.yaml` with your own in `custom/` folder (#782, #904, #2578, #3032)
    2. [](#bugfix)
        - Fixed `Config::flatten()` when the value is not defined or isn't an array
 2. [Joomla](#joomla)
