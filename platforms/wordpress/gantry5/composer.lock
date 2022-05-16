@@ -975,33 +975,33 @@
         },
         {
             "name": "timber/timber",
-            "version": "1.19.1",
+            "version": "1.19.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/timber/timber.git",
-                "reference": "3e213fbd3587eb36adec2d5a081824c4722a0acf"
+                "reference": "e1460c04914c97e5d08be06d27f9df958fc17725"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/timber/timber/zipball/3e213fbd3587eb36adec2d5a081824c4722a0acf",
-                "reference": "3e213fbd3587eb36adec2d5a081824c4722a0acf",
+                "url": "https://api.github.com/repos/timber/timber/zipball/e1460c04914c97e5d08be06d27f9df958fc17725",
+                "reference": "e1460c04914c97e5d08be06d27f9df958fc17725",
                 "shasum": ""
             },
             "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3.0|7.*",
+                "composer/installers": "^1.0 || ^2.0",
+                "php": ">=5.3.0 || 7.*",
                 "twig/cache-extension": "^1.5",
-                "twig/twig": "^1.41|^2.10",
-                "upstatement/routes": "0.8.1"
+                "twig/twig": "^1.41 || ^2.10",
+                "upstatement/routes": "0.8.*"
             },
             "require-dev": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
                 "johnpbloch/wordpress": "*",
-                "phpunit/phpunit": "5.7.16|6.*",
+                "phpunit/phpunit": "5.7.16 || 6.*",
                 "squizlabs/php_codesniffer": "3.*",
                 "wp-coding-standards/wpcs": "^2.0",
                 "wpackagist-plugin/advanced-custom-fields": "5.*",
-                "wpackagist-plugin/co-authors-plus": "3.2.*|3.4.*",
+                "wpackagist-plugin/co-authors-plus": "3.2.* || 3.4.*",
                 "yoast/phpunit-polyfills": "^1.0"
             },
             "suggest": {
@@ -1042,7 +1042,7 @@
                 "issues": "https://github.com/timber/timber/issues",
                 "source": "https://github.com/timber/timber"
             },
-            "time": "2021-10-18T13:21:54+00:00"
+            "time": "2022-04-19T19:03:58+00:00"
         },
         {
             "name": "twig/cache-extension",
