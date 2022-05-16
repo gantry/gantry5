@@ -46,7 +46,7 @@ class ThemeDetails implements \ArrayAccess
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $filename = $locator->findResource("gantry-themes://{$theme}/gantry/theme.yaml");
+        $filename = $locator->findResource("gantry-themes://{$theme}/custom/gantry/theme.yaml") ?: $locator->findResource("gantry-themes://{$theme}/gantry/theme.yaml");
         if (!$filename) {
             throw new \RuntimeException(sprintf('Theme %s not found', $theme), 404);
         }
