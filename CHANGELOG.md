@@ -1,3 +1,10 @@
+# 5.5.14
+## mm/dd/2022
+
+1. [Common](#common)
+    1. [](#bugfix)
+        - Fixed `Config::flatten()` when the value is not defined or isn't an array
+
 # 5.5.13
 ## 04/29/2022
 
