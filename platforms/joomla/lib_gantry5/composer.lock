@@ -396,23 +396,23 @@
         },
         {
             "name": "rockettheme/toolbox",
-            "version": "1.6.1",
+            "version": "1.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "fdf0195ced25b83525d3b084c3e81f05de96ac8c"
+                "reference": "99448a20a2f78d6480035d72821ecb9e4dc17032"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/fdf0195ced25b83525d3b084c3e81f05de96ac8c",
-                "reference": "fdf0195ced25b83525d3b084c3e81f05de96ac8c",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/99448a20a2f78d6480035d72821ecb9e4dc17032",
+                "reference": "99448a20a2f78d6480035d72821ecb9e4dc17032",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "php": ">=5.6.0",
                 "pimple/pimple": "^3.0",
-                "symfony/event-dispatcher": "^3.4|^4.0|^5.0",
+                "symfony/event-dispatcher": "^3.4|^4.0",
                 "symfony/yaml": "^3.4|^4.0|^5.0"
             },
             "type": "library",
@@ -458,10 +458,10 @@
                 "rockettheme"
             ],
             "support": {
-                "source": "https://github.com/rockettheme/toolbox/tree/1.6.1",
+                "source": "https://github.com/rockettheme/toolbox/tree/1.6.2",
                 "issues": "https://github.com/rockettheme/toolbox/issues"
             },
-            "time": "2022-02-08T08:36:03+00:00"
+            "time": "2022-06-14T16:24:33+00:00"
         },
         {
             "name": "scssphp/scssphp",

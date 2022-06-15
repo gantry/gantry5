@@ -8,7 +8,7 @@
        - Fixed `Config::flatten()` when the value is not defined or isn't an array
 2. [Joomla](#joomla)
     1. [](#bugfix)
-        - Fixed deprecated message in PHP 8.1 when `moduleclass_sfx` is not defined in a module (Helium/Hydrogen)
+        - Helium / Hydrogen: Fixed deprecated message in PHP 8.1 when `moduleclass_sfx` is not defined in a module
 
 # 5.5.13
 ## 04/29/2022
