@@ -1,6 +1,9 @@
 # 5.5.15
 ## mm/dd/2022
 
+1. [Common](#common)
+    1. [](#improved)
+        - Improved Twig 2/3 compatibility in the template files (#3052)
 2. [Joomla](#joomla)
     1. [](#new)
         - Added Joomla 4.2 support

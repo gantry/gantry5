@@ -11,8 +11,10 @@
 {% endset -%}
 
 {%- set offcanvas = null -%}
-{%- for segment in segments if segment.type == 'offcanvas' %}
-    {%- set offcanvas = segment -%}
+{%- for segment in segments %}
+    {% if segment.type == 'offcanvas' %}
+        {%- set offcanvas = segment -%}
+    {% endif %}
 {% endfor -%}
 
 {%- set page_offcanvas %}
@@ -28,8 +30,10 @@
 
 {%- set page_layout %}
     {% block page_layout %}
-    {% for segment in segments if segment.type != 'offcanvas' %}
-        {% include '@nucleus/layout/' ~ segment.type ~ '.html.twig' with { 'segments': segment.children } %}
+    {% for segment in segments %}
+        {% if segment.type != 'offcanvas' %}
+            {% include '@nucleus/layout/' ~ segment.type ~ '.html.twig' with { 'segments': segment.children } %}
+        {% endif %}
     {% endfor %}
     {% endblock %}
 {% endset -%}

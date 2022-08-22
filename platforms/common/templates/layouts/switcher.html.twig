@@ -66,16 +66,18 @@
             >
                 {{ 'GANTRY5_PLATFORM_BASE_OUTLINE'|trans }}
             </li>
-            {% for key,current in user_conf if key != configuration %}
-                {% set label=current|replace({'_': ' '})|trim|title %}
-                <li tabindex="0"
-                    aria-label="{{ 'GANTRY5_PLATFORM_X_OUTLINE'|trans(label) }}"
-                    role="button"
-                    data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/switch/' ~ key) }}"
-                    class="g-switch-configuration"
-                >
-                    {{ label }}
-                </li>
+            {% for key,current in user_conf %}
+                {% if key != configuration %}
+                    {% set label=current|replace({'_': ' '})|trim|title %}
+                    <li tabindex="0"
+                        aria-label="{{ 'GANTRY5_PLATFORM_X_OUTLINE'|trans(label) }}"
+                        role="button"
+                        data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/switch/' ~ key) }}"
+                        class="g-switch-configuration"
+                    >
+                        {{ label }}
+                    </li>
+                {% endif %}
             {% endfor %}
         </ul>
 
