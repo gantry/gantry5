@@ -4,7 +4,9 @@
 1. [Common](#common)
     1. [](#improved)
         - Improved Twig 2/3 compatibility in the template files (#3052)
-2. [Joomla](#joomla)
+    2. [](#bugfix)
+        - Fixed PHP 8.1 error in Twig (#3052)
+3. [Joomla](#joomla)
     1. [](#new)
         - Added Joomla 4.2 support
 
