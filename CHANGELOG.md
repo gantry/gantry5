@@ -1,3 +1,10 @@
+# 5.5.15
+## mm/dd/2022
+
+2. [Joomla](#joomla)
+    1. [](#new)
+        - Added Joomla 4.2 support
+
 # 5.5.14
 ## 06/15/2022
 
