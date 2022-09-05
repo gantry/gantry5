@@ -9,6 +9,9 @@
 3. [Joomla](#joomla)
     1. [](#new)
         - Added Joomla 4.2 support
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Added WordPress 6 support
 
 # 5.5.14
 ## 06/15/2022
