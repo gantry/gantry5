@@ -975,16 +975,16 @@
         },
         {
             "name": "timber/timber",
-            "version": "1.19.2",
+            "version": "1.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/timber/timber.git",
-                "reference": "e1460c04914c97e5d08be06d27f9df958fc17725"
+                "reference": "3ac8c7629656009b9e0d6d9e4ccda202aad3b8e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/timber/timber/zipball/e1460c04914c97e5d08be06d27f9df958fc17725",
-                "reference": "e1460c04914c97e5d08be06d27f9df958fc17725",
+                "url": "https://api.github.com/repos/timber/timber/zipball/3ac8c7629656009b9e0d6d9e4ccda202aad3b8e0",
+                "reference": "3ac8c7629656009b9e0d6d9e4ccda202aad3b8e0",
                 "shasum": ""
             },
             "require": {
@@ -992,12 +992,12 @@
                 "php": ">=5.3.0 || 7.*",
                 "twig/cache-extension": "^1.5",
                 "twig/twig": "^1.41 || ^2.10",
-                "upstatement/routes": "0.8.*"
+                "upstatement/routes": "0.9.*"
             },
             "require-dev": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
                 "johnpbloch/wordpress": "*",
-                "phpunit/phpunit": "5.7.16 || 6.*",
+                "phpunit/phpunit": "5.7.21 || 6.*",
                 "squizlabs/php_codesniffer": "3.*",
                 "wp-coding-standards/wpcs": "^2.0",
                 "wpackagist-plugin/advanced-custom-fields": "5.*",
@@ -1042,7 +1042,7 @@
                 "issues": "https://github.com/timber/timber/issues",
                 "source": "https://github.com/timber/timber"
             },
-            "time": "2022-04-19T19:03:58+00:00"
+            "time": "2022-06-22T19:42:09+00:00"
         },
         {
             "name": "twig/cache-extension",
@@ -1186,22 +1186,22 @@
         },
         {
             "name": "upstatement/routes",
-            "version": "0.8.1",
+            "version": "0.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Upstatement/routes.git",
-                "reference": "02eb866668f5478d794547aa79e73dd92a989ad9"
+                "reference": "cac3c844ab824e4039fd26edbea5402415aa6d0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Upstatement/routes/zipball/02eb866668f5478d794547aa79e73dd92a989ad9",
-                "reference": "02eb866668f5478d794547aa79e73dd92a989ad9",
+                "url": "https://api.github.com/repos/Upstatement/routes/zipball/cac3c844ab824e4039fd26edbea5402415aa6d0a",
+                "reference": "cac3c844ab824e4039fd26edbea5402415aa6d0a",
                 "shasum": ""
             },
             "require": {
                 "altorouter/altorouter": "^2.0.2",
-                "composer/installers": "~1.0",
-                "php": ">=5.6.0"
+                "composer/installers": "^1.0 || ^2.0",
+                "php": ">=5.6.0|7.*"
             },
             "require-dev": {
                 "phpunit/phpunit": "5.7.16",
@@ -1238,7 +1238,7 @@
                 "source": "https://github.com/Upstatement/routes",
                 "wiki": "https://github.com/Upstatement/routes/wiki"
             },
-            "time": "2021-10-16T00:12:03+00:00"
+            "time": "2022-06-22T19:53:51+00:00"
         }
     ],
     "packages-dev": [

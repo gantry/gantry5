@@ -1,9 +1,18 @@
 # 5.5.16
 ## dd/mm/2022
 
+1. [Common](#common)
+    1. [](#new)
+        - Updated SCSS compiler to v1.11
 2. [Joomla](#joomla)
     1. [](#bugfix)
         - Fixed fatal error in Menu particle on PHP 8 when using Joomla 4 (#3048)
+        - Fixed Menu Manager throwíng deprecated error in PHP 8.1 (#3073)
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.20
+    2. [](#bugfix)
+        - Fixed Menu Manager throwing deprecated error in PHP 8.1 (#3073)
 
 # 5.5.15
 ## 09/05/2022

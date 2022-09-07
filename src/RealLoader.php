@@ -112,10 +112,11 @@ abstract class RealLoader
         /** @var ClassLoader $loader */
         $loader = require $autoload;
 
-        // In PHP >=7.2.5 we need to use newer version of Twig.
+        // In PHP >=7.2.5 we need to use newer version of Pimple and Twig.
         if ($useNewLibraries) {
             $loader->setPsr4('Twig\\', "{$lib}/compat/vendor/twig/twig/src");
             $loader->set('Twig_', "{$lib}/compat/vendor/twig/twig/lib");
+            $loader->set('Pimple', "{$lib}/compat/vendor/pimple/pimple/src");
         }
 
         // Skip registering SCSS compiler until it's needed.

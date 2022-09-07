@@ -5,8 +5,8 @@ setlocale(LC_ALL, ['en_GB.utf8', 'en_GB']);
 date_default_timezone_set('America/Denver');
 chdir(__DIR__ . '/..');
 
-echo "# Running composer update for build script\n";
-composer_update('bin/builder', false);
+//echo "# Running composer update for build script\n";
+//composer_update('bin/builder', false);
 
 chdir('platforms');
 
