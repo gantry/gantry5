@@ -745,8 +745,8 @@ class Menu extends AbstractMenu
         }
 
         $tree = isset($this->base->tree) ? $this->base->tree : [];
-        $start = $params['startLevel'];
-        $max = $params['maxLevels'];
+        $start = (int)$params['startLevel'];
+        $max = (int)$params['maxLevels'];
         $end = $max ? $start + $max - 1 : 0;
         $this->root = $start > 1 && isset($tree[$start - 2]) ? (int)$tree[$start - 2] : '';
 

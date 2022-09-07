@@ -1,3 +1,10 @@
+# 5.5.16
+## dd/mm/2022
+
+2. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Fixed fatal error in Menu particle on PHP 8 when using Joomla 4 (#3048)
+
 # 5.5.15
 ## 09/05/2022
 
