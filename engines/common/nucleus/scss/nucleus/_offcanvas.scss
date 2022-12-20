@@ -29,7 +29,7 @@
     overflow: hidden;
 
     body, #g-page-surround {
-        overflow: hidden;
+        overflow-x: clip;
     }
 
     .g-nav-overlay {
