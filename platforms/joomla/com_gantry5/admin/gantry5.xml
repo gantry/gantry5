@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <extension version="3.9" type="component" method="upgrade">
     <name>com_gantry5</name>
-    <version>@version@</version>
-    <creationDate>@versiondate@</creationDate>
+    <version>5.5.15</version>
+    <creationDate>January 16, 2023</creationDate>
     <author>RocketTheme, LLC</author>
     <authorEmail>support@rockettheme.com</authorEmail>
     <authorUrl>http://www.rockettheme.com</authorUrl>

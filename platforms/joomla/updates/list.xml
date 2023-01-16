@@ -5,20 +5,20 @@
                element="pkg_gantry5"
                type="package"
                client="site"
-               version="@version@"
+               version="5.5.15"
                detailsurl="http://updates.gantry.org/5.0/joomla/pkg_gantry5.xml"/>
     <extension name="Hydrogen"
                description="Hydrogen Template"
                element="g5_hydrogen"
                type="template"
                client="site"
-               version="@version@"
+               version="5.5.15"
                detailsurl="http://updates.gantry.org/5.0/joomla/tpl_g5_hydrogen.xml"/>
     <extension name="Helium"
                description="Helium Template"
                element="g5_helium"
                type="template"
                client="site"
-               version="@version@"
+               version="5.5.15"
                detailsurl="http://updates.gantry.org/5.0/joomla/tpl_g5_helium.xml"/>
 </extensionset>
