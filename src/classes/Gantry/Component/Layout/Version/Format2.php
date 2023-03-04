@@ -353,9 +353,9 @@ class Format2
 
             // Special handling for grid and block elements.
             if (in_array($type, ['grid', 'block'], true) && count($child) === 1 && isset($child['type'])) {
-                $id = null;
+                $id = "";
             }
-
+ 
             // Check if type and subtype can be generated from the id.
             if ($subtype && (preg_match("/^{$type}-{$subtype}(-|$)/", $id))
                 || (in_array($type, ['section', 'particle']) && preg_match("/^{$subtype}(-|$)/", $id))) {
