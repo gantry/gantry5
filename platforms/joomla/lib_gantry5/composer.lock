@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e9e01f45dba5190c157bbcefd884db7a",
+    "content-hash": "1a6a29e5774a744a7ee793f4130c5262",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -392,16 +392,16 @@
         },
         {
             "name": "rockettheme/toolbox",
-            "version": "1.6.3",
+            "version": "1.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "8c751e96269aee4b42bf10c8d39f2121b7b7859c"
+                "reference": "4d1021492385117323b50e3370626da613dd6c16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/8c751e96269aee4b42bf10c8d39f2121b7b7859c",
-                "reference": "8c751e96269aee4b42bf10c8d39f2121b7b7859c",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/4d1021492385117323b50e3370626da613dd6c16",
+                "reference": "4d1021492385117323b50e3370626da613dd6c16",
                 "shasum": ""
             },
             "require": {
@@ -454,10 +454,10 @@
                 "rockettheme"
             ],
             "support": {
-                "source": "https://github.com/rockettheme/toolbox/tree/1.6.3",
+                "source": "https://github.com/rockettheme/toolbox/tree/1.6.4",
                 "issues": "https://github.com/rockettheme/toolbox/issues"
             },
-            "time": "2023-02-19T19:28:53+00:00"
+            "time": "2023-03-24T18:58:25+00:00"
         },
         {
             "name": "scssphp/scssphp",
