@@ -9,7 +9,7 @@
         "symfony/yaml": "^4.0.0",
         "pimple/pimple": "^3.2",
         "filp/whoops": "^2.15.1",
-        "rockettheme/toolbox": "^1.5",
+        "rockettheme/toolbox": "~1.6.4",
         "erusev/parsedown-extra": "^0.7",
 
         "twig/twig": "^2.5.15",
