@@ -8,12 +8,12 @@
         "symfony/event-dispatcher": "^3.4",
         "symfony/yaml": "^4.0.0",
         "pimple/pimple": "^3.2",
-        "filp/whoops": "^2.15.1",
+        "filp/whoops": "^2.5",
         "rockettheme/toolbox": "^1.5",
         "erusev/parsedown-extra": "^0.7",
 
         "twig/twig": "^2.5.15",
-        "scssphp/scssphp": "~1.10",
+        "scssphp/scssphp": "1.6.0",
         "leafo/scssphp": "0.8.4"
     },
     "require-dev": {
