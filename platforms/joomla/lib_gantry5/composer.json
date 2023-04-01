@@ -6,7 +6,7 @@
     "require": {
         "php": ">=7.2.5",
         "symfony/event-dispatcher": "^3.4",
-        "symfony/yaml": "^4.0.0",
+        "symfony/yaml": "^4.4.45",
         "pimple/pimple": "^3.2",
         "filp/whoops": "^2.15.1",
         "rockettheme/toolbox": "~1.6.4",
