@@ -31,7 +31,7 @@ jobs:
           sudo apt-get -y install -qq git zip < /dev/null > /dev/null
       - name: Get composer cache directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir -d bin/builder)"
+        run: echo "dir=$(composer config cache-files-dir -d bin/builder)" >> $GITHUB_OUTPUT
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
