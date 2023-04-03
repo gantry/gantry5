@@ -99,7 +99,11 @@ if ($params->get('robots')) {
 }
 
 /** @var object $params */
-$data = json_decode($params->get('particle'), true);
+if ($params->get('particle')) {
+    $data = json_decode($params->get('particle'), true);
+} else {
+    $data = false;
+}
 if (!$data) {
     // No component output.
     return;

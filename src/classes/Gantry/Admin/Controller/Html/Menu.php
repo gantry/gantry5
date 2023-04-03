@@ -570,7 +570,7 @@ class Menu extends HtmlController
             if ($items && $items[0] !== '{' && $items[0] !== '[') {
                 $items = urldecode((string)base64_decode($items));
             }
-            $items = json_decode($items, true);
+            $items = json_decode((string)$items, true);
 
             $settings = $input->getJsonArray('settings');
             $order = $input->getJsonArray('ordering');
