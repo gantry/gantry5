@@ -578,10 +578,9 @@ class HtmlDocument
             $match = '(.*?)';
         }
 
-        $html = preg_replace_callback('^(\s)(src|href)="' . $match . '"^u', 'static::linkHandler', $html);
-        $html = preg_replace_callback('^(\s)url\(' . $match . '\)^u', 'static::urlHandler', $html);
+        $html = preg_replace_callback('^(\s)(src|href)="' . $match . '"^u', static::class . '::linkHandler', $html);
+        $html = preg_replace_callback('^(\s)url\(' . $match . '\)^u', static::class . '::urlHandler', $html);
         $html = static::replaceTokens($tokens, $html);
-
         return $html;
     }
 

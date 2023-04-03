@@ -31,7 +31,7 @@ foreach ($argv as $arg) {
 
 $base = dirname(__DIR__);
 if (false === $hasVersion) {
-    $file = fopen("{$base}/CHANGELOG.md",'rb');
+    $file = fopen("{$base}/CHANGELOG.md", 'rb');
     if (preg_match('/^# (\d\.\d+.\d+(-[a-z0-9.]+)?)\s*$/i', fgets($file), $matches) !== 1) {
         echo 'First line of CHANGELOG.md has wrong Gantry version format, aborting';
         return 1;
@@ -52,13 +52,14 @@ if (false === $hasVersion) {
         $version .= '-' . $commitShort;
 
         $argv[] = '-Dstr.fileversion=_' . $branch;
-        $argv[] = '-Dcommit=' . $commit;
+        if (!empty($commit)) {
+            $argv[] = '-Dcommit=' . $commit;
+        }
     }
-
-    $argv[] = '-Dxml.version=' . $version;
 }
 
 $command = 'vendor/bin/phing ' . implode(' ', $argv);
+echo "Running command: {$command}\n";
 if (false === system($command, $result) || $result) {
     throw new \RuntimeException('Failed to run build script');
 }

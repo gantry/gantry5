@@ -1,8 +1,8 @@
 details:
   name: Helium
-  version: '5.5.15'
+  version: '@version@'
   icon: paper-plane
-  date: 'January 16, 2023'
+  date: '@versiondate@'
   author:
     name: 'RocketTheme, LLC'
     email: 'support@rockettheme.com'

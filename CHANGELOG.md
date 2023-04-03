@@ -1,13 +1,18 @@
 # 5.5.16
-## dd/mm/2022
+## 03/31/2023
 
 1. [Common](#common)
     1. [](#new)
         - Updated SCSS compiler to v1.11
+        - Updated: RocketTheme Toolbox to v1.6.4
+        - Updated: Flip Whoops to 2.15.1
+        - Updated: Symfony Yaml to 4.0.0
+        - Updated: Twig to 2.5.15
 2. [Joomla](#joomla)
     1. [](#bugfix)
         - Fixed fatal error in Menu particle on PHP 8 when using Joomla 4 (#3048)
         - Fixed Menu Manager throwíng deprecated error in PHP 8.1 (#3073)
+        - Fixed numerous php 8.x deprecations
 3. [WordPress](#wordpress)
     1. [](#new)
         - Updated Timber to v1.20
