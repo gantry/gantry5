@@ -39,23 +39,22 @@ if (false === $hasVersion) {
     $version = $matches[1];
 
     if (false === $isProd && is_file("{$base}/.git/HEAD")) {
-        $head = preg_replace('!^ref: (\S+)\s+$!m', '\\1', file_get_contents("{$base}/.git/HEAD"));
-        $branch = basename($head);
-        $commit = is_file("{$base}/.git/{$head}") ? trim(file_get_contents("{$base}/.git/{$head}")) : '';
-        $commitShort = substr($commit, 0, 9);
-        if ($branch !== 'develop') {
-            $branch = 'dev-' . $branch;
-        }
-        if (!strpos($version, '-dev')) {
-            $version .= '-dev';
-        }
-        $version .= '-' . $commitShort;
+    $head = preg_replace('!^ref: (\S+)\s+$!m', '\\1', file_get_contents("{$base}/.git/HEAD"));
+    $branch = basename($head);
+    $commit = is_file("{$base}/.git/{$head}") ? trim(file_get_contents("{$base}/.git/{$head}")) : '';
+    $commitShort = substr($commit, 0, 9);
+    if ($branch !== 'develop') {
+        $branch = 'dev-' . $branch;
+    }
+    if (!strpos($version, '-dev')) {
+        $version .= '-dev';
+    }
+    $version .= '-' . $commitShort;
 
-        $argv[] = '-Dstr.fileversion=_' . $branch;
+    $argv[] = '-Dstr.fileversion=_' . $branch;
+    if (!empty($commit)) {
         $argv[] = '-Dcommit=' . $commit;
     }
-
-    $argv[] = '-Dxml.version=' . $version;
 }
 
 $command = 'vendor/bin/phing ' . implode(' ', $argv);
