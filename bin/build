@@ -59,6 +59,7 @@ if (false === $hasVersion) {
 }
 
 $command = 'vendor/bin/phing ' . implode(' ', $argv);
+echo "Running command: {$command}\n";
 if (false === system($command, $result) || $result) {
     throw new \RuntimeException('Failed to run build script');
 }
