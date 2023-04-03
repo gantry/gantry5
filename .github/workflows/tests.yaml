@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        php: [ 8.2, 8.1, 8.0, 7.4, 7.3]
+        php: [ 8.1, 8.0, 7.4, 7.3]
         os: [ubuntu-latest]
     timeout-minutes: 10
     steps:
