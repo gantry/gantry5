@@ -4,27 +4,31 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "378e22a865a0527b3c1ec8d09a4576b8",
+    "content-hash": "0b97e41a6b304ebf48ed680a76197556",
     "packages": [
         {
             "name": "aws/aws-crt-php",
-            "version": "v1.0.2",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/awslabs/aws-crt-php.git",
-                "reference": "3942776a8c99209908ee0b287746263725685732"
+                "reference": "1926277fc71d253dfa820271ac5987bdb193ccf5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/awslabs/aws-crt-php/zipball/3942776a8c99209908ee0b287746263725685732",
-                "reference": "3942776a8c99209908ee0b287746263725685732",
+                "url": "https://api.github.com/repos/awslabs/aws-crt-php/zipball/1926277fc71d253dfa820271ac5987bdb193ccf5",
+                "reference": "1926277fc71d253dfa820271ac5987bdb193ccf5",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.5"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.8.35|^5.4.3"
+                "phpunit/phpunit": "^4.8.35||^5.6.3||^9.5",
+                "yoast/phpunit-polyfills": "^1.0"
+            },
+            "suggest": {
+                "ext-awscrt": "Make sure you install awscrt native extension to use any of the functionality."
             },
             "type": "library",
             "autoload": {
@@ -43,7 +47,7 @@
                 }
             ],
             "description": "AWS Common Runtime for PHP",
-            "homepage": "http://aws.amazon.com/sdkforphp",
+            "homepage": "https://github.com/awslabs/aws-crt-php",
             "keywords": [
                 "amazon",
                 "aws",
@@ -52,32 +56,32 @@
             ],
             "support": {
                 "issues": "https://github.com/awslabs/aws-crt-php/issues",
-                "source": "https://github.com/awslabs/aws-crt-php/tree/v1.0.2"
+                "source": "https://github.com/awslabs/aws-crt-php/tree/v1.2.1"
             },
-            "time": "2021-09-03T22:57:30+00:00"
+            "time": "2023-03-24T20:22:19+00:00"
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.222.12",
+            "version": "3.263.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "8503d393b3ebef20241931b1abc20cb2af494cb2"
+                "reference": "5516a7edae70fff66223b2fd320c20b3b17ced56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/8503d393b3ebef20241931b1abc20cb2af494cb2",
-                "reference": "8503d393b3ebef20241931b1abc20cb2af494cb2",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/5516a7edae70fff66223b2fd320c20b3b17ced56",
+                "reference": "5516a7edae70fff66223b2fd320c20b3b17ced56",
                 "shasum": ""
             },
             "require": {
-                "aws/aws-crt-php": "^1.0.2",
+                "aws/aws-crt-php": "^1.0.4",
                 "ext-json": "*",
                 "ext-pcre": "*",
                 "ext-simplexml": "*",
-                "guzzlehttp/guzzle": "^5.3.3 || ^6.2.1 || ^7.0",
+                "guzzlehttp/guzzle": "^6.5.8 || ^7.4.5",
                 "guzzlehttp/promises": "^1.4.0",
-                "guzzlehttp/psr7": "^1.7.0 || ^2.1.1",
+                "guzzlehttp/psr7": "^1.8.5 || ^2.3",
                 "mtdowling/jmespath.php": "^2.6",
                 "php": ">=5.5"
             },
@@ -85,6 +89,8 @@
                 "andrewsville/php-token-reflection": "^1.4",
                 "aws/aws-php-sns-message-validator": "~1.0",
                 "behat/behat": "~3.0",
+                "composer/composer": "^1.10.22",
+                "dms/phpunit-arraysubset-asserts": "^0.4.0",
                 "doctrine/cache": "~1.4",
                 "ext-dom": "*",
                 "ext-openssl": "*",
@@ -92,10 +98,11 @@
                 "ext-sockets": "*",
                 "nette/neon": "^2.3",
                 "paragonie/random_compat": ">= 2",
-                "phpunit/phpunit": "^4.8.35 || ^5.6.3",
+                "phpunit/phpunit": "^4.8.35 || ^5.6.3 || ^9.5",
                 "psr/cache": "^1.0",
                 "psr/simple-cache": "^1.0",
-                "sebastian/comparator": "^1.2.3"
+                "sebastian/comparator": "^1.2.3 || ^4.0",
+                "yoast/phpunit-polyfills": "^1.0"
             },
             "suggest": {
                 "aws/aws-php-sns-message-validator": "To validate incoming SNS notifications",
@@ -143,36 +150,37 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.222.12"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.263.2"
             },
-            "time": "2022-05-13T18:15:34+00:00"
+            "time": "2023-04-03T18:19:25+00:00"
         },
         {
             "name": "composer/pcre",
-            "version": "2.x-dev",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/pcre.git",
-                "reference": "66930996df48eb8dcd5346eee236a35c3853a8b0"
+                "reference": "4bff79ddd77851fe3cdd11616ed3f92841ba5bd2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/pcre/zipball/66930996df48eb8dcd5346eee236a35c3853a8b0",
-                "reference": "66930996df48eb8dcd5346eee236a35c3853a8b0",
+                "url": "https://api.github.com/repos/composer/pcre/zipball/4bff79ddd77851fe3cdd11616ed3f92841ba5bd2",
+                "reference": "4bff79ddd77851fe3cdd11616ed3f92841ba5bd2",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2 || ^8.0"
+                "php": "^7.4 || ^8.0"
             },
             "require-dev": {
                 "phpstan/phpstan": "^1.3",
                 "phpstan/phpstan-strict-rules": "^1.1",
                 "symfony/phpunit-bridge": "^5"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "2.x-dev"
+                    "dev-main": "3.x-dev"
                 }
             },
             "autoload": {
@@ -200,7 +208,7 @@
             ],
             "support": {
                 "issues": "https://github.com/composer/pcre/issues",
-                "source": "https://github.com/composer/pcre/tree/2.x"
+                "source": "https://github.com/composer/pcre/tree/3.1.0"
             },
             "funding": [
                 {
@@ -216,7 +224,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-26T13:13:56+00:00"
+            "time": "2022-11-17T09:50:14+00:00"
         },
         {
             "name": "composer/xdebug-handler",
@@ -290,18 +298,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "82ca75f0b1f130f018febdda29af13086da5dbac"
+                "reference": "8459341c16f96b9610dcdfe22bd3060d60c0da04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/82ca75f0b1f130f018febdda29af13086da5dbac",
-                "reference": "82ca75f0b1f130f018febdda29af13086da5dbac",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/8459341c16f96b9610dcdfe22bd3060d60c0da04",
+                "reference": "8459341c16f96b9610dcdfe22bd3060d60c0da04",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "guzzlehttp/promises": "^1.5",
-                "guzzlehttp/psr7": "^1.8.3 || ^2.1",
+                "guzzlehttp/psr7": "^1.9 || ^2.4",
                 "php": "^7.2.5 || ^8.0",
                 "psr/http-client": "^1.0",
                 "symfony/deprecation-contracts": "^2.2 || ^3.0"
@@ -310,10 +318,10 @@
                 "psr/http-client-implementation": "1.0"
             },
             "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.4.1",
+                "bamarni/composer-bin-plugin": "^1.8.1",
                 "ext-curl": "*",
                 "php-http/client-integration-tests": "^3.0",
-                "phpunit/phpunit": "^8.5.5 || ^9.3.5",
+                "phpunit/phpunit": "^8.5.29 || ^9.5.23",
                 "psr/log": "^1.1 || ^2.0 || ^3.0"
             },
             "suggest": {
@@ -324,8 +332,12 @@
             "default-branch": true,
             "type": "library",
             "extra": {
+                "bamarni-bin": {
+                    "bin-links": true,
+                    "forward-command": false
+                },
                 "branch-alias": {
-                    "dev-master": "7.4-dev"
+                    "dev-master": "7.5-dev"
                 }
             },
             "autoload": {
@@ -407,7 +419,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-20T14:21:21+00:00"
+            "time": "2022-08-29T11:03:19+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -415,12 +427,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "fe752aedc9fd8fcca3fe7ad05d419d32998a06da"
+                "reference": "b94b2807d85443f9719887892882d0329d1e2598"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/fe752aedc9fd8fcca3fe7ad05d419d32998a06da",
-                "reference": "fe752aedc9fd8fcca3fe7ad05d419d32998a06da",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/b94b2807d85443f9719887892882d0329d1e2598",
+                "reference": "b94b2807d85443f9719887892882d0329d1e2598",
                 "shasum": ""
             },
             "require": {
@@ -476,7 +488,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/promises/issues",
-                "source": "https://github.com/guzzle/promises/tree/1.5.1"
+                "source": "https://github.com/guzzle/promises/tree/1.5.2"
             },
             "funding": [
                 {
@@ -492,7 +504,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-10-22T20:56:57+00:00"
+            "time": "2022-08-28T14:55:35+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -500,12 +512,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "f8ae7cb4c654e9d6f31c10271321ea99f7ca8ae9"
+                "reference": "3cf1b6d4f0c820a2cf8bcaec39fc698f3443b5cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/f8ae7cb4c654e9d6f31c10271321ea99f7ca8ae9",
-                "reference": "f8ae7cb4c654e9d6f31c10271321ea99f7ca8ae9",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/3cf1b6d4f0c820a2cf8bcaec39fc698f3443b5cf",
+                "reference": "3cf1b6d4f0c820a2cf8bcaec39fc698f3443b5cf",
                 "shasum": ""
             },
             "require": {
@@ -519,9 +531,9 @@
                 "psr/http-message-implementation": "1.0"
             },
             "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.4.1",
+                "bamarni/composer-bin-plugin": "^1.8.1",
                 "http-interop/http-factory-tests": "^0.9",
-                "phpunit/phpunit": "^8.5.8 || ^9.3.10"
+                "phpunit/phpunit": "^8.5.29 || ^9.5.23"
             },
             "suggest": {
                 "laminas/laminas-httphandlerrunner": "Emit PSR-7 responses"
@@ -529,8 +541,12 @@
             "default-branch": true,
             "type": "library",
             "extra": {
+                "bamarni-bin": {
+                    "bin-links": true,
+                    "forward-command": false
+                },
                 "branch-alias": {
-                    "dev-master": "2.2-dev"
+                    "dev-master": "2.4-dev"
                 }
             },
             "autoload": {
@@ -592,7 +608,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/master"
+                "source": "https://github.com/guzzle/psr7/tree/2.4.4"
             },
             "funding": [
                 {
@@ -608,32 +624,35 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-02T17:34:52+00:00"
+            "time": "2023-03-09T13:19:02+00:00"
         },
         {
             "name": "jawira/plantuml-client",
-            "version": "v1.0.1",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jawira/plantuml-client.git",
-                "reference": "295a07a5553bfb1ce16d02ccad7959adc12ae925"
+                "reference": "28ca92b4e0825bd7f3a82fed10c7f3dbe0657fd5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jawira/plantuml-client/zipball/295a07a5553bfb1ce16d02ccad7959adc12ae925",
-                "reference": "295a07a5553bfb1ce16d02ccad7959adc12ae925",
+                "url": "https://api.github.com/repos/jawira/plantuml-client/zipball/28ca92b4e0825bd7f3a82fed10c7f3dbe0657fd5",
+                "reference": "28ca92b4e0825bd7f3a82fed10c7f3dbe0657fd5",
                 "shasum": ""
             },
             "require": {
                 "jawira/plantuml-encoding": "^1.0",
-                "php": ">=7.3"
+                "php": ">=7.4"
             },
             "require-dev": {
                 "ergebnis/composer-normalize": "^2.13",
                 "ext-fileinfo": "*",
-                "pds/skeleton": "^1.0",
-                "phpstan/phpstan": "^0.12",
+                "jawira/skeleton": "^2.16",
+                "phpstan/phpstan": "^1.8",
                 "phpunit/phpunit": "^9.5"
+            },
+            "suggest": {
+                "pds/skeleton": "Standard PHP package skeleton."
             },
             "type": "library",
             "autoload": {
@@ -660,29 +679,30 @@
             ],
             "support": {
                 "issues": "https://github.com/jawira/plantuml-client/issues",
-                "source": "https://github.com/jawira/plantuml-client/tree/v1.0.1"
+                "source": "https://github.com/jawira/plantuml-client/tree/v1.0.3"
             },
-            "time": "2021-06-29T20:21:34+00:00"
+            "time": "2022-11-08T23:48:25+00:00"
         },
         {
             "name": "jawira/plantuml-encoding",
-            "version": "v1.0.9",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jawira/plantuml-encoding.git",
-                "reference": "e7a0213a3813df97887975767c132c67f69595ef"
+                "reference": "cec097dfc062e7e13655d9594eacce5f9df639ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jawira/plantuml-encoding/zipball/e7a0213a3813df97887975767c132c67f69595ef",
-                "reference": "e7a0213a3813df97887975767c132c67f69595ef",
+                "url": "https://api.github.com/repos/jawira/plantuml-encoding/zipball/cec097dfc062e7e13655d9594eacce5f9df639ad",
+                "reference": "cec097dfc062e7e13655d9594eacce5f9df639ad",
                 "shasum": ""
             },
             "require": {
                 "ext-zlib": "*",
-                "php": ">=5.3"
+                "php": ">=7.0"
             },
             "require-dev": {
+                "jawira/skeleton": "^2.14",
                 "phpstan/phpstan": "^1.0",
                 "vimeo/psalm": "^4.0"
             },
@@ -698,7 +718,8 @@
             ],
             "authors": [
                 {
-                    "name": "Jawira Portugal"
+                    "name": "Jawira Portugal",
+                    "homepage": "https://jawira.com"
                 }
             ],
             "description": "PlantUML encoding functions",
@@ -711,9 +732,9 @@
             ],
             "support": {
                 "issues": "https://github.com/jawira/plantuml-encoding/issues",
-                "source": "https://github.com/jawira/plantuml-encoding/tree/v1.0.9"
+                "source": "https://github.com/jawira/plantuml-encoding/tree/v1.1.0"
             },
-            "time": "2021-11-18T22:25:01+00:00"
+            "time": "2022-05-31T18:58:21+00:00"
         },
         {
             "name": "mehr-als-nix/parallel",
@@ -822,12 +843,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "af43d042005ae4ac5571262abd8611cfbe53e6cd"
+                "reference": "2627cab3890ecc74b621af24e0d881f475de2850"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/af43d042005ae4ac5571262abd8611cfbe53e6cd",
-                "reference": "af43d042005ae4ac5571262abd8611cfbe53e6cd",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/2627cab3890ecc74b621af24e0d881f475de2850",
+                "reference": "2627cab3890ecc74b621af24e0d881f475de2850",
                 "shasum": ""
             },
             "require": {
@@ -872,7 +893,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-14T12:17:42+00:00"
+            "time": "2023-03-22T11:16:27+00:00"
         },
         {
             "name": "pear/archive_tar",
@@ -880,12 +901,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pear/Archive_Tar.git",
-                "reference": "7789ebb2f34f9e4adb3a4152ad0d1548930a9755"
+                "reference": "94e6e85c988ad7b4004c7f54f536a029edb8f984"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/Archive_Tar/zipball/7789ebb2f34f9e4adb3a4152ad0d1548930a9755",
-                "reference": "7789ebb2f34f9e4adb3a4152ad0d1548930a9755",
+                "url": "https://api.github.com/repos/pear/Archive_Tar/zipball/94e6e85c988ad7b4004c7f54f536a029edb8f984",
+                "reference": "94e6e85c988ad7b4004c7f54f536a029edb8f984",
                 "shasum": ""
             },
             "require": {
@@ -917,7 +938,7 @@
                 "./"
             ],
             "license": [
-                "BSD-3-Clause"
+                "BSD-2-Clause"
             ],
             "authors": [
                 {
@@ -953,7 +974,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-09-07T07:21:19+00:00"
+            "time": "2023-01-01T16:28:59+00:00"
         },
         {
             "name": "pear/console_getopt",
@@ -1120,12 +1141,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pear/VersionControl_Git.git",
-                "reference": "417059e9286d0c85b0a148fe295217c2bf26ef10"
+                "reference": "c32d75d237974297f052ceb781dfc2eb817f7b59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/VersionControl_Git/zipball/417059e9286d0c85b0a148fe295217c2bf26ef10",
-                "reference": "417059e9286d0c85b0a148fe295217c2bf26ef10",
+                "url": "https://api.github.com/repos/pear/VersionControl_Git/zipball/c32d75d237974297f052ceb781dfc2eb817f7b59",
+                "reference": "c32d75d237974297f052ceb781dfc2eb817f7b59",
                 "shasum": ""
             },
             "require": {
@@ -1162,7 +1183,7 @@
                 "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=VersionControl_Git",
                 "source": "https://github.com/pear/VersionControl_Git"
             },
-            "time": "2022-01-14T08:03:15+00:00"
+            "time": "2023-03-22T19:55:38+00:00"
         },
         {
             "name": "pear/versioncontrol_svn",
@@ -1234,79 +1255,99 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phingofficial/phing.git",
-                "reference": "47a0622d7dfa8080256af167050913e847d36da7"
+                "reference": "a5f24462e2352a0a679ba606a201ab70fe91d62b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/phing/zipball/47a0622d7dfa8080256af167050913e847d36da7",
-                "reference": "47a0622d7dfa8080256af167050913e847d36da7",
+                "url": "https://api.github.com/repos/phingofficial/phing/zipball/a5f24462e2352a0a679ba606a201ab70fe91d62b",
+                "reference": "a5f24462e2352a0a679ba606a201ab70fe91d62b",
                 "shasum": ""
             },
             "require": {
+                "aws/aws-sdk-php": "^3.181",
                 "ext-dom": "*",
                 "ext-json": "*",
+                "ext-libxml": "*",
+                "ext-simplexml": "*",
                 "ext-xml": "*",
+                "jawira/plantuml-client": "^1.0",
                 "mehr-als-nix/parallel": "^v1.0",
+                "pdepend/pdepend": "^2.9",
+                "pear/archive_tar": "^1.4",
+                "pear/versioncontrol_git": "dev-master",
+                "pear/versioncontrol_svn": "^0.7.0",
                 "phing/phing-composer-configurator": "dev-master",
-                "phing/task-analyzers": "dev-main",
-                "phing/task-apigen": "dev-main",
-                "phing/task-archives": "dev-main",
-                "phing/task-aws": "dev-main",
-                "phing/task-coverage": "dev-main",
-                "phing/task-dbdeploy": "dev-main",
-                "phing/task-ftpdeploy": "dev-main",
-                "phing/task-git": "dev-main",
-                "phing/task-hg": "dev-main",
-                "phing/task-http": "dev-main",
-                "phing/task-inifile": "dev-main",
-                "phing/task-ioncube": "dev-main",
-                "phing/task-jshint": "dev-main",
-                "phing/task-jsmin": "dev-main",
-                "phing/task-liquibase": "dev-main",
-                "phing/task-phkpackage": "dev-main",
-                "phing/task-phpdoc": "dev-main",
-                "phing/task-phpunit": "dev-main",
-                "phing/task-sass": "dev-main",
-                "phing/task-smarty": "dev-main",
-                "phing/task-ssh": "dev-main",
-                "phing/task-svn": "dev-main",
-                "phing/task-visualizer": "dev-main",
-                "phing/task-zendcodeanalyser": "dev-main",
-                "phing/task-zendserverdevelopmenttools": "dev-main",
-                "php": "^7.3 || ^7.4 || ^8.0 || ^8.1",
+                "php": ">= 7.4",
+                "phploc/phploc": "^7.0",
+                "phpmd/phpmd": "^2.10",
+                "phpstan/phpstan": "^0.12.87 || ^1.0",
+                "sebastian/phpcpd": "^6.0",
                 "sebastian/version": "^3.0",
+                "siad007/versioncontrol_hg": "^1.0",
                 "symfony/console": "^5.0|^6.0",
-                "symfony/yaml": "^5.0"
+                "symfony/yaml": "^5.0|^6.0",
+                "tedivm/jshrink": "^1.3"
+            },
+            "replace": {
+                "phing/task-analyzers": "self.version",
+                "phing/task-apigen": "self.version",
+                "phing/task-archives": "self.version",
+                "phing/task-aws": "self.version",
+                "phing/task-coverage": "self.version",
+                "phing/task-dbdeploy": "self.version",
+                "phing/task-ftpdeploy": "self.version",
+                "phing/task-git": "self.version",
+                "phing/task-hg": "self.version",
+                "phing/task-http": "self.version",
+                "phing/task-inifile": "self.version",
+                "phing/task-ioncube": "self.version",
+                "phing/task-jshint": "self.version",
+                "phing/task-jsmin": "self.version",
+                "phing/task-liquibase": "self.version",
+                "phing/task-phkpackage": "self.version",
+                "phing/task-phpdoc": "self.version",
+                "phing/task-phpunit": "self.version",
+                "phing/task-sass": "self.version",
+                "phing/task-smarty": "self.version",
+                "phing/task-ssh": "self.version",
+                "phing/task-svn": "self.version",
+                "phing/task-visualizer": "self.version",
+                "phing/task-zendcodeanalyser": "self.version",
+                "phing/task-zendserverdevelopmenttools": "self.version"
             },
             "require-dev": {
+                "ergebnis/composer-normalize": "^2.13",
                 "ext-curl": "*",
                 "ext-iconv": "*",
                 "ext-openssl": "*",
                 "ext-pdo_sqlite": "*",
                 "ext-phar": "*",
-                "ext-simplexml": "*",
                 "ext-sockets": "*",
                 "ext-xsl": "*",
                 "ext-zip": "*",
                 "friendsofphp/php-cs-fixer": "^3.0",
-                "guzzlehttp/guzzle": "^7.1",
+                "guzzlehttp/guzzle": "^7.2",
                 "jawira/plantuml-encoding": "^1.0",
                 "mikey179/vfsstream": "2.0.x-dev",
                 "monolog/monolog": "^2.2",
                 "pear/console_getopt": "^v1.4.3",
                 "pear/mail": "^1.4",
                 "pear/mail_mime": "^1.10",
+                "pear/net_ftp": "dev-master",
                 "pear/net_growl": "dev-master",
-                "pear/pear-core-minimal": "^1.10.10",
+                "pear/pear-core-minimal": "~1.10.10",
                 "pear/pear_exception": "^v1.0.2",
-                "pear/versioncontrol_git": "dev-master",
+                "phpdocumentor/phpdocumentor": "^3.1",
                 "phpunit/phpunit": "^9.5.10",
+                "psr/http-message": "^1.0",
                 "roave/security-advisories": "dev-master",
-                "scssphp/scssphp": "~1.0",
+                "scssphp/scssphp": "~1.11.0",
+                "smarty/smarty": "^3.1",
                 "squizlabs/php_codesniffer": "^3.5",
-                "symfony/config": "^5.2",
-                "symfony/dependency-injection": "^5.2",
-                "symfony/stopwatch": "^5.2"
+                "symfony/config": "^5.2|^6.0",
+                "symfony/dependency-injection": "^5.2|^6.0",
+                "symfony/stopwatch": "^5.2|^6.0",
+                "symplify/monorepo-builder": "11.2.2.72"
             },
             "suggest": {
                 "ext-gettext": "*",
@@ -1328,8 +1369,98 @@
             ],
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-main": "3.0.x-dev"
+                "phing-custom-taskdefs": {
+                    "visualizer": "Phing\\Task\\Ext\\Visualizer\\VisualizerTask",
+                    "gitarchive": "Phing\\Task\\Ext\\Git\\Git\\GitArchiveTask",
+                    "gitinit": "Phing\\Task\\Ext\\Git\\Git\\GitInitTask",
+                    "gitclone": "Phing\\Task\\Ext\\Git\\Git\\GitCloneTask",
+                    "gitgc": "Phing\\Task\\Ext\\Git\\Git\\GitGcTask",
+                    "gitbranch": "Phing\\Task\\Ext\\Git\\Git\\GitBranchTask",
+                    "gitfetch": "Phing\\Task\\Ext\\Git\\Git\\GitFetchTask",
+                    "gitmerge": "Phing\\Task\\Ext\\Git\\Git\\GitMergeTask",
+                    "gitcheckout": "Phing\\Task\\Ext\\Git\\Git\\GitCheckoutTask",
+                    "gitpull": "Phing\\Task\\Ext\\Git\\Git\\GitPullTask",
+                    "gitpush": "Phing\\Task\\Ext\\Git\\Git\\GitPushTask",
+                    "gitlog": "Phing\\Task\\Ext\\Git\\Git\\GitLogTask",
+                    "gittag": "Phing\\Task\\Ext\\Git\\Git\\GitTagTask",
+                    "gitcommit": "Phing\\Task\\Ext\\Git\\Git\\GitCommitTask",
+                    "gitdescribe": "Phing\\Task\\Ext\\Git\\Git\\GitDescribeTask",
+                    "coverage-setup": "Phing\\Task\\Ext\\Coverage\\CoverageSetupTask",
+                    "coverage-merger": "Phing\\Task\\Ext\\Coverage\\CoverageMergerTask",
+                    "coverage-report": "Phing\\Task\\Ext\\Coverage\\CoverageReportTask",
+                    "coverage-threshold": "Phing\\Task\\Ext\\Coverage\\CoverageThresholdTask",
+                    "phpstan": "Phing\\Task\\Ext\\Analyzer\\Phpstan\\PHPStanTask",
+                    "phpcpd": "Phing\\Task\\Ext\\Analyzer\\Phpcpd\\PHPCPDTask",
+                    "phploc": "Phing\\Task\\Ext\\Analyzer\\Phploc\\PHPLocTask",
+                    "phpmd": "Phing\\Task\\Ext\\Analyzer\\Phpmd\\PHPMDTask",
+                    "phpdepend": "Phing\\Task\\Ext\\Analyzer\\Pdepend\\PhpDependTask",
+                    "sonar": "Phing\\Task\\Ext\\Analyzer\\Sonar\\SonarTask",
+                    "phkpackage": "Phing\\Task\\Ext\\PhkPackage\\PhkPackageTask",
+                    "sass": "Phing\\Task\\Ext\\Sass\\SassTask",
+                    "jsmin": "Phing\\Task\\Ext\\JsMin\\JsMinTask",
+                    "liquibase-changelog": "Phing\\Task\\Ext\\Liquibase\\LiquibaseChangeLogTask",
+                    "liquibase-dbdoc": "Phing\\Task\\Ext\\Liquibase\\LiquibaseDbDocTask",
+                    "liquibase-diff": "Phing\\Task\\Ext\\Liquibase\\LiquibaseDiffTask",
+                    "liquibase-rollback": "Phing\\Task\\Ext\\Liquibase\\LiquibaseRollbackTask",
+                    "liquibase-tag": "Phing\\Task\\Ext\\Liquibase\\LiquibaseTagTask",
+                    "liquibase-update": "Phing\\Task\\Ext\\Liquibase\\LiquibaseUpdateTask",
+                    "liquibase": "Phing\\Task\\Ext\\Liquibase\\LiquibaseTask",
+                    "s3get": "Phing\\Task\\Ext\\Amazon\\S3\\S3GetTask",
+                    "s3put": "Phing\\Task\\Ext\\Amazon\\S3\\S3PutTask",
+                    "zsdtvalidate": "Phing\\Task\\Ext\\ZendServerDeploymentTool\\ZsdtValidateTask",
+                    "zsdtpack": "Phing\\Task\\Ext\\ZendServerDeploymentTool\\ZsdtPackTask",
+                    "hgadd": "Phing\\Task\\Ext\\Hg\\HgAddTask",
+                    "hgarchive": "Phing\\Task\\Ext\\Hg\\HgArchiveTask",
+                    "hgclone": "Phing\\Task\\Ext\\Hg\\HgCloneTask",
+                    "hgcommit": "Phing\\Task\\Ext\\Hg\\HgCommitTask",
+                    "hginit": "Phing\\Task\\Ext\\Hg\\HgInitTask",
+                    "hglog": "Phing\\Task\\Ext\\Hg\\HgLogTask",
+                    "hgpull": "Phing\\Task\\Ext\\Hg\\HgPullTask",
+                    "hgpush": "Phing\\Task\\Ext\\Hg\\HgPushTask",
+                    "hgrevert": "Phing\\Task\\Ext\\Hg\\HgRevertTask",
+                    "hgtag": "Phing\\Task\\Ext\\Hg\\HgTagTask",
+                    "hgupdate": "Phing\\Task\\Ext\\Hg\\HgUpdateTask",
+                    "http-request": "Phing\\Task\\Ext\\Http\\HttpRequestTask",
+                    "httpget": "Phing\\Task\\Ext\\Http\\HttpGetTask",
+                    "phpunit": "Phing\\Task\\Ext\\PhpUnit\\PHPUnitTask",
+                    "phpunitreport": "Phing\\Task\\Ext\\PhpUnit\\PHPUnitReportTask",
+                    "apigen": "Phing\\Task\\Ext\\ApiGen\\ApiGenTask",
+                    "ssh": "Phing\\Task\\Ext\\Ssh\\SshTask",
+                    "scp": "Phing\\Task\\Ext\\Ssh\\ScpTask",
+                    "dbdeploy": "Phing\\Task\\Ext\\DbDeploy\\DbDeployTask",
+                    "smarty": "Phing\\Task\\Ext\\Snmarty\\SmartyTask",
+                    "ioncubeencoder": "Phing\\Task\\Ext\\Ioncube\\IoncubeEncoderTask",
+                    "ioncubelicense": "Phing\\Task\\Ext\\Ioncube\\IoncubeLicenseTask",
+                    "tar": "Phing\\Task\\Ext\\Archive\\TarTask",
+                    "untar": "Phing\\Task\\Ext\\Archive\\UntarTask",
+                    "zip": "Phing\\Task\\Ext\\Archive\\ZipTask",
+                    "unzip": "Phing\\Task\\Ext\\Archive\\UnzipTask",
+                    "jshint": "Phing\\Task\\Ext\\JsHint\\JsHintTask",
+                    "zendcodeanalyzer": "Phing\\Task\\Ext\\ZendCodeAnalyzer\\ZendCodeAnalyzerTask",
+                    "analyze": "Phing\\Task\\Ext\\ZendCodeAnalyzer\\ZendCodeAnalyzerTask",
+                    "inifile": "Phing\\Task\\Ext\\IniFile\\IniFileTask",
+                    "phpdoc": "Phing\\Task\\Ext\\PhpDoc\\PhpDocumentor2Task",
+                    "phpdoc2": "Phing\\Task\\Ext\\PhpDoc\\PhpDocumentor2Task",
+                    "ftpdeploy": "Phing\\Task\\Ext\\FtpDeploy\\FtpDeployTask",
+                    "svnlastrevision": "Phing\\Task\\Ext\\Svn\\SvnLastRevisionTask",
+                    "svncheckout": "Phing\\Task\\Ext\\Svn\\SvnCheckoutTask",
+                    "svnexport": "Phing\\Task\\Ext\\Svn\\SvnExportTask",
+                    "svnupdate": "Phing\\Task\\Ext\\Svn\\SvnUpdateTask",
+                    "svnswitch": "Phing\\Task\\Ext\\Svn\\SvnSwitchTask",
+                    "svncopy": "Phing\\Task\\Ext\\Svn\\SvnCopyTask",
+                    "svncommit": "Phing\\Task\\Ext\\Svn\\SvnCommitTask",
+                    "svnlist": "Phing\\Task\\Ext\\Svn\\SvnListTask",
+                    "svnlog": "Phing\\Task\\Ext\\Svn\\SvnLogTask",
+                    "svninfo": "Phing\\Task\\Ext\\Svn\\SvnInfoTask",
+                    "svnproplist": "Phing\\Task\\Ext\\Svn\\SvnProplistTask",
+                    "svnpropget": "Phing\\Task\\Ext\\Svn\\SvnPropgetTask",
+                    "svnpropset": "Phing\\Task\\Ext\\Svn\\SvnPropsetTask",
+                    "svnrevert": "Phing\\Task\\Ext\\Svn\\SvnRevertTask"
+                },
+                "phing-custom-typedefs": {
+                    "sshconfig": "Phing\\Task\\Ext\\Ssh\\Ssh2MethodParam",
+                    "tarfileset": "Phing\\Task\\Ext\\Archive\\TarFileSet",
+                    "zipfileset": "Phing\\Task\\Ext\\Archive\\ZipFileSet"
                 }
             },
             "autoload": {
@@ -1385,7 +1516,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-05-10T07:20:21+00:00"
+            "time": "2023-04-04T08:30:38+00:00"
         },
         {
             "name": "phing/phing-composer-configurator",
@@ -1393,12 +1524,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phingofficial/phing-composer-configurator.git",
-                "reference": "63b47823654d2636574b220db57ad06e9c378453"
+                "reference": "4ae5639bbecc82d849374139895092de528b8803"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/phing-composer-configurator/zipball/63b47823654d2636574b220db57ad06e9c378453",
-                "reference": "63b47823654d2636574b220db57ad06e9c378453",
+                "url": "https://api.github.com/repos/phingofficial/phing-composer-configurator/zipball/4ae5639bbecc82d849374139895092de528b8803",
+                "reference": "4ae5639bbecc82d849374139895092de528b8803",
                 "shasum": ""
             },
             "require": {
@@ -1406,7 +1537,7 @@
                 "php": ">= 7.3"
             },
             "require-dev": {
-                "composer/composer": "~2.1.9 || ~2.3.0",
+                "composer/composer": "~2.1.9 || ~2.3.0 || ~2.5.0",
                 "ergebnis/composer-normalize": "^2.0.2",
                 "ergebnis/phpstan-rules": "^0.14.2|^0.15.0",
                 "mikey179/vfsstream": "^1.6.8",
@@ -1466,1330 +1597,7 @@
                 "slack": "https://www.phing.info/slack",
                 "source": "https://github.com/phingofficial/phing-composer-configurator/"
             },
-            "time": "2022-03-30T11:21:00+00:00"
-        },
-        {
-            "name": "phing/task-analyzers",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-analyzers.git",
-                "reference": "c5a6c66d1d6243f3110d1272a67714c83c52bf2a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-analyzers/zipball/c5a6c66d1d6243f3110d1272a67714c83c52bf2a",
-                "reference": "c5a6c66d1d6243f3110d1272a67714c83c52bf2a",
-                "shasum": ""
-            },
-            "require": {
-                "pdepend/pdepend": "^2.9",
-                "php": ">= 7.1",
-                "phploc/phploc": "^7.0",
-                "phpmd/phpmd": "^2.10",
-                "phpstan/phpstan": "^0.12.87 || ^1.0",
-                "sebastian/phpcpd": "^6.0"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "phpstan": "Phing\\Task\\Ext\\Phpstan\\PHPStanTask",
-                    "phpcpd": "Phing\\Task\\Ext\\Phpcpd\\PHPCPDTask",
-                    "phploc": "Phing\\Task\\Ext\\Phploc\\PHPLocTask",
-                    "phpmd": "Phing\\Task\\Ext\\Phpmd\\PHPMDTask",
-                    "phpdepend": "Phing\\Task\\Ext\\Pdepend\\PhpDependTask",
-                    "sonar": "Phing\\Task\\Ext\\Sonar\\SonarTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "Tasks for code analysis.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-analyzers/issues",
-                "source": "https://github.com/phingofficial/task-analyzers/tree/main"
-            },
-            "time": "2021-09-13T11:26:58+00:00"
-        },
-        {
-            "name": "phing/task-apigen",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-apigen.git",
-                "reference": "df34b0d85ae681335d1911b5ebab0a6653e59946"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-apigen/zipball/df34b0d85ae681335d1911b5ebab0a6653e59946",
-                "reference": "df34b0d85ae681335d1911b5ebab0a6653e59946",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "apigen": "Phing\\Task\\Ext\\ApiGenTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "Task for ApiGen, a tool for creating professional API documentation from PHP source code.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-apigen/issues",
-                "source": "https://github.com/phingofficial/task-apigen/tree/main"
-            },
-            "time": "2021-01-25T14:55:48+00:00"
-        },
-        {
-            "name": "phing/task-archives",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-archives.git",
-                "reference": "dfc47eada97a51d586931f1064798bf394339f1d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-archives/zipball/dfc47eada97a51d586931f1064798bf394339f1d",
-                "reference": "dfc47eada97a51d586931f1064798bf394339f1d",
-                "shasum": ""
-            },
-            "require": {
-                "pear/archive_tar": "^1.4",
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "tar": "Phing\\Task\\Ext\\TarTask",
-                    "untar": "Phing\\Task\\Ext\\UntarTask",
-                    "zip": "Phing\\Task\\Ext\\ZipTask",
-                    "unzip": "Phing\\Task\\Ext\\UnzipTask"
-                },
-                "phing-custom-typedefs": {
-                    "tarfileset": "Phing\\Task\\Ext\\TarFileSet",
-                    "zipfileset": "Phing\\Task\\Ext\\ZipFileSet"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "Archive related phing tasks and types.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-archives/issues",
-                "source": "https://github.com/phingofficial/task-archives/tree/main"
-            },
-            "time": "2021-05-14T11:38:15+00:00"
-        },
-        {
-            "name": "phing/task-aws",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-aws.git",
-                "reference": "c3c81955300f622ed2faff13421f69cce542b262"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-aws/zipball/c3c81955300f622ed2faff13421f69cce542b262",
-                "reference": "c3c81955300f622ed2faff13421f69cce542b262",
-                "shasum": ""
-            },
-            "require": {
-                "aws/aws-sdk-php": "^3.181",
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "s3get": "Phing\\Task\\Ext\\Amazon\\S3\\S3GetTask",
-                    "s3put": "Phing\\Task\\Ext\\Amazon\\S3\\S3PutTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "AWS related tasks.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-aws/issues",
-                "source": "https://github.com/phingofficial/task-aws/tree/main"
-            },
-            "time": "2021-05-14T11:36:53+00:00"
-        },
-        {
-            "name": "phing/task-coverage",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-coverage.git",
-                "reference": "e68f3ba3a63bb7b94f4d74eb9547cdb01c97cd92"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-coverage/zipball/e68f3ba3a63bb7b94f4d74eb9547cdb01c97cd92",
-                "reference": "e68f3ba3a63bb7b94f4d74eb9547cdb01c97cd92",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "coverage-setup": "Phing\\Task\\Ext\\Coverage\\CoverageSetupTask",
-                    "coverage-merger": "Phing\\Task\\Ext\\Coverage\\CoverageMergerTask",
-                    "coverage-report": "Phing\\Task\\Ext\\Coverage\\CoverageReportTask",
-                    "coverage-threshold": "Phing\\Task\\Ext\\Coverage\\CoverageThresholdTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\Coverage\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "coverage database tasks which can be used to gather code coverage information for unit tests.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-coverage/issues",
-                "source": "https://github.com/phingofficial/task-coverage/tree/main"
-            },
-            "time": "2021-02-07T20:49:32+00:00"
-        },
-        {
-            "name": "phing/task-dbdeploy",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-dbdeploy.git",
-                "reference": "36519d66be4fd201dd06369aa6b411c855bb47bc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-dbdeploy/zipball/36519d66be4fd201dd06369aa6b411c855bb47bc",
-                "reference": "36519d66be4fd201dd06369aa6b411c855bb47bc",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "dbdeploy": "Phing\\Task\\Ext\\DbDeployTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "support": {
-                "issues": "https://github.com/phingofficial/task-dbdeploy/issues",
-                "source": "https://github.com/phingofficial/task-dbdeploy/tree/main"
-            },
-            "time": "2021-01-29T19:30:51+00:00"
-        },
-        {
-            "name": "phing/task-ftpdeploy",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-ftpdeploy.git",
-                "reference": "4837b11e5033d49a3faf03bff53ab00f22685c9a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-ftpdeploy/zipball/4837b11e5033d49a3faf03bff53ab00f22685c9a",
-                "reference": "4837b11e5033d49a3faf03bff53ab00f22685c9a",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "pear/net_ftp": "dev-master",
-                "pear/pear-core-minimal": "~1.10.9",
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "ftpdeploy": "Phing\\Task\\Ext\\FtpDeployTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "Deploys a set of files to a remote FTP server.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-ftpdeploy/issues",
-                "source": "https://github.com/phingofficial/task-ftpdeploy/tree/main"
-            },
-            "time": "2021-01-25T14:56:06+00:00"
-        },
-        {
-            "name": "phing/task-git",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-git.git",
-                "reference": "f928d2e109e23afa73d2799608f25c96a9bc7bff"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-git/zipball/f928d2e109e23afa73d2799608f25c96a9bc7bff",
-                "reference": "f928d2e109e23afa73d2799608f25c96a9bc7bff",
-                "shasum": ""
-            },
-            "require": {
-                "pear/versioncontrol_git": "dev-master",
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "gitarchive": "Phing\\Task\\Ext\\GitArchiveTask",
-                    "gitinit": "Phing\\Task\\Ext\\GitInitTask",
-                    "gitclone": "Phing\\Task\\Ext\\GitCloneTask",
-                    "gitgc": "Phing\\Task\\Ext\\GitGcTask",
-                    "gitbranch": "Phing\\Task\\Ext\\GitBranchTask",
-                    "gitfetch": "Phing\\Task\\Ext\\GitFetchTask",
-                    "gitmerge": "Phing\\Task\\Ext\\GitMergeTask",
-                    "gitcheckout": "Phing\\Task\\Ext\\GitCheckoutTask",
-                    "gitpull": "Phing\\Task\\Ext\\GitPullTask",
-                    "gitpush": "Phing\\Task\\Ext\\GitPushTask",
-                    "gitlog": "Phing\\Task\\Ext\\GitLogTask",
-                    "gittag": "Phing\\Task\\Ext\\GitTagTask",
-                    "gitcommit": "Phing\\Task\\Ext\\GitCommitTask",
-                    "gitdescribe": "Phing\\Task\\Ext\\GitDescribeTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "Git related phing tasks.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-git/issues",
-                "source": "https://github.com/phingofficial/task-git/tree/main"
-            },
-            "time": "2021-05-14T10:56:32+00:00"
-        },
-        {
-            "name": "phing/task-hg",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-hg.git",
-                "reference": "1b09e6d5e3fe8229abb58755a5f88996b2d210e7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-hg/zipball/1b09e6d5e3fe8229abb58755a5f88996b2d210e7",
-                "reference": "1b09e6d5e3fe8229abb58755a5f88996b2d210e7",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 7.1",
-                "siad007/versioncontrol_hg": "^1.0"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "hgadd": "Phing\\Task\\Ext\\HgAddTask",
-                    "hgarchive": "Phing\\Task\\Ext\\HgArchiveTask",
-                    "hgclone": "Phing\\Task\\Ext\\HgCloneTask",
-                    "hgcommit": "Phing\\Task\\Ext\\HgCommitTask",
-                    "hginit": "Phing\\Task\\Ext\\HgInitTask",
-                    "hglog": "Phing\\Task\\Ext\\HgLogTask",
-                    "hgpull": "Phing\\Task\\Ext\\HgPullTask",
-                    "hgpush": "Phing\\Task\\Ext\\HgPushTask",
-                    "hgrevert": "Phing\\Task\\Ext\\HgRevertTask",
-                    "hgtag": "Phing\\Task\\Ext\\HgTagTask",
-                    "hgupdate": "Phing\\Task\\Ext\\HgUpdateTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "Mercurial related phing tasks.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-hg/issues",
-                "source": "https://github.com/phingofficial/task-hg/tree/main"
-            },
-            "time": "2021-05-14T10:57:57+00:00"
-        },
-        {
-            "name": "phing/task-http",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-http.git",
-                "reference": "fd5e1d9fea80a445349001cb76c8805ce1c0a9fe"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-http/zipball/fd5e1d9fea80a445349001cb76c8805ce1c0a9fe",
-                "reference": "fd5e1d9fea80a445349001cb76c8805ce1c0a9fe",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "guzzlehttp/guzzle": "^7.2",
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "http-request": "Phing\\Task\\Ext\\HttpRequestTask",
-                    "httpget": "Phing\\Task\\Ext\\HttpGetTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "HTTP related tasks.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-http/issues",
-                "source": "https://github.com/phingofficial/task-http/tree/main"
-            },
-            "time": "2021-01-31T23:04:30+00:00"
-        },
-        {
-            "name": "phing/task-inifile",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-inifile.git",
-                "reference": "54b9e2c75b1c2fdef85ede464fc6cde4b071e136"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-inifile/zipball/54b9e2c75b1c2fdef85ede464fc6cde4b071e136",
-                "reference": "54b9e2c75b1c2fdef85ede464fc6cde4b071e136",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "inifile": "Phing\\Task\\Ext\\IniFileTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "Tasks related to ini files.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-inifile/issues",
-                "source": "https://github.com/phingofficial/task-inifile/tree/main"
-            },
-            "time": "2021-01-26T22:04:11+00:00"
-        },
-        {
-            "name": "phing/task-ioncube",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-ioncube.git",
-                "reference": "67bbbfe22ade3037b65dcda5acb11b515b783a04"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-ioncube/zipball/67bbbfe22ade3037b65dcda5acb11b515b783a04",
-                "reference": "67bbbfe22ade3037b65dcda5acb11b515b783a04",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 7.3"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "ioncubeencoder": "Phing\\Task\\Ext\\IoncubeEncoderTask",
-                    "ioncubelicense": "Phing\\Task\\Ext\\IoncubeLicenseTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "The Ioncube tasks executes ionCube commands.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-ioncube/issues",
-                "source": "https://github.com/phingofficial/task-ioncube/tree/main"
-            },
-            "time": "2021-11-19T10:49:21+00:00"
-        },
-        {
-            "name": "phing/task-jshint",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-jshint.git",
-                "reference": "c87f0513a4689bc7bab83f2fc4b3d83396c6466b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-jshint/zipball/c87f0513a4689bc7bab83f2fc4b3d83396c6466b",
-                "reference": "c87f0513a4689bc7bab83f2fc4b3d83396c6466b",
-                "shasum": ""
-            },
-            "require": {
-                "ext-libxml": "*",
-                "ext-simplexml": "*",
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "jshint": "Phing\\Task\\Ext\\JsHintTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "Checks the JavaScript code using JSHint.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-jshint/issues",
-                "source": "https://github.com/phingofficial/task-jshint/tree/main"
-            },
-            "time": "2022-01-15T14:29:01+00:00"
-        },
-        {
-            "name": "phing/task-jsmin",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-jsmin.git",
-                "reference": "9252bfe554e383420e44aad75cff3c2bff40075f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-jsmin/zipball/9252bfe554e383420e44aad75cff3c2bff40075f",
-                "reference": "9252bfe554e383420e44aad75cff3c2bff40075f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 7.1",
-                "tedivm/jshrink": "^1.3"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "jsmin": "Phing\\Task\\Ext\\JsMinTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "Task to minify javascript files.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-jsmin/issues",
-                "source": "https://github.com/phingofficial/task-jsmin/tree/main"
-            },
-            "time": "2022-01-14T08:03:11+00:00"
-        },
-        {
-            "name": "phing/task-liquibase",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-liquibase.git",
-                "reference": "91cfa93680e0bcff32aeb0d91262ebbce90b04e4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-liquibase/zipball/91cfa93680e0bcff32aeb0d91262ebbce90b04e4",
-                "reference": "91cfa93680e0bcff32aeb0d91262ebbce90b04e4",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "liquibase-changelog": "Phing\\Task\\Ext\\LiquibaseChangeLogTask",
-                    "liquibase-dbdoc": "Phing\\Task\\Ext\\LiquibaseDbDocTask",
-                    "liquibase-diff": "Phing\\Task\\Ext\\LiquibaseDiffTask",
-                    "liquibase-rollback": "Phing\\Task\\Ext\\LiquibaseRollbackTask",
-                    "liquibase-tag": "Phing\\Task\\Ext\\LiquibaseTagTask",
-                    "liquibase-update": "Phing\\Task\\Ext\\LiquibaseUpdateTask",
-                    "liquibase": "Phing\\Task\\Ext\\LiquibaseTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "The LiquibaseTask is a generic task for liquibase commands that don't require extra command parameters.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-liquibase/issues",
-                "source": "https://github.com/phingofficial/task-liquibase/tree/main"
-            },
-            "time": "2021-01-25T14:57:23+00:00"
-        },
-        {
-            "name": "phing/task-phkpackage",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-phkpackage.git",
-                "reference": "f753840d8bc7c2542a24c05466316de249208fac"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-phkpackage/zipball/f753840d8bc7c2542a24c05466316de249208fac",
-                "reference": "f753840d8bc7c2542a24c05466316de249208fac",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "phkpackage": "Phing\\Task\\Ext\\PhkPackageTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "This task runs PHK_Creator.phk to build PHK-package.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-phkpackage/issues",
-                "source": "https://github.com/phingofficial/task-phkpackage/tree/main"
-            },
-            "time": "2021-01-25T14:57:38+00:00"
-        },
-        {
-            "name": "phing/task-phpdoc",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-phpdoc.git",
-                "reference": "87db308a415622244f3bf7f87f62e7f80b48752d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-phpdoc/zipball/87db308a415622244f3bf7f87f62e7f80b48752d",
-                "reference": "87db308a415622244f3bf7f87f62e7f80b48752d",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev",
-                "phpdocumentor/phpdocumentor": "^2.9"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "phpdoc": "Phing\\Task\\Ext\\PhpDocumentor2Task",
-                    "phpdoc2": "Phing\\Task\\Ext\\PhpDocumentor2Task"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "This task runs phpDocumentor 2, a API documentation tool. This project is the result of the merge of the phpDocumentor and DocBlox projects.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-phpdoc/issues",
-                "source": "https://github.com/phingofficial/task-phpdoc/tree/main"
-            },
-            "time": "2021-01-25T14:57:46+00:00"
-        },
-        {
-            "name": "phing/task-phpunit",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-phpunit.git",
-                "reference": "30e828eb78400b6df1b022467f0c644f77c4ef67"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-phpunit/zipball/30e828eb78400b6df1b022467f0c644f77c4ef67",
-                "reference": "30e828eb78400b6df1b022467f0c644f77c4ef67",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev",
-                "phpunit/phpunit": "^9.3"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "phpunit": "Phing\\Task\\Ext\\PHPUnitTask",
-                    "phpunitreport": "Phing\\Task\\Ext\\PHPUnitReportTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "PHPUnit related tasks.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-phpunit/issues",
-                "source": "https://github.com/phingofficial/task-phpunit/tree/main"
-            },
-            "time": "2022-01-18T15:24:52+00:00"
-        },
-        {
-            "name": "phing/task-sass",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-sass.git",
-                "reference": "13d5209cf582d40b42551944d46db0d4d2f52c7a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-sass/zipball/13d5209cf582d40b42551944d46db0d4d2f52c7a",
-                "reference": "13d5209cf582d40b42551944d46db0d4d2f52c7a",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev",
-                "scssphp/scssphp": "~1.0"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "sass": "Phing\\Task\\Ext\\SassTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "SassTask.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-sass/issues",
-                "source": "https://github.com/phingofficial/task-sass/tree/main"
-            },
-            "time": "2021-02-07T21:16:15+00:00"
-        },
-        {
-            "name": "phing/task-smarty",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-smarty.git",
-                "reference": "ad36b52d43af7f2ce365006c458852ce2c2b3245"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-smarty/zipball/ad36b52d43af7f2ce365006c458852ce2c2b3245",
-                "reference": "ad36b52d43af7f2ce365006c458852ce2c2b3245",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev",
-                "smarty/smarty": "^3.1"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "smarty": "Phing\\Task\\Ext\\SmartyTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "A task for generating output by using Smarty.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-smarty/issues",
-                "source": "https://github.com/phingofficial/task-smarty/tree/main"
-            },
-            "time": "2021-01-25T14:57:57+00:00"
-        },
-        {
-            "name": "phing/task-ssh",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-ssh.git",
-                "reference": "28fabc264846eb9880ae963b7711cd02feb55407"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-ssh/zipball/28fabc264846eb9880ae963b7711cd02feb55407",
-                "reference": "28fabc264846eb9880ae963b7711cd02feb55407",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "ssh": "Phing\\Task\\Ext\\SshTask",
-                    "scp": "Phing\\Task\\Ext\\ScpTask"
-                },
-                "phing-custom-typedefs": {
-                    "sshconfig": "Phing\\Task\\Ext\\Ssh2MethodParam"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "Execute commands on a remote host using ssh.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-ssh/issues",
-                "source": "https://github.com/phingofficial/task-ssh/tree/main"
-            },
-            "time": "2021-03-15T20:36:39+00:00"
-        },
-        {
-            "name": "phing/task-svn",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-svn.git",
-                "reference": "69c30141f9b466b2a6cc2ca038a9f1b492b7f6a9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-svn/zipball/69c30141f9b466b2a6cc2ca038a9f1b492b7f6a9",
-                "reference": "69c30141f9b466b2a6cc2ca038a9f1b492b7f6a9",
-                "shasum": ""
-            },
-            "require": {
-                "pear/versioncontrol_svn": "^0.7.0",
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "svnlastrevision": "Phing\\Tasks\\Ext\\SvnLastRevisionTask",
-                    "svncheckout": "Phing\\Tasks\\Ext\\SvnCheckoutTask",
-                    "svnexport": "Phing\\Tasks\\Ext\\SvnExportTask",
-                    "svnupdate": "Phing\\Tasks\\Ext\\SvnUpdateTask",
-                    "svnswitch": "Phing\\Tasks\\Ext\\SvnSwitchTask",
-                    "svncopy": "Phing\\Tasks\\Ext\\SvnCopyTask",
-                    "svncommit": "Phing\\Tasks\\Ext\\SvnCommitTask",
-                    "svnlist": "Phing\\Tasks\\Ext\\SvnListTask",
-                    "svnlog": "Phing\\Tasks\\Ext\\SvnLogTask",
-                    "svninfo": "Phing\\Tasks\\Ext\\SvnInfoTask",
-                    "svnproplist": "Phing\\Tasks\\Ext\\SvnProplistTask",
-                    "svnpropget": "Phing\\Tasks\\Ext\\SvnPropgetTask",
-                    "svnpropset": "Phing\\Tasks\\Ext\\SvnPropsetTask",
-                    "svnrevert": "Phing\\Tasks\\Ext\\SvnRevertTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Tasks\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "Subversion related phing tasks.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-svn/issues",
-                "source": "https://github.com/phingofficial/task-svn/tree/main"
-            },
-            "time": "2021-06-29T09:06:01+00:00"
-        },
-        {
-            "name": "phing/task-visualizer",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-visualizer.git",
-                "reference": "3abb57a4860770a8b7a57e7f9485da637dc6b15a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-visualizer/zipball/3abb57a4860770a8b7a57e7f9485da637dc6b15a",
-                "reference": "3abb57a4860770a8b7a57e7f9485da637dc6b15a",
-                "shasum": ""
-            },
-            "require": {
-                "jawira/plantuml-client": "^1.0",
-                "php": "^7.3 || ^7.4 || ^8.0"
-            },
-            "require-dev": {
-                "ergebnis/composer-normalize": "^2.13",
-                "ext-simplexml": "*",
-                "ext-xsl": "*",
-                "guzzlehttp/guzzle": "^7.2",
-                "phing/phing": "dev-main",
-                "phpstan/phpstan": "^0.12",
-                "psr/http-message": "^1.0"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "visualizer": "Phing\\Task\\Ext\\VisualizerTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                },
-                {
-                    "name": "Jawira Portugal",
-                    "email": "dev@tugal.be"
-                }
-            ],
-            "description": "VisualizerTask creates diagrams using buildfiles, these diagrams represents calls and depends among targets.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-visualizer/issues",
-                "source": "https://github.com/phingofficial/task-visualizer/tree/v1.2.0"
-            },
-            "time": "2021-08-31T22:07:42+00:00"
-        },
-        {
-            "name": "phing/task-zendcodeanalyser",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-zendcodeanalyser.git",
-                "reference": "c794fd80afd6b363076fa8acb55fb5cc25218938"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-zendcodeanalyser/zipball/c794fd80afd6b363076fa8acb55fb5cc25218938",
-                "reference": "c794fd80afd6b363076fa8acb55fb5cc25218938",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "zendcodeanalyzer": "Phing\\Task\\Ext\\ZendCodeAnalyzerTask",
-                    "analyze": "Phing\\Task\\Ext\\ZendCodeAnalyzerTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "The ZendCodeAnalyzerTask analyze PHP source files using the Zend Code Analyzer tool that ships with all versions of Zend Studio.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-zendcodeanalyser/issues",
-                "source": "https://github.com/phingofficial/task-zendcodeanalyser/tree/main"
-            },
-            "time": "2021-01-25T14:58:16+00:00"
-        },
-        {
-            "name": "phing/task-zendserverdevelopmenttools",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phingofficial/task-zendserverdeploymenttool.git",
-                "reference": "a5f8b0ef4f373d1bbdc54dfbdbb1fe05bfc09893"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/task-zendserverdeploymenttool/zipball/a5f8b0ef4f373d1bbdc54dfbdbb1fe05bfc09893",
-                "reference": "a5f8b0ef4f373d1bbdc54dfbdbb1fe05bfc09893",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 7.1"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.x-dev"
-            },
-            "default-branch": true,
-            "type": "phing-extension",
-            "extra": {
-                "phing-custom-taskdefs": {
-                    "zsdtvalidate": "Phing\\Task\\Ext\\ZsdtValidateTask",
-                    "zsdtpack": "Phing\\Task\\Ext\\ZsdtPackTask"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phing\\Task\\Ext\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Siad Ardroumli",
-                    "email": "siad.ardroumli@gmail.com"
-                }
-            ],
-            "description": "Zend Server Development Tools.",
-            "support": {
-                "issues": "https://github.com/phingofficial/task-zendserverdeploymenttool/issues",
-                "source": "https://github.com/phingofficial/task-zendserverdeploymenttool/tree/main"
-            },
-            "time": "2021-01-25T14:58:31+00:00"
+            "time": "2022-12-20T14:31:40+00:00"
         },
         {
             "name": "phploc/phploc",
@@ -2797,12 +1605,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phploc.git",
-                "reference": "7cc1ba45bfca6e2aae7a435bb17fac09f217c106"
+                "reference": "0797c79fa6fff56094740225e922ac278a5a1816"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phploc/zipball/7cc1ba45bfca6e2aae7a435bb17fac09f217c106",
-                "reference": "7cc1ba45bfca6e2aae7a435bb17fac09f217c106",
+                "url": "https://api.github.com/repos/sebastianbergmann/phploc/zipball/0797c79fa6fff56094740225e922ac278a5a1816",
+                "reference": "0797c79fa6fff56094740225e922ac278a5a1816",
                 "shasum": ""
             },
             "require": {
@@ -2851,26 +1659,27 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-05-03T08:08:31+00:00"
+            "abandoned": true,
+            "time": "2023-01-10T12:47:50+00:00"
         },
         {
             "name": "phpmd/phpmd",
-            "version": "2.12.0",
+            "version": "2.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpmd/phpmd.git",
-                "reference": "c0b678ba71902f539c27c14332aa0ddcf14388ec"
+                "reference": "dad0228156856b3ad959992f9748514fa943f3e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/c0b678ba71902f539c27c14332aa0ddcf14388ec",
-                "reference": "c0b678ba71902f539c27c14332aa0ddcf14388ec",
+                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/dad0228156856b3ad959992f9748514fa943f3e3",
+                "reference": "dad0228156856b3ad959992f9748514fa943f3e3",
                 "shasum": ""
             },
             "require": {
                 "composer/xdebug-handler": "^1.0 || ^2.0 || ^3.0",
                 "ext-xml": "*",
-                "pdepend/pdepend": "^2.10.3",
+                "pdepend/pdepend": "^2.12.1",
                 "php": ">=5.3.9"
             },
             "require-dev": {
@@ -2926,7 +1735,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/phpmd",
                 "issues": "https://github.com/phpmd/phpmd/issues",
-                "source": "https://github.com/phpmd/phpmd/tree/2.12.0"
+                "source": "https://github.com/phpmd/phpmd/tree/2.13.0"
             },
             "funding": [
                 {
@@ -2934,20 +1743,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-24T13:33:01+00:00"
+            "time": "2022-09-10T08:44:15+00:00"
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.7.x-dev",
+            "version": "1.10.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "dc7d5379f471e9ea347b07e133ae2c41f84d6c18"
+                "reference": "aeddfab221275fc342537f45eb1ea05a28e40caa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/dc7d5379f471e9ea347b07e133ae2c41f84d6c18",
-                "reference": "dc7d5379f471e9ea347b07e133ae2c41f84d6c18",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/aeddfab221275fc342537f45eb1ea05a28e40caa",
+                "reference": "aeddfab221275fc342537f45eb1ea05a28e40caa",
                 "shasum": ""
             },
             "require": {
@@ -2972,9 +1781,16 @@
                 "MIT"
             ],
             "description": "PHPStan - PHP Static Analysis Tool",
+            "keywords": [
+                "dev",
+                "static analysis"
+            ],
             "support": {
+                "docs": "https://phpstan.org/user-guide/getting-started",
+                "forum": "https://github.com/phpstan/phpstan/discussions",
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.7.x"
+                "security": "https://github.com/phpstan/phpstan/security/policy",
+                "source": "https://github.com/phpstan/phpstan-src"
             },
             "funding": [
                 {
@@ -2986,15 +1802,11 @@
                     "type": "github"
                 },
                 {
-                    "url": "https://www.patreon.com/phpstan",
-                    "type": "patreon"
-                },
-                {
                     "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-16T08:38:31+00:00"
+            "time": "2023-04-04T09:02:16+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -3117,22 +1929,28 @@
         },
         {
             "name": "psr/container",
-            "version": "1.1.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/container.git",
-                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf"
+                "reference": "90db7b9ac2a2c5b849fcb69dde58f3ae182c68f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/8622567409010282b7aeebe4bb841fe98b58dcaf",
-                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/90db7b9ac2a2c5b849fcb69dde58f3ae182c68f5",
+                "reference": "90db7b9ac2a2c5b849fcb69dde58f3ae182c68f5",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.0"
+                "php": ">=7.4.0"
             },
+            "default-branch": true,
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Psr\\Container\\": "src/"
@@ -3159,9 +1977,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-fig/container/issues",
-                "source": "https://github.com/php-fig/container/tree/1.1.x"
+                "source": "https://github.com/php-fig/container/tree/master"
             },
-            "time": "2021-03-05T17:36:06+00:00"
+            "time": "2022-07-19T17:36:59+00:00"
         },
         {
             "name": "psr/http-client",
@@ -3222,12 +2040,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/http-factory.git",
-                "reference": "36fa03d50ff82abcae81860bdaf4ed9a1510c7cd"
+                "reference": "5a4f141ac2e5bc35e615134f127e1833158d2944"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-factory/zipball/36fa03d50ff82abcae81860bdaf4ed9a1510c7cd",
-                "reference": "36fa03d50ff82abcae81860bdaf4ed9a1510c7cd",
+                "url": "https://api.github.com/repos/php-fig/http-factory/zipball/5a4f141ac2e5bc35e615134f127e1833158d2944",
+                "reference": "5a4f141ac2e5bc35e615134f127e1833158d2944",
                 "shasum": ""
             },
             "require": {
@@ -3270,7 +2088,7 @@
             "support": {
                 "source": "https://github.com/php-fig/http-factory/tree/master"
             },
-            "time": "2020-09-17T16:52:55+00:00"
+            "time": "2022-07-14T07:21:53+00:00"
         },
         {
             "name": "psr/http-message",
@@ -3328,30 +2146,31 @@
         },
         {
             "name": "psr/log",
-            "version": "1.1.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "d49695b909c3b7628b6289db5479a1c204601f11"
+                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/d49695b909c3b7628b6289db5479a1c204601f11",
-                "reference": "d49695b909c3b7628b6289db5479a1c204601f11",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/fe5ea303b0887d5caefd3d431c3e61ad47037001",
+                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=8.0.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev"
+                    "dev-master": "3.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Psr\\Log\\": "Psr/Log/"
+                    "Psr\\Log\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3372,9 +2191,9 @@
                 "psr-3"
             ],
             "support": {
-                "source": "https://github.com/php-fig/log/tree/1.1.4"
+                "source": "https://github.com/php-fig/log/tree/3.0.0"
             },
-            "time": "2021-05-03T11:20:27+00:00"
+            "time": "2021-07-14T16:46:02+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -3535,6 +2354,7 @@
                     "type": "github"
                 }
             ],
+            "abandoned": true,
             "time": "2020-12-07T05:39:23+00:00"
         },
         {
@@ -3644,40 +2464,38 @@
         },
         {
             "name": "symfony/config",
-            "version": "5.4.x-dev",
+            "version": "6.3.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "9f8964f56f7234f8ace16f66cb3fbae950c04e68"
+                "reference": "3e2717ea077b50517e21bd3153507139242eab83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/9f8964f56f7234f8ace16f66cb3fbae950c04e68",
-                "reference": "9f8964f56f7234f8ace16f66cb3fbae950c04e68",
+                "url": "https://api.github.com/repos/symfony/config/zipball/3e2717ea077b50517e21bd3153507139242eab83",
+                "reference": "3e2717ea077b50517e21bd3153507139242eab83",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.5",
-                "symfony/deprecation-contracts": "^2.1|^3",
-                "symfony/filesystem": "^4.4|^5.0|^6.0",
-                "symfony/polyfill-ctype": "~1.8",
-                "symfony/polyfill-php80": "^1.16",
-                "symfony/polyfill-php81": "^1.22"
+                "php": ">=8.1",
+                "symfony/deprecation-contracts": "^2.5|^3",
+                "symfony/filesystem": "^5.4|^6.0",
+                "symfony/polyfill-ctype": "~1.8"
             },
             "conflict": {
-                "symfony/finder": "<4.4"
+                "symfony/finder": "<5.4",
+                "symfony/service-contracts": "<2.5"
             },
             "require-dev": {
-                "symfony/event-dispatcher": "^4.4|^5.0|^6.0",
-                "symfony/finder": "^4.4|^5.0|^6.0",
-                "symfony/messenger": "^4.4|^5.0|^6.0",
-                "symfony/service-contracts": "^1.1|^2|^3",
-                "symfony/yaml": "^4.4|^5.0|^6.0"
+                "symfony/event-dispatcher": "^5.4|^6.0",
+                "symfony/finder": "^5.4|^6.0",
+                "symfony/messenger": "^5.4|^6.0",
+                "symfony/service-contracts": "^2.5|^3",
+                "symfony/yaml": "^5.4|^6.0"
             },
             "suggest": {
                 "symfony/yaml": "To use the yaml reference dumper"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -3704,7 +2522,7 @@
             "description": "Helps you find, load, combine, autofill and validate configuration values of any kind",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/config/tree/v5.4.8"
+                "source": "https://github.com/symfony/config/tree/6.3"
             },
             "funding": [
                 {
@@ -3720,50 +2538,47 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-12T16:02:29+00:00"
+            "time": "2023-04-02T01:25:41+00:00"
         },
         {
             "name": "symfony/console",
-            "version": "5.4.x-dev",
+            "version": "6.3.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "18949198428c079e9cbe7be63fd628d74e7f2751"
+                "reference": "22139f9c425d2be619ccbf1bdbabbd67d1060c50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/18949198428c079e9cbe7be63fd628d74e7f2751",
-                "reference": "18949198428c079e9cbe7be63fd628d74e7f2751",
+                "url": "https://api.github.com/repos/symfony/console/zipball/22139f9c425d2be619ccbf1bdbabbd67d1060c50",
+                "reference": "22139f9c425d2be619ccbf1bdbabbd67d1060c50",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.5",
-                "symfony/deprecation-contracts": "^2.1|^3",
+                "php": ">=8.1",
+                "symfony/deprecation-contracts": "^2.5|^3",
                 "symfony/polyfill-mbstring": "~1.0",
-                "symfony/polyfill-php73": "^1.9",
-                "symfony/polyfill-php80": "^1.16",
-                "symfony/service-contracts": "^1.1|^2|^3",
-                "symfony/string": "^5.1|^6.0"
+                "symfony/service-contracts": "^2.5|^3",
+                "symfony/string": "^5.4|^6.0"
             },
             "conflict": {
-                "psr/log": ">=3",
-                "symfony/dependency-injection": "<4.4",
-                "symfony/dotenv": "<5.1",
-                "symfony/event-dispatcher": "<4.4",
-                "symfony/lock": "<4.4",
-                "symfony/process": "<4.4"
+                "symfony/dependency-injection": "<5.4",
+                "symfony/dotenv": "<5.4",
+                "symfony/event-dispatcher": "<5.4",
+                "symfony/lock": "<5.4",
+                "symfony/process": "<5.4"
             },
             "provide": {
-                "psr/log-implementation": "1.0|2.0"
+                "psr/log-implementation": "1.0|2.0|3.0"
             },
             "require-dev": {
-                "psr/log": "^1|^2",
-                "symfony/config": "^4.4|^5.0|^6.0",
-                "symfony/dependency-injection": "^4.4|^5.0|^6.0",
-                "symfony/event-dispatcher": "^4.4|^5.0|^6.0",
-                "symfony/lock": "^4.4|^5.0|^6.0",
-                "symfony/process": "^4.4|^5.0|^6.0",
-                "symfony/var-dumper": "^4.4|^5.0|^6.0"
+                "psr/log": "^1|^2|^3",
+                "symfony/config": "^5.4|^6.0",
+                "symfony/dependency-injection": "^5.4|^6.0",
+                "symfony/event-dispatcher": "^5.4|^6.0",
+                "symfony/lock": "^5.4|^6.0",
+                "symfony/process": "^5.4|^6.0",
+                "symfony/var-dumper": "^5.4|^6.0"
             },
             "suggest": {
                 "psr/log": "For using the console logger",
@@ -3771,7 +2586,6 @@
                 "symfony/lock": "",
                 "symfony/process": ""
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -3799,12 +2613,12 @@
             "homepage": "https://symfony.com",
             "keywords": [
                 "cli",
-                "command line",
+                "command-line",
                 "console",
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/5.4"
+                "source": "https://github.com/symfony/console/tree/6.3"
             },
             "funding": [
                 {
@@ -3820,54 +2634,51 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-14T12:51:09+00:00"
+            "time": "2023-04-04T06:17:48+00:00"
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "5.4.x-dev",
+            "version": "6.3.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "855e29cd715ad62bb840c9841fe09a7cde50811f"
+                "reference": "26e7107e7b15bd511c5a626fb9aa06355250167d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/855e29cd715ad62bb840c9841fe09a7cde50811f",
-                "reference": "855e29cd715ad62bb840c9841fe09a7cde50811f",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/26e7107e7b15bd511c5a626fb9aa06355250167d",
+                "reference": "26e7107e7b15bd511c5a626fb9aa06355250167d",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.5",
-                "psr/container": "^1.1.1",
-                "symfony/deprecation-contracts": "^2.1|^3",
-                "symfony/polyfill-php80": "^1.16",
-                "symfony/polyfill-php81": "^1.22",
-                "symfony/service-contracts": "^1.1.6|^2"
+                "php": ">=8.1",
+                "psr/container": "^1.1|^2.0",
+                "symfony/deprecation-contracts": "^2.5|^3",
+                "symfony/service-contracts": "^2.5|^3.0",
+                "symfony/var-exporter": "^6.2.7"
             },
             "conflict": {
                 "ext-psr": "<1.1|>=2",
-                "symfony/config": "<5.3",
-                "symfony/finder": "<4.4",
-                "symfony/proxy-manager-bridge": "<4.4",
-                "symfony/yaml": "<4.4.26"
+                "symfony/config": "<6.1",
+                "symfony/finder": "<5.4",
+                "symfony/proxy-manager-bridge": "<6.3",
+                "symfony/yaml": "<5.4"
             },
             "provide": {
-                "psr/container-implementation": "1.0",
-                "symfony/service-implementation": "1.0|2.0"
+                "psr/container-implementation": "1.1|2.0",
+                "symfony/service-implementation": "1.1|2.0|3.0"
             },
             "require-dev": {
-                "symfony/config": "^5.3|^6.0",
-                "symfony/expression-language": "^4.4|^5.0|^6.0",
-                "symfony/yaml": "^4.4.26|^5.0|^6.0"
+                "symfony/config": "^6.1",
+                "symfony/expression-language": "^5.4|^6.0",
+                "symfony/yaml": "^5.4|^6.0"
             },
             "suggest": {
                 "symfony/config": "",
                 "symfony/expression-language": "For using expressions in service container configuration",
                 "symfony/finder": "For using double-star glob patterns or when GLOB_BRACE portability is required",
-                "symfony/proxy-manager-bridge": "Generate service proxies to lazy load them",
                 "symfony/yaml": ""
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -3894,7 +2705,7 @@
             "description": "Allows you to standardize and centralize the way objects are constructed in your application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/dependency-injection/tree/v5.4.8"
+                "source": "https://github.com/symfony/dependency-injection/tree/6.3"
             },
             "funding": [
                 {
@@ -3910,29 +2721,30 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-26T13:08:29+00:00"
+            "time": "2023-04-02T02:11:49+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
-            "version": "2.5.x-dev",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/deprecation-contracts.git",
-                "reference": "e8b495ea28c1d97b5e0c121748d6f9b53d075c66"
+                "reference": "e2d1534420bd723d0ef5aec58a22c5fe60ce6f5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/e8b495ea28c1d97b5e0c121748d6f9b53d075c66",
-                "reference": "e8b495ea28c1d97b5e0c121748d6f9b53d075c66",
+                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/e2d1534420bd723d0ef5aec58a22c5fe60ce6f5e",
+                "reference": "e2d1534420bd723d0ef5aec58a22c5fe60ce6f5e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1"
+                "php": ">=8.1"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "2.5-dev"
+                    "dev-main": "3.3-dev"
                 },
                 "thanks": {
                     "name": "symfony/contracts",
@@ -3961,7 +2773,7 @@
             "description": "A generic function and convention to trigger deprecation notices",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/deprecation-contracts/tree/2.5"
+                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.2.1"
             },
             "funding": [
                 {
@@ -3977,29 +2789,27 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-02T09:53:40+00:00"
+            "time": "2023-03-01T10:25:55+00:00"
         },
         {
             "name": "symfony/filesystem",
-            "version": "5.4.x-dev",
+            "version": "6.3.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "3a4442138d80c9f7b600fb297534ac718b61d37f"
+                "reference": "ebd0ca75299ab3629c4283c28222536c0f3033a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/3a4442138d80c9f7b600fb297534ac718b61d37f",
-                "reference": "3a4442138d80c9f7b600fb297534ac718b61d37f",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/ebd0ca75299ab3629c4283c28222536c0f3033a6",
+                "reference": "ebd0ca75299ab3629c4283c28222536c0f3033a6",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.5",
+                "php": ">=8.1",
                 "symfony/polyfill-ctype": "~1.8",
-                "symfony/polyfill-mbstring": "~1.8",
-                "symfony/polyfill-php80": "^1.16"
+                "symfony/polyfill-mbstring": "~1.8"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -4026,7 +2836,7 @@
             "description": "Provides basic utilities for the filesystem",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/filesystem/tree/v5.4.7"
+                "source": "https://github.com/symfony/filesystem/tree/6.3"
             },
             "funding": [
                 {
@@ -4042,7 +2852,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-01T12:33:59+00:00"
+            "time": "2023-04-02T01:25:41+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -4050,12 +2860,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "9fa980f4c4b0cbf0b6406832e307b9aed839876f"
+                "reference": "ea208ce43cbb04af6867b4fdddb1bdbf84cc28cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/9fa980f4c4b0cbf0b6406832e307b9aed839876f",
-                "reference": "9fa980f4c4b0cbf0b6406832e307b9aed839876f",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/ea208ce43cbb04af6867b4fdddb1bdbf84cc28cb",
+                "reference": "ea208ce43cbb04af6867b4fdddb1bdbf84cc28cb",
                 "shasum": ""
             },
             "require": {
@@ -4071,7 +2881,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.26-dev"
+                    "dev-main": "1.28-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -4125,7 +2935,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-10T07:21:04+00:00"
+            "time": "2023-01-26T09:26:14+00:00"
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
@@ -4133,12 +2943,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-grapheme.git",
-                "reference": "1dbff59483b45a8e5685ec0568c7fad4d4b18133"
+                "reference": "875e90aeea2777b6f135677f618529449334a612"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-grapheme/zipball/1dbff59483b45a8e5685ec0568c7fad4d4b18133",
-                "reference": "1dbff59483b45a8e5685ec0568c7fad4d4b18133",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-grapheme/zipball/875e90aeea2777b6f135677f618529449334a612",
+                "reference": "875e90aeea2777b6f135677f618529449334a612",
                 "shasum": ""
             },
             "require": {
@@ -4151,7 +2961,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.26-dev"
+                    "dev-main": "1.28-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -4207,7 +3017,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-10T07:21:04+00:00"
+            "time": "2023-01-26T09:26:14+00:00"
         },
         {
             "name": "symfony/polyfill-intl-normalizer",
@@ -4215,12 +3025,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-normalizer.git",
-                "reference": "cb7c57fcdec70ed4606806bfab35940b64cbaf5d"
+                "reference": "8c4ad05dd0120b6a53c1ca374dca2ad0a1c4ed92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-normalizer/zipball/cb7c57fcdec70ed4606806bfab35940b64cbaf5d",
-                "reference": "cb7c57fcdec70ed4606806bfab35940b64cbaf5d",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-normalizer/zipball/8c4ad05dd0120b6a53c1ca374dca2ad0a1c4ed92",
+                "reference": "8c4ad05dd0120b6a53c1ca374dca2ad0a1c4ed92",
                 "shasum": ""
             },
             "require": {
@@ -4233,7 +3043,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.26-dev"
+                    "dev-main": "1.28-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -4292,7 +3102,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-10T07:21:04+00:00"
+            "time": "2023-01-26T09:26:14+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -4300,12 +3110,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "240259a291e16e306dbf46dfe139d50c7fcb2d34"
+                "reference": "f9c7affe77a00ae32ca127ca6833d034e6d33f25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/240259a291e16e306dbf46dfe139d50c7fcb2d34",
-                "reference": "240259a291e16e306dbf46dfe139d50c7fcb2d34",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/f9c7affe77a00ae32ca127ca6833d034e6d33f25",
+                "reference": "f9c7affe77a00ae32ca127ca6833d034e6d33f25",
                 "shasum": ""
             },
             "require": {
@@ -4321,7 +3131,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.26-dev"
+                    "dev-main": "1.28-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -4376,270 +3186,25 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-10T07:21:04+00:00"
-        },
-        {
-            "name": "symfony/polyfill-php73",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-php73.git",
-                "reference": "115f2c1357f09f65c82d5aa8399051b6d17f22eb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/115f2c1357f09f65c82d5aa8399051b6d17f22eb",
-                "reference": "115f2c1357f09f65c82d5aa8399051b6d17f22eb",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1"
-            },
-            "default-branch": true,
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "1.26-dev"
-                },
-                "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "bootstrap.php"
-                ],
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php73\\": ""
-                },
-                "classmap": [
-                    "Resources/stubs"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill backporting some PHP 7.3+ features to lower PHP versions",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-php73/tree/main"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-05-10T07:21:04+00:00"
-        },
-        {
-            "name": "symfony/polyfill-php80",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-php80.git",
-                "reference": "cfa0ae98841b9e461207c13ab093d76b0fa7bace"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/cfa0ae98841b9e461207c13ab093d76b0fa7bace",
-                "reference": "cfa0ae98841b9e461207c13ab093d76b0fa7bace",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1"
-            },
-            "default-branch": true,
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "1.26-dev"
-                },
-                "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "bootstrap.php"
-                ],
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php80\\": ""
-                },
-                "classmap": [
-                    "Resources/stubs"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ion Bazan",
-                    "email": "ion.bazan@gmail.com"
-                },
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill backporting some PHP 8.0+ features to lower PHP versions",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-php80/tree/main"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-05-10T07:21:04+00:00"
-        },
-        {
-            "name": "symfony/polyfill-php81",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-php81.git",
-                "reference": "69884f948a2b2ae8ff5069ec52af4f94df74a73c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php81/zipball/69884f948a2b2ae8ff5069ec52af4f94df74a73c",
-                "reference": "69884f948a2b2ae8ff5069ec52af4f94df74a73c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1"
-            },
-            "default-branch": true,
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "1.26-dev"
-                },
-                "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "bootstrap.php"
-                ],
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php81\\": ""
-                },
-                "classmap": [
-                    "Resources/stubs"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill backporting some PHP 8.1+ features to lower PHP versions",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-php81/tree/main"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-05-10T07:21:04+00:00"
+            "time": "2023-01-30T17:25:47+00:00"
         },
         {
             "name": "symfony/service-contracts",
-            "version": "2.5.x-dev",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/service-contracts.git",
-                "reference": "24d9dc654b83e91aa59f9d167b131bc3b5bea24c"
+                "reference": "a8c9cedf55f314f3a186041d19537303766df09a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/24d9dc654b83e91aa59f9d167b131bc3b5bea24c",
-                "reference": "24d9dc654b83e91aa59f9d167b131bc3b5bea24c",
+                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/a8c9cedf55f314f3a186041d19537303766df09a",
+                "reference": "a8c9cedf55f314f3a186041d19537303766df09a",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.5",
-                "psr/container": "^1.1",
-                "symfony/deprecation-contracts": "^2.1|^3"
+                "php": ">=8.1",
+                "psr/container": "^2.0"
             },
             "conflict": {
                 "ext-psr": "<1.1|>=2"
@@ -4647,10 +3212,11 @@
             "suggest": {
                 "symfony/service-implementation": ""
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "2.5-dev"
+                    "dev-main": "3.3-dev"
                 },
                 "thanks": {
                     "name": "symfony/contracts",
@@ -4660,7 +3226,10 @@
             "autoload": {
                 "psr-4": {
                     "Symfony\\Contracts\\Service\\": ""
-                }
+                },
+                "exclude-from-classmap": [
+                    "/Test/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -4687,7 +3256,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/service-contracts/tree/2.5"
+                "source": "https://github.com/symfony/service-contracts/tree/v3.2.1"
             },
             "funding": [
                 {
@@ -4703,40 +3272,39 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-13T20:07:29+00:00"
+            "time": "2023-03-01T10:32:47+00:00"
         },
         {
             "name": "symfony/string",
-            "version": "5.4.x-dev",
+            "version": "6.3.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "3c061a76bff6d6ea427d85e12ad1bb8ed8cd43e8"
+                "reference": "f2e190ee75ff0f5eced645ec0be5c66fac81f51f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/3c061a76bff6d6ea427d85e12ad1bb8ed8cd43e8",
-                "reference": "3c061a76bff6d6ea427d85e12ad1bb8ed8cd43e8",
+                "url": "https://api.github.com/repos/symfony/string/zipball/f2e190ee75ff0f5eced645ec0be5c66fac81f51f",
+                "reference": "f2e190ee75ff0f5eced645ec0be5c66fac81f51f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.5",
+                "php": ">=8.1",
                 "symfony/polyfill-ctype": "~1.8",
                 "symfony/polyfill-intl-grapheme": "~1.0",
                 "symfony/polyfill-intl-normalizer": "~1.0",
-                "symfony/polyfill-mbstring": "~1.0",
-                "symfony/polyfill-php80": "~1.15"
+                "symfony/polyfill-mbstring": "~1.0"
             },
             "conflict": {
-                "symfony/translation-contracts": ">=3.0"
+                "symfony/translation-contracts": "<2.5"
             },
             "require-dev": {
-                "symfony/error-handler": "^4.4|^5.0|^6.0",
-                "symfony/http-client": "^4.4|^5.0|^6.0",
-                "symfony/translation-contracts": "^1.1|^2",
-                "symfony/var-exporter": "^4.4|^5.0|^6.0"
+                "symfony/error-handler": "^5.4|^6.0",
+                "symfony/http-client": "^5.4|^6.0",
+                "symfony/intl": "^6.2",
+                "symfony/translation-contracts": "^2.5|^3.0",
+                "symfony/var-exporter": "^5.4|^6.0"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [
@@ -4774,7 +3342,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v5.4.8"
+                "source": "https://github.com/symfony/string/tree/6.3"
             },
             "funding": [
                 {
@@ -4790,37 +3358,109 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-19T10:40:37+00:00"
+            "time": "2023-03-21T21:06:29+00:00"
         },
         {
-            "name": "symfony/yaml",
-            "version": "5.4.x-dev",
+            "name": "symfony/var-exporter",
+            "version": "6.3.x-dev",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/yaml.git",
-                "reference": "e80f87d2c9495966768310fc531b487ce64237a2"
+                "url": "https://github.com/symfony/var-exporter.git",
+                "reference": "226d0842fe410299932a58458ff1ddbb22af5c69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/e80f87d2c9495966768310fc531b487ce64237a2",
-                "reference": "e80f87d2c9495966768310fc531b487ce64237a2",
+                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/226d0842fe410299932a58458ff1ddbb22af5c69",
+                "reference": "226d0842fe410299932a58458ff1ddbb22af5c69",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.5",
-                "symfony/deprecation-contracts": "^2.1|^3",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "symfony/var-dumper": "^5.4|^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\VarExporter\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Allows exporting any serializable PHP data structure to plain PHP code",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "clone",
+                "construct",
+                "export",
+                "hydrate",
+                "instantiate",
+                "lazy-loading",
+                "proxy",
+                "serialize"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/var-exporter/tree/6.3"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-03-14T15:56:29+00:00"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "6.3.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "e2bacb46cd102f23f43e033a530fadf229af3c41"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/e2bacb46cd102f23f43e033a530fadf229af3c41",
+                "reference": "e2bacb46cd102f23f43e033a530fadf229af3c41",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
                 "symfony/polyfill-ctype": "^1.8"
             },
             "conflict": {
-                "symfony/console": "<5.3"
+                "symfony/console": "<5.4"
             },
             "require-dev": {
-                "symfony/console": "^5.3|^6.0"
+                "symfony/console": "^5.4|^6.0"
             },
             "suggest": {
                 "symfony/console": "For validating YAML files using the lint command"
             },
-            "default-branch": true,
             "bin": [
                 "Resources/bin/yaml-lint"
             ],
@@ -4850,7 +3490,7 @@
             "description": "Loads and dumps YAML files",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/yaml/tree/v5.4.3"
+                "source": "https://github.com/symfony/yaml/tree/6.3"
             },
             "funding": [
                 {
@@ -4866,29 +3506,29 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-26T16:32:32+00:00"
+            "time": "2023-04-02T02:11:49+00:00"
         },
         {
             "name": "tedivm/jshrink",
-            "version": "v1.4.0",
+            "version": "v1.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tedious/JShrink.git",
-                "reference": "0513ba1407b1f235518a939455855e6952a48bbc"
+                "reference": "aa786b10f012fc0e15b5147c22bdb8c765fac76a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tedious/JShrink/zipball/0513ba1407b1f235518a939455855e6952a48bbc",
-                "reference": "0513ba1407b1f235518a939455855e6952a48bbc",
+                "url": "https://api.github.com/repos/tedious/JShrink/zipball/aa786b10f012fc0e15b5147c22bdb8c765fac76a",
+                "reference": "aa786b10f012fc0e15b5147c22bdb8c765fac76a",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.6|^7.0|^8.0"
+                "php": "^7.0|^8.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.8",
-                "php-coveralls/php-coveralls": "^1.1.0",
-                "phpunit/phpunit": "^6"
+                "friendsofphp/php-cs-fixer": "^3.14",
+                "php-coveralls/php-coveralls": "^2.5.0",
+                "phpunit/phpunit": "^9|^10"
             },
             "type": "library",
             "autoload": {
@@ -4914,15 +3554,19 @@
             ],
             "support": {
                 "issues": "https://github.com/tedious/JShrink/issues",
-                "source": "https://github.com/tedious/JShrink/tree/v1.4.0"
+                "source": "https://github.com/tedious/JShrink/tree/v1.6.5"
             },
             "funding": [
+                {
+                    "url": "https://github.com/tedivm",
+                    "type": "github"
+                },
                 {
                     "url": "https://tidelift.com/funding/github/packagist/tedivm/jshrink",
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-30T18:10:21+00:00"
+            "time": "2023-03-12T15:19:34+00:00"
         }
     ],
     "packages-dev": [],
@@ -4937,7 +3581,7 @@
     "platform": [],
     "platform-dev": [],
     "platform-overrides": {
-        "php": "7.3.6"
+        "php": "8.1.0"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
