@@ -12,7 +12,7 @@ form:
     version:
       type: input.text
       label: Version
-      default: "@version@"
+      default: "5.5.16"
 
     icon:
       type: input.text
@@ -22,7 +22,7 @@ form:
     date:
       type: input.text
       label: Release Date
-      default: "@versiondate@"
+      default: "April 4, 2023"
 
     author.name:
       type: input.text
