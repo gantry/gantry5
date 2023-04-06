@@ -9,7 +9,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.4"
+            "php": "7.3.33"
         },
         "allow-plugins": {
             "phing/phing-composer-configurator": true
