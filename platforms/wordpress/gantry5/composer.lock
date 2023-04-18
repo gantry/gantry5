@@ -320,16 +320,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.15.1",
+            "version": "2.15.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "e864ac957acd66e1565f25efda61e37791a5db0b"
+                "reference": "aac9304c5ed61bf7b1b7a6064bf9806ab842ce73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/e864ac957acd66e1565f25efda61e37791a5db0b",
-                "reference": "e864ac957acd66e1565f25efda61e37791a5db0b",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/aac9304c5ed61bf7b1b7a6064bf9806ab842ce73",
+                "reference": "aac9304c5ed61bf7b1b7a6064bf9806ab842ce73",
                 "shasum": ""
             },
             "require": {
@@ -379,7 +379,7 @@
             ],
             "support": {
                 "issues": "https://github.com/filp/whoops/issues",
-                "source": "https://github.com/filp/whoops/tree/2.15.1"
+                "source": "https://github.com/filp/whoops/tree/2.15.2"
             },
             "funding": [
                 {
@@ -387,7 +387,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-07T12:00:00+00:00"
+            "time": "2023-04-12T12:00:00+00:00"
         },
         {
             "name": "leafo/scssphp",
@@ -607,23 +607,23 @@
         },
         {
             "name": "rockettheme/toolbox",
-            "version": "1.6.1",
+            "version": "1.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "fdf0195ced25b83525d3b084c3e81f05de96ac8c"
+                "reference": "4d1021492385117323b50e3370626da613dd6c16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/fdf0195ced25b83525d3b084c3e81f05de96ac8c",
-                "reference": "fdf0195ced25b83525d3b084c3e81f05de96ac8c",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/4d1021492385117323b50e3370626da613dd6c16",
+                "reference": "4d1021492385117323b50e3370626da613dd6c16",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "php": ">=5.6.0",
                 "pimple/pimple": "^3.0",
-                "symfony/event-dispatcher": "^3.4|^4.0|^5.0",
+                "symfony/event-dispatcher": "^3.4|^4.0",
                 "symfony/yaml": "^3.4|^4.0|^5.0"
             },
             "type": "library",
@@ -669,10 +669,10 @@
                 "rockettheme"
             ],
             "support": {
-                "source": "https://github.com/rockettheme/toolbox/tree/1.6.1",
+                "source": "https://github.com/rockettheme/toolbox/tree/1.6.4",
                 "issues": "https://github.com/rockettheme/toolbox/issues"
             },
-            "time": "2022-02-08T08:36:03+00:00"
+            "time": "2023-03-24T18:58:25+00:00"
         },
         {
             "name": "scssphp/scssphp",
