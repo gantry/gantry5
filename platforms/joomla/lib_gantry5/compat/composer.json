@@ -5,8 +5,12 @@
 
     "require": {
         "php": ">=7.2.5",
+        "pimple/pimple": "~3.5",
         "twig/twig": "~1.44",
         "scssphp/scssphp": "~1.10"
+    },
+    "replace": {
+        "psr/container": "*"
     },
     "config": {
         "platform": {
