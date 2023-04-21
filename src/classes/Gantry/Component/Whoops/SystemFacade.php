@@ -116,7 +116,7 @@ class SystemFacade extends \Whoops\Util\SystemFacade
             foreach ($this->registeredPatterns as $entry) {
                 $pathMatches = $file && preg_match($entry['pattern'], $file);
                 if ($pathMatches) {
-                    return $handler($level, $message, $file, $line);
+                    return $handler($level, (string)$message, $file, $line);
                 }
             }
         }
