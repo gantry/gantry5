@@ -30,8 +30,9 @@ class plgSystemGantry5_Debugbar extends CMSPlugin
      */
     public function __construct(&$subject, $config = array())
     {
-        require_once __DIR__ . '/Debugger.php';
-
+        if (!class_exists('Gantry\Debugger')) {
+            require_once __DIR__ . '/Debugger.php';
+        }
         parent::__construct($subject, $config);
     }
 }
