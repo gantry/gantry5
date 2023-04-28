@@ -83,9 +83,6 @@ class plgSystemGantry5 extends CMSPlugin
             return;
         }
 
-        // Load Debugger
-        require_once __DIR__ . '/Debugger.php';
-
         // Finish initialization and register all the events.
         parent::__construct($subject, $config);
     }
