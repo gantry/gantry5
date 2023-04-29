@@ -12,6 +12,7 @@
 
     <files>
         <filename plugin="gantry5">gantry5.php</filename>
+        <filename>Debugger.php</filename>
         <filename>MD5SUMS</filename>
         <folder>fields</folder>
         <folder>forms</folder>
