@@ -178,7 +178,7 @@ class Debugger
 
         self::addDeprecations();
 
-        return self::$renderer->render();
+        return false;
     }
 
     /**
