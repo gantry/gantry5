@@ -6,11 +6,11 @@
 		<element>g5_hydrogen</element>
 		<type>template</type>
 		<client>site</client>
-		<version>5.5.16</version>
-		<infourl title="Hydrogen 5.5.16">http://docs.gantry.org/gantry5</infourl>
-        <sha512>fef0235f29b71d8971c2105a8cba150ad326cedd7a888e86373d7880d348831e0315f402372ec726c24a3067d24409600fc0ae8e0d103ed098e19e33c968b658</sha512>
+		<version>@version@</version>
+		<infourl title="Hydrogen @version@">http://docs.gantry.org/gantry5</infourl>
+        <sha512>@sha512_joomla_hydrogen@</sha512>
 		<downloads>
-			<downloadurl type="full" format="zip">http://updates.gantry.org/download/5.5.16/joomla-tpl_g5_hydrogen_v5.5.16.zip</downloadurl>
+			<downloadurl type="full" format="zip">http://updates.gantry.org/download/@version@/joomla-tpl_g5_hydrogen_v@version@.zip</downloadurl>
 		</downloads>
 		<tags>
 			<tag>stable</tag>

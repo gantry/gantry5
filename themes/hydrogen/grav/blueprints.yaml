@@ -1,5 +1,5 @@
 name: Hydrogen
-version: "5.5.16"
+version: "@version@"
 description: "Default Gantry 5 theme."
 icon: gantry
 author:
