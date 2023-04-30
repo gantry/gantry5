@@ -1,5 +1,5 @@
 name: Helium
-version: "5.5.15"
+version: "@version@"
 description: "Default Gantry 5 theme."
 icon: gantry
 author:

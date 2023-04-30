@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jedupdate version="1">
-    <version>5.5.15</version>
+    <version>@version@</version>
 
     <compatibility>
         <version>39</version>
