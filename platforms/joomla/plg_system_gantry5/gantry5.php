@@ -83,6 +83,10 @@ class plgSystemGantry5 extends CMSPlugin
             return;
         }
 
+        if (!class_exists('Gantry\Debugger')) {
+            error_reporting(0);
+        }
+
         // Finish initialization and register all the events.
         parent::__construct($subject, $config);
     }
