@@ -1,6 +1,7 @@
 {
     "require": {
-        "phing/phing": "3.0.0-rc5"
+        "phing/phing": "3.0.0-RC5",
+        "guzzlehttp/guzzle": "7.7.x-dev"
     },
     "minimum-stability": "dev",
     "autoload": {
