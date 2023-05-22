@@ -49,10 +49,10 @@
     <property name="path.src" value="${project_dir}/src" />
     <property name="path.themes" value="${project_dir}/themes" />
     <tstamp>
-        <format property="str.datefmt" pattern="${cfg.datefmt}" />
+        <format property="str.datefmt" pattern="MMMM d, yyyy" locale="en"/>
     </tstamp>
     <tstamp>
-        <format property="str.datexml" pattern="${cfg.date}" />
+        <format property="str.datexml" pattern="MMMM d, yyyy" locale="en"/>
     </tstamp>
     <property name="version.date" value="${str.datexml}" />
 
