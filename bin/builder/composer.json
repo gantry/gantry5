@@ -1,6 +1,6 @@
 {
     "require": {
-        "phing/phing": "3.0.0-RC3"
+        "phing/phing": "3.0.0-RC4"
     },
     "minimum-stability": "dev",
     "autoload": {
