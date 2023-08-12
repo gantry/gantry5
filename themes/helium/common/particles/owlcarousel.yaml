@@ -3,10 +3,6 @@ description: Display Owl Carousel.
 type: particle
 icon: fa-sliders
 
-configuration:
-  caching:
-    type: static
-
 form:
   fields:
     enabled:
@@ -109,8 +105,21 @@ form:
           label: Button Class
           description: Input the button class.
           default: 'button-outline'
-        .disable:
-          type: input.checkbox
-          label: Disable
-          description: Disables the item on the front end.
-          default: false
+        .showItem:
+          type: select.select
+          label: Show Item
+          description: Select the front end rendering behaviour for the item.
+          default: yes
+          options:
+            yes: Yes
+            no: No
+            once: Once
+            annual: Annual
+        .startDate:
+          type: input.date
+          label: Start Date
+          description: Select the date when the item should be first shown (only for 'annual' and 'once').
+        .endDate:
+          type: input.date
+          label: End Date
+          description: Select the date when the item should be last shown (only for 'annual' and 'once').
