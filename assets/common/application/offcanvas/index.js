@@ -126,9 +126,12 @@ var Offcanvas = new prime({
     },
 
     attachMutationEvent: function() {
-        this.offcanvas.on('DOMSubtreeModified', this.bound('_checkTogglers')); // IE8 < has propertychange
+        if (this.offcanvas instanceof Node) {
+            var observer = new MutationObserver(this.bound('_checkTogglers'));
+            observer.observe(this.offcanvas, { childList: true, subtree: true });
+        }
     },
-
+    
     attachTouchEvents: function() {
         var msPointerSupported = window.navigator.msPointerEnabled,
             touch              = {
@@ -164,9 +167,12 @@ var Offcanvas = new prime({
     },
 
     detachMutationEvent: function() {
-        this.offcanvas.off('DOMSubtreeModified', this.bound('_checkTogglers'));
+        if (this.offcanvas instanceof Node) {
+            var observer = new MutationObserver(this.bound('_checkTogglers'));
+            observer.disconnect();
+        }
     },
-
+    
     detachTouchEvents: function() {
         var msPointerSupported = window.navigator.msPointerEnabled,
             touch              = {
