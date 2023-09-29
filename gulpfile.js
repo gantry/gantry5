@@ -234,8 +234,11 @@ var minifyJS = function() {
     return merge(streams);
 };
 
-function minify() {
-    if (!prod) { return; }
+function minify(done) {
+    if (!prod) { 
+        done();
+        return; 
+    }
 
     return minifyJS();
 }
