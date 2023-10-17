@@ -2,7 +2,7 @@
 ## 10/17/2023
 1. [Common](#common)
     1. [](#bugfix)
-        - Added Webp file extension (#3159)
+        - Added Webp file extension to lightcase (#3159)
 2. [Joomla](#joomla)
     1. [](#bugfix)
         - Update target platforms to match Joomla 4.3 and up (#3170)
