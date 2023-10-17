@@ -1,3 +1,10 @@
+# 5.5.17
+## 10/17/2023
+
+2. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Update target platforms to match Joomla 4.3 and up (#3170)
+
 # 5.5.16
 ## 03/31/2023
 
