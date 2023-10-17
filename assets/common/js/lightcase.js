@@ -118,7 +118,7 @@
 				href: null,
 				type: null,
 				typeMapping: {
-					'image': 'jpg,jpeg,gif,png,bmp',
+					'image': 'jpg,jpeg,gif,png,bmp,webp',
 					'flash': 'swf',
 					'video': 'mp4,mov,ogv,ogg,webm',
 					'iframe': 'html,php',
