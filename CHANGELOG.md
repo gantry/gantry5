@@ -4,9 +4,11 @@
     1. [](#bugfix)
         - Added Webp file extension to lightcase (#3159)
         - Spanish translation of Gantry 5 administration common platforms (#3120)
+        - PHP 8.x compatibility fixes
 2. [Joomla](#joomla)
     1. [](#bugfix)
         - Update target platforms to match Joomla 4.3 and up (#3170)
+        - Login forms css styling bugfixes (#3185)
 
 # 5.5.16
 ## 03/31/2023

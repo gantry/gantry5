@@ -16,7 +16,9 @@
     text-shadow: none;
     transition: all 0.2s;
 
-    &:hover, &:active, &:focus {
+    &:hover,
+    &:active,
+    &:focus {
         background: darken($accent-color-1, 10%);
         color: $white;
     }
@@ -44,6 +46,24 @@
     }
 }
 
+// Login fixes
+.login {
+    .plg_system_webauthn_login_button {
+        padding-top: 0.9rem;
+        min-height: 60px;
+
+        svg {
+            vertical-align: middle;
+        }
+    }
+
+    .input-password-toggle {
+        padding: 0.375rem 0.75rem;
+        margin: 0;
+        border-radius: 6px;
+    }
+}
+
 .btn-mini {
     margin: 0.5rem 0;
 }
@@ -62,13 +82,15 @@
     text-shadow: none;
     transition: all 0.2s;
 
-    &:hover, &:active, &:focus {
+    &:hover,
+    &:active,
+    &:focus {
         background: darken($accent-color-1, 10%);
         color: $white;
     }
 }
 
-.btn-group > .btn.dropdown-toggle {
+.btn-group>.btn.dropdown-toggle {
     background: darken($base-background, 12%);
 }
 
@@ -76,7 +98,10 @@
     background: $accent-color-2;
 }
 
-.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-submenu:hover > a, .dropdown-submenu:focus > a {
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus,
+.dropdown-submenu:hover>a,
+.dropdown-submenu:focus>a {
     background-image: none;
     background: $accent-color-2;
 }
@@ -98,29 +123,36 @@ table.table-bordered {
     }
 }
 
-.table-striped tbody tr:nth-child(2n+1) td, .table-striped tbody tr:nth-child(2n+1) th {
+.table-striped tbody tr:nth-child(2n+1) td,
+.table-striped tbody tr:nth-child(2n+1) th {
     background: #eceff3;
 }
 
 .table-hover tbody tr:hover {
-    > td, > th {
+
+    >td,
+    >th {
         background: darken(#eceff3, 3%);
     }
 }
 
-.table, .table-bordered {
+.table,
+.table-bordered {
     border-color: $base-border-color $base-border-color $base-border-color transparent;
 
-    th, td {
+    th,
+    td {
         border-left-color: $base-border-color;
     }
 }
 
 // Edit Page
 .edit.item-page {
+
     .inputbox,
     .chzn-choices {
-        border-radius: 6px;;
+        border-radius: 6px;
+        ;
     }
 
     .input-append {
