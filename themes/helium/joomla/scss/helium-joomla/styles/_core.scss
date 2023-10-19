@@ -46,7 +46,7 @@
     }
 }
 
-// Login fixes
+// Login and registration page fixes
 .login {
     .plg_system_webauthn_login_button {
         padding-top: 0.9rem;
@@ -56,11 +56,18 @@
             vertical-align: middle;
         }
     }
+}
 
+#g-page-surround {
     .input-password-toggle {
         padding: 0.375rem 0.75rem;
         margin: 0;
         border-radius: 6px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    meter {
+        width: 100%;
     }
 }
 

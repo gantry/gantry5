@@ -9,6 +9,7 @@
     1. [](#bugfix)
         - Update target platforms to match Joomla 4.3 and up (#3170)
         - Login forms css styling bugfixes (#3185)
+        - Register forms css styling bugfixes (#3185)
 
 # 5.5.16
 ## 03/31/2023
