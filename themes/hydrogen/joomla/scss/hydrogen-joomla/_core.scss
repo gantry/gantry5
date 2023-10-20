@@ -2,14 +2,17 @@
 	background: $accent-color-1;
 	color: $white;
 	text-shadow: none;
-	box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+
 	&:hover {
 		background: lighten($accent-color-1, 5%);
 		color: $white;
 	}
-	&:active, &:focus {
+
+	&:active,
+	&:focus {
 		background: darken($accent-color-1, 5%);
-		box-shadow: inset -1px -1px 1px rgba(0,0,0,0.15);
+		box-shadow: inset -1px -1px 1px rgba(0, 0, 0, 0.15);
 		color: $white;
 	}
 }
@@ -18,14 +21,17 @@
 	background: $accent-color-2;
 	color: $white;
 	text-shadow: none;
-	box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+
 	&:hover {
 		background: lighten($accent-color-2, 5%);
 		color: $white;
 	}
-	&:active, &:focus {
+
+	&:active,
+	&:focus {
 		background: darken($accent-color-2, 5%);
-		box-shadow: inset -1px -1px 1px rgba(0,0,0,0.15);
+		box-shadow: inset -1px -1px 1px rgba(0, 0, 0, 0.15);
 		color: $white;
 	}
 }
@@ -34,17 +40,20 @@ meter {
 	width: 100%;
 }
 
-.btn-group > .btn + .dropdown-toggle {
-	box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+.btn-group>.btn+.dropdown-toggle {
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 .btn-group.open .btn-primary.dropdown-toggle {
 	background: darken($accent-color-1, 5%);
 	color: $white;
-	box-shadow: inset -1px -1px 1px rgba(0,0,0,0.15);
+	box-shadow: inset -1px -1px 1px rgba(0, 0, 0, 0.15);
 }
 
-.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-submenu:hover > a, .dropdown-submenu:focus > a {
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus,
+.dropdown-submenu:hover>a,
+.dropdown-submenu:focus>a {
 	background-image: none;
 	background-color: $accent-color-1;
 }
@@ -55,12 +64,16 @@ meter {
 
 // Login and registration page fixes
 .login {
-    .plg_system_webauthn_login_button {
-        padding-top: 0.9rem;
-        min-height: 60px;
+	fieldset {
+		padding: 0;
+	}
 
-        svg {
-            vertical-align: middle;
-        }
-    }
+	.plg_system_webauthn_login_button {
+		padding-top: 0.9rem;
+		min-height: 60px;
+
+		svg {
+			vertical-align: middle;
+		}
+	}
 }
