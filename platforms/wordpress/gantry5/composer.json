@@ -11,7 +11,7 @@
         "filp/whoops": "~2.5",
         "rockettheme/toolbox": "~1.5",
         "erusev/parsedown-extra": "~0.7",
-        "timber/timber": "^1.14",
+        "timber/timber": "^1.22.1",
 
         "twig/twig": "~1.42",
         "scssphp/scssphp": "1.6.0",
