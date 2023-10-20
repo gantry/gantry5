@@ -34,7 +34,10 @@
     {% endif %}
 
     {% if gantry.theme.joomla %}
-        {% if gantry.platform.checkVersion(4) %}
+        {% if gantry.platform.checkVersion(5) %}
+            {# Joomla 5.x #}
+            <link rel="stylesheet" href="{{ url('media/plg_system_debug/css/debug.css') }}" type="text/css"/>
+        {% elseif gantry.platform.checkVersion(4) %}
             {# Joomla 4.x #}
             <link rel="stylesheet" href="{{ url('media/system/css/debug.css') }}" type="text/css"/>
         {% elseif gantry.platform.checkVersion(3) %}
