@@ -357,8 +357,8 @@ class Format2
             }
  
             // Check if type and subtype can be generated from the id.
-            if ($subtype && (preg_match("/".preg_quote( "/^{$type}-{$subtype}(-|$)/", "/" )."/", $id))
-                || (in_array($type, ['section', 'particle']) && preg_match("/".preg_quote("/^{$subtype}(-|$)/", "/")."/", $id))) {
+            if ($subtype && (preg_match("/".preg_quote("^{$type}-{$subtype}(-|$)", "/" )."/", $id))
+                || (in_array($type, ['section', 'particle']) && preg_match("/".preg_quote("^{$subtype}(-|$)", "/")."/", $id))) {
                 unset ($child['type'], $child['subtype']);
             } elseif (preg_match("/^{$type}(-|$)/", $id)) {
                 unset ($child['type']);
