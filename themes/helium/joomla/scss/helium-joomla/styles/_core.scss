@@ -48,6 +48,10 @@
 
 // Login and registration page fixes
 .login {
+    fieldset {
+        padding: 0;
+    }
+
     .plg_system_webauthn_login_button {
         padding-top: 0.9rem;
         min-height: 60px;
@@ -66,6 +70,7 @@
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
     }
+
     meter {
         width: 100%;
     }
