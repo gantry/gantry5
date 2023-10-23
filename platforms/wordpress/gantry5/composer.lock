@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a6adb49f57b6166f435c8ff98670c09",
+    "content-hash": "570caa196fda8bcd0a5c5bb16da9c95d",
     "packages": [
         {
             "name": "altorouter/altorouter",
@@ -391,16 +391,16 @@
         },
         {
             "name": "leafo/scssphp",
-            "version": "v0.8.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/leafo/scssphp.git",
-                "reference": "b9cdea3e42c3bcb1a9faafd04ccce4e8ec860ad9"
+                "url": "https://github.com/rockettheme/scssphp.git",
+                "reference": "0a06cb2188fcda02f78c9c972f8df1c4c962971e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/scssphp/zipball/b9cdea3e42c3bcb1a9faafd04ccce4e8ec860ad9",
-                "reference": "b9cdea3e42c3bcb1a9faafd04ccce4e8ec860ad9",
+                "url": "https://api.github.com/repos/rockettheme/scssphp/zipball/0a06cb2188fcda02f78c9c972f8df1c4c962971e",
+                "reference": "0a06cb2188fcda02f78c9c972f8df1c4c962971e",
                 "shasum": ""
             },
             "require": {
@@ -412,6 +412,7 @@
                 "twbs/bootstrap": "~4.3",
                 "zurb/foundation": "~6.5"
             },
+            "default-branch": true,
             "bin": [
                 "bin/pscss"
             ],
@@ -421,7 +422,21 @@
                     "Leafo\\ScssPhp\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Leafo\\ScssPhp\\Test\\": "tests/"
+                }
+            },
+            "archive": {
+                "exclude": [
+                    "/Makefile",
+                    "/.gitattributes",
+                    "/.gitignore",
+                    "/.travis.yml",
+                    "/phpunit.xml.dist",
+                    "/tests"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -442,11 +457,10 @@
                 "stylesheet"
             ],
             "support": {
-                "issues": "https://github.com/leafo/scssphp/issues",
-                "source": "https://github.com/leafo/scssphp/tree/v0.8.4"
+                "source": "https://github.com/rockettheme/scssphp/tree/master"
             },
             "abandoned": "scssphp/scssphp",
-            "time": "2019-06-18T21:15:44+00:00"
+            "time": "2023-10-23T17:52:37+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -1663,7 +1677,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "leafo/scssphp": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
