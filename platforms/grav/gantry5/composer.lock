@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "70ea7eae85a7b3eb8f126ea46bf3d8bc",
+    "content-hash": "8db773bd92bd4a34b26352bda32203ca",
     "packages": [
         {
             "name": "leafo/scssphp",
-            "version": "v0.8.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/leafo/scssphp.git",
-                "reference": "b9cdea3e42c3bcb1a9faafd04ccce4e8ec860ad9"
+                "url": "https://github.com/rockettheme/scssphp.git",
+                "reference": "0a06cb2188fcda02f78c9c972f8df1c4c962971e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/scssphp/zipball/b9cdea3e42c3bcb1a9faafd04ccce4e8ec860ad9",
-                "reference": "b9cdea3e42c3bcb1a9faafd04ccce4e8ec860ad9",
+                "url": "https://api.github.com/repos/rockettheme/scssphp/zipball/0a06cb2188fcda02f78c9c972f8df1c4c962971e",
+                "reference": "0a06cb2188fcda02f78c9c972f8df1c4c962971e",
                 "shasum": ""
             },
             "require": {
@@ -29,6 +29,7 @@
                 "twbs/bootstrap": "~4.3",
                 "zurb/foundation": "~6.5"
             },
+            "default-branch": true,
             "bin": [
                 "bin/pscss"
             ],
@@ -38,7 +39,21 @@
                     "Leafo\\ScssPhp\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Leafo\\ScssPhp\\Test\\": "tests/"
+                }
+            },
+            "archive": {
+                "exclude": [
+                    "/Makefile",
+                    "/.gitattributes",
+                    "/.gitignore",
+                    "/.travis.yml",
+                    "/phpunit.xml.dist",
+                    "/tests"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -59,24 +74,23 @@
                 "stylesheet"
             ],
             "support": {
-                "issues": "https://github.com/leafo/scssphp/issues",
-                "source": "https://github.com/leafo/scssphp/tree/v0.8.4"
+                "source": "https://github.com/rockettheme/scssphp/tree/master"
             },
             "abandoned": "scssphp/scssphp",
-            "time": "2019-06-18T21:15:44+00:00"
+            "time": "2023-10-23T17:52:37+00:00"
         },
         {
             "name": "scssphp/scssphp",
-            "version": "v1.11.0",
+            "version": "v1.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scssphp/scssphp.git",
-                "reference": "33749d12c2569bb24071f94e9af828662dabb068"
+                "reference": "ace2503684bab0dcc817d7614c8a54b865122414"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/scssphp/scssphp/zipball/33749d12c2569bb24071f94e9af828662dabb068",
-                "reference": "33749d12c2569bb24071f94e9af828662dabb068",
+                "url": "https://api.github.com/repos/scssphp/scssphp/zipball/ace2503684bab0dcc817d7614c8a54b865122414",
+                "reference": "ace2503684bab0dcc817d7614c8a54b865122414",
                 "shasum": ""
             },
             "require": {
@@ -93,7 +107,7 @@
                 "thoughtbot/bourbon": "^7.0",
                 "twbs/bootstrap": "~5.0",
                 "twbs/bootstrap4": "4.6.1",
-                "zurb/foundation": "~6.5"
+                "zurb/foundation": "~6.7.0"
             },
             "suggest": {
                 "ext-iconv": "Can be used as fallback when ext-mbstring is not available",
@@ -141,15 +155,17 @@
             ],
             "support": {
                 "issues": "https://github.com/scssphp/scssphp/issues",
-                "source": "https://github.com/scssphp/scssphp/tree/v1.11.0"
+                "source": "https://github.com/scssphp/scssphp/tree/v1.11.1"
             },
-            "time": "2022-09-02T21:24:55+00:00"
+            "time": "2023-09-24T13:38:17+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "leafo/scssphp": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
