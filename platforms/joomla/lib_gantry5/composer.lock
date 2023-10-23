@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "245fdca202e369d104d50f3b080bc243",
+    "content-hash": "adf5a720abaf5488a6fec033c5fcff95",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -109,16 +109,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.15.2",
+            "version": "2.15.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "aac9304c5ed61bf7b1b7a6064bf9806ab842ce73"
+                "reference": "c83e88a30524f9360b11f585f71e6b17313b7187"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/aac9304c5ed61bf7b1b7a6064bf9806ab842ce73",
-                "reference": "aac9304c5ed61bf7b1b7a6064bf9806ab842ce73",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/c83e88a30524f9360b11f585f71e6b17313b7187",
+                "reference": "c83e88a30524f9360b11f585f71e6b17313b7187",
                 "shasum": ""
             },
             "require": {
@@ -168,7 +168,7 @@
             ],
             "support": {
                 "issues": "https://github.com/filp/whoops/issues",
-                "source": "https://github.com/filp/whoops/tree/2.15.2"
+                "source": "https://github.com/filp/whoops/tree/2.15.3"
             },
             "funding": [
                 {
@@ -176,20 +176,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-04-12T12:00:00+00:00"
+            "time": "2023-07-13T12:00:00+00:00"
         },
         {
             "name": "leafo/scssphp",
-            "version": "v0.8.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/leafo/scssphp.git",
-                "reference": "b9cdea3e42c3bcb1a9faafd04ccce4e8ec860ad9"
+                "url": "https://github.com/rockettheme/scssphp.git",
+                "reference": "0a06cb2188fcda02f78c9c972f8df1c4c962971e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/scssphp/zipball/b9cdea3e42c3bcb1a9faafd04ccce4e8ec860ad9",
-                "reference": "b9cdea3e42c3bcb1a9faafd04ccce4e8ec860ad9",
+                "url": "https://api.github.com/repos/rockettheme/scssphp/zipball/0a06cb2188fcda02f78c9c972f8df1c4c962971e",
+                "reference": "0a06cb2188fcda02f78c9c972f8df1c4c962971e",
                 "shasum": ""
             },
             "require": {
@@ -201,6 +201,7 @@
                 "twbs/bootstrap": "~4.3",
                 "zurb/foundation": "~6.5"
             },
+            "default-branch": true,
             "bin": [
                 "bin/pscss"
             ],
@@ -210,7 +211,21 @@
                     "Leafo\\ScssPhp\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Leafo\\ScssPhp\\Test\\": "tests/"
+                }
+            },
+            "archive": {
+                "exclude": [
+                    "/Makefile",
+                    "/.gitattributes",
+                    "/.gitignore",
+                    "/.travis.yml",
+                    "/phpunit.xml.dist",
+                    "/tests"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -231,11 +246,10 @@
                 "stylesheet"
             ],
             "support": {
-                "issues": "https://github.com/leafo/scssphp/issues",
-                "source": "https://github.com/leafo/scssphp/tree/v0.8.4"
+                "source": "https://github.com/rockettheme/scssphp/tree/master"
             },
             "abandoned": "scssphp/scssphp",
-            "time": "2019-06-18T21:15:44+00:00"
+            "time": "2023-10-23T17:52:37+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -395,16 +409,16 @@
         },
         {
             "name": "rockettheme/toolbox",
-            "version": "1.6.4",
+            "version": "1.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "4d1021492385117323b50e3370626da613dd6c16"
+                "reference": "c5e84deac813da7fcb78cd8a663c8966da9b27bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/4d1021492385117323b50e3370626da613dd6c16",
-                "reference": "4d1021492385117323b50e3370626da613dd6c16",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/c5e84deac813da7fcb78cd8a663c8966da9b27bd",
+                "reference": "c5e84deac813da7fcb78cd8a663c8966da9b27bd",
                 "shasum": ""
             },
             "require": {
@@ -457,10 +471,10 @@
                 "rockettheme"
             ],
             "support": {
-                "source": "https://github.com/rockettheme/toolbox/tree/1.6.4",
+                "source": "https://github.com/rockettheme/toolbox/tree/1.6.5",
                 "issues": "https://github.com/rockettheme/toolbox/issues"
             },
-            "time": "2023-03-24T18:58:25+00:00"
+            "time": "2023-05-09T18:11:17+00:00"
         },
         {
             "name": "scssphp/scssphp",
@@ -681,16 +695,16 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.27.0",
+            "version": "v1.28.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "5bbc823adecdae860bb64756d639ecfec17b050a"
+                "reference": "ea208ce43cbb04af6867b4fdddb1bdbf84cc28cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/5bbc823adecdae860bb64756d639ecfec17b050a",
-                "reference": "5bbc823adecdae860bb64756d639ecfec17b050a",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/ea208ce43cbb04af6867b4fdddb1bdbf84cc28cb",
+                "reference": "ea208ce43cbb04af6867b4fdddb1bdbf84cc28cb",
                 "shasum": ""
             },
             "require": {
@@ -705,7 +719,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.27-dev"
+                    "dev-main": "1.28-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -743,7 +757,7 @@
                 "portable"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.27.0"
+                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.28.0"
             },
             "funding": [
                 {
@@ -759,7 +773,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-11-03T14:55:06+00:00"
+            "time": "2023-01-26T09:26:14+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -1333,7 +1347,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "leafo/scssphp": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

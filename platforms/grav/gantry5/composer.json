@@ -8,7 +8,7 @@
     "require": {
         "php": ">=7.3.6",
         "scssphp/scssphp": "~1.10",
-        "leafo/scssphp": "0.8.4"
+        "leafo/scssphp": "dev-master"
     },
     "autoload": {
         "psr-4": {
@@ -20,6 +20,12 @@
             "src/Loader.php"
         ]
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/rockettheme/scssphp"
+          }
+    ],
     "config": {
         "platform": {
             "php": "7.3.6"
