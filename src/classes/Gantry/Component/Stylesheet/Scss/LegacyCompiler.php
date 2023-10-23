@@ -383,13 +383,13 @@ class LegacyCompiler extends \Leafo\ScssPhp\Compiler
     {
         for ($env = $this->env; $env; $env = $env->parent) {
             $file = $this->streamNames[$env->block->sourceIndex];
-
-            if (realpath($file) === $name) {
+    
+            if ($file !== null && realpath($file) === $name) {
                 $this->throwError('An @import loop has been found: %s imports %s', $file, Gantry::basename($file));
                 break;
             }
         }
-    }
+    }    
 
     /**
      * Override function to improve the logic.
