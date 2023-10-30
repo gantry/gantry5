@@ -1,8 +1,8 @@
 details:
   name: Helium Child
-  version: '@version@'
+  version: '5.5.17'
   icon: paper-plane
-  date: '@versiondate@'
+  date: 'October 30, 2023'
   author:
     name: 'RocketTheme, LLC'
     email: 'support@rockettheme.com'
