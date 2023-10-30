@@ -1,5 +1,5 @@
 # 5.5.17
-## 10/17/2023
+## 10/30/2023
 1. [Common](#common)
     1. [](#bugfix)
         - Added Webp file extension to lightcase (#3159)
@@ -12,6 +12,9 @@
         - Helium register forms css styling bugfixes (#3185)
         - Hydrogen login and register forms css styling bugfixes (#3185)
         - Fix for Joomla 5.x debug css (#3190)
+        - Basic support for Joomla 5
+2. [Wordpress](#wordpress)
+        - Timber updated to 1.23
 
 # 5.5.16
 ## 03/31/2023
