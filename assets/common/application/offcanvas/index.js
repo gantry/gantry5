@@ -125,12 +125,15 @@ var Offcanvas = new prime({
         return this;
     },
 
-    attachMutationEvent: function() {
-        if (this.offcanvas instanceof Node) {
-            var observer = new MutationObserver(this.bound('_checkTogglers'));
-            observer.observe(this.offcanvas, { childList: true, subtree: true });
-        }
-    },
+    attachMutationEvent: function () {
+        this.observer = new MutationObserver(() => {
+          this._checkTogglers();
+        });
+        this.observer.observe(this.offcanvas[0], {
+          childList: true,
+          subtree: true,
+        });
+      },
     
     attachTouchEvents: function() {
         var msPointerSupported = window.navigator.msPointerEnabled,
@@ -166,13 +169,10 @@ var Offcanvas = new prime({
         return this;
     },
 
-    detachMutationEvent: function() {
-        if (this.offcanvas instanceof Node) {
-            var observer = new MutationObserver(this.bound('_checkTogglers'));
-            observer.disconnect();
-        }
-    },
-    
+    detachMutationEvent: function () {
+        this.observer.disconnect();
+      },
+
     detachTouchEvents: function() {
         var msPointerSupported = window.navigator.msPointerEnabled,
             touch              = {
