@@ -1,10 +1,13 @@
 # 5.5.18
 ## 11/21/2023
+
 1. [Common](#common)
     1. [](#bugfix)
         - Regression: Mobile Menu fix (#3198)
+
 # 5.5.17
 ## 10/30/2023
+
 1. [Common](#common)
     1. [](#bugfix)
         - Added Webp file extension to lightcase (#3159)
@@ -23,6 +26,7 @@
 
 # 5.5.16
 ## 03/31/2023
+
 1. [Common](#common)
     1. [](#new)
         - Updated SCSS compiler to v1.11
