@@ -13,7 +13,7 @@
                     <i class="g-keyvalue-sep fa fa-fw fa-arrow-right"></i>
                     <input class="g-keyvalue-input-value" type="text" data-keyvalue-value="" value="{{ val }}" {% if field.value_placeholder is defined %}placeholder="{{ field.value_placeholder }}"{% endif %} />
                 </div>
-                <i class="fa fa-fw fa-trash font-small" aria-hidden="true" data-keyvalue-remove=""></i>
+                <i class="fas fa-fw fa-trash font-small" aria-hidden="true" data-keyvalue-remove=""></i>
             </li>
             {% endfor %}
         {% endfor %}
@@ -30,7 +30,7 @@
                 <i class="g-keyvalue-sep fa fa-fw fa-arrow-right"></i>
                 <input class="g-keyvalue-input-value" type="text" data-keyvalue-value="" value="" {% if field.value_placeholder is defined %}placeholder="{{ field.value_placeholder }}"{% endif %} />
             </div>
-            <i class="fa fa-fw fa-trash font-small" aria-hidden="true" data-keyvalue-remove=""></i>
+            <i class="fas fa-fw fa-trash font-small" aria-hidden="true" data-keyvalue-remove=""></i>
         </li>
     </ul>
     <input type="hidden" data-keyvalue-data="" data-keyvalue-exclude="{{ field.exclude|default([])|json_encode|e('html_attr') }}" name="{{ (scope ~ name ~ '._json')|fieldName }}" value="{{ value|default({})|json_encode(constant('JSON_UNESCAPED_SLASHES'))|e('html_attr') }}" />
