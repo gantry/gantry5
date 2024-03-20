@@ -3,6 +3,7 @@
 1. [Common](#common)
     1. [](#bugfix)
         - Regression: Mobile Menu fix (#3198)
+        - Joomla 5 Fontawesome 6 bugfix (#3196)
 # 5.5.17
 ## 10/30/2023
 1. [Common](#common)
