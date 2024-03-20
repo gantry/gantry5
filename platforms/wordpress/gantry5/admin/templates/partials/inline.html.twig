@@ -2,10 +2,8 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/admin.css') }}" type="text/css" />
-    {% if not gantry.platform.has('fontawesome') %}
-    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css/font-awesome5-all.min.css') }}" type="text/css" />
-    {% endif %}
-    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css/font-awesome5-shim.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css/font-awesome6-all.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css/font-awesome6-shim.min.css') }}" type="text/css" />
     {{ parent() }}
 {% endblock %}
 
