@@ -68,6 +68,19 @@ form:
         enable: Enable
         disable: Disable
 
+    lazyLoadImages:
+      type: input.checkbox
+      label: Lazy Load Images
+      description: Enable to lazy load the item images.
+      default: false
+
+    lazyLoadEager:
+      type: input.text
+      label: Lazy Load Eager
+      description: Number of eagerly pre-loaded images to the left and right.
+      placeholder: 0
+      default: 0
+
     items:
       type: collection.list
       array: true
