@@ -74,9 +74,10 @@ class ModGantry5ParticleHelper
 
         /** @var CMSApplication $app */
         $app = Factory::getApplication();
-
         // Trigger the onRenderModule event.
-        $app->triggerEvent('onRenderModule', ['module' => &$module, 'attribs' => &$attribs]);
+        if ($app->get('dispatcher')) {
+            $app->get('dispatcher')->triggerEvent('onRenderModule', ['module' => &$module, 'attribs' => &$attribs]);
+        }
 
         $params = new Registry($module->params);
         $params->set('ajax', $props);
