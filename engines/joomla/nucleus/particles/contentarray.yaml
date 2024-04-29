@@ -49,7 +49,7 @@ form:
               overridable: false
 
             article.limit.total:
-              type: input.text
+              type: input.number
               label: Number of Articles
               description: Enter the maximum number of articles to display.
               default: 2

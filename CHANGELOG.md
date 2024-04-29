@@ -4,6 +4,7 @@
     1. [](#bugfix)
         - Regression: Mobile Menu fix (#3198)
         - Joomla 5 FontAwesome 6 bugfix (#3196)
+        - Error on previous/next button fix (#3218)
 # 5.5.17
 ## 10/30/2023
 1. [Common](#common)
