@@ -1,11 +1,12 @@
 # 5.5.18
-## 11/21/2023
+## 05/21/2024
 1. [Common](#common)
     1. [](#bugfix)
         - Regression: Mobile Menu fix (#3198)
         - Joomla 5 FontAwesome 6 bugfix (#3196)
         - Error on previous/next button fix (#3218)
         - Minor english translation bugfixes
+        - Joomla Articles particle issue with Pagination (#3239)
 # 5.5.17
 ## 10/30/2023
 1. [Common](#common)

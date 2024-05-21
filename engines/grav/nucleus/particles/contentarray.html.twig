@@ -15,7 +15,7 @@
     },
     false) %}
 {% set total = collection.count() %}
-{% set pages = collection.slice(start, limit.total) %}
+{% set pages = collection.slice(start, limit.total|default(2)|int) %}
 
 {% block particle %}
 
