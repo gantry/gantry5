@@ -6,7 +6,7 @@
         - Joomla 5 FontAwesome 6 bugfix (#3196)
         - Error on previous/next button fix (#3218)
         - Minor english translation bugfixes
-        - Joomla Articles particle issue with Pagination (#3239)
+        - Contentarray issue with Pagination (#3239)
 # 5.5.17
 ## 10/30/2023
 1. [Common](#common)
