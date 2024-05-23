@@ -1,3 +1,8 @@
+# 5.5.18.1
+## 05/23/2024
+1. [Common](#common)
+    1. [](#bugfix)
+        - Fix Joomla 5.1 "Invalid extension update" bug
 # 5.5.18
 ## 05/22/2024
 1. [Common](#common)
