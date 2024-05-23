@@ -23,8 +23,8 @@ form:
       default: fa4
       options:
         fa4: Font Awesome 4 (legacy)
-        fa5css: Font Awesome 5 Free (Webfont / CSS)
-        fa5js: Font Awesome 5 Free (SVG / JS)
+        fa5css: Font Awesome 6 Free (Webfont / CSS)
+        fa5js: Font Awesome 6 Free (SVG / JS)
 
     fa4_compatibility:
       type: enable.enable

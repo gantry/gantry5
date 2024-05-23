@@ -343,7 +343,7 @@
 
 #g5-container .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator { display: inline-block; vertical-align: middle; line-height: normal; }
 
-#g5-container .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator:after { display: inline-block; cursor: pointer; width: 1.5rem; opacity: 0.5; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome; font-weight: 900; content: ""; text-align: right; }
+#g5-container .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator:after { display: inline-block; cursor: pointer; width: 1.5rem; opacity: 0.5; font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free", FontAwesome; font-weight: 900; content: ""; text-align: right; }
 
 #g5-container .g-main-nav .g-toplevel > li.g-parent.g-selected > .g-menu-item-container > .g-menu-parent-indicator:after { content: ""; }
 
@@ -417,7 +417,7 @@
 
 #g5-container .g-go-back a span { display: none; }
 
-#g5-container .g-go-back a:before { display: block; text-align: center; width: 1.28571em; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome; font-weight: 900; content: ""; opacity: 0.5; }
+#g5-container .g-go-back a:before { display: block; text-align: center; width: 1.28571em; font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free", FontAwesome; font-weight: 900; content: ""; opacity: 0.5; }
 
 #g5-container .g-menu-item-container > i { vertical-align: middle; margin-right: 0.2rem; }
 
@@ -437,7 +437,7 @@
 
 #g5-container #g-mobilemenu-container .g-toplevel li.g-parent .g-menu-parent-indicator { position: absolute; right: 0.938rem; text-align: center; }
 
-#g5-container #g-mobilemenu-container .g-toplevel li.g-parent .g-menu-parent-indicator:after { display: inline-block; text-align: center; opacity: 0.5; width: 1.5rem; line-height: normal; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome; font-weight: 900; content: ""; }
+#g5-container #g-mobilemenu-container .g-toplevel li.g-parent .g-menu-parent-indicator:after { display: inline-block; text-align: center; opacity: 0.5; width: 1.5rem; line-height: normal; font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free", FontAwesome; font-weight: 900; content: ""; }
 
 #g5-container #g-mobilemenu-container .g-toplevel .g-dropdown { top: 0; background: transparent; position: absolute; left: 0; right: 0; z-index: 1; transition: transform .2s ease-out; transform: translateX(100%); }
 
@@ -899,9 +899,9 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full, i.fa-grav-logo, i
 
 .g-selectize-control.g-single .g-selectize-input.g-input-active, .g-selectize-control.g-single .g-selectize-input.g-input-active input { cursor: text; }
 
-.g-selectize-control.g-single .g-selectize-input:after { content: ""; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free"; font-weight: 900; display: block; position: absolute; top: 50%; right: 23px; margin-top: -8px; width: 0; height: 0; color: #808080; font-size: 0.8em; }
+.g-selectize-control.g-single .g-selectize-input:after { content: ""; font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free"; font-weight: 900; display: block; position: absolute; top: 50%; right: 23px; margin-top: -8px; width: 0; height: 0; color: #808080; font-size: 0.8em; }
 
-.g-selectize-control.g-single .g-selectize-input.g-dropdown-active:after { content: ""; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free"; font-weight: 900; }
+.g-selectize-control.g-single .g-selectize-input.g-dropdown-active:after { content: ""; font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free"; font-weight: 900; }
 
 .g-selectize-control .g-selectize-input.g-disabled { opacity: 0.5; background-color: #fafafa; }
 
@@ -1323,7 +1323,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full, i.fa-grav-logo, i
 
 #g5-container #navbar ul ul li a, #g5-container .g5-dialog > .g-tabs ul ul li a, #g5-container .g5-popover-content > .g-tabs ul ul li a, #g5-container .g5-dialog form > .g-tabs ul ul li a, #g5-container .g5-popover-content form > .g-tabs ul ul li a, #g5-container .g5-dialog .g5-content > .g-tabs ul ul li a, #g5-container .g5-popover-content .g5-content > .g-tabs ul ul li a { color: #999; padding-top: 0.2345rem; padding-bottom: 0.2345rem; padding-left: 42px; }
 
-#g5-container #navbar ul ul li a:before, #g5-container .g5-dialog > .g-tabs ul ul li a:before, #g5-container .g5-popover-content > .g-tabs ul ul li a:before, #g5-container .g5-dialog form > .g-tabs ul ul li a:before, #g5-container .g5-popover-content form > .g-tabs ul ul li a:before, #g5-container .g5-dialog .g5-content > .g-tabs ul ul li a:before, #g5-container .g5-popover-content .g5-content > .g-tabs ul ul li a:before { content: ""; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free"; font-weight: 900; font-size: 100%; vertical-align: middle; display: inline-block; font-weight: normal; padding-right: 5px; color: #ddd; }
+#g5-container #navbar ul ul li a:before, #g5-container .g5-dialog > .g-tabs ul ul li a:before, #g5-container .g5-popover-content > .g-tabs ul ul li a:before, #g5-container .g5-dialog form > .g-tabs ul ul li a:before, #g5-container .g5-popover-content form > .g-tabs ul ul li a:before, #g5-container .g5-dialog .g5-content > .g-tabs ul ul li a:before, #g5-container .g5-popover-content .g5-content > .g-tabs ul ul li a:before { content: ""; font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free"; font-weight: 900; font-size: 100%; vertical-align: middle; display: inline-block; font-weight: normal; padding-right: 5px; color: #ddd; }
 
 #g5-container .g-block.navbar-icons { flex: 0 3%; }
 
@@ -1541,9 +1541,9 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full, i.fa-grav-logo, i
 
 #g5-container .lm-blocks .section .g-grid:not(:empty):not(.no-hover):before, #g5-container .lm-blocks .section .g-grid:not(:empty):not(.no-hover):not(.no-gear):after, #g5-container .lm-blocks .atoms-section .g-grid:not(:empty):not(.no-hover):before, #g5-container .lm-blocks .atoms-section .g-grid:not(:empty):not(.no-hover):not(.no-gear):after, #g5-container .lm-blocks .offcanvas-section .g-grid:not(:empty):not(.no-hover):before, #g5-container .lm-blocks .offcanvas-section .g-grid:not(:empty):not(.no-hover):not(.no-gear):after { display: block; position: absolute; background: #f6f6f6; top: -1px; bottom: -1px; width: 25px; vertical-align: middle; line-height: 58px; text-align: center; z-index: 5; color: #aaa; border: 1px solid #ddd; opacity: 0; }
 
-#g5-container .lm-blocks .section .g-grid:not(:empty):not(.no-hover):before, #g5-container .lm-blocks .atoms-section .g-grid:not(:empty):not(.no-hover):before, #g5-container .lm-blocks .offcanvas-section .g-grid:not(:empty):not(.no-hover):before { font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free"; font-weight: 900; content: ""; border-radius: 3px 0 0 3px; left: -21px; cursor: move; border-right: 0 !important; }
+#g5-container .lm-blocks .section .g-grid:not(:empty):not(.no-hover):before, #g5-container .lm-blocks .atoms-section .g-grid:not(:empty):not(.no-hover):before, #g5-container .lm-blocks .offcanvas-section .g-grid:not(:empty):not(.no-hover):before { font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free"; font-weight: 900; content: ""; border-radius: 3px 0 0 3px; left: -21px; cursor: move; border-right: 0 !important; }
 
-#g5-container .lm-blocks .section .g-grid:not(:empty):not(.no-hover):not(.no-gear):after, #g5-container .lm-blocks .atoms-section .g-grid:not(:empty):not(.no-hover):not(.no-gear):after, #g5-container .lm-blocks .offcanvas-section .g-grid:not(:empty):not(.no-hover):not(.no-gear):after { font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free"; font-weight: 900; content: ""; border-radius: 0 3px 3px 0; right: -21px; border-left: 0 !important; cursor: pointer; }
+#g5-container .lm-blocks .section .g-grid:not(:empty):not(.no-hover):not(.no-gear):after, #g5-container .lm-blocks .atoms-section .g-grid:not(:empty):not(.no-hover):not(.no-gear):after, #g5-container .lm-blocks .offcanvas-section .g-grid:not(:empty):not(.no-hover):not(.no-gear):after { font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free"; font-weight: 900; content: ""; border-radius: 0 3px 3px 0; right: -21px; border-left: 0 !important; cursor: pointer; }
 
 #g5-container .lm-blocks .section .g-grid:hover:not(:empty), #g5-container .lm-blocks .atoms-section .g-grid:hover:not(:empty), #g5-container .lm-blocks .offcanvas-section .g-grid:hover:not(:empty) { box-shadow: 0 0 0 1px #ddd; }
 
@@ -1859,7 +1859,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full, i.fa-grav-logo, i
 
 #g5-container #page-settings #atoms.atoms-override .atoms-list { margin: 0.5rem 2rem 0.5rem 0.5rem; }
 
-#g5-container #menu-editor .parent-indicator:before { font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free"; font-weight: 900; vertical-align: middle; display: inline-block; }
+#g5-container #menu-editor .parent-indicator:before { font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free"; font-weight: 900; vertical-align: middle; display: inline-block; }
 
 #g5-container #menu-editor .config-cog { opacity: 0; position: absolute; transition: opacity 0.2s; }
 
@@ -1939,7 +1939,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full, i.fa-grav-logo, i
 
 #g5-container .submenu-selector .g-block { position: relative; padding-bottom: 60px; background: #DADADA; }
 
-#g5-container .submenu-selector .g-block .submenu-reorder { position: absolute; background: #DADADA; bottom: 40px; width: 50px; vertical-align: middle; line-height: 22px; text-align: center; z-index: 5; color: #111; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free"; font-weight: 900; border-radius: 0 0 0.1875rem 0.1875rem; left: 50%; margin-left: -25px; cursor: ew-resize; opacity: 0; }
+#g5-container .submenu-selector .g-block .submenu-reorder { position: absolute; background: #DADADA; bottom: 40px; width: 50px; vertical-align: middle; line-height: 22px; text-align: center; z-index: 5; color: #111; font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free"; font-weight: 900; border-radius: 0 0 0.1875rem 0.1875rem; left: 50%; margin-left: -25px; cursor: ew-resize; opacity: 0; }
 
 @media only all and (max-width: 59.99rem) { #g5-container .submenu-selector .g-block .submenu-reorder { opacity: 1; } }
 
@@ -1993,7 +1993,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full, i.fa-grav-logo, i
 
 #g5-container .submenu-selector .submenu-items:empty:before { content: "Drop menu items here"; position: absolute; top: 50%; margin-top: -40px; line-height: 1rem; text-align: center; color: #aaa; width: 100%; }
 
-#g5-container .submenu-selector .submenu-items:empty:after { content: ""; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free"; font-weight: 900; font-size: 1.5rem; position: absolute; top: 0; right: 6px; opacity: 0.5; width: 36px; height: 36px; transition: opacity 0.2s ease-in-out; margin: 0 !important; text-align: center; cursor: pointer; }
+#g5-container .submenu-selector .submenu-items:empty:after { content: ""; font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free"; font-weight: 900; font-size: 1.5rem; position: absolute; top: 0; right: 6px; opacity: 0.5; width: 36px; height: 36px; transition: opacity 0.2s ease-in-out; margin: 0 !important; text-align: center; cursor: pointer; }
 
 #g5-container .submenu-selector .submenu-items:empty:hover:after { opacity: 1; }
 

@@ -333,7 +333,7 @@ th { text-align: left; }
 
 .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator { display: inline-block; vertical-align: middle; line-height: normal; }
 
-.g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator:after { display: inline-block; cursor: pointer; width: 1.5rem; opacity: 0.5; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome; font-weight: 900; content: ""; text-align: right; }
+.g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator:after { display: inline-block; cursor: pointer; width: 1.5rem; opacity: 0.5; font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free", FontAwesome; font-weight: 900; content: ""; text-align: right; }
 
 .g-main-nav .g-toplevel > li.g-parent.g-selected > .g-menu-item-container > .g-menu-parent-indicator:after { content: ""; }
 
@@ -407,7 +407,7 @@ th { text-align: left; }
 
 .g-go-back a span { display: none; }
 
-.g-go-back a:before { display: block; text-align: center; width: 1.28571em; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome; font-weight: 900; content: ""; opacity: 0.5; }
+.g-go-back a:before { display: block; text-align: center; width: 1.28571em; font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free", FontAwesome; font-weight: 900; content: ""; opacity: 0.5; }
 
 .g-menu-item-container > i { vertical-align: middle; margin-right: 0.2rem; }
 
@@ -427,7 +427,7 @@ th { text-align: left; }
 
 #g-mobilemenu-container .g-toplevel li.g-parent .g-menu-parent-indicator { position: absolute; right: 0.938rem; text-align: center; }
 
-#g-mobilemenu-container .g-toplevel li.g-parent .g-menu-parent-indicator:after { display: inline-block; text-align: center; opacity: 0.5; width: 1.5rem; line-height: normal; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome; font-weight: 900; content: ""; }
+#g-mobilemenu-container .g-toplevel li.g-parent .g-menu-parent-indicator:after { display: inline-block; text-align: center; opacity: 0.5; width: 1.5rem; line-height: normal; font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free", FontAwesome; font-weight: 900; content: ""; }
 
 #g-mobilemenu-container .g-toplevel .g-dropdown { top: 0; background: transparent; position: absolute; left: 0; right: 0; z-index: 1; transition: transform .2s ease-out; transform: translateX(100%); }
 

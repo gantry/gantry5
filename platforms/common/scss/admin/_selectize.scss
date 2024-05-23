@@ -240,7 +240,7 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
 
     &:after {
         content: $fa-chevron-down;
-        font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free";
+        font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free";
         font-weight: 900;
         display: block;
         position: absolute;
@@ -255,7 +255,7 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
 
     &.g-dropdown-active:after {
         content: $fa-chevron-up;
-        font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free";
+        font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free";
         font-weight: 900;
     }
 }
