@@ -1,8 +1,9 @@
-# 5.5.18.1
+# 5.5.19
 ## 05/23/2024
 1. [Common](#common)
     1. [](#bugfix)
         - Fix Joomla 5.1 "Invalid extension update" bug
+        - FontAwesome 6 Fix (#3253)
 # 5.5.18
 ## 05/22/2024
 1. [Common](#common)
