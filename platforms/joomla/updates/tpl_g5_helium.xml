@@ -6,11 +6,11 @@
 		<element>g5_helium</element>
 		<type>template</type>
 		<client>site</client>
-		<version>@version@</version>
-		<infourl title="Helium @version@">http://docs.gantry.org/gantry5</infourl>
-        <sha512>@sha512_joomla_helium@</sha512>
+		<version>5.5.19</version>
+		<infourl title="Helium 5.5.19">http://docs.gantry.org/gantry5</infourl>
+        <sha512>5bea7f5bfdee7ff20408400a09fc5a16629f95292f2346e60604507871d6246fe5944422a584377623f21c1e11c957111d142fc53c48b0427eecd106b4da8cba</sha512>
 		<downloads>
-			<downloadurl type="full" format="zip">http://updates.gantry.org/download/@version@/joomla-tpl_g5_helium_v@version@.zip</downloadurl>
+			<downloadurl type="full" format="zip">http://updates.gantry.org/download/5.5.19/joomla-tpl_g5_helium_v5.5.19.zip</downloadurl>
 		</downloads>
 		<tags>
 			<tag>stable</tag>

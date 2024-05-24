@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <extension version="3.9" type="module" client="site" method="upgrade">
     <name>mod_gantry5_particle</name>
-    <version>@version@</version>
-    <creationDate>@versiondate@</creationDate>
+    <version>5.5.19</version>
+    <creationDate>May 24, 2024</creationDate>
     <author>RocketTheme, LLC</author>
     <authorEmail>support@rockettheme.com</authorEmail>
     <authorUrl>http://www.rockettheme.com</authorUrl>
