@@ -12,7 +12,7 @@
                     <div class="g-owlcarousel-item {{ item.class|e }}">
                         <div class="g-owlcarousel-item-wrapper">
                             <div class="g-owlcarousel-item-img">
-                                <img src="{{ url(item.image)|e }}" alt="{{ item.title|e }}" />
+                                <img {% if particle.lazyLoadImages %}class="owl-lazy" data-{% endif %}src="{{ url(item.image)|e }}" alt="{{ item.title|e }}" />
                             </div>
                             <div class="g-owlcarousel-item-content-container">
                                 <div class="g-owlcarousel-item-content-wrapper">
@@ -41,6 +41,7 @@
 
 {% endblock %}
 
+{% set loadEager = particle.lazyLoadEager|default('0') %}
 {% block javascript_footer %}
     {% do gantry.load('jquery') %}
     <script src="{{ url('gantry-theme://js/owl.carousel.min.js') }}"></script>
@@ -63,9 +64,15 @@
                 {% endif %}
                 {% if particle.autoplay == 'enable' %}
                 autoplay: true,
-                autoplayTimeout: {{ particle.autoplaySpeed|default('5000') }},
+                autoplayTimeout: {{ particle.autoplaySpeed|default('5000')|e('js') }},
                 {% else %}
                 autoplay: false,
+                {% endif %}
+                {% if particle.lazyLoadImages %}
+                lazyLoad: true,
+                    {% if loadEager > 0 %}
+                        lazyLoadEager: {{ loadEager|e('js') }},
+                    {% endif %}
                 {% endif %}
             })
         });
