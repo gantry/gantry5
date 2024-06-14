@@ -57,6 +57,18 @@ form:
                 show: Show
                 '': Hide
               overridable: false
+            
+            post.display.pagination_button_prev.label:
+              type: input.text
+              label: Pagination Prev Label
+              description: Type in the label for the 'Prev' button.
+              placeholder: 'Prev'
+
+            post.display.pagination_button_next.label:
+              type: input.text
+              label: Pagination Next Label
+              description: Type in the label for the 'Next' button.
+              placeholder: 'Next'
 
             post.limit.columns:
               type: select.select
