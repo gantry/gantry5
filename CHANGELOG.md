@@ -4,7 +4,7 @@
     1. [](#bugfix)
         - Fix Joomla 5.1 "Invalid extension update" bug
         - FontAwesome 6 Fix (#3253)
-          
+
 # 5.5.18
 ## 05/22/2024
 1. [Common](#common)
@@ -15,7 +15,7 @@
         - Minor english translation bugfixes
         - Contentarray issue with Pagination (#3239)
         - Minor Joomla 5 compatibility fixes
-          
+
 # 5.5.17
 ## 10/30/2023
 1. [Common](#common)
