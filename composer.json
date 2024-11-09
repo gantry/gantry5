@@ -5,7 +5,7 @@
     "license": "MIT",
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.6.20",
+        "php": "^8.1.0",
         "ext-zip": "*",
         "ext-json": "*"
     },

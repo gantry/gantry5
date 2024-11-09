@@ -10,18 +10,18 @@
     "slick": "^1.12.2"
   },
   "devDependencies": {
-    "browserify": "^17.0.0",
-    "gulp": "^4.0.2",
-    "gulp-sass": "^4.1.0",
+    "browserify": "^17.0.1",
+    "gulp": "^5.0.0",
     "gulp-if": "^3.0.0",
     "gulp-rename": "^2.0.0",
+    "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-uglify": "^3.0.2",
-    "gulp-util": "^3.0.8",
     "merge-stream": "^2.0.0",
+    "sass": "^1.80.6",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
     "watchify": "^4.0.0",
-    "yargs": "^16.2.0"
+    "yargs": "^17.7.2"
   }
 }

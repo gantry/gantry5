@@ -19,34 +19,35 @@ const convertBytes = function(bytes) {
 // You can install or update NPM dependencies across the whole project via the supported commands:
 //      -update, --update, -up, --up, -install, --install, -inst, --inst, -go, --go, -deps, --deps
 // They all execute the same command and it will be smart enough to know whether to install or update the deps
-if (process.argv.slice(2).join(',').match(/(-{1,2}update|-{1,2}up|-{1,2}install|-{1,2}inst|-{1,2}go|-{1,2}deps)/)) {
-    gulp.task('default', function() {
-        paths = ['./', 'platforms/common', 'assets/common', 'engines/common/nucleus'];
-        var exec = require('child_process').exec, child;
-        paths.forEach(function(path) {
-            var nodes  = path.replace(/(\/$)/g, '') + '/' + 'node_modules',
-                method = 'install',
-                exists = false;
+// if (process.argv.slice(2).join(',').match(/(-{1,2}update|-{1,2}up|-{1,2}install|-{1,2}inst|-{1,2}go|-{1,2}deps)/)) {
+//     gulp.task('default', function(resolve) {
+//         paths = ['./', 'platforms/common', 'assets/common', 'engines/common/nucleus'];
+//         var exec = require('child_process').exec, child;
+//         paths.forEach(function(path) {
+//             var nodes  = path.replace(/(\/$)/g, '') + '/' + 'node_modules',
+//                 method = 'install',
+//                 exists = false;
 
-            try { exists = fs.lstatSync(nodes).isDirectory(); }
-            catch (e) {}
-            if (exists) { method = 'update --save --save-dev'; }
+//             try { exists = fs.lstatSync(nodes).isDirectory(); }
+//             catch (e) {}
+//             if (exists) { method = 'update --save --save-dev'; }
 
-            console.log((exists ? 'Updating' : "Installing") + " JS dependencies in: " + path);
-            child = exec('cd ' + path + ' && npm ' + method + ' --silent',
-                function(error, stdout, stderr) {
-                    if (stdout) { console.log('Completed `' + path + '`:', "\n", stdout); }
-                    if (stderr) { console.log('Error `' + path + '`:' + stderr); }
-                    if (error !== null) { console.log('Exec error `' + path + '`:' + error); }
-                });
-        });
-    });
+//             console.log((exists ? 'Updating' : "Installing") + " JS dependencies in: " + path);
+//             child = exec('cd ' + path + ' && npm ' + method + ' --silent',
+//                 function(error, stdout, stderr) {
+//                     if (stdout) { console.log('Completed `' + path + '`:', "\n", stdout); }
+//                     if (stderr) { console.log('Error `' + path + '`:' + stderr); }
+//                     if (error !== null) { console.log('Exec error `' + path + '`:' + error); }
+//                 });
+//         });
 
-    return;
-}
+//         resolve();
+//     });
+
+//     return;
+// }
 
 var argv            = require('yargs').argv,
-    gutil           = require('gulp-util'),
     gulpif          = require('gulp-if'),
     uglify          = require('gulp-uglify'),
     rename          = require('gulp-rename'),
@@ -57,7 +58,9 @@ var argv            = require('yargs').argv,
     browserify      = require('browserify'),
     watchifyModule  = require('watchify'),
     jsonminify      = require('gulp-jsonminify'),
-    sass            = require('gulp-sass'),
+    sass            = require('gulp-sass')(require('sass')),
+    log             = require('fancy-log'),
+    colors          = require('ansi-colors'),
 
     prod            = !!(argv.p || argv.prod || argv.production),
     watchType       = (argv.css && argv.js) ? 'all' : (argv.css ? 'css' : (argv.js ? 'js' : 'all')),
@@ -81,10 +84,14 @@ paths = {
             out: './platforms/common/css-compiled/g-admin.css',
             load: './engines/common/nucleus/scss'
         },
-        { // admin - joomla
-            in: './platforms/joomla/com_gantry5/admin/scss/joomla-admin.scss',
-            out: './platforms/joomla/com_gantry5/admin/css-compiled/joomla-g-admin.css',
+        { // admin common - joomla
+            in: './platforms/common/scss/admin.scss',
+            out: './platforms/joomla/com_gantry5/media/css/g-admin.css',
             load: './engines/common/nucleus/scss'
+        },
+        { // admin - joomla
+            in: './platforms/joomla/com_gantry5/media/scss/joomla-admin.scss',
+            out: './platforms/joomla/com_gantry5/media/css/joomla-g-admin.css',
         },
         { // admin - wordpress
             in: './platforms/wordpress/gantry5/admin/scss/wordpress-admin.scss',
@@ -99,16 +106,6 @@ paths = {
         { // nucleus
             in: './engines/common/nucleus/scss/nucleus.scss',
             out: './engines/common/nucleus/css-compiled/nucleus.css'
-        },
-        { // nucleus - joomla 3
-            in: './engines/joomla/nucleus/scss/joomla.scss',
-            out: './engines/joomla/nucleus/css-compiled/joomla.css',
-            load: './engines/common/nucleus/scss'
-        },
-        { // bootstrap - joomla 4
-            in: './engines/joomla/nucleus/scss/bootstrap5.scss',
-            out: './engines/joomla/nucleus/css-compiled/bootstrap5.css',
-            load: './engines/common/nucleus/scss'
         },
         { // nucleus - wordpress
             in: './engines/wordpress/nucleus/scss/wordpress.scss',
@@ -133,18 +130,19 @@ var compileCSS = function(app) {
         _out  = app.out.split(/[\\/]/).pop(),
         _maps = '../' + app.in.substring(0, app.in.lastIndexOf('/')).split(/[\\/]/).pop();
 
-    gutil.log(gutil.colors.blue('*'), 'Compiling', _in);
+    log(colors.blue('*'), 'Compiling', _in);
 
     var options = {
         sourceMap: !prod,
         includePaths: _load,
-        outputStyle: prod ? 'compact' : 'expanded'
+        outputStyle: prod ? 'compressed' : 'expanded',
+        silenceDeprecations: ['import']
     };
 
     return gulp.src(_in)
         .pipe(sass(options).on('error', sass.logError))
         .on('end', function() {
-            gutil.log(gutil.colors.green('√'), 'Saved ' + _in);
+            log(colors.green('√'), 'Saved ' + _dest + '/' + _out);
         })
         .pipe(gulpif(!prod, sourcemaps.write('.', { sourceRoot: _maps, sourceMappingURL: function() { return _out + '.map'; }})))
         .pipe(rename(_out))
@@ -159,7 +157,7 @@ var compileJS = function(app, watching) {
         _maps = './' + app.in.substring(0, app.in.lastIndexOf('/')).split(/[\\/]/).pop();
 
     if (!watching) {
-        gutil.log(gutil.colors.blue('*'), 'Compiling', _in);
+        log(colors.blue('*'), 'Compiling', _in);
     }
 
     var bundle = browserify({
@@ -184,10 +182,10 @@ var compileJS = function(app, watching) {
         bundle.on('log', function(msg) {
             var bytes = msg.match(/^(\d{1,})\s/)[1];
             msg = msg.replace(/^\d{1,}\sbytes/, convertBytes(bytes));
-            gutil.log(gutil.colors.green('√'), 'Done, ', msg, '...');
+            log(colors.green('√'), 'Done, ', msg, '...');
         });
         bundle.on('update', function(files) {
-            gutil.log(gutil.colors.red('>'), 'Change detected in', files.join(', '), '...');
+            log(colors.red('>'), 'Change detected in', files.join(', '), '...');
             return bundleShare(bundle, _in, _out, _maps, _dest);
         });
     }
@@ -198,10 +196,10 @@ var compileJS = function(app, watching) {
 var bundleShare = function(bundle, _in, _out, _maps, _dest) {
     return bundle.bundle()
         .on('error', function(error) {
-            gutil.log('Browserify', '' + error);
+            log('Browserify', '' + error);
         })
         .on('end', function() {
-            gutil.log(gutil.colors.green('√'), 'Saved ' + _in);
+            log(colors.green('√'), 'Saved ' + _in);
         })
         .pipe(source(_out))
         .pipe(buffer())
@@ -220,13 +218,13 @@ var minifyJS = function() {
             _dest = app.out.substring(0, app.out.lastIndexOf('/')),
             _ext  = _file.split('.').pop();
 
-        gutil.log(gutil.colors.blue('*'), 'Minifying', app.in);
+        log(colors.blue('*'), 'Minifying', app.in);
 
         streams.push(gulp.src(app.in)
             .on('end', function() {
-                gutil.log(gutil.colors.green('√'), 'Saved ' + app.in);
+                log(colors.green('√'), 'Saved ' + app.in);
             })
-            .on('error', gutil.log)
+            .on('error', log)
             .pipe(gulpif(_ext == 'json', jsonminify(), uglify()))
             .pipe(gulp.dest(_dest)));
     });
@@ -235,9 +233,9 @@ var minifyJS = function() {
 };
 
 function minify(done) {
-    if (!prod) { 
+    if (!prod) {
         done();
-        return; 
+        return;
     }
 
     return minifyJS();
@@ -281,7 +279,7 @@ exports.watch = gulp.series(watchify, function() {
     paths.css.forEach(function(app) {
         var _path = app.in.substring(0, app.in.lastIndexOf('/'));
         gulp.watch(_path + '/**/*.scss', function(event) {
-            gutil.log(gutil.colors.red('>'), 'File', event.path, 'was', event.type);
+            log(colors.red('>'), 'File', event.path, 'was', event.type);
             return compileCSS(app);
         });
     });

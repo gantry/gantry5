@@ -34,24 +34,41 @@
 
         <copy todir="${tmp_dir}/packages/com_gantry5/admin" overwrite="true">
             <fileset dir="${path.platforms}/common">
-                <exclude name=".sass-cache/"/>
                 <exclude name="application/"/>
+                <exclude name="translations/"/>
                 <exclude name="node_modules/"/>
                 <exclude name="gulpfile.js"/>
                 <exclude name="package.json"/>
-                <exclude name="scss.sh"/>
                 <exclude name="**/*.js.map"/>
                 <exclude name="**/*.css.map"/>
+                <exclude name=".yarn/"/>
+                <exclude name="yarn.lock"/>
             </fileset>
             <fileset dir="${path.platforms}/joomla/com_gantry5/admin">
-                <exclude name=".sass-cache/"/>
                 <exclude name="common/"/>
                 <exclude name="gulpfile.js"/>
                 <exclude name="package.json"/>
-                <exclude name="scss.sh"/>
                 <exclude name="**/*.js.map"/>
                 <exclude name="**/*.css.map"/>
             </fileset>
+        </copy>
+
+        <copy todir="${tmp_dir}/packages/com_gantry5/media" overwrite="true">
+            <fileset dir="${path.platforms}/common">
+                <exclude name="application/"/>
+                <exclude name="blueprints/"/>
+                <exclude name="css-compiled/"/>
+                <exclude name="templates/"/>
+                <exclude name="translations/"/>
+                <exclude name="node_modules/"/>
+                <exclude name="gulpfile.js"/>
+                <exclude name="package.json"/>
+                <exclude name="**/*.js.map"/>
+                <exclude name="**/*.css.map"/>
+                <exclude name=".yarn/"/>
+                <exclude name="yarn.lock"/>
+            </fileset>
+            <fileset dir="${path.platforms}/joomla/com_gantry5/media"/>
         </copy>
 
         <!-- Add version information to all xml files -->
@@ -75,6 +92,9 @@
         <phingcall target="checksum">
             <property name="source" value="${tmp_dir}/packages/com_gantry5/admin" />
         </phingcall>
+        <phingcall target="checksum">
+            <property name="source" value="${tmp_dir}/packages/com_gantry5/media" />
+        </phingcall>
     </target>
 
     <target name="build-joomla-library" depends="build-joomla-installer">
@@ -85,23 +105,25 @@
                 <exclude name="src/"/>
                 <exclude name="vendor/"/>
                 <!-- PHP 8 compatibility -->
-                <exclude name="compat/"/>
+                <!-- <exclude name="compat/"/> -->
             </fileset>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/lib_gantry5/src" overwrite="true">
+        <!-- <copy todir="${tmp_dir}/packages/lib_gantry5/src" overwrite="true">
             <filterchain refid="filter" />
             <fileset dir="${path.src}">
                 <include name="*.php"/>
             </fileset>
-        </copy>
+        </copy> -->
 
-        <copy todir="${tmp_dir}/packages/lib_gantry5/src/classes" overwrite="true">
-            <fileset dir="${path.src}/classes"/>
+        <copy todir="${tmp_dir}/packages/lib_gantry5/src" overwrite="true">
+            <fileset dir="${path.src}/classes/Gantry">
+                <exclude name="platforms/"/>
+             </fileset>
         </copy>
 
         <copy todir="${tmp_dir}/packages/lib_gantry5/src" overwrite="true">
-            <fileset dir="${path.src}/platforms/joomla"/>
+            <fileset dir="${path.src}/platforms/joomla/classes/Gantry"/>
         </copy>
 
         <copy todir="${tmp_dir}/packages/lib_gantry5/vendor" overwrite="true">
@@ -140,7 +162,7 @@
         </copy>
 
         <!-- PHP 8 compatibility -->
-        <copy todir="${tmp_dir}/packages/lib_gantry5/compat" overwrite="true">
+        <!-- <copy todir="${tmp_dir}/packages/lib_gantry5/compat" overwrite="true">
             <fileset dir="${path.platforms}/joomla/lib_gantry5/compat">
                 <exclude name="vendor/bin/"/>
                 <exclude name="**/doc/"/>
@@ -151,7 +173,7 @@
                 <exclude name="**/LICENSE"/>
                 <exclude name="vendor/**/composer.lock"/>
             </fileset>
-        </copy>
+        </copy> -->
 
         <!-- Add version information to all xml files -->
         <copy todir="${tmp_dir}/packages/lib_gantry5" overwrite="true">
@@ -162,7 +184,7 @@
         </copy>
 
         <!-- Common assets -->
-        <copy todir="${tmp_dir}/packages/lib_gantry5/assets" overwrite="true">
+        <!-- <copy todir="${tmp_dir}/packages/lib_gantry5/assets" overwrite="true">
             <fileset dir="${path.assets}/common">
                 <exclude name="application/**"/>
                 <exclude name="**/*.js.map"/>
@@ -180,7 +202,7 @@
                 <exclude name="gulpfile.js"/>
                 <exclude name="package.json"/>
             </fileset>
-        </copy>
+        </copy> -->
 
         <!-- Generate Manifest files -->
         <phingcall target="checksum">
@@ -194,11 +216,9 @@
         <copy todir="${tmp_dir}/packages/gantry5_nucleus" overwrite="true">
             <fileset dir="${path.engines}/common">
                 <exclude name="**/*.sh"/>
-                <exclude name="**/.sass-cache/"/>
                 <exclude name="**/node_modules/"/>
                 <exclude name="**/gulpfile.js"/>
                 <exclude name="**/package.json"/>
-                <exclude name="**/scss.sh"/>
                 <exclude name="**/*.js.map"/>
                 <exclude name="**/*.css.map"/>
             </fileset>
