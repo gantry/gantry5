@@ -1,35 +1,22 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<extension version="3.9" type="library" method="upgrade">
-    <name>Gantry 5 Framework</name>
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="library" method="upgrade">
+    <name>lib_gantry5</name>
     <libraryname>gantry5</libraryname>
-    <version>@version@</version>
     <creationDate>@versiondate@</creationDate>
     <author>RocketTheme, LLC</author>
-    <authorEmail>support@rockettheme.com</authorEmail>
-    <authorUrl>http://www.rockettheme.com</authorUrl>
     <copyright>(C) 2005 - 2021 RocketTheme, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <authorEmail>support@rockettheme.com</authorEmail>
+    <authorUrl>http://www.rockettheme.com</authorUrl>
+    <version>@version@</version>
     <description>LIB_GANTRY5_DESCRIPTION</description>
-
-    <files>
+    <namespace path="src/">Gantry</namespace>
+    <files folder="gantry5">
         <filename>composer.json</filename>
         <filename>composer.lock</filename>
         <filename>MD5SUMS</filename>
-        <folder>compat</folder>
         <folder>src</folder>
         <folder>language</folder>
         <folder>vendor</folder>
     </files>
-
-    <media folder="assets" destination="gantry5/assets">
-        <folder>css</folder>
-        <folder>fonts</folder>
-        <folder>images</folder>
-        <folder>js</folder>
-        <folder>webfonts</folder>
-    </media>
-
-    <languages folder="language">
-        <language tag="en-GB">en-GB/en-GB.lib_gantry5.sys.ini</language>
-    </languages>
 </extension>
