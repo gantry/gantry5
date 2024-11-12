@@ -28,7 +28,7 @@
             {% if faVersion == 'manual' or gantry.config.page.fontawesome.html_css_import|trim %}
                 {{ gantry.config.page.fontawesome.html_css_import|html|raw -}}
             {% else %}
-                {{ gantry.document.webassetmanager('fontawesome', 'style') }}
+                <link rel="stylesheet" href="{{ url('media/system/css/joomla-fontawesome.min.css') }}" />
             {% endif %}
         {% endif %}
         {% for scss in gantry.theme.configuration.css.overrides %}
