@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<extension version="3.9" type="template" client="site" method="upgrade">
+<extension type="template" client="site">
     <name>g5_hydrogen</name>
-    <version>@version@</version>
-    <creationDate>@versiondate@</creationDate>
     <author>RocketTheme, LLC</author>
-    <authorEmail>support@rockettheme.com</authorEmail>
-    <authorUrl>http://www.rockettheme.com</authorUrl>
+    <creationDate>@versiondate@</creationDate>
     <copyright>(C) 2007 - 2022 RocketTheme, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2</license>
+    <authorEmail>support@rockettheme.com</authorEmail>
+    <authorUrl>http://www.rockettheme.com</authorUrl>
+    <version>@version@</version>
     <description>TPL_G5_HYDROGEN_DESC</description>
-
     <scriptfile>install.php</scriptfile>
-
     <files>
+        <file>component.php</file>
+        <file>error.php</file>
+        <file>index.php</file>
+        <file>offline.php</file>
+        <file>template_preview.png</file>
+        <file>template_thumbnail.png</file>
+        <file>MD5SUMS</file>
         <folder>admin</folder>
         <folder>blueprints</folder>
         <folder>config</folder>
@@ -27,18 +32,9 @@
         <folder>layouts</folder>
         <folder>particles</folder>
         <folder>scss</folder>
-        <file>component.php</file>
-        <file>error.php</file>
-        <file>index.php</file>
-        <file>offline.php</file>
-        <file>template_preview.png</file>
-        <file>template_thumbnail.png</file>
-        <file>MD5SUMS</file>
     </files>
-
     <positions>
     </positions>
-
     <config>
         <fields name="params" addfieldpath="/templates/g5_hydrogen/fields">
             <fieldset name="basic">
@@ -46,7 +42,6 @@
             </fieldset>
         </fields>
     </config>
-
     <updateservers>
         <server type="extension" priority="1" name="Hydrogen Template">https://updates.gantry.org/5.0/joomla/tpl_g5_hydrogen.xml</server>
     </updateservers>

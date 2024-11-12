@@ -15,6 +15,8 @@ use Gantry\Framework\Platform;
 use Gantry\Framework\Theme;
 use Joomla\CMS\Factory;
 
+/** @var Joomla\CMS\Document\ErrorDocument $this */
+
 // Bootstrap Gantry framework or fail gracefully (inside included file).
 $className = __DIR__ . '/custom/includes/gantry.php';
 if (!is_file($className)) {

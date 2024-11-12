@@ -57,17 +57,17 @@ content:
       description: '<p>Gantry 5 is packed full of features created to empower the development of designs into fully functional layouts with the absolute minimum effort and fuss</p>'
       samples:
         -
-          icon: 'fa fa-code'
+          icon: 'fa-solid fa-code'
           subtitle: ''
           description: '<p>Gantry 5 leverages the power of <a href="https://twig.symfony.com/doc/1.x/">Twig</a> to make creating powerful, dynamic themes quick and easy.</p>'
           title: 'Twig Templating'
         -
-          icon: 'far fa-newspaper'
+          icon: 'fa-solid fa-newspaper'
           subtitle: ''
           description: '<p>Drag-and-drop functionality gives you the power to place content blocks, resize them, and configure their unique settings in seconds.</p>'
           title: 'Layout Manager'
         -
-          icon: 'fa fa-cubes'
+          icon: 'fa-solid fa-cubes'
           subtitle: ''
           description: '<p>Create, configure, and manage content blocks as well as special features and functionality with the powerful particle system.</p>'
           title: 'Particles System'
@@ -77,22 +77,22 @@ content:
         class: social-items
       items:
         -
-          icon: 'fa fa-twitter'
+          icon: 'fa-brands fa-twitter'
           text: Twitter
           link: 'http://twitter.com/rockettheme'
           name: Twitter
         -
-          icon: 'fa fa-facebook'
+          icon: 'fa-brands fa-facebook'
           text: Facebook
           link: 'http://facebook.com/rockettheme'
           name: Facebook
         -
-          icon: 'fa fa-google'
+          icon: 'fa-brands fa-google'
           text: Google
           link: 'http://plus.google.com/+rockettheme'
           name: Google
         -
-          icon: 'fa fa-rss'
+          icon: 'fa-solid fa-rss'
           text: RSS
           link: 'http://www.rockettheme.com/product-updates?rss'
           name: RSS

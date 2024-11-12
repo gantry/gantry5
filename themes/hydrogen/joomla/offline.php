@@ -14,6 +14,8 @@ defined('_JEXEC') or die;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Theme;
 
+/** @var Joomla\CMS\Document\HtmlDocument $this */
+
 // Bootstrap Gantry framework or fail gracefully (inside included file).
 $className = __DIR__ . '/custom/includes/gantry.php';
 if (!is_file($className)) {
