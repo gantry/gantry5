@@ -53,10 +53,6 @@
                     {
                         "source":"/platforms/joomla/plg_quickicon_gantry5",
                         "destination":"/plugins/quickicon/gantry5"
-                    },
-                    {
-                        "source":"/platforms/joomla/plg_system_gantry5_debugbar",
-                        "destination":"/plugins/system/gantry5_debugbar"
                     }
                 ],
                 "modules":[

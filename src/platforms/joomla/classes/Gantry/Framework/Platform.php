@@ -552,6 +552,14 @@ class Platform extends BasePlatform
             return [];
         }
 
+        $updateInformation = [
+            'installed' => \GANTRY5_VERSION,
+            'latest'    => null,
+            'object'    => null,
+            'hasUpdate' => false,
+            'current'   => GANTRY5_VERSION, // This is deprecated please use 'installed' or JVERSION directly
+        ];
+
         $styles = ThemeList::getThemes();
 
         $extension_ids = \array_unique(\array_map(
@@ -570,11 +578,16 @@ class Platform extends BasePlatform
             ->from($db->quoteName('#__updates'))
             ->where("element='pkg_gantry5' OR extension_id IN ($extension_ids)");
 
-        $updates = $db->setQuery($query)->loadObjectList();
+        $updateObject = $db->setQuery($query)->loadObjectList();
 
-        $list = [];
+        if (empty($updateObject)) {
+            // We have not found any update in the database - we seem to be running the latest version.
+            $updateInformation['latest'] = GANTRY5_VERSION;
 
-        foreach ($updates as $update) {
+            return $updateInformation;
+        }
+
+        foreach ($updateObject as $update) {
             if ($update->element === 'pkg_gantry5') {
                 // Rename Gantry 5 package.
                 $update->name = 'Gantry';
@@ -586,19 +599,24 @@ class Platform extends BasePlatform
                 ) {
                     continue;
                 }
+
+                $updateInformation['latest'] = $update->version;
             } else {
                 // Check if templates need to be updated.
-                $version = isset($styles[$update->element]) ? $styles[$update->element]->get('details.version') : null;
+                $version = $styles[$update->element]?->get('details.version');
 
-                if (\version_compare($version, 0) < 0 || \version_compare($update->version, $version) <= 0) {
+                if (
+                    \version_compare($version, 0) < 0
+                    || \version_compare($update->version, $version) <= 0
+                ) {
                     continue;
                 }
             }
 
-            $list[] = $update->name . ' ' . $update->version;
+            $updateInformation['hasUpdate'] = true;
         }
 
-        return $list;
+        return $updateInformation;
     }
 
     /**

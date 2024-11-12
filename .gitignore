@@ -27,6 +27,7 @@ platforms/*/*/assets
 platforms/*/*/engines
 
 !platforms/*/plg_system_gantry5/src
+!platforms/*/plg_quickicon_gantry5/src
 
 # Symbolic links in themes
 themes/*/*/common
