@@ -7,11 +7,11 @@
                 type="hidden"
                 value="1"
             />
+
             <field
                 name="gantry-attributes"
                 type="subform"
                 label="List Tag Attributes"
-                description=""
                 layout="joomla.form.field.subform.repeatable-table"
                 icon="list"
                 multiple="true"
@@ -32,11 +32,11 @@
                     />
                 </form>
             </field>
+
             <field
                 name="gantry-link_attributes"
                 type="subform"
                 label="Link Tag Attributes"
-                description=""
                 layout="joomla.form.field.subform.repeatable-table"
                 icon="list"
                 multiple="true"
@@ -57,54 +57,82 @@
                     />
                 </form>
             </field>
+
             <field name="gantry-hash"
-                   type="text"
-                   label="Append Hash"/>
+                type="text"
+                label="Append Hash"
+            />
+
             <field name="gantry-dropdown"
-                   type="list"
-                   label="Dropdown Style">
+                type="list"
+                label="Dropdown Style"
+            >
                 <option value="">- Use Default -</option>
                 <option value="standard">Simple</option>
                 <option value="fullwidth">Extended</option>
             </field>
+
             <field name="gantry-dropdown_dir"
-                   type="list"
-                   label="Dropdown Direction">
+                type="list"
+                label="Dropdown Direction"
+            >
                 <option value="left">Expand Left</option>
                 <option value="center">Keep Centered</option>
                 <option value="right">Expand Right</option>
             </field>
+
             <field name="gantry-dropdown_hide"
-                   type="checkbox"
-                   label="Disable Dropdowns"/>
+                type="checkbox"
+                label="Disable Dropdowns"
+            />
+
             <field name="gantry-width"
-                   type="text"
-                   label="Dropdown Width"/>
+                type="text"
+                label="Dropdown Width"
+            />
+
             <field name="gantry-class"
-                   type="text"
-                   label="CSS Classes"/>
+                type="text"
+                label="CSS Classes"
+            />
+
             <field name="gantry-icon"
-                   type="text"
-                   label="Icon"/>
+                type="text"
+                label="Icon"
+            />
+
             <field name="gantry-subtitle"
-                   type="text"
-                   label="Subtitle"/>
+                type="text"
+                label="Subtitle"
+            />
+
             <field name="gantry-layout"
-                   type="hidden"/>
+                type="hidden"
+            />
+
             <field name="gantry-visible"
-                   type="hidden"
-                   filter="bool"/>
+                type="hidden"
+                filter="bool"
+            />
+
             <field name="gantry-columns"
-                   type="hidden"
-                   filter="raw"/>
+                type="hidden"
+                filter="raw"
+            />
+
             <field name="gantry-columns_count"
-                   type="hidden"
-                   filter="raw"/>
+                type="hidden"
+                filter="raw"
+            />
+
             <field name="gantry-particle"
-                   type="hidden"/>
+                type="hidden"
+            />
+
             <field name="gantry-options"
-                   type="hidden"
-                   filter="raw"/>
+                type="hidden"
+                filter="raw"
+            />
         </fieldset>
     </fields>
 </form>

@@ -1,8 +1,5 @@
 <?php
 
-use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\Language\Text;
-
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
@@ -12,30 +9,47 @@ use Joomla\CMS\Language\Text;
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-class JFormFieldWarning extends JFormField
+namespace Gantry\Plugin\System\Gantry5\Field;
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Language\Text;
+
+class WarningField extends FormField
 {
+    /**
+     * The form field type.
+     *
+     * @var    string
+     */
     protected $type = 'Warning';
 
+    /**
+     * {@inheritDoc}
+     */
     protected function getLabel()
     {
         return 'Gantry 5';
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function getInput()
     {
-        /** @var CMSApplication $app */
-        $app = JFactory::getApplication();
-        $input = $app->input;
+        $app   = Factory::getApplication();
+        $input = $app->getInput();
 
         $route = '';
         $cid = $input->post->get('cid', (array) $input->getInt('id'), 'array');
+
         if ($cid) {
             $styles = $this->getStyles();
             $selected = array_intersect_key($styles, array_flip($cid));
             if ($selected) {
                 $theme = reset($selected);
                 $id = key($selected);
-                $token = JSession::getFormToken();
+                $token = Factory::getApplication()->getFormToken();
                 $route = "index.php?option=com_gantry5&view=configurations/{$id}";
             }
         }
@@ -44,7 +58,7 @@ class JFormFieldWarning extends JFormField
             return '<a href="index.php?option=com_gantry5" class="btn" style="background:#439a86; color:#fff;">Gantry 5</a>';
         }
 
-        $lang = JFactory::getLanguage();
+        $lang = Factory::getApplication()->getLanguage();
         $lang->load('com_gantry5', JPATH_ADMINISTRATOR) || $lang->load('com_gantry5', JPATH_ADMINISTRATOR . '/components/com_gantry5');
 
         $title1 = Text::_('GANTRY5_PLATFORM_LAYOUT');
@@ -61,16 +75,15 @@ HTML;
     /**
      * @return array
      */
-    private function getStyles()
+    private function getStyles(): array
     {
         static $list;
 
         if ($list === null) {
-            // Load styles
-            $db = JFactory::getDbo();
-            $query = $db
-                ->getQuery(true)
-                ->select('s.id, s.template')
+            $db    = $this->getDatabase();
+            $query = $db->createQuery();
+
+            $query->select('s.id, s.template')
                 ->from('#__template_styles as s')
                 ->where('s.client_id = 0')
                 ->where('e.enabled = 1')
@@ -79,7 +92,7 @@ HTML;
             $db->setQuery($query);
             $templates = (array)$db->loadObjectList();
 
-            $list = array();
+            $list = [];
 
             foreach ($templates as $template) {
                 if ($this->isGantryTemplate($template->template)) {
@@ -95,8 +108,8 @@ HTML;
      * @param string $name
      * @return bool
      */
-    private function isGantryTemplate($name)
+    private function isGantryTemplate($name): bool
     {
-        return file_exists(JPATH_SITE . "/templates/{$name}/gantry/theme.yaml");
+        return \file_exists(JPATH_SITE . "/templates/{$name}/gantry/theme.yaml");
     }
 }
