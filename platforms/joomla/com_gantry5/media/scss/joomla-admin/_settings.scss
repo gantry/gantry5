@@ -1,6 +1,12 @@
 #g5-container {
+    > .settings-block .settings-param-field {
+        margin-left: 0;
+    }
+
     .settings-block {
-        input, textarea, select {
+        input,
+        textarea,
+        select {
             &:focus {
                 border-color: rgba($core-accent, .5);
             }

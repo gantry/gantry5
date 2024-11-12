@@ -1,43 +1,44 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<extension version="3.9" type="component" method="upgrade">
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="component" method="upgrade">
     <name>com_gantry5</name>
-    <version>@version@</version>
-    <creationDate>@versiondate@</creationDate>
     <author>RocketTheme, LLC</author>
-    <authorEmail>support@rockettheme.com</authorEmail>
-    <authorUrl>http://www.rockettheme.com</authorUrl>
+    <creationDate>@versiondate@</creationDate>
     <copyright>(C) 2005 - 2021 RocketTheme, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2</license>
+    <authorEmail>support@rockettheme.com</authorEmail>
+    <authorUrl>http://www.rockettheme.com</authorUrl>
+    <version>@version@</version>
     <description>COM_GANTRY5_DESCRIPTION</description>
-
-    <files folder="site">
-        <filename>gantry5.php</filename>
-        <filename>router.php</filename>
+    <namespace path="src">Gantry\Component\Gantry5</namespace>
+    <files destination="com_gantry5" folder="media">
+        <filename>joomla.asset.json</filename>
         <filename>MD5SUMS</filename>
-        <folder>fields</folder>
-        <folder>views</folder>
+        <folder>css</folder>
+        <!-- <folder>fonts</folder>
+        <folder>images</folder>
+        <folder>js</folder> -->
     </files>
-
     <administration>
         <files folder="admin">
             <filename>access.xml</filename>
             <filename>config.xml</filename>
-            <filename>gantry5.php</filename>
-            <filename>MD5SUMS</filename>
+            <filename>gantry5.xml</filename>
             <folder>blueprints</folder>
-            <folder>css-compiled</folder>
-            <folder>fonts</folder>
-            <folder>images</folder>
             <folder>install</folder>
-            <folder>js</folder>
             <folder>language</folder>
             <folder>scss</folder>
+            <folder>services</folder>
+            <folder>src</folder>
             <folder>templates</folder>
         </files>
-        <menu>COM_GANTRY5</menu>
-        <submenu>
-            <menu view="themes">COM_GANTRY5_ADMIN_MENU_THEMES</menu>
-            <menu>COM_GANTRY5_ADMIN_MENU_THEME</menu>
-        </submenu>
+		<menu>COM_GANTRY5</menu>
+		<submenu>
+			<menu
+				link="option=com_gantry5"
+				view="themes"
+				>
+				COM_GANTRY5_ADMIN_MENU_THEMES
+			</menu>
+		</submenu>
     </administration>
 </extension>

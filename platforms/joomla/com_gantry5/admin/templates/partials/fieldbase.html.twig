@@ -1,9 +1,11 @@
 {% assets with { priority: 10 } %}
     {% block stylesheets %}
+        {{ gantry.document.webassetmanager('com_gantry5.g-admin', 'style') }}
         {{ gantry.document.webassetmanager('com_gantry5.joomla-g-admin', 'style') }}
     {% endblock %}
 
     {% block javascript %}
+        {{ gantry.document.webassetmanager('com_gantry5.main', 'script') }}
         <script>
             var GANTRY_AJAX_SUFFIX = '{{ gantry.ajax_suffix|raw }}';
             var GANTRY_AJAX_URL = '{{ gantry.route('%ajax%')|e }}';
@@ -14,12 +16,10 @@
     {% endblock %}
 {% endassets -%}
 
-<div id="g5-container">
-    {% block content %}
-    {% endblock %}
-
-    {% block footer_section %}
-    {% endblock %}
-</div>
+{% block content %}
+    <div id="g5-container">
+        {{ content|raw }}
+    </div>
+{% endblock %}
 
 {% do gantry.platform.finalize() %}

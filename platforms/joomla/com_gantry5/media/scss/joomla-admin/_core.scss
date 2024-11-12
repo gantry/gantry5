@@ -1,15 +1,5 @@
-html {
-    height: inherit !important;
-}
-
-textarea, input, .input-append, .input-prepend, #sbox-window {
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-}
-
 body.com_gantry5 {
-    color: $light-gray;
+    //color: $light-gray;
     background-color: $body-bg !important;
 
     #content { // Joomla 4
@@ -33,12 +23,8 @@ body.com_gantry5 {
         text-decoration: none;
     }
 
-    .btn-subhead, .subhead-collapse.collapse, .header, .subhead { // .subhead is for Joomla 4
+    .subhead {
         display: none;
-    }
-
-    #header { // Joomla 4
-        display: block;
     }
 
     .container-main {
@@ -86,7 +72,7 @@ body.com_gantry5 {
     }
 }
 
-body.com_modules, body.com_advancedmodules, body.com_menus {
+body.com_modules, body.com_menus {
     #g5-container {
         font-size: inherit; // inherit from the platform
 

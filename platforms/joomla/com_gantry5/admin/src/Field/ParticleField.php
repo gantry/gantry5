@@ -9,64 +9,56 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
+namespace Gantry\Component\Gantry5\Administrator\Field;
+
 use Gantry\Admin\Router;
 use Gantry\Admin\Theme;
 use Gantry\Framework\Gantry;
 use Gantry\Joomla\StyleHelper;
-use Gantry5\Loader;
-use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Language\Text;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Class JFormFieldParticle
  */
-class JFormFieldParticle extends FormField
+class ParticleField extends FormField
 {
+    /**
+     * The form field type.
+     *
+     * @var    string
+     */
     protected $type = 'Particle';
-    protected $container;
 
     /**
-     * @return string
-     * @throws Exception
+     * {@inheritDoc}
      */
     protected function getInput()
     {
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
-
-        // Detect Gantry Framework or fail gracefully.
-        if (!class_exists('Gantry5\Loader')) {
-            $application->enqueueMessage(
-                Text::sprintf('MOD_GANTRY5_PLUGIN_MISSING', Text::_('MOD_GANTRY5_PARTICLE')),
-                'error'
-            );
-            return '';
-        }
+        /** @var \Joomla\CMS\Application\AdministratorApplication $app */
+        $app = Factory::getApplication();
 
         if (!defined('GANTRYADMIN_PATH')) {
             define('GANTRYADMIN_PATH', JPATH_ADMINISTRATOR . '/components/com_gantry5');
         }
 
-        // Initialize administrator or fail gracefully.
         try {
-            Loader::setup();
+            $gantry = Gantry::instance();
 
-            $language = $application->getLanguage();
-            $language->load('com_gantry5', JPATH_ADMINISTRATOR)
-                || $language->load('com_gantry5', GANTRYADMIN_PATH);
-
-            $this->container = Gantry::instance();
-            $this->container['router'] = function ($c) {
+            $gantry['router'] = function ($c): Router {
                 return new Router($c);
             };
-
-        } catch (Exception $e) {
-            $application->enqueueMessage(
+        } catch (\Exception $e) {
+            $app->enqueueMessage(
                 Text::sprintf($e->getMessage()),
                 'error'
             );
+
             return '';
         }
 
@@ -74,19 +66,19 @@ class JFormFieldParticle extends FormField
         $style = StyleHelper::getDefaultStyle();
 
         if (!$style->template) {
-            $application->enqueueMessage(
+            $app->enqueueMessage(
                 Text::_('GANTRY5_PARTICLE_FIELD_NO_DEFAULT_STYLE'),
                 'warning'
             );
-        } elseif (!file_exists(JPATH_SITE . "/templates/{$style->template}/gantry/theme.yaml")) {
-            $application->enqueueMessage(
+        } elseif (!\file_exists(JPATH_SITE . "/templates/{$style->template}/gantry/theme.yaml")) {
+            $app->enqueueMessage(
                 Text::sprintf('GANTRY5_PARTICLE_FIELD_NO_GANTRY5_STYLE', $style->title),
                 'warning'
             );
         }
 
         /** @var Router $router */
-        $router = $this->container['router'];
+        $router = $gantry['router'];
         $router->setTheme($style->template, null)->load();
 
         $field = [
@@ -100,16 +92,16 @@ class JFormFieldParticle extends FormField
                 'picker_label' => 'Pick a Particle',
                 'overridable' => false
             ],
-            'value' => json_decode($this->value, true)
+            'value' => \json_decode($this->value, true)
         ];
 
         /** @var Theme $adminTheme */
-        $adminTheme = $this->container['admin.theme'];
+        $adminTheme = $gantry['admin.theme'];
 
         $params = [
             'content' => $adminTheme->render('@gantry-admin/forms/fields/gantry/particle.html.twig', $field)
         ];
 
-        return $adminTheme->render('@gantry-admin/partials/layout.html.twig', $params);
+        return $adminTheme->render('@gantry-admin/partials/fieldbase.html.twig', $params);
     }
 }
