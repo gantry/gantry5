@@ -1,12 +1,10 @@
-{%- do gantry.debugger.startTimer('render', 'Rendering page') %}
 {%- do gantry.theme.setLayout() -%}
 {%- do gantry.theme.loadAtoms() -%}
 {%- set segments = gantry.theme.segments() -%}
 
 {%- set content %}
     {% if gantry.theme.hasContent() %}
-        {% block content %}
-        {% endblock %}
+        {% block content %}{% endblock %}
     {% endif %}
 {% endset -%}
 
@@ -39,30 +37,24 @@
 {% endset -%}
 
 {%- set page_top %}
-    {% block page_top %}
-    {% endblock %}
+    {% block page_top %}{% endblock %}
     {{ gantry.document.getHtml('top')|join("\n    ")|raw }}
 {% endset -%}
 
 {%- set page_bottom %}
-    {% block page_bottom %}
-    {% endblock %}
+    {% block page_bottom %}{% endblock %}
     {{ gantry.document.getHtml('bottom')|join("\n    ")|raw }}
 {% endset -%}
 
 {%- set body_top %}
-    {% block body_top %}
-    {% endblock %}
+    {% block body_top %}{% endblock %}
     {{ gantry.document.getHtml('body_top')|join("\n    ")|raw }}
 {% endset -%}
 
 {%- set body_bottom %}
-    {% block body_bottom %}
-    {% endblock %}
+    {% block body_bottom %}{% endblock %}
     {{ gantry.document.getHtml('body_bottom')|join("\n    ")|raw }}
 {% endset -%}
-
-{%- do gantry.document.addScript(url('gantry-assets://js/main.js'), 11, 'footer') -%}
 
 {# Head and footer needs to come last because of any of the above blocks may have CSS or JavaScript in them #}
 
@@ -77,8 +69,6 @@
         {% do gantry.platform.finalize() -%}
         {{ gantry.scripts('footer')|join("\n    ")|raw -}}
     {% endblock %}
-
-    {{ gantry.debugger.render()|raw }}
 {% endset -%}
 
 {%- block page -%}
