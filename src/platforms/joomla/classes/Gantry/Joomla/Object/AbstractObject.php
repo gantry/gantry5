@@ -13,31 +13,38 @@ namespace Gantry\Joomla\Object;
 
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\DatabaseQuery;
 
 /**
  * Abstract base class for database objects.
  */
-abstract class AbstractObject extends \JObject
+abstract class AbstractObject extends CMSObject
 {
     /** @var array If you don't have global instance ids, override this in extending class. */
-    static protected $instances = [];
+    protected static $instances = [];
+
     /** @var string Override table class in your own class. */
-    static protected $table;
+    protected static $table;
+
     /** @var string Table class prefix, override if needed. */
-    static protected $tablePrefix = 'JTable';
+    protected static $tablePrefix = 'Table';
+
     /** @var string Override table in your own class. */
-    static protected $order;
+    protected static $order;
 
     /** @var int */
     public $id;
 
     /** @var boolean Is object stored into database? */
     protected $_exists = false;
+
     /** @var bool Readonly object. */
     protected $_readonly = false;
+
     /** @var bool */
     protected $_initialized = false;
 
@@ -104,7 +111,9 @@ abstract class AbstractObject extends \JObject
             $class = \get_called_class();
             $instance = new $class($keys);
             /** @var Object $instance */
-            if (!$instance->exists()) return $instance;
+            if (!$instance->exists()) {
+                return $instance;
+            }
 
             // Instance exists: make sure that we return the global instance.
             $keys = $instance->id;
@@ -146,7 +155,9 @@ abstract class AbstractObject extends \JObject
     public function exists($exists = null)
     {
         $return = $this->_exists;
-        if ($exists !== null) $this->_exists = (bool) $exists;
+        if ($exists !== null) {
+            $this->_exists = (bool) $exists;
+        }
 
         return $return;
     }
@@ -175,7 +186,9 @@ abstract class AbstractObject extends \JObject
     public function getProperties($public = true)
     {
         if ($public) {
-            $getProperties = static function($obj) { return get_object_vars($obj); };
+            $getProperties = static function ($obj) {
+                return get_object_vars($obj);
+            };
             return $getProperties($this);
         }
 
@@ -521,12 +534,12 @@ abstract class AbstractObject extends \JObject
     /**
      * @return \JDatabaseQuery
      */
-    static protected function getQuery()
+    protected static function getQuery()
     {
         $table = static::getTable();
-        $db = Factory::getDbo();
-        $query = $db->getQuery(true);
-        $query->select('a.*')->from($table->getTableName().' AS a')->order(static::$order);
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->createQuery();
+        $query->select('a.*')->from($table->getTableName() . ' AS a')->order(static::$order);
 
         return $query;
     }
@@ -540,7 +553,7 @@ abstract class AbstractObject extends \JObject
             $query = static::getQuery();
         }
 
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $db->setQuery($query);
 
         /** @var Object[] $items */

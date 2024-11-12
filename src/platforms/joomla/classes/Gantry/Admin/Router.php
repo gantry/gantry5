@@ -37,33 +37,36 @@ class Router extends BaseRouter
     {
         HTMLHelper::_('behavior.keepalive');
 
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
-        $input = $application->input;
+        /** @var CMSApplication $app */
+        $app = Factory::getApplication();
+        $input = $app->getInput();
 
         // TODO: Remove style variable.
         $style = $input->getInt('style');
         $theme = $input->getCmd('theme');
-        $path = array_filter(explode('/', $input->getString('view', '')), static function($var) { return $var !== ''; });
+        $path  = \array_filter(explode('/', $input->getString('view', '')), static function ($var): bool {
+            return $var !== '';
+        });
 
         $this->setTheme($theme, $style);
 
         /** @var Request $request */
         $request = $this->container['request'];
 
-        $this->method = $request->getMethod();
-        $this->path = $path ?: (isset($this->container['theme.name']) ? ['configurations', true] : ['themes']);
-        $this->resource = array_shift($this->path);
-        $this->format = strtolower($input->getCmd('format', 'html'));
-        $ajax = ($this->format === 'json');
+        $this->method   = $request->getMethod();
+        $this->path     = $path ?: (isset($this->container['theme.name']) ? ['configurations', true] : ['themes']);
+        $this->resource = \array_shift($this->path);
+        $this->format   = \strtolower($input->getCmd('format', 'html'));
+
+        $ajax = $this->format === 'json';
 
         $this->params = [
-            'user' => $application->getIdentity(),
-            'ajax' => $ajax,
+            'user'     => $app->getIdentity(),
+            'ajax'     => $ajax,
             'location' => $this->resource,
-            'method' => $this->method,
-            'format' => $this->format,
-            'params' => $request->post->getJsonArray('params')
+            'method'   => $this->method,
+            'format'   => $this->format,
+            'params'   => $request->post->getJsonArray('params')
         ];
 
         return $this;
@@ -79,14 +82,16 @@ class Router extends BaseRouter
         if ($style) {
             $theme = StyleHelper::getStyle($style)->template;
         }
+
         if (!$theme) {
             $theme = StyleHelper::getDefaultStyle()->template;
         }
 
         $path = JPATH_SITE . '/templates/' . $theme;
 
-        if (!is_file("{$path}/gantry/theme.yaml")) {
+        if (!\is_file("{$path}/gantry/theme.yaml")) {
             $theme = '';
+
             /** @var Streams $streams */
             $streams = $this->container['streams'];
             $streams->register();
@@ -98,22 +103,19 @@ class Router extends BaseRouter
             $global = $this->container['global'];
 
             CompiledYamlFile::$defaultCachePath = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
-            CompiledYamlFile::$defaultCaching = $global->get('compile_yaml', 1);
+            CompiledYamlFile::$defaultCaching   = $global->get('compile_yaml', 1);
         }
 
-        $this->container['base_url'] = Uri::base(true) . '/index.php?option=com_gantry5';
-
+        $this->container['base_url']    = Uri::base(true) . '/index.php?option=com_gantry5';
         $this->container['ajax_suffix'] = '&format=json';
 
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
-        $session = $application->getSession();
-        $token = $session::getFormToken();
+        $app = Factory::getApplication();
+
+        $token = $app->getFormToken();
 
         $this->container['routes'] = [
-            '1' => "&view=%s&theme={$theme}&{$token}=1",
-
-            'themes' => '&view=themes',
+            '1'              => "&view=%s&theme={$theme}&{$token}=1",
+            'themes'         => '&view=themes',
             'picker/layouts' => "&view=layouts&theme={$theme}&{$token}=1",
         ];
 
@@ -127,7 +129,7 @@ class Router extends BaseRouter
         // Load language file for the template.
         $languageFile = 'tpl_' . $theme;
 
-        $language = $application->getLanguage();
+        $language = $app->getLanguage();
         $language->load($languageFile, JPATH_SITE)
             || $language->load($languageFile, $path)
             || $language->load($languageFile, $path, 'en-GB');
@@ -138,13 +140,9 @@ class Router extends BaseRouter
     /**
      * @return bool
      */
-    protected function checkSecurityToken()
+    protected function checkSecurityToken(): bool
     {
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
-        $session = $application->getSession();
-
-        return $session::checkToken('get');
+        return Factory::getApplication()->checkToken('get');
     }
 
     /**
@@ -152,38 +150,40 @@ class Router extends BaseRouter
      *
      * @param Response $response
      */
-    protected function send(Response $response)
+    protected function send(Response $response): void
     {
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
-        $document = $application->getDocument();
+        $app      = Factory::getApplication();
+        $document = $app->getDocument();
+
         $document->setCharset($response->charset);
         $document->setMimeEncoding($response->mimeType);
 
         // Output HTTP header.
-        $application->setHeader('Status', $response->getStatus());
-        $application->setHeader('Content-Type', $response->mimeType . '; charset=' . $response->charset);
+        $app->setHeader('Status', $response->getStatus());
+        $app->setHeader('Content-Type', $response->mimeType . '; charset=' . $response->charset);
+
         foreach ($response->getHeaders() as $key => $values) {
             $replace = true;
+
             foreach ($values as $value) {
-                $application->setHeader($key, $value, $replace);
+                $app->setHeader($key, $value, $replace);
                 $replace = false;
             }
         }
 
         if ($response instanceof JsonResponse) {
-            $application->setHeader('Expires', 'Wed, 17 Aug 2005 00:00:00 GMT', true);
-            $application->setHeader('Last-Modified', gmdate('D, d M Y H:i:s') . ' GMT', true);
-            $application->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0', false);
-            $application->setHeader('Pragma', 'no-cache');
-            $application->sendHeaders();
+            $app->setHeader('Expires', 'Wed, 17 Aug 2005 00:00:00 GMT', true);
+            $app->setHeader('Last-Modified', gmdate('D, d M Y H:i:s') . ' GMT', true);
+            $app->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0', false);
+            $app->setHeader('Pragma', 'no-cache');
+            $app->sendHeaders();
         }
 
         // Output Gantry response.
         echo $response;
 
         if ($response instanceof JsonResponse) {
-            $application->close();
+            $app->close();
         }
     }
 }

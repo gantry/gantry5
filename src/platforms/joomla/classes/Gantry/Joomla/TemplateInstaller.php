@@ -18,4 +18,6 @@ use Gantry\Framework\ThemeInstaller;
  * @package Gantry\Joomla
  * @deprecated 5.3.2
  */
-class TemplateInstaller extends ThemeInstaller {}
+class TemplateInstaller extends ThemeInstaller
+{
+}

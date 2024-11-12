@@ -36,12 +36,7 @@ class Icons extends JsonController
         /** @var Config $config */
         $config = $this->container['config'];
 
-        $version = $config->get('page.fontawesome.version', $config->get('page.fontawesome.default_version', 'fa4'));
-        if ($version === 'fa4') {
-            $list = include __DIR__ . '/Icons/FontAwesome4.php';
-        } else {
-            $list = include __DIR__ . '/Icons/FontAwesome5.php';
-        }
+        $list = include __DIR__ . '/Icons/FontAwesome5.php';
 
         $options = [
             'fw' => 'Fixed Width',

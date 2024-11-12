@@ -26,6 +26,7 @@ class AssignmentsStyle implements AssignmentsInterface
 {
     /** @var string */
     public $type = 'style';
+
     /** @var int */
     public $priority = 2;
 
@@ -34,19 +35,22 @@ class AssignmentsStyle implements AssignmentsInterface
      *
      * @return array
      */
-    public function getRules()
+    public function getRules(): array
     {
         static $rules;
 
         if (null === $rules) {
             $rules = [];
 
-            /** @var CMSApplication $application */
-            $application = Factory::getApplication();
-            $template = $application->getTemplate(true);
+            /** @var CMSApplication $app */
+            $app      = Factory::getApplication();
+            $template = $app->getTemplate(true);
 
-            $theme = $template->template;
-            $outline = $template->params->get('configuration', !empty($template->id) ? $template->id : $template->params->get('preset', null));
+            $theme   = $template->template;
+            $outline = $template->params->get(
+                'configuration',
+                !empty($template->id) ? $template->id : $template->params->get('preset', null)
+            );
 
             if (JDEBUG) {
                 if (\GANTRY_DEBUGGER) {
@@ -55,14 +59,14 @@ class AssignmentsStyle implements AssignmentsInterface
                 }
 
                 if (!$outline) {
-                    $application->enqueueMessage('JApplicationSite::getTemplate() was overridden with no specified Gantry 5 outline.', 'debug');
+                    $app->enqueueMessage('CMSApplication::getTemplate() was overridden with no specified Gantry 5 outline.', 'debug');
                 }
             }
 
             /** @var UniformResourceLocator $locator */
             $locator = Gantry::instance()['locator'];
 
-            if ($outline && is_dir($locator("gantry-themes://{$theme}/custom/config/{$outline}"))) {
+            if ($outline && \is_dir($locator("gantry-themes://{$theme}/custom/config/{$outline}"))) {
                 $rules = ['id' => [$outline => $this->priority]];
             }
         }
@@ -76,7 +80,7 @@ class AssignmentsStyle implements AssignmentsInterface
      * @param string $configuration
      * @return array
      */
-    public function listRules($configuration)
+    public function listRules($configuration): array
     {
         return [];
     }

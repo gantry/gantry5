@@ -20,9 +20,10 @@ use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\Manifest;
 use Gantry\Joomla\MenuHelper;
 use Gantry\Joomla\StyleHelper;
-use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Event\DispatcherInterface;
+use Joomla\Event\Event as CMSEvent;
 use Joomla\Registry\Registry;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
@@ -41,13 +42,13 @@ class EventListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            'admin.init.theme'  => ['onAdminThemeInit', 0],
-            'admin.global.save' => ['onGlobalSave', 0],
-            'admin.styles.save' => ['onStylesSave', 0],
-            'admin.settings.save' => ['onSettingsSave', 0],
-            'admin.layout.save' => ['onLayoutSave', 0],
+            'admin.init.theme'       => ['onAdminThemeInit', 0],
+            'admin.global.save'      => ['onGlobalSave', 0],
+            'admin.styles.save'      => ['onStylesSave', 0],
+            'admin.settings.save'    => ['onSettingsSave', 0],
+            'admin.layout.save'      => ['onLayoutSave', 0],
             'admin.assignments.save' => ['onAssignmentsSave', 0],
-            'admin.menus.save' => ['onMenusSave', 0]
+            'admin.menus.save'       => ['onMenusSave', 0]
         ];
     }
 
@@ -64,7 +65,7 @@ class EventListener implements EventSubscriberInterface
      */
     public function onGlobalSave(Event $event)
     {
-        $this->triggerEvent('onGantry5SaveConfig', [$event->data]);
+        $this->triggerEvent('onGantry5SaveConfig', ['data' => $event->data]);
     }
 
     /**
@@ -122,7 +123,7 @@ class EventListener implements EventSubscriberInterface
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $filename = "gantry-theme://language/en-GB/en-GB.tpl_{$theme}_positions.ini";
+        $filename = "gantry-theme://language/en-GB/tpl_{$theme}_positions.ini";
 
         $ini = IniFile::instance($locator->findResource($filename, true, true));
         $ini->save($translations);
@@ -169,7 +170,7 @@ class EventListener implements EventSubscriberInterface
         /** @var Gantry $gantry */
         $gantry = $event->gantry;
         if ($gantry->authorize('menu.edit') && !$menuType->save($options)) {
-            throw new \RuntimeException('Saving menu failed: '. $menuType->getError(), 400);
+            throw new \RuntimeException('Saving menu failed: ' . $menuType->getError(), 400);
         }
 
         unset($menu['settings']);
@@ -225,7 +226,6 @@ class EventListener implements EventSubscriberInterface
                         $table->setLocation($parentId ?: $table->getRootId(), 'last-child');
                     }
                 }
-
             } else {
                 // Add missing particles into the menu.
                 if ($type !== 'particle') {
@@ -347,24 +347,24 @@ class EventListener implements EventSubscriberInterface
      * @return array
      */
     protected function getAll($menutype)
-	{
-	    $table = MenuHelper::getMenu();
+    {
+        $table = MenuHelper::getMenu();
         $db = $table->getDbo();
         $name = $table->getTableName();
-		$key = $table->getKeyName();
+        $key = $table->getKeyName();
 
-		// Get the node and children as a tree.
-		$select = 'DISTINCT n.' . $key . ', n.parent_id, n.level, n.lft, n.path, n.type, n.access, n.params, n.language, n.published';
-		$query = $db->getQuery(true)
-			->select($select)
-			->from($name . ' AS n, ' . $name . ' AS p')
-			->where('n.lft BETWEEN p.lft AND p.rgt')
-			->where('n.menutype = ' . $db->quote($menutype))
+        // Get the node and children as a tree.
+        $select = 'DISTINCT n.' . $key . ', n.parent_id, n.level, n.lft, n.path, n.type, n.access, n.params, n.language, n.published';
+        $query = $db->getQuery(true)
+            ->select($select)
+            ->from($name . ' AS n, ' . $name . ' AS p')
+            ->where('n.lft BETWEEN p.lft AND p.rgt')
+            ->where('n.menutype = ' . $db->quote($menutype))
             ->where('n.client_id = 0')
-			->order('n.lft');
+            ->order('n.lft');
 
-		return $db->setQuery($query)->loadAssocList($key);
-	}
+        return $db->setQuery($query)->loadAssocList($key);
+    }
 
     /**
      * @param array $item
@@ -387,12 +387,10 @@ class EventListener implements EventSubscriberInterface
      */
     protected function triggerEvent($eventName, $args = [])
     {
-        PluginHelper::importPlugin('gantry5');
+        /** @var DispatcherInterface $dispatcher */
+        $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+        PluginHelper::importPlugin('gantry5', null, true, $dispatcher);
 
-        /** @var CMSApplication $app */
-        $app = Factory::getApplication();
-
-        // Trigger the onGantryThemeInit event.
-        $app->triggerEvent($eventName, $args);
+        $dispatcher->dispatch($eventName, new CMSEvent($eventName, $args));
     }
 }

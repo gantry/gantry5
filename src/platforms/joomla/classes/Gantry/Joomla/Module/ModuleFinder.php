@@ -23,12 +23,16 @@ class ModuleFinder extends Finder
 {
     /** @var string */
     protected $table = '#__modules';
+
     /** @var bool */
     protected $readonly = true;
+
     /** @var array */
     protected $state = [];
+
     /** @var array */
     protected $published = [0, 1];
+
     /** @var int */
     protected $limit = 0;
 
@@ -79,11 +83,11 @@ class ModuleFinder extends Finder
         if (!$language) {
             return $this;
         }
+
         if ($language === true || is_numeric($language)) {
-            /** @var CMSApplication $application */
-            $application = Factory::getApplication();
-            $language = $application->getLanguage()->getTag();
+            $language = Factory::getApplication()->getLanguage()->getTag();
         }
+
         return $this->where('a.language', 'IN', [$language, '*']);
     }
 
@@ -120,11 +124,10 @@ class ModuleFinder extends Finder
             return $this;
         }
 
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
-        $user = $application->getIdentity();
+        $user = Factory::getApplication()->getIdentity();
 
         $groups = $user ? $user->getAuthorisedViewLevels() : [];
+
         if (!$groups) {
             $this->skip = true;
 

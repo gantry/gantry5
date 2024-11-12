@@ -19,7 +19,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Version as JVersion;
+use Joomla\Event\DispatcherInterface;
+use Joomla\Event\Event;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use Twig\Environment;
 use Twig\Extension\CoreExtension;
@@ -48,11 +49,6 @@ class Theme extends AbstractTheme
     {
         if ($enable && !$this->joomla) {
             $this->joomla = true;
-
-            // Workaround for Joomla! 3.x not loading bootstrap when it needs it.
-            if (version_compare(JVERSION, '4', '<')) {
-                static::gantry()->load('bootstrap');
-            }
         }
 
         return $this->joomla;
@@ -72,15 +68,17 @@ class Theme extends AbstractTheme
         /** @var CoreExtension $core */
         $core = $twig->getExtension(CoreExtension::class);
 
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
-        $user = $application->getIdentity();
+        /** @var CMSApplication $app */
+        $app  = Factory::getApplication();
+        $user = $app->getIdentity();
 
         // Get user timezone and if not set, use Joomla default.
-        $timezone = Factory::getConfig()->get('offset', 'UTC');
+        $timezone = $app->get('offset', 'UTC');
+
         if ($user) {
             $timezone = $user->getParam('timezone', $timezone);
         }
+
         $core->setTimezone(new \DateTimeZone($timezone));
 
         // Set locale for dates and numbers.
@@ -111,7 +109,7 @@ class Theme extends AbstractTheme
     {
         if (null === $format) {
             $formats = $env->getExtension(CoreExtension::class)->getDateFormat();
-            $format = $date instanceof \DateInterval ? $formats[1] : $formats[0];
+            $format  = $date instanceof \DateInterval ? $formats[1] : $formats[0];
         }
 
         if ($date instanceof \DateInterval) {
@@ -120,7 +118,7 @@ class Theme extends AbstractTheme
 
         if (!($date instanceof Date)) {
             // Create localized Date object.
-            $twig_date = \twig_date_converter($env, $date, $timezone);
+            $twig_date = $env->getExtension(CoreExtension::class)->convertDate($date, $timezone);
 
             $date = new Date($twig_date->getTimestamp());
             $date->setTimezone($twig_date->getTimezone());
@@ -142,7 +140,7 @@ class Theme extends AbstractTheme
         $gantry = static::gantry();
 
         $context = parent::getContext($context);
-        $context['site'] = $gantry['site'];
+        $context['site']   = $gantry['site'];
         $context['joomla'] = $gantry['platform'];
 
         return $context;
@@ -160,16 +158,16 @@ class Theme extends AbstractTheme
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
-        $language = $application->getLanguage();
+        /** @var CMSApplication $app */
+        $app = Factory::getApplication();
+        $language = $app->getLanguage();
 
         // FIXME: Do not hardcode this file.
         $language->load('files_gantry5_nucleus', JPATH_SITE);
 
-        if ($application->isClient('site')) {
+        if ($app->isClient('site')) {
             // Load our custom positions file as frontend requires the strings to be there.
-            $filename = $locator("gantry-theme://language/en-GB/en-GB.tpl_{$this->name}_positions.ini");
+            $filename = $locator("gantry-theme://language/en-GB/tpl_{$this->name}_positions.ini");
 
             if ($filename) {
                 $language->load("tpl_{$this->name}_positions", \dirname(\dirname(\dirname($filename))), 'en-GB');
@@ -182,14 +180,15 @@ class Theme extends AbstractTheme
             }
         }
 
-        $this->language = 'en-gb';
+        $this->language  = 'en-gb';
         $this->direction = 'ltr';
-        $this->url = Uri::root(true) . '/templates/' . $this->name;
+        $this->url       = Uri::root(true) . '/templates/' . $this->name;
 
-        PluginHelper::importPlugin('gantry5');
+        /** @var DispatcherInterface $dispatcher */
+        $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+        PluginHelper::importPlugin('gantry5', null, true, $dispatcher);
 
-        // Trigger the onGantryThemeInit event.
-        $application->triggerEvent('onGantry5ThemeInit', ['theme' => $this]);
+        $dispatcher->dispatch('onGantry5ThemeInit', new Event('onGantry5ThemeInit', ['theme' => $this]));
     }
 
     /**
@@ -199,8 +198,10 @@ class Theme extends AbstractTheme
      */
     public static function getTwigPaths()
     {
+        $gantry = Gantry::instance();
+
         /** @var UniformResourceLocator $locator */
-        $locator = static::gantry()['locator'];
+        $locator = $gantry['locator'];
 
         return $locator->mergeResources(['gantry-theme://twig', 'gantry-engine://twig']);
     }

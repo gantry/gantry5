@@ -17,21 +17,20 @@ namespace Gantry\Component\Twig;
 use Gantry\Component\Content\Document\HtmlDocument;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Translator\TranslatorInterface;
-use Gantry\Component\Twig\TokenParser\TokenParserPageblock;
 use Gantry\Component\Twig\TokenParser\TokenParserAssets;
+use Gantry\Component\Twig\TokenParser\TokenParserMarkdown;
+use Gantry\Component\Twig\TokenParser\TokenParserPageblock;
 use Gantry\Component\Twig\TokenParser\TokenParserScripts;
 use Gantry\Component\Twig\TokenParser\TokenParserStyles;
-use Gantry\Component\Twig\TokenParser\TokenParserTryCatch;
-use Gantry\Component\Twig\TokenParser\TokenParserMarkdown;
 use Gantry\Component\Twig\TokenParser\TokenParserSwitch;
 use Gantry\Component\Twig\TokenParser\TokenParserThrow;
+use Gantry\Component\Twig\TokenParser\TokenParserTryCatch;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Markdown\Parsedown;
 use Gantry\Framework\Markdown\ParsedownExtra;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Request;
-use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccess;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\GlobalsInterface;
 use Twig\TwigFilter;
@@ -50,7 +49,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
      *
      * @return array
      */
-    public function getGlobals()
+    public function getGlobals(): array
     {
         return [
             'gantry' => static::gantry(),
@@ -242,7 +241,8 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
         if ($remote || @is_file($src)) {
             try {
                 list($width, $height,, $attr) = @getimagesize($src);
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {
+            }
 
             $sizes['width'] = $width;
             $sizes['height'] = $height;

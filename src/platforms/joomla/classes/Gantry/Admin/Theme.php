@@ -33,7 +33,7 @@ class Theme extends AbstractTheme
     /**
      * @see AbstractTheme::init()
      */
-    protected function init()
+    protected function init(): void
     {
         $gantry = static::gantry();
 
@@ -76,15 +76,17 @@ class Theme extends AbstractTheme
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $nucleus = $patform->getEnginePaths('nucleus')[''];
-        if (strpos($this->path, '://')) {
-            $relpath = $this->path;
-        } else {
-            $relpath = Folder::getRelativePath($this->path);
-        }
+        $nucleus   = $patform->getEnginePaths('nucleus')[''];
+        $relPath   = strpos($this->path, '://') ? $this->path : Folder::getRelativePath($this->path);
+
         $patform->set('streams.gantry-admin.prefixes', [
-            ''        => ['gantry-theme://admin', $relpath, $relpath . '/common', 'gantry-engine://admin'],
-            'assets/' => array_merge([$relpath, $relpath . '/common'], $nucleus, ['gantry-assets://'])
+            '' => [
+                'gantry-theme://admin',
+                $relPath,
+                $relPath . '/common',
+                'media/com_gantry5',
+                'gantry-engine://admin'
+            ],
         ]);
 
         // Add admin paths.

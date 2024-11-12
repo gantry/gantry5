@@ -29,7 +29,8 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class ThemeDetails implements \ArrayAccess
 {
-    use NestedArrayAccessWithGetters, Export;
+    use NestedArrayAccessWithGetters;
+    use Export;
 
     protected $items;
     protected $parent;
@@ -38,21 +39,31 @@ class ThemeDetails implements \ArrayAccess
      * Create new theme details.
      *
      * @param string $theme
+     * @param string $path
+     * @param string $cachePath
      */
-    public function __construct($theme)
+    public function __construct($theme, $path = null, $cachePath = null)
     {
         $gantry = Gantry::instance();
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $filename = $locator->findResource("gantry-themes://{$theme}/custom/gantry/theme.yaml") ?: $locator->findResource("gantry-themes://{$theme}/gantry/theme.yaml");
+        if ($path) {
+            $filename = \file_exists($path . '/custom/gantry/theme.yaml')
+                ? $path . '/custom/gantry/theme.yaml'
+                : $path . '/gantry/theme.yaml';
+        } else {
+            $filename = $locator->findResource("gantry-themes://{$theme}/custom/gantry/theme.yaml")
+                ?: $locator->findResource("gantry-themes://{$theme}/gantry/theme.yaml");
+        }
+
         if (!$filename) {
             throw new \RuntimeException(sprintf('Theme %s not found', $theme), 404);
         }
 
         /** @var string $cache */
-        $cache = $locator->findResource("gantry-cache://{$theme}/compiled/yaml", true, true);
+        $cache = $cachePath ?: $locator->findResource("gantry-cache://{$theme}/compiled/yaml", true, true);
 
         $file = CompiledYamlFile::instance($filename);
         $this->items = (array)$file->setCachePath($cache)->content();

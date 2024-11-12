@@ -230,22 +230,16 @@ class HtmlDocument
                         $attribs .= ' media="' . static::escape($style['media']) . '"';
                     }
                     $output[] = sprintf(
-                        '<link rel="stylesheet" href="%s" type="%s"%s />',
+                        '<link rel="stylesheet" href="%s" %s />',
                         static::escape($style['href']),
-                        static::escape($style['type']),
                         $attribs
                     );
                     break;
                 case 'inline':
-                    $attribs = '';
-                    if ($style['type'] !== 'text/css') {
-                        $attribs .= ' type="' . static::escape($style['type']) . '"';
-                    }
-                    $output[] = sprintf(
-                        '<style%s>%s</style>',
-                        $attribs,
-                        $style['content']
-                    );
+                        $output[] = sprintf(
+                            '<style>%s</style>',
+                            $style['content']
+                        );
                     break;
             }
         }
@@ -269,22 +263,20 @@ class HtmlDocument
                 case 'file':
                     $attribs = '';
                     if ($script['async']) {
-                        $attribs .= ' async="async"';
+                        $attribs .= ' async';
                     }
                     if ($script['defer']) {
-                        $attribs .= ' defer="defer"';
+                        $attribs .= ' defer';
                     }
                     $output[] = sprintf(
-                        '<script type="%s"%s src="%s"></script>',
-                        static::escape($script['type']),
-                        $attribs,
-                        static::escape($script['src'])
+                        '<script src="%s" %s></script>',
+                        static::escape($script['src']),
+                        $attribs
                     );
                     break;
                 case 'inline':
                     $output[] = sprintf(
-                        '<script type="%s">%s</script>',
-                        static::escape($script['type']),
+                        '<script>%s</script>',
                         $script['content']
                     );
                     break;
@@ -484,7 +476,6 @@ class HtmlDocument
             } else {
                 $path = $newPath;
             }
-
         } elseif ($host || $port) {
             // If URL doesn't have scheme but has host or port, it is external.
             return str_replace(' ', '%20', $url);
@@ -516,13 +507,17 @@ class HtmlDocument
 
         // Add query string back.
         if (!empty($parts['query'])) {
-            if (!$uri) $uri = static::rootUri();
+            if (!$uri) {
+                $uri = static::rootUri();
+            }
             $uri .= '?' . $parts['query'];
         }
 
         // Add fragment back.
         if (!empty($parts['fragment'])) {
-            if (!$uri) $uri = static::rootUri();
+            if (!$uri) {
+                $uri = static::rootUri();
+            }
             $uri .= '#' . $parts['fragment'];
         }
 
@@ -546,9 +541,9 @@ class HtmlDocument
         // Tokenize all PRE, CODE and SCRIPT tags to avoid modifying any src|href|url in them
         $tokens = [];
 
-        $html = preg_replace_callback('#<(pre|code|script)(\s[^>]+)?>.*?</\\1>#ius', static function($matches) use (&$tokens) {
+        $html = preg_replace_callback('#<(pre|code|script)(\s[^>]+)?>.*?</\\1>#ius', static function ($matches) use (&$tokens) {
             // Unfortunately uniqid() doesn't quite work in Windows, so we need to work it around by adding some randomness.
-            $token = '@@'. uniqid((string)mt_rand(), true) . '@@';
+            $token = '@@' . uniqid((string)mt_rand(), true) . '@@';
             $match = $matches[0];
 
             $tokens[$token] = $match;
@@ -573,7 +568,7 @@ class HtmlDocument
                 return $html;
             }
 
-            $match = '(gantry-(' . implode('|', $list). ')://.*?)';
+            $match = '(gantry-(' . implode('|', $list) . ')://.*?)';
         } else {
             $match = '(.*?)';
         }
@@ -733,7 +728,9 @@ class HtmlDocument
     {
         foreach ($tokens as $token => $replacement) {
             // We need to use callbacks to turn off backreferences ($1, \\1) in the replacement string.
-            $callback = static function() use ($replacement) { return $replacement; };
+            $callback = static function () use ($replacement) {
+                return $replacement;
+            };
 
             $html = preg_replace_callback('#' . preg_quote($token, '#') . '#u', $callback, $html);
         }
@@ -758,8 +755,8 @@ class HtmlDocument
         static::addScript(
             [
                 'src' => 'https://code.jquery.com/jquery-3.6.0.min.js',
-			    'integrity' => 'sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=',
-			    'crossorigin' => 'anonymous'
+                'integrity' => 'sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=',
+                'crossorigin' => 'anonymous'
             ],
             11
         );
@@ -794,7 +791,8 @@ class HtmlDocument
                 'integrity' => 'sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd',
                 'crossorigin' => 'anonymous'
             ],
-            11);
+            11
+        );
     }
 
     protected static function registerBootstrap4()
@@ -805,7 +803,8 @@ class HtmlDocument
                 'integrity' => 'sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns',
                 'crossorigin' => 'anonymous'
             ],
-            11);
+            11
+        );
     }
 
 
@@ -817,7 +816,8 @@ class HtmlDocument
                 'integrity' => 'sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM',
                 'crossorigin' => 'anonymous'
             ],
-            11);
+            11
+        );
     }
 
     protected static function registerMootools()

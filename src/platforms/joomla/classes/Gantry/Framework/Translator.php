@@ -24,7 +24,7 @@ class Translator extends BaseTranslator
      * @param string $string
      * @return string
      */
-    public function translate($string)
+    public function translate($string): string
     {
         if (\func_num_args() === 1) {
             return Text::_($string);

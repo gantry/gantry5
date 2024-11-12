@@ -149,6 +149,7 @@ class ContentFinder extends Finder
         }
 
         $unpublished = CategoryFinder::getUnpublished('content');
+
         if ($unpublished) {
             $this->where('a.catid', 'NOT IN', $unpublished);
         }
@@ -156,6 +157,7 @@ class ContentFinder extends Finder
         /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $user = $application->getIdentity();
+
         if (!$user) {
             $this->skip = true;
 
@@ -165,19 +167,14 @@ class ContentFinder extends Finder
         // Filter by start and end dates.
         if (!$user->authorise('core.edit.state', 'com_content') && !$user->authorise('core.edit', 'com_content')) {
             // Define null and now dates
-            $nowDate = $this->db->quote(Factory::getDate()->toSql());
-            if (version_compare(JVERSION, '4.0', '<')) {
-                $nullDate = $this->db->quote($this->db->getNullDate());
-                $nullDateUp = "a.publish_up = {$nullDate}";
-                $nullDateDown = "a.publish_down = {$nullDate}";
-            } else {
-                $nullDateUp = $this->query->isNullDatetime('a.publish_up');
-                $nullDateDown = $this->query->isNullDatetime('a.publish_down');
-            }
+            $nowDate = $this->query->quote(Factory::getDate()->toSql());
+
+            $nullDateUp = $this->query->isNullDatetime('a.publish_up');
+            $nullDateDown = $this->query->isNullDatetime('a.publish_down');
 
             $this->query
                 ->where('(' . $nullDateUp . ' OR a.publish_up <= ' . $nowDate . ')')
-                ->where('(' . $nullDateDown. ' OR a.publish_down >= ' . $nowDate . ')')
+                ->where('(' . $nullDateDown . ' OR a.publish_down >= ' . $nowDate . ')')
                 ->where('a.state >= 1')
             ;
         }

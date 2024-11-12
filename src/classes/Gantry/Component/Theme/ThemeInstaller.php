@@ -36,13 +36,16 @@ abstract class ThemeInstaller
 {
     /** @var bool Set to true if in Gantry. */
     public $initialized = false;
+
     /** @var array */
     public $actions = [];
 
     /** @var string|null */
     protected $name;
+
     /** @var array */
     protected $outlines;
+
     /** @var object|null */
     protected $script;
 
@@ -150,7 +153,7 @@ abstract class ThemeInstaller
             $loader->setPaths([$this->getPath() . '/install/templates']);
 
             $params = [
-                'cache' => null,
+                'cache' => false,
                 'debug' => false,
                 'autoescape' => 'html'
             ];

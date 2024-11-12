@@ -209,7 +209,6 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
 
         $id = !empty($element['id']) ? ['id' => (string) $element['id']] : [];
         $href = $element['href'];
-        $type = !empty($element['type']) ? (string) $element['type'] : 'text/css';
         $media = !empty($element['media']) ? (string) $element['media'] : null;
         unset($element['tag'], $element['id'], $element['rel'], $element['content'], $element['href'], $element['type'], $element['media']);
 
@@ -217,7 +216,6 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
                 ':type' => 'file',
                 ':priority' => (int) $priority,
                 'href' => $href,
-                'type' => $type,
                 'media' => $media,
                 'element' => $element
             ] + $id;
@@ -247,13 +245,11 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         }
 
         $content = (string) $element['content'];
-        $type = !empty($element['type']) ? (string) $element['type'] : 'text/css';
 
         $this->styles[$location][md5($content) . sha1($content)] = [
             ':type' => 'inline',
             ':priority' => (int) $priority,
             'content' => $content,
-            'type' => $type
         ];
 
         return true;
@@ -281,19 +277,19 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         }
 
         $src = $element['src'];
-        $type = !empty($element['type']) ? (string) $element['type'] : 'text/javascript';
         $defer = isset($element['defer']) ? true : false;
         $async = isset($element['async']) ? true : false;
         $handle = !empty($element['handle']) ? (string) $element['handle'] : '';
+        unset($element['tag'], $element['id'], $element['src'], $element['type'], $element['defer'], $element['async'], $element['handle']);
 
         $this->scripts[$location][md5($src) . sha1($src)] = [
             ':type' => 'file',
             ':priority' => (int) $priority,
             'src' => $src,
-            'type' => $type,
             'defer' => $defer,
             'async' => $async,
-            'handle' => $handle
+            'handle' => $handle,
+            'element' => $element
         ];
 
         return true;
@@ -321,13 +317,11 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         }
 
         $content = (string) $element['content'];
-        $type = !empty($element['type']) ? (string) $element['type'] : 'text/javascript';
 
         $this->scripts[$location][md5($content) . sha1($content)] = [
             ':type' => 'inline',
             ':priority' => (int) $priority,
             'content' => $content,
-            'type' => $type
         ];
 
         return true;

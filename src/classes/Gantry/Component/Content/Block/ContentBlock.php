@@ -248,7 +248,8 @@ class ContentBlock implements ContentBlockInterface
      */
     protected function checkVersion(array $serialized)
     {
-        $version = isset($serialized['_version']) ? (string) $serialized['_version'] : 1;
+        $version = $serialized['_version'] ?? 1;
+
         if ($version !== $this->version) {
             throw new \RuntimeException(sprintf('Unsupported version %s', $version));
         }

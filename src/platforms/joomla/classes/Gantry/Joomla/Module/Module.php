@@ -16,10 +16,9 @@ use Gantry\Framework\Theme;
 use Gantry\Joomla\Object\AbstractObject;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Table\Table;
+use Joomla\Database\DatabaseInterface;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
-
-Table::addIncludePath(JPATH_LIBRARIES . '/legacy/table/');
 
 /**
  * Class Module
@@ -41,14 +40,16 @@ class Module extends AbstractObject implements ExportInterface
     use Export;
 
     /** @var array */
-    static protected $instances = [];
+    protected static $instances = [];
+
     /** @var string */
-    static protected $table = 'Module';
+    protected static $table = 'Module';
+
     /** @var string */
-    static protected $order = 'id';
+    protected static $order = 'id';
 
     /** @var array */
-    protected $_assignments;
+    protected $assignments;
 
     /**
      * @param int[]|null $assignments
@@ -57,18 +58,18 @@ class Module extends AbstractObject implements ExportInterface
     public function assignments($assignments = null)
     {
         if (is_array($assignments)) {
-            $this->_assignments = array_map('intval', array_values($assignments));
+            $this->assignments = array_map('intval', array_values($assignments));
+        } elseif (!isset($this->assignments)) {
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
+            $query = $db->createQuery();
 
-        } elseif (!isset($this->_assignments)) {
-            $db = Factory::getDbo();
-            $query = $db->getQuery(true);
             $query->select('menuid')->from('#__modules_menu')->where('moduleid = ' . $this->id);
             $db->setQuery($query);
 
-            $this->_assignments = array_map('intval', (array) $db->loadColumn());
+            $this->assignments = array_map('intval', (array) $db->loadColumn());
         }
 
-        return $this->_assignments;
+        return $this->assignments;
     }
 
     /**
@@ -124,8 +125,8 @@ class Module extends AbstractObject implements ExportInterface
         if ($particle) {
             $array['joomla'] = $options;
             $options = !empty($params['particle']) ? json_decode($params['particle'], true) : [];
-            $options['type'] = isset($options['particle']) ? $options['particle'] : null;
-            $options['attributes'] = isset($options['options']['particle']) ? $options['options']['particle'] : [];
+            $options['type'] = $options['particle'] ?? null;
+            $options['attributes'] = $options['options']['particle'] ?? [];
 
             unset($options['particle'], $options['options']);
 
@@ -164,11 +165,10 @@ class Module extends AbstractObject implements ExportInterface
         $type = $array['type'];
 
         if ($type === 'particle') {
-            $particle = isset($array['options']) ? $array['options'] : [];
-            $array['options'] = isset($array['joomla']) ? $array['joomla'] : [];
+            $particle = $array['options'] ?? [];
+            $array['options'] = $array['joomla'] ?? [];
             $array['options']['type'] = 'mod_gantry5_particle';
             $array['options']['params']['particle'] = $particle;
-
         } elseif ($type !== 'joomla') {
             return null;
         }
@@ -176,17 +176,17 @@ class Module extends AbstractObject implements ExportInterface
         $options = $array['options'];
 
         $properties = [
-            'title' => $array['title'],
-            'note' => isset($options['note']) ? $options['note'] : '',
-            'content' => isset($options['content']) ? $options['content'] : '',
-            'position' => $array['position'],
-            'ordering' => (int) $array['ordering'],
-            'published' => (int) !empty($options['published']),
-            'module' => $options['type'],
-            'showtitle' => (int) !empty($array['chrome']['display_title']),
-            'params' => isset($options['params']) ? json_decode(json_encode($options['params']), false) : [],
-            'language' => isset($options['language']) ? $options['language'] : '*',
-            '_assignments' => isset($array['assignments']) ? $array['assignments'] : [],
+            'title'        => $array['title'],
+            'note'         => $options['note'] ?? '',
+            'content'      => $options['content'] ?? '',
+            'position'     => $array['position'],
+            'ordering'     => (int) $array['ordering'],
+            'published'    => (int) !empty($options['published']),
+            'module'       => $options['type'],
+            'showtitle'    => (int) !empty($array['chrome']['display_title']),
+            'params'       => isset($options['params']) ? json_decode(json_encode($options['params']), false) : [],
+            'language'     => $options['language'] ?? '*',
+            '_assignments' => $array['assignments'] ?? [],
         ];
 
         $object = new static();
@@ -201,8 +201,10 @@ class Module extends AbstractObject implements ExportInterface
      */
     public function render($file)
     {
+        $gantry = Gantry::instance();
+
         /** @var Theme $theme */
-        $theme = Gantry::instance()['theme'];
+        $theme = $gantry['theme'];
 
         return $theme->render($file, ['particle' => $this]);
     }
@@ -213,8 +215,10 @@ class Module extends AbstractObject implements ExportInterface
      */
     public function compile($string)
     {
+        $gantry = Gantry::instance();
+
         /** @var Theme $theme */
-        $theme = Gantry::instance()['theme'];
+        $theme = $gantry['theme'];
 
         return $theme->compile($string, ['particle' => $this]);
     }
