@@ -154,7 +154,7 @@ var Particle = new prime({
     getLimits: function(parent) {
         if (!parent) { return false; }
 
-        var sibling = parent.block.nextSibling() || parent.block.previousSibling() || false;
+        var sibling = parent.block.nextSibling(':not(.g-grid-settings)') || parent.block.previousSibling(':not(.g-grid-settings)') || false;
 
         if (!sibling) { return [100, 100]; }
 

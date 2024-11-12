@@ -1,8 +1,10 @@
 "use strict";
 var prime      = require('prime'),
     Base       = require('./base'),
+    zen        = require('elements/zen'),
     $          = require('elements'),
-    getAjaxURL = require('../../utils/get-ajax-url').config;
+    getAjaxURL = require('../../utils/get-ajax-url').config,
+    translate  = require('../../utils/translate');
 
 var Grid = new prime({
     inherits: Base,
@@ -20,7 +22,7 @@ var Grid = new prime({
         return '<div class="g-grid nowrap" data-lm-id="' + this.getId() + '" ' + this.dropzone() + '  data-lm-samewidth data-lm-blocktype="grid"></div>';
     },
 
-    onRendered: function() {
+    onRendered: function(element) {
         var parent = this.block.parent();
         if (parent && parent.data('lm-blocktype') == 'atoms') {
             this.block.removeClass('nowrap');
@@ -29,6 +31,8 @@ var Grid = new prime({
         if (parent && parent.data('lm-root') || (parent.data('lm-blocktype') == 'container' && parent.parent().data('lm-root'))) {
             this.removeDropzone();
         }
+
+        this.addSettings(element);
     },
 
     hasChanged: function(state) {
@@ -41,6 +45,19 @@ var Grid = new prime({
         if (!parent || !id) { return; }
 
         if (this.options.builder) { this.options.builder.get(id).emit('changed', state, this); }
+    },
+
+    addSettings: function() {
+        var parent = this.block.parent();
+
+        if (parent.hasClass('g-lm-container')) {
+            return;
+        }
+
+        var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId()),
+            actions = zen('div.g-grid-settings').top(this.block);
+
+        actions.html('<span data-tip="' + translate('GANTRY5_PLATFORM_JS_LM_SETTINGS', 'Grid') + '" data-tip-place="top-right"><i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_CONFIGURE_SETTINGS', 'Grid') + '" class="fa fa-cog" aria-hidden="true" data-lm-settings="' + settings_uri + '"></i></span>');
     }
 });
 

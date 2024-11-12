@@ -269,7 +269,11 @@ body.g-prime {
 // Whoops Debug
 .Whoops.container {
     position: inherit;
-    @include clearfix;
+    &::after {
+        clear: both;
+        content: "";
+        display: block;
+    }
 }
 
 // Keyframes

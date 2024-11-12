@@ -112,7 +112,11 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
         display: inline-block;
         zoom: 1;
         *display: inline;
-        @include ellipsis(235px);
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+        display: -webkit-box;
+        overflow: hidden;
     }
     .g-selectize-control.g-multi & > div {
         cursor: pointer;
@@ -186,7 +190,7 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
     border-radius: 0 0 $selectize-border-radius $selectize-border-radius;
 
     [data-selectable] {
-        @include word-wrap(normal);
+        word-wrap: normal;
         cursor: pointer;
         overflow: hidden;
         .g-highlight {

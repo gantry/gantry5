@@ -43,9 +43,9 @@
         }
 
         .g-panes {
-            @include border-width(null 1px null 1px);
-            @include border-style(null solid null solid);
-            @include border-color(null #e6e6e6 null #e6e6e6);
+            border-width: 0 1px 0 1px;
+            border-style: none solid none solid;
+            border-color: none #e6e6e6 none #e6e6e6;
 
             .settings-param {
                 background-color: #fafafa;

@@ -61,8 +61,8 @@ var Resizer = new prime({
         this.siblings = {
             occupied: 0,
             elements: siblings,
-            next: this.element.nextSibling(),
-            prevs: this.element.previousSiblings(),
+            next: this.element.nextSibling(':not(.g-grid-settings)'),
+            prevs: this.element.previousSiblings(':not(.g-grid-settings)'),
             sizeBefore: 0
         };
 
@@ -97,7 +97,7 @@ var Resizer = new prime({
             down: offset
         };
 
-        this.origin.offset.parentRect.left = this.element.parent().find('> [data-lm-id]:first-child')[0].getBoundingClientRect().left;
+        this.origin.offset.parentRect.left = this.element.parent().find('> :not(.g-grid-settings) [data-lm-id]:first-child')[0].getBoundingClientRect().left;
         this.origin.offset.parentRect.right = this.element.parent().find('> [data-lm-id]:last-child')[0].getBoundingClientRect().right;
 
         this.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
@@ -142,7 +142,7 @@ var Resizer = new prime({
         this.getBlock(this.siblings.next).setSize(diff, true);
 
         // Hack to handle cases where size is not an integer
-        var siblings = this.element.siblings(),
+        var siblings = this.element.siblings(':not(.g-grid-settings)'),
             amount = siblings ? siblings.length + 1 : 1;
         if (amount == 3 || amount == 6 || amount == 7 || amount == 8 || amount == 9 || amount == 11 || amount == 12) {
             var total = 0, blocks;

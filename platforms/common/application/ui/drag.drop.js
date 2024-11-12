@@ -135,7 +135,7 @@ var DragDrop = new prime({
         if ((offset < 6 && this.element.parent().find(':last-child') !== this.element) || (columns && offset > 3 && offset < 10)) {
             if (this.element.parent('[data-lm-blocktype="atoms"]')) { return false; }
 
-            this.emit('dragdrop:resize', event, this.element, (this.element.parent('[data-mm-id]') || this.element).siblings(':not(.placeholder)'), this.origin.offset.x);
+            this.emit('dragdrop:resize', event, this.element, (this.element.parent('[data-mm-id]') || this.element).siblings(':not(.placeholder):not(.g-grid-settings)'), this.origin.offset.x);
             return false;
         }
 

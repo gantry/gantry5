@@ -130,7 +130,11 @@ $atom: #9055AF;
                     font-weight: $font-weight-regular;
                     font-family: $font-family-default;
                     font-size: 24px;
-                    @include ellipsis();
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    line-clamp: 1;
+                    display: -webkit-box;
+                    overflow: hidden;
                 }
 
                 i {
@@ -273,10 +277,13 @@ $atom: #9055AF;
                     text-align: center;
                     margin: 0 auto;
                     position: relative;
-                    vertical-align: middle;
                     line-height: 47px;
                     color: #bababa;
-                    @include ellipsis();
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    line-clamp: 1;
+                    display: -webkit-box;
+                    overflow: hidden;
                 }
             }
         }
@@ -358,7 +365,11 @@ $atom: #9055AF;
         .offcanvas-section, .wrapper-section {
             .g-grid:empty:after {
                 content: "Drop particles here...";
-                @include ellipsis();
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                line-clamp: 1;
+                display: -webkit-box;
+                overflow: hidden;
             }
         }
 
@@ -734,7 +745,8 @@ $atom: #9055AF;
             background-color: $red;
             font-size: $core-font-size * 2;
             border-radius: 100px;
-            @include size(50px 50px);
+            width: 50px;
+            height: 50px;
             line-height: 50px;
             margin: 0 auto;
             font-weight: 400;
@@ -1076,7 +1088,7 @@ $atom: #9055AF;
 
             .search input {
                 width: inherit;
-                margin-right: -($content-padding + ($content-padding / 2) + $content-margin + rem(1px));
+                margin-right: -($content-padding + ($content-padding / 2) + $content-margin + calc-rem(1px));
             }
         }
 
