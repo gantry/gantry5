@@ -161,19 +161,7 @@ class Document extends HtmlDocument
                         unset($attribs['asset']);
                     }
 
-                    // If the asset exists in our joomla.asset.json, then update the uri.
-                    if ($wa->assetExists('style', $asset)) {
-                        $item = $wa->getAsset('style', $asset);
-
-                        // We are doing the forbiden here and updating the uri for the assest.
-                        $rProperty = new \ReflectionProperty('Joomla\CMS\WebAsset\WebAssetItem', 'uri');
-                        $rProperty->setAccessible(true);
-                        $rProperty->setValue($item, $uri);
-
-                        $wa->registerStyle($item);
-                    } else {
-                        $wa->registerAndUseStyle($asset, $uri, [], $attribs, $dependencies);
-                    }
+                    $wa->registerAndUseStyle($asset, $uri, [], $attribs, $dependencies);
 
                     break;
                 case 'inline':
@@ -226,19 +214,7 @@ class Document extends HtmlDocument
                         unset($attribs['asset']);
                     }
 
-                    // If the asset exists in our joomla.asset.json, then update the uri.
-                    if ($wa->assetExists('style', $asset)) {
-                        $item = $wa->getAsset('style', $asset);
-
-                        // We are doing the forbiden here and updating the uri for the assest.
-                        $rProperty = new \ReflectionProperty('Joomla\CMS\WebAsset\WebAssetItem', 'uri');
-                        $rProperty->setAccessible(true);
-                        $rProperty->setValue($item, $uri);
-
-                        $wa->registerScript($item);
-                    } else {
-                        $wa->registerAndUseScript($asset, $uri, [], $attribs, $dependencies);
-                    }
+                    $wa->registerAndUseScript($asset, $uri, [], $attribs, $dependencies);
 
                     break;
                 case 'inline':

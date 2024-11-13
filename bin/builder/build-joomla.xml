@@ -335,6 +335,7 @@
                         <include name="**/*.xml"/>
                         <include name="gantry/theme.yaml"/>
                         <include name="install.php"/>
+                        <include name="joomla.asset.json"/>
                     </fileset>
                 </copy>
 

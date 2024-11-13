@@ -6,31 +6,48 @@
   "license": "GPL-2.0-or-later",
   "assets": [
     {
+      "name": "template.nucleus",
+      "description": "The file containing the css for this template.",
+      "type": "style",
+      "uri": "gantry-engine://css-compiled/nucleus.css",
+      "namespace": "Gantry\\Joomla\\WebAsset",
+      "class": "StreamAssetItem"
+    },
+    {
       "name": "template.hydrogen",
       "description": "The file containing the css for this template.",
       "type": "style",
-      "uri": "",
+      "uri": "hydrogen.scss",
       "dependencies": [
-        "fontawesome"
-      ]
+        "fontawesome",
+        "template.nucleus"
+      ],
+      "namespace": "Gantry\\Joomla\\WebAsset",
+      "class": "ScssAssetItem"
+    },
+    {
+      "name": "template.hydrogen-joomla",
+      "description": "The file containing the css for this template.",
+      "type": "style",
+      "uri": "hydrogen-joomla.scss",
+      "dependencies": [
+        "template.hydrogen"
+      ],
+      "namespace": "Gantry\\Joomla\\WebAsset",
+      "class": "ScssAssetItem"
     },
     {
       "name": "template.hydrogen",
       "description": "The file containing the javascript for this template.",
       "type": "script",
-      "uri": "media/gantry5/assets/js/main.js",
-      "attributes" : {
-        "type": "module"
-      },
-      "dependencies": [
-        "core"
-      ]
+      "uri": "media/gantry5/assets/js/main.js"
     },
     {
       "name": "template.hydrogen",
       "type": "preset",
       "dependencies": [
         "template.hydrogen#style",
+        "template.hydrogen-joomla#style",
         "template.hydrogen#script"
       ]
     },

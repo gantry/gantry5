@@ -33,7 +33,7 @@ $joomla->document = $this;
 $theme = $gantry['theme'];
 
 $wa = $this->getWebAssetManager();
-//$wa->usePreset('template.hydrogen');
+$wa->usePreset('template.hydrogen');
 
 // All the custom twig variables can be defined in here:
 $context = [];

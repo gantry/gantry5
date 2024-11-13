@@ -1,12 +1,15 @@
 {%- do gantry.debugger.assets() -%}
 {%- do gantry.theme.loadAtoms() -%}
 
+{% set webassetmanager = gantry.theme.configuration.css.webassetmanager|default(0) %}
 {% set faEnabled = gantry.config.page.fontawesome.enable|default(1) %}
 {% set faVersion = gantry.config.page.fontawesome.version ?? gantry.config.page.fontawesome.default_version ?? 'fa6css' %}
 
 {% assets with { priority: 10 } %}
     {% block head_stylesheets -%}
+        {% if not webassetmanager %}
         <link rel="stylesheet" href="gantry-engine://css-compiled/nucleus.css" />
+        {% endif %}
         {% for scss in gantry.theme.configuration.css.persistent|default(gantry.theme.configuration.css.files) %}
         <link rel="stylesheet" href="{{ scss }}.scss" />
         {%- endfor %}
@@ -18,7 +21,9 @@
                 {{ gantry.config.page.fontawesome.html_js_import|html|raw -}}
             {% endif %}
         {% endif %}
+        {% if not webassetmanager %}
         <script src="{{ url('gantry-assets://js/main.js') }}" defer=""></script>
+        {%- endif %}
     {% endblock -%}
 
     {% block head_platform %}{% endblock %}

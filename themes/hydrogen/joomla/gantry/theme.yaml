@@ -50,15 +50,8 @@ configuration:
     paths:
       - gantry-theme://scss
       - gantry-engine://scss
-    files:
-      - hydrogen
-      - hydrogen-joomla
-      - custom
-    persistent:
-      - hydrogen
-    overrides:
-      - hydrogen-joomla
-      - custom
+    target: 'gantry-theme://css-compiled'
+    webassetmanager: true
 
   block-variations:
     Box Variations:
