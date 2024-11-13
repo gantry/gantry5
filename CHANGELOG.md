@@ -1,5 +1,6 @@
 # 5.5.19
 ## 05/23/2024
+
 1. [Common](#common)
     1. [](#bugfix)
         - Fix Joomla 5.1 "Invalid extension update" bug
@@ -7,6 +8,7 @@
 
 # 5.5.18
 ## 05/22/2024
+
 1. [Common](#common)
     1. [](#bugfix)
         - Regression: Mobile Menu fix (#3198)
@@ -18,6 +20,7 @@
 
 # 5.5.17
 ## 10/30/2023
+
 1. [Common](#common)
     1. [](#bugfix)
         - Added Webp file extension to lightcase (#3159)
@@ -36,6 +39,7 @@
 
 # 5.5.16
 ## 03/31/2023
+
 1. [Common](#common)
     1. [](#new)
         - Updated SCSS compiler to v1.11
