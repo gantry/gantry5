@@ -12,8 +12,8 @@ Thumbs.db
 !**/scss/vendor/**
 
 # Builds
-bin/build/tmp
-bin/build/package
+bin/builder/tmp
+bin/builder/package
 dist
 
 # Tester
@@ -26,6 +26,7 @@ platforms/*/*/src
 platforms/*/*/assets
 platforms/*/*/engines
 
+!platforms/*/plg_gantry5_preset/src
 !platforms/*/plg_system_gantry5/src
 !platforms/*/plg_quickicon_gantry5/src
 
