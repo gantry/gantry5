@@ -1,0 +1,14 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "g5_base",
+  "version": "@version@",
+  "description": "This file contains details of the assets used by g5_base site template.",
+  "license": "GPL-2.0-or-later",
+  "assets": [
+    {
+      "name": "fontawesome",
+      "type": "style",
+      "uri": "system/joomla-fontawesome.min.css"
+    }
+  ]
+}

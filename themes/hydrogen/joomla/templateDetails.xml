@@ -14,6 +14,7 @@
         <file>component.php</file>
         <file>error.php</file>
         <file>index.php</file>
+        <file>joomla.asset.json</file>
         <file>offline.php</file>
         <file>template_preview.png</file>
         <file>template_thumbnail.png</file>
@@ -38,7 +39,7 @@
     <config>
         <fields name="params" addfieldprefix="Gantry\Component\Gantry5\Administrator\Field">
             <fieldset name="basic">
-                <field name="warning" type="warning" />
+                <field name="warning" type="Warning" />
             </fieldset>
         </fields>
     </config>

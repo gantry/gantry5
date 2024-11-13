@@ -39,7 +39,7 @@
     <config>
         <fields name="params" addfieldprefix="Gantry\Component\Gantry5\Administrator\Field">
             <fieldset name="basic">
-                <field name="warning" type="warning" />
+                <field name="warning" type="Warning" />
             </fieldset>
         </fields>
     </config>
