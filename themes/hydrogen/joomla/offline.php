@@ -36,9 +36,9 @@ $html = ob_get_clean();
 $start = strpos($html, '<body>') + 6;
 $end = strpos($html, '</body>', $start);
 
-$context = array(
+$context = [
     'message' => substr($html, $start, $end - $start)
-);
+];
 
 // Reset used outline configuration.
 unset($gantry['configuration']);

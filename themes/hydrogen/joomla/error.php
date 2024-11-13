@@ -17,6 +17,8 @@ use Joomla\CMS\Factory;
 
 /** @var Joomla\CMS\Document\ErrorDocument $this */
 
+$app = Factory::getApplication();
+
 // Bootstrap Gantry framework or fail gracefully (inside included file).
 $className = __DIR__ . '/custom/includes/gantry.php';
 if (!is_file($className)) {
@@ -30,14 +32,13 @@ $joomla->document = $this;
 
 /** @var Theme $theme */
 $theme = $gantry['theme'];
-$app = Factory::getApplication();
 
-$context = array(
-    'errorcode' => isset($this->error) ? $this->error->getCode() : null,
-    'error' => isset($this->error) ? $this->error->getMessage() : null,
-    'debug' => $app->get('debug_lang', '0') == '1' || $app->get('debug', '0') == '1',
+$context = [
+    'errorcode' => $this->error?->getCode(),
+    'error'     => $this->error?->getMessage(),
+    'debug'     => $app->get('debug_lang', '0') == '1' || $app->get('debug', '0') == '1',
     'backtrace' => $this->debug ? $this->renderBacktrace() : null
-);
+];
 
 // Reset used outline configuration.
 unset($gantry['configuration']);

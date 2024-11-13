@@ -12,16 +12,71 @@ textarea, select[multiple=multiple] {
 	}
 }
 
-#{$all-text-inputs} {
+input:not([type]),
+select,
+textarea,
+[type="color"],
+[type="date"],
+[type="datetime"],
+[type="datetime-local"],
+[type="email"],
+[type="month"],
+[type="month"],
+[type="number"],
+[type="password"],
+[type="search"],
+[type="tel"],
+[type="text"],
+[type="time"],
+[type="url"],
+[type="week"] {
 	background-color: white;
 	border: 1px solid $base-border-color;
 	box-shadow: $base-box-shadow;
 }
 
-#{$all-text-inputs-hover} {
+:where(
+  input:not([type]),
+  select,
+  textarea,
+  [type="color"],
+  [type="date"],
+  [type="datetime"],
+  [type="datetime-local"],
+  [type="email"],
+  [type="month"],
+  [type="month"],
+  [type="number"],
+  [type="password"],
+  [type="search"],
+  [type="tel"],
+  [type="text"],
+  [type="time"],
+  [type="url"],
+  [type="week"]
+):hover {
 	border-color: $border-color-hover;
 }
 
-#{$all-text-inputs-focus} {
+:where(
+  input:not([type]),
+  select,
+  textarea,
+  [type="color"],
+  [type="date"],
+  [type="datetime"],
+  [type="datetime-local"],
+  [type="email"],
+  [type="month"],
+  [type="month"],
+  [type="number"],
+  [type="password"],
+  [type="search"],
+  [type="tel"],
+  [type="text"],
+  [type="time"],
+  [type="url"],
+  [type="week"]
+):focus {
 	border-color: $border-color-focus;
 }

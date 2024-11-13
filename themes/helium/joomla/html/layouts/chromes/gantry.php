@@ -12,10 +12,6 @@
 
 defined('_JEXEC') or die;
 
-/**
- * Gantry Module Chrome for Joomla 4
- */
-
 use Joomla\Utilities\ArrayHelper;
 
 $module  = $displayData['module'];
@@ -35,14 +31,13 @@ $headerAttribs          = [];
 $headerAttribs['class'] = $headerClass;
 
 // Only add aria if the moduleTag is not a div
-if ($moduleTag !== 'div')
-{
-    if ($module->showtitle) :
+if ($moduleTag !== 'div') {
+    if ($module->showtitle) {
         $moduleAttribs['aria-labelledby'] = 'mod-' . $module->id;
         $headerAttribs['id']              = 'mod-' . $module->id;
-    else:
+    } else {
         $moduleAttribs['aria-label'] = $module->title;
-    endif;
+    }
 }
 
 $header = '<' . $headerTag . ' ' . ArrayHelper::toString($headerAttribs) . '>' . $module->title . '</' . $headerTag . '>';

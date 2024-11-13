@@ -38,11 +38,11 @@
         </files>
 		<menu>COM_GANTRY5</menu>
 		<submenu>
-			<menu
-				link="option=com_gantry5"
-				view="themes"
-				>
+			<menu view="themes" >
 				COM_GANTRY5_ADMIN_MENU_THEMES
+			</menu>
+			<menu>
+				COM_GANTRY5_ADMIN_MENU_THEME
 			</menu>
 		</submenu>
     </administration>

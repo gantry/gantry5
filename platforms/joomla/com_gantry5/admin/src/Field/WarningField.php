@@ -9,24 +9,36 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
+namespace Gantry\Component\Gantry5\Administrator\Field;
+
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Language\Text;
 
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
- * Class JFormFieldWarning
+ * Class WarningField
  */
-class JFormFieldWarning extends JFormField
+class WarningField extends FormField
 {
-    /** @var string */
+    /**
+     * The form field type.
+     *
+     * @var    string
+     */
     protected $type = 'Warning';
 
     /**
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getInput()
     {
         $app = Factory::getApplication();
+
         if ($app->isClient('administrator')) {
             $app->enqueueMessage(Text::_('GANTRY5_THEME_INSTALL_GANTRY'), 'error');
         } else {

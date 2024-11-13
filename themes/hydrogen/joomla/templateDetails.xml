@@ -8,7 +8,7 @@
     <authorEmail>support@rockettheme.com</authorEmail>
     <authorUrl>http://www.rockettheme.com</authorUrl>
     <version>@version@</version>
-    <description>TPL_G5_HYDROGEN_DESC</description>
+    <description>TPL_G5_HYDROGEN_XML_DESC</description>
     <scriptfile>install.php</scriptfile>
     <files>
         <file>component.php</file>
@@ -36,7 +36,7 @@
     <positions>
     </positions>
     <config>
-        <fields name="params" addfieldpath="/templates/g5_hydrogen/fields">
+        <fields name="params" addfieldprefix="Gantry\Component\Gantry5\Administrator\Field">
             <fieldset name="basic">
                 <field name="warning" type="warning" />
             </fieldset>

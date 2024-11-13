@@ -14,6 +14,8 @@ defined('_JEXEC') or die;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Theme;
 
+/** @var Joomla\CMS\Document\HtmlDocument $this */
+
 // Bootstrap Gantry framework or fail gracefully (inside included file).
 $className = __DIR__ . '/custom/includes/gantry.php';
 if (!is_file($className)) {
@@ -34,9 +36,9 @@ $html = ob_get_clean();
 $start = strpos($html, '<body>') + 6;
 $end = strpos($html, '</body>', $start);
 
-$context = array(
+$context = [
     'message' => substr($html, $start, $end - $start)
-);
+];
 
 // Reset used outline configuration.
 unset($gantry['configuration']);
