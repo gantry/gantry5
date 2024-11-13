@@ -2,12 +2,12 @@
 <extension type="component" method="upgrade">
     <name>com_gantry5</name>
     <author>RocketTheme, LLC</author>
-    <creationDate>November 13, 2024</creationDate>
+    <creationDate>@versiondate@</creationDate>
     <copyright>(C) 2005 - 2021 RocketTheme, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2</license>
     <authorEmail>support@rockettheme.com</authorEmail>
     <authorUrl>http://www.rockettheme.com</authorUrl>
-    <version>5.6.0</version>
+    <version>@version@</version>
     <description>COM_GANTRY5_DESCRIPTION</description>
     <namespace path="src">Gantry\Component\Gantry5</namespace>
 	<files folder="site">

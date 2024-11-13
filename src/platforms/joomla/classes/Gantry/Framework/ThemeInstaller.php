@@ -442,10 +442,12 @@ class ThemeInstaller extends AbstractInstaller
             ]);
         }
 
-        $table->setLocation($parent_id, 'last-child');
+        if (!$update) {
+            $table->setLocation($parent_id, 'last-child');
 
-        if (!$table->bind($item) || !$table->check() || !$table->store()) {
-            throw new \Exception($table->getError());
+            if (!$table->bind($item) || !$table->check() || !$table->store()) {
+                throw new \Exception($table->getError());
+            }
         }
 
         // Turn menu item into home, ignore errors.
