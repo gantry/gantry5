@@ -1,52 +1,68 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<extension version="3.9" type="module" client="site" method="upgrade">
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="module" client="site" method="upgrade">
     <name>mod_gantry5_particle</name>
-    <version>@version@</version>
+	<author>RocketTheme, LLC</author>
     <creationDate>@versiondate@</creationDate>
-    <author>RocketTheme, LLC</author>
-    <authorEmail>support@rockettheme.com</authorEmail>
-    <authorUrl>http://www.rockettheme.com</authorUrl>
     <copyright>(C) 2005 - 2022 RocketTheme, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2</license>
-    <description>MOD_GANTRY5_PARTICLE_DESCRIPTION</description>
-
+    <authorEmail>support@rockettheme.com</authorEmail>
+    <authorUrl>http://www.rockettheme.com</authorUrl>
+	<version>@version@</version>
+    <description>MOD_GANTRY5_PARTICLE_XML_DESCRIPTION</description>
+	<namespace path="src">Gantry\Module\Gantry5Particle</namespace>
     <files>
-        <filename module="mod_gantry5_particle">mod_gantry5_particle.php</filename>
-        <filename>helper.php</filename>
-        <folder>language</folder>
+		<folder module="mod_mod_gantry5_particlefooter">services</folder>
+		<folder>language</folder>
+		<folder>src</folder>
+		<folder>tmpl</folder>
     </files>
     <config>
         <fields name="params">
-            <fieldset name="basic" addfieldpath="/components/com_gantry5/fields">
+            <fieldset name="basic" addfieldprefix="Gantry\Component\Gantry5\Administrator\Field">
                 <field
-                        name="particle"
-                        type="particle"
-                        filter="raw"
-                        label="MOD_GANTRY5_PARTICLE_FIELD_PARTICLE_LABEL"
-                        description="MOD_GANTRY5_PARTICLE_FIELD_PARTICLE_DESC" />
+					name="particle"
+					type="particle"
+					label="MOD_GANTRY5_PARTICLE_FIELD_PARTICLE_LABEL"
+					filter="raw"
+				/>
             </fieldset>
 
             <fieldset name="advanced">
-                <field
-                    name="moduleclass_sfx"
-                    type="text"
-                    label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" />
+				<field
+					name="moduleclass_sfx"
+					type="textarea"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					rows="3"
+					validate="CssIdentifier"
+				/>
 
-                <field
-                        name="owncache"
-                        type="list"
-                        label="COM_MODULES_FIELD_CACHING_LABEL"
-                        default="0"
-                >
-                    <option value="1">JGLOBAL_USE_GLOBAL</option>
-                    <option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
-                </field>
+				<field
+					name="cache"
+					type="list"
+					label="COM_MODULES_FIELD_CACHING_LABEL"
+					default="1"
+					filter="integer"
+					validate="options"
+					>
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
 
-                <field
-                        name="cache_time"
-                        type="text"
-                        default="900"
-                        label="COM_MODULES_FIELD_CACHE_TIME_LABEL" />
+				<field
+					name="cache_time"
+					type="number"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+					default="900"
+					filter="integer"
+				/>
+
+				<field
+					name="cachemode"
+					type="hidden"
+					default="static"
+					>
+					<option value="static"></option>
+				</field>
             </fieldset>
         </fields>
     </config>

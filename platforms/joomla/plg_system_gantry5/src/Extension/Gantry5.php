@@ -25,6 +25,7 @@ use Gantry\Framework\Platform;
 use Gantry\Framework\Theme;
 use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\StyleHelper;
+use Gantry\Module\Gantry5Particle\Site\Helper\Gantry5ParticleHelper;
 use Joomla\CMS\Event\Application;
 use Joomla\CMS\Event\Model;
 use Joomla\CMS\Event\Module;
@@ -445,11 +446,7 @@ final class Gantry5 extends CMSPlugin implements SubscriberInterface
 
             $id = $matches[1];
 
-            // require_once JPATH_ROOT . '/modules/mod_gantry5_particle/helper.php';
-
-            // return ModGantry5ParticleHelper::ajax($id, $props, $format);
-
-            return null;
+            return Gantry5ParticleHelper::ajax($id, $props, $format);
         }
 
         $gantry = Gantry::instance();
