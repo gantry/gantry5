@@ -2,31 +2,36 @@
 <extension type="component" method="upgrade">
     <name>com_gantry5</name>
     <author>RocketTheme, LLC</author>
-    <creationDate>@versiondate@</creationDate>
+    <creationDate>November 13, 2024</creationDate>
     <copyright>(C) 2005 - 2021 RocketTheme, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2</license>
     <authorEmail>support@rockettheme.com</authorEmail>
     <authorUrl>http://www.rockettheme.com</authorUrl>
-    <version>@version@</version>
+    <version>5.6.0</version>
     <description>COM_GANTRY5_DESCRIPTION</description>
     <namespace path="src">Gantry\Component\Gantry5</namespace>
-    <files destination="com_gantry5" folder="media">
+	<files folder="site">
+        <filename>MD5SUMS</filename>
+		<folder>language</folder>
+		<folder>src</folder>
+		<folder>tmpl</folder>
+	</files>
+    <media destination="com_gantry5" folder="media">
         <filename>joomla.asset.json</filename>
         <filename>MD5SUMS</filename>
         <folder>css</folder>
-        <!-- <folder>fonts</folder>
+        <folder>fonts</folder>
         <folder>images</folder>
-        <folder>js</folder> -->
-    </files>
+        <folder>js</folder>
+        <folder>scss</folder>
+    </media>
     <administration>
         <files folder="admin">
             <filename>access.xml</filename>
             <filename>config.xml</filename>
-            <filename>gantry5.xml</filename>
             <folder>blueprints</folder>
             <folder>install</folder>
             <folder>language</folder>
-            <folder>scss</folder>
             <folder>services</folder>
             <folder>src</folder>
             <folder>templates</folder>

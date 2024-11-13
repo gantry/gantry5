@@ -1,11 +1,34 @@
+# 5.6.0
+## 11/13/2024
+
+1. [Common](#common)
+    1. [](#new)
+        - Updated Build tool dependencies
+        - Removed BourBon library dependency from nucleus
+        - Removed type attribut from script and style tags
+        - Added Grid Settings to Layout Manager
+2. [Joomla](#joomla)
+    1. [](#new)
+        - Removed Joomla 3.x support
+        - Updated minimum requirement to PHP 8.1
+        - Updated SCSS compiler to v1.13
+        - Updated Twig to 3.14
+          - Remove deprecated spaceless tag
+        - Updated Library, Component, Plugin and Template to support Joomla 5 natively
+        - Added WebAssetManager support in Documment (twig)
+        - Engine can be selected from theme.xml
+
 # 5.5.19
 ## 05/23/2024
+
 1. [Common](#common)
     1. [](#bugfix)
         - Fix Joomla 5.1 "Invalid extension update" bug
         - FontAwesome 6 Fix (#3253)
+
 # 5.5.18
 ## 05/22/2024
+
 1. [Common](#common)
     1. [](#bugfix)
         - Regression: Mobile Menu fix (#3198)
@@ -14,8 +37,10 @@
         - Minor english translation bugfixes
         - Contentarray issue with Pagination (#3239)
         - Minor Joomla 5 compatibility fixes
+
 # 5.5.17
 ## 10/30/2023
+
 1. [Common](#common)
     1. [](#bugfix)
         - Added Webp file extension to lightcase (#3159)
@@ -34,6 +59,7 @@
 
 # 5.5.16
 ## 03/31/2023
+
 1. [Common](#common)
     1. [](#new)
         - Updated SCSS compiler to v1.11

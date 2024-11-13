@@ -11,7 +11,7 @@
     <description>MOD_GANTRY5_PARTICLE_XML_DESCRIPTION</description>
 	<namespace path="src">Gantry\Module\Gantry5Particle</namespace>
     <files>
-		<folder module="mod_mod_gantry5_particlefooter">services</folder>
+		<folder module="mod_gantry5_particle">services</folder>
 		<folder>language</folder>
 		<folder>src</folder>
 		<folder>tmpl</folder>

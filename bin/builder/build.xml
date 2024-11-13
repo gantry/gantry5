@@ -229,7 +229,6 @@
         </manifest>
     </target>
 
-
     <target name="dev" depends="preflight,info,mkdir,joomla,wordpress,grav,create-map,cleanup,postflight" />
     <target name="prod" depends="preflight,info,mkdir,joomla,wordpress,grav,cleanup,postflight" />
     <target name="joomla-dev" depends="preflight,info,mkdir,joomla,create-map,cleanup,postflight" />
