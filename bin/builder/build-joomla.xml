@@ -81,6 +81,13 @@
             </fileset>
         </copy>
 
+        <copy todir="${tmp_dir}/packages/com_gantry5/media" overwrite="true">
+            <filterchain refid="filter"/>
+            <fileset dir="${path.platforms}/joomla/com_gantry5/media">
+                <include name="*.json"/>
+            </fileset>
+        </copy>
+
         <move todir="${tmp_dir}/packages/com_gantry5" overwrite="true">
             <fileset dir="${tmp_dir}/packages/com_gantry5/admin">
                 <include name="gantry5.xml"/>
@@ -232,6 +239,7 @@
             <filterchain refid="filter"/>
             <fileset dir="${path.platforms}/joomla/plg_system_gantry5">
                 <include name="*.xml"/>
+                <include name="src/Extension/Gantry5.php"/>
             </fileset>
         </copy>
 

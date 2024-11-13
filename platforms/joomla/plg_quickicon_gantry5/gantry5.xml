@@ -16,6 +16,7 @@
     <files>
         <folder plugin="gantry5">services</folder>
         <folder>language</folder>
+        <folder>src</folder>
         <filename>MD5SUMS</filename>
     </files>
     <config>

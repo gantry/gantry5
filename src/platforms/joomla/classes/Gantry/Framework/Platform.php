@@ -30,6 +30,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Utilities\ArrayHelper;
 use RocketTheme\Toolbox\DI\Container;
 
 /**
@@ -562,21 +563,29 @@ class Platform extends BasePlatform
 
         $styles = ThemeList::getThemes();
 
-        $extension_ids = \array_unique(\array_map(
+        $extensionIds = \array_unique(\array_map(
             function ($item) {
                 return (int) $item->extension_id;
             },
             $styles
         ));
 
-        $extension_ids = $extension_ids ? implode(',', $extension_ids) : '-1';
+        $ids = $extensionIds ?: ['-1'];
+        $ids = ArrayHelper::toInteger($ids);
 
+        /** @var DatabaseInterface $db */
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->createQuery();
 
         $query->select('*')
             ->from($db->quoteName('#__updates'))
-            ->where("element='pkg_gantry5' OR extension_id IN ($extension_ids)");
+            ->where(
+                [
+                    $db->quoteName('element') . ' = ' . $db->quote('pkg_gantry5'),
+                    $db->quoteName('extension_id') . ' IN (' . implode(',', $query->bindArray($ids)) . ')',
+                ],
+                'OR'
+            );
 
         $updateObject = $db->setQuery($query)->loadObjectList();
 
