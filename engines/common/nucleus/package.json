@@ -2,7 +2,9 @@
   "name": "gantry5-nucleus",
   "version": "1.0.0",
   "devDependencies": {
+    "ansi-colors": "^4.1.3",
     "browserify": "^17.0.1",
+    "fancy-log": "^2.0.0",
     "gulp": "^5.0.0",
     "gulp-if": "^3.0.0",
     "gulp-jsonminify": "^1.1.0",

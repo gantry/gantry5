@@ -10,7 +10,9 @@
     "slick": "^1.12.2"
   },
   "devDependencies": {
+    "ansi-colors": "^4.1.3",
     "browserify": "^17.0.1",
+    "fancy-log": "^2.0.0",
     "gulp": "^5.0.0",
     "gulp-if": "^3.0.0",
     "gulp-rename": "^2.0.0",

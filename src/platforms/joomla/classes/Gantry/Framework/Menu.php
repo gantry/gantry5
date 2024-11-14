@@ -60,27 +60,21 @@ class Menu extends AbstractMenu
 
         $this->setDatabase($db);
 
-        /** @var CMSApplication $app */
-        $app = Factory::getApplication();
+        $this->app = Factory::getApplication();
 
-        if ($app->isClient('administrator')) {
+        if ($this->app->isClient('administrator')) {
             $this->isAdmin = true;
-            $this->app = Factory::getContainer()->get(SiteApplication::class);
+            $appMenu = Factory::getContainer()->get(SiteApplication::class);
         } else {
             $this->isAdmin = false;
-            $this->app = $app;
+            $appMenu = $this->app;
         }
 
-        if (Multilanguage::isEnabled()) {
-            $language = $app->getLanguage();
-            $tag = $language->getTag();
-        } else {
-            $tag = '*';
-        }
-
-        $this->menu    = $this->app->getMenu();
-        $this->default = $this->menu->getDefault($tag);
+        $this->menu    = $appMenu->getMenu();
         $this->active  = $this->menu->getActive();
+
+        $tag = Multilanguage::isEnabled() ? $this->app->getLanguage()->getTag() : '*';
+        $this->default = $this->menu->getDefault($tag);
     }
 
     /**
