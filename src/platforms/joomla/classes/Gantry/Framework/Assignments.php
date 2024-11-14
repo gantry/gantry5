@@ -172,7 +172,7 @@ class Assignments extends AbstractAssignments
                         'AND',
                         [
                             $db->quoteName('checked_out') . ' = :userid',
-                            $db->quoteName('checked_out') . ' IS NOT NULL',
+                            $db->quoteName('checked_out') . ' IS NULL',
                         ],
                         'OR'
                     )
@@ -195,17 +195,17 @@ class Assignments extends AbstractAssignments
                 $query->whereNotIn($db->quoteName('id'), $active);
             }
 
-            $query->where($db->quoteName('template_style_id') . ' != :styleid')
+            $query->where($db->quoteName('template_style_id') . ' = :styleid')
                 ->extendWhere(
                     'AND',
                     [
                         $db->quoteName('checked_out') . ' = :userid',
-                        $db->quoteName('checked_out') . ' IS NOT NULL',
+                        $db->quoteName('checked_out') . ' IS NULL',
                     ],
                     'OR'
                 )
                 ->bind(':styleid', $style->id, ParameterType::INTEGER)
-                ->bind(':userid', $style->id, ParameterType::INTEGER);
+                ->bind(':userid', $user->id, ParameterType::INTEGER);
 
             $db->setQuery($query)->execute();
 

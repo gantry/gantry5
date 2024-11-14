@@ -169,24 +169,6 @@
             </fileset>
         </copy>
 
-        <!-- Common assets -->
-        <copy todir="${tmp_dir}/packages/lib_gantry5/assets" overwrite="true">
-            <fileset dir="${path.assets}/common">
-                <exclude name="application/"/>
-                <exclude name="node_modules/"/>
-                <exclude name="gulpfile.js"/>
-                <exclude name="package.json"/>
-                <exclude name="**/*.js.map"/>
-                <exclude name="**/*.css.map"/>
-                <exclude name=".yarn/"/>
-                <exclude name="yarn.lock"/>
-            </fileset>
-            <fileset dir="${path.assets}/joomla">
-                <exclude name="**/*.js.map"/>
-                <exclude name="**/*.css.map"/>
-            </fileset>
-        </copy>
-
         <!-- Generate Manifest files -->
         <phingcall target="checksum">
             <property name="source" value="${tmp_dir}/packages/lib_gantry5" />
@@ -211,6 +193,25 @@
         <copy todir="${tmp_dir}/packages/gantry5_nucleus" overwrite="true">
             <fileset dir="${path.engines}/joomla"/>
             <fileset dir="${path.platforms}/joomla/gantry5_nucleus"/>
+        </copy>
+
+        <!-- Common assets -->
+        <copy todir="${tmp_dir}/packages/gantry5_nucleus/assets" overwrite="true">
+            <fileset dir="${path.assets}/common">
+                <exclude name="application/"/>
+                <exclude name="node_modules/"/>
+                <exclude name="gulpfile.js"/>
+                <exclude name="package.json"/>
+                <exclude name="**/*.js.map"/>
+                <exclude name="**/*.css.map"/>
+                <exclude name=".yarn/"/>
+                <exclude name="yarn.lock"/>
+            </fileset>
+            <fileset dir="${path.assets}/joomla">
+                <exclude name="**/*.js.map"/>
+                <exclude name="**/*.css.map"/>
+                <exclude name=".gitkeep"/>
+            </fileset>
         </copy>
 
         <!-- Add version information to all xml files -->
