@@ -52,12 +52,6 @@ form:
       description: Set the maximum number of menu levels to display.
       default: 0
 
-    renderTitles:
-      type: input.checkbox
-      label: Render Titles
-      description: Renders the titles/tooltips of the Menu Items for accessibility.
-      default: 0
-
     hoverExpand:
       type: input.checkbox
       label: Expand on Hover

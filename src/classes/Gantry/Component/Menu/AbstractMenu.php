@@ -73,6 +73,12 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     ];
 
     /**
+     * Internal memory based cache array of data.
+     * @var array
+     */
+    protected static $cache = [];
+
+    /**
      * Create ordering lookup index [path => 1...n] from the nested ordering. Lookup has been sorted by accending ordering.
      *
      * @param array $ordering Nested ordering structure.
@@ -273,6 +279,12 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
      */
     public function instance(array $params = [], Config $menu = null)
     {
+        $store = \json_encode($params);
+
+        if (isset(static::$cache[$store])) {
+            return static::$cache[$store];
+        }
+
         $params += $this->defaults;
 
         $menus = $this->getMenus();
@@ -330,7 +342,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         // Sort menu items.
         $instance->sortAll();
 
-        return $instance;
+        return static::$cache[$store] = $instance;
     }
 
     /**

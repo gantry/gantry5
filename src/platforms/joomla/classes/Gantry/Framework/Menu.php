@@ -40,14 +40,20 @@ class Menu extends AbstractMenu
     use DatabaseAwareTrait;
     use GantryTrait;
 
-    /** @var bool */
-    protected $isAdmin;
-
     /** @var CMSApplication */
     protected $app;
 
     /** @var \Joomla\CMS\Menu\AbstractMenu */
     protected $menu;
+
+    /** @var MenuItem */
+    protected $default;
+
+    /** @var MenuItem */
+    protected $active;
+
+    /** @var MenuItem */
+    protected $base;
 
     /**
      * @param ?DatabaseInterface $db
@@ -63,15 +69,14 @@ class Menu extends AbstractMenu
         $this->app = Factory::getApplication();
 
         if ($this->app->isClient('administrator')) {
-            $this->isAdmin = true;
-            $appMenu = Factory::getContainer()->get(SiteApplication::class);
+            /** @var CMSApplication $app */
+            $app = Factory::getContainer()->get(SiteApplication::class);
+            $this->menu = $app->getMenu();
         } else {
-            $this->isAdmin = false;
-            $appMenu = $this->app;
+            $this->menu = $this->app->getMenu();
         }
 
-        $this->menu    = $appMenu->getMenu();
-        $this->active  = $this->menu->getActive();
+        $this->active = $this->menu->getActive();
 
         $tag = Multilanguage::isEnabled() ? $this->app->getLanguage()->getTag() : '*';
         $this->default = $this->menu->getDefault($tag);
@@ -113,8 +118,9 @@ class Menu extends AbstractMenu
         if (!empty($params['admin'])) {
             $menuType = MenuHelper::getMenuType($params['menu']);
 
-            $config = $this->config();
             $this->id = $menuType->id;
+
+            $config = $this->config();
             $config->set('settings.title', $menuType->title);
             $config->set('settings.description', $menuType->description);
         }
@@ -169,14 +175,20 @@ class Menu extends AbstractMenu
      */
     public function getMenuIds()
     {
-        $db    = $this->getDatabase();
-        $query = $db->createQuery();
+        static $items;
 
-        $query->select($db->quoteName('id'))
-            ->from($db->quoteName('#__menu_types', 'a'))
-            ->where($db->quoteName('a.client_id') . ' = 0');
+        if ($items === null) {
+            $db    = $this->getDatabase();
+            $query = $db->createQuery();
 
-        return $$db->setQuery($query)->loadColumn();
+            $query->select($db->quoteName('id'))
+                ->from($db->quoteName('#__menu_types', 'a'))
+                ->where($db->quoteName('a.client_id') . ' = 0');
+
+            $items = $db->setQuery($query)->loadColumn();
+        }
+
+        return $items;
     }
 
     /**
@@ -204,6 +216,14 @@ class Menu extends AbstractMenu
         }
 
         return $groups;
+    }
+
+    /**
+     * @return object
+     */
+    public function getDefault()
+    {
+        return $this->offsetGet($this->default->id);
     }
 
     /**
@@ -247,9 +267,9 @@ class Menu extends AbstractMenu
     }
 
     /**
-     * @return string|null
+     * @return int|null
      */
-    public function getCacheId()
+    public function getCacheId(): int|null
     {
         $user = $this->app->getIdentity();
 
@@ -273,8 +293,7 @@ class Menu extends AbstractMenu
         }
 
         if ($item->type === 'alias') {
-//TODO: link_id does not exists in MenuTiem
-            $aliasToId = $item->link_id;
+            $aliasToId = $item->getParams()->get('aliasoptions');
 
             if (\count($tree) > 0 && $aliasToId === $tree[\count($tree) - 1]) {
                 return (bool) $this->params['highlightAlias'];
@@ -296,128 +315,6 @@ class Menu extends AbstractMenu
     {
         return $item->id == $this->active->id
             || ($item->type === 'alias' && $item->getParams()->get('aliasoptions') == $this->active->id);
-    }
-
-    /**
-     * Get menu items from the platform.
-     *
-     * @param array $params
-     * @return array<string,object|MenuItem> List of routes to the pages.
-     */
-    protected function getItemsFromPlatform($params): array
-    {
-        // Items are already filtered by access and language, in admin we need to work around that.
-        if ($this->app->isClient('administrator')) {
-            $items = $this->getMenuItemsInAdmin($params['menu']);
-        } else {
-            $attributes = ['menutype'];
-            $values     = [$params['menu']];
-
-            $items = [];
-
-            foreach ($this->menu->getItems($attributes, $values) as $item) {
-                $items[$item->id] = $item;
-            }
-
-            $items = \array_replace($this->getMenuItemIds($params['menu']), $items);
-        }
-
-        return $items;
-    }
-
-    /**
-     * @param array<string,object|MenuItem> $menuItems
-     * @param array[] $items
-     * @return Item[]
-     */
-    public function createMenuItems($menuItems, $items): array
-    {
-        // Generate lookup indexes using menu item ids and paths.
-        $idLookup   = [];
-        $pathLookup = [];
-
-        foreach ($items as $path => &$item) {
-            if (isset($item['yaml_path'])) {
-                $path = $item['yaml_path'];
-            }
-
-            $path = \strtolower(\str_replace('/__', '/', \trim($path, '_')));
-            $item['yaml_path'] = $path;
-            $pathLookup[$path] = &$item;
-
-            if (isset($item['id']) && \is_numeric($item['id'])) {
-                $idLookup[$item['id']] = &$item;
-            }
-        }
-
-        unset($item);
-
-        $map  = [];
-        $list = [];
-
-        // Create menu items for the pages.
-        foreach ($menuItems as $menuItem) {
-            $id = $menuItem->id;
-            $path = $menuItem->route;
-
-            // Try to locate Gantry menu item.
-            if (isset($idLookup[$id])) {
-                // Id found, use it.
-                $data = $idLookup[$id];
-            } elseif (isset($pathLookup[$path])) {
-                // ID not found, use route instead.
-                $data = $pathLookup[$path];
-            } else {
-                // Menu item is not in YAML file.
-                $data = ['yaml_path' => $path];
-            }
-
-            $map[$data['yaml_path']] = $id;
-
-            $item = $this->createMenuItem($data, $menuItem);
-
-            $list[$item->id] = $item;
-        }
-
-        // Create particles which are only inside the menu YAML.
-        foreach ($pathLookup as $path => $data) {
-            // Ignore everything which is not a module or particle type.
-            if (
-                isset($map[$path])
-                || !isset($data['type'])
-                || !\in_array($data['type'], ['module', 'particle'], true)
-            ) {
-                continue;
-            }
-
-            $level = \substr_count($path, '/');
-
-            if ($level) {
-                $parentRoute = $level ? \dirname($path) : '';
-
-                // If we cannot locate parent, we need to skip the menu item.
-                if (!isset($map[$parentRoute])) {
-                    continue;
-                }
-
-                $parent_id = $map[$parentRoute];
-            } else {
-                $parent_id = '';
-            }
-
-            $data['id']        = $path;
-            $data['parent_id'] = $parent_id;
-            $data['path']      = $path;
-
-            $tree         = isset($list[$parent_id]) ? $list[$parent_id]->tree : [];
-            $tree[]       = $item->id;
-            $data['tree'] = $tree;
-
-            $item = $this->createMenuItem($data);
-            $list[$item->id] = $item;
-        }
-
-        return $list;
     }
 
     /**
@@ -483,7 +380,6 @@ class Menu extends AbstractMenu
                         } else {
                             $list[$k] = $v;
                         }
-                        $i++;
                     }
                     $value = $list;
                 } elseif (\in_array($var, ['options', 'columns', 'columns_count'])) {
@@ -519,6 +415,7 @@ class Menu extends AbstractMenu
                 if (\is_object($value)) {
                     $value = \get_object_vars($value);
                 }
+
                 if (
                     \is_array($value)
                     && \in_array($param, ['attributes', 'link_attributes'], true)
@@ -545,6 +442,160 @@ class Menu extends AbstractMenu
 
         return $paramsEmbedded || $properties ? $properties : null;
     }
+
+    /**
+     * Get menu items from the platform.
+     *
+     * @param array $params
+     * @return array<string,object|MenuItem> List of routes to the pages.
+     */
+    protected function getItemsFromPlatform($params): array
+    {
+        // Items are already filtered by access and language, in admin we need to work around that.
+        if ($this->app->isClient('administrator')) {
+            $items = $this->getMenuItemsInAdmin($params['menu']);
+        } else {
+            $items = [];
+
+            foreach ($this->menu->getItems('menutype', $params['menu']) as $item) {
+                $items[$item->id] = $item;
+            }
+        }
+
+        return $items;
+    }
+
+    /**
+     * @param array<string,object|MenuItem> $menuItems
+     * @param array[] $items
+     * @return Item[]
+     */
+    public function createMenuItems($menuItems, $items): array
+    {
+        // Generate lookup indexes using menu item ids and paths.
+        $idLookup   = [];
+        $pathLookup = [];
+
+        foreach ($items as $path => &$item) {
+            if (isset($item['yaml_path'])) {
+                $path = $item['yaml_path'];
+            }
+
+            $path = \strtolower(\str_replace('/__', '/', \trim($path, '_')));
+            $item['yaml_path'] = $path;
+            $pathLookup[$path] = &$item;
+
+            if (isset($item['id']) && \is_numeric($item['id'])) {
+                $idLookup[$item['id']] = &$item;
+            }
+        }
+
+        unset($item);
+
+        $map  = [];
+        $list = [];
+
+        if ($this->app->isClient('site')) {
+            $inputVars = $this->app->getInput()->getArray();
+
+            $start    = (int) $this->params['startLevel'] ?: 1;
+            $lastitem = 0;
+
+            foreach ($menuItems as $i => $menuItem) {
+                $menuItem->current = true;
+
+                foreach ($menuItem->query as $key => $value) {
+                    if (!isset($inputVars[$key]) || $inputVars[$key] !== $value) {
+                        $menuItem->current = false;
+                        break;
+                    }
+                }
+
+                $menuItem->deeper     = false;
+                $menuItem->shallower  = false;
+                $menuItem->level_diff = 0;
+
+                if (isset($menuItems[$lastitem])) {
+                    $menuItems[$lastitem]->deeper     = ($menuItem->level > $menuItems[$lastitem]->level);
+                    $menuItems[$lastitem]->shallower  = ($menuItem->level < $menuItems[$lastitem]->level);
+                    $menuItems[$lastitem]->level_diff = ($menuItems[$lastitem]->level - $menuItem->level);
+                }
+
+                $lastitem = $i;
+            }
+
+            if (isset($menuItems[$lastitem])) {
+                $menuItems[$lastitem]->deeper     = (($start ?: 1) > $menuItems[$lastitem]->level);
+                $menuItems[$lastitem]->shallower  = (($start ?: 1) < $menuItems[$lastitem]->level);
+                $menuItems[$lastitem]->level_diff = ($menuItems[$lastitem]->level - ($start ?: 1));
+            }
+        }
+
+        // Create menu items for the pages.
+        foreach ($menuItems as $menuItem) {
+            $id   = $menuItem->id;
+            $path = $menuItem->route;
+
+            // Try to locate Gantry menu item.
+            if (isset($idLookup[$id])) {
+                // Id found, use it.
+                $data = $idLookup[$id];
+            } elseif (isset($pathLookup[$path])) {
+                // ID not found, use route instead.
+                $data = $pathLookup[$path];
+            } else {
+                // Menu item is not in YAML file.
+                $data = ['yaml_path' => $path];
+            }
+
+            $map[$data['yaml_path']] = $id;
+
+            $item = $this->createMenuItem($data, $menuItem);
+
+            $list[$item->id] = $item;
+        }
+
+        // Create particles which are only inside the menu YAML.
+        foreach ($pathLookup as $path => $data) {
+            // Ignore everything which is not a module or particle type.
+            if (
+                isset($map[$path])
+                || !isset($data['type'])
+                || !\in_array($data['type'], ['module', 'particle'], true)
+            ) {
+                continue;
+            }
+
+            $level = \substr_count($path, '/');
+
+            if ($level) {
+                $parentRoute = $level ? \dirname($path) : '';
+
+                // If we cannot locate parent, we need to skip the menu item.
+                if (!isset($map[$parentRoute])) {
+                    continue;
+                }
+
+                $parent_id = $map[$parentRoute];
+            } else {
+                $parent_id = '';
+            }
+
+            $data['id']        = $path;
+            $data['parent_id'] = $parent_id;
+            $data['path']      = $path;
+
+            $tree         = isset($list[$parent_id]) ? $list[$parent_id]->tree : [];
+            $tree[]       = $item->id;
+            $data['tree'] = $tree;
+
+            $item = $this->createMenuItem($data);
+            $list[$item->id] = $item;
+        }
+
+        return $list;
+    }
+
 
     /**
      * @param array $data
@@ -670,6 +721,8 @@ class Menu extends AbstractMenu
                 'title'        => $menuItem->title,
                 'anchor_class' => $params ? $params->get('menu-anchor_css', '') : '',
                 'image'        => $params ? $params->get('menu_image', '') : '',
+                'image_class'  => $params ? $params->get('menu_image_css', '') : '',
+                'icon'         => $params ? $params->get('menu_icon_css', '') : '',
                 'icon_only'    => $params ? !$params->get('menu_text', 1) : false,
                 'target'       => $target
             ];
@@ -741,9 +794,9 @@ class Menu extends AbstractMenu
      *
      * @param   ?int  $itemid
      *
-     * @return  object|null
+     * @return  MenuItem|null
      */
-    protected function calcBase($itemid = null)
+    protected function calcBase($itemid = null): MenuItem|null
     {
         $menu = $this->app->getMenu();
 
@@ -796,62 +849,6 @@ class Menu extends AbstractMenu
 
             $this->add($item);
         }
-    }
-
-    /**
-     * @param string $menutype
-     * @return array
-     */
-    private function getMenuItemIds($menutype)
-    {
-        $db    = $this->getDatabase();
-        $query = $db->createQuery();
-
-        $query->select(
-            [
-                $db->quoteName('id'),
-                $db->quoteName('alias'),
-                $db->quoteName('path', 'route'),
-                $db->quoteName('level'),
-                $db->quoteName('parent_id'),
-            ]
-        )
-            ->from($db->quoteName('#__menu'))
-            ->where(
-                [
-                    $db->quoteName('menutype') . ' = :menutype',
-                    $db->quoteName('parent_id') . '> 0',
-                    $db->quoteName('client_id') . '= 0',
-                    $db->quoteName('published') . '>= 0',
-                ]
-            )
-            ->bind(':menutype', $menutype)
-            ->order('lft');
-
-        // Set the query
-        $db->setQuery($query);
-
-        $items = [];
-
-        foreach ($db->loadAssocList('id') as $id => $data) {
-            $data       += ['type' => 'separator', 'tree' => [], 'title' => '', 'link' => null, 'browserNav' => null];
-            $items[$id] = (object) $data;
-        }
-
-        foreach ($items as &$item) {
-            // Get parent information.
-            $parent_tree = [];
-
-            if (isset($items[$item->parent_id])) {
-                $parent_tree = $items[$item->parent_id]->tree;
-            }
-
-            // Create tree.
-            $parent_tree[] = $item->id;
-            $item->tree    = $parent_tree;
-        }
-
-        return $items;
     }
 
     /**

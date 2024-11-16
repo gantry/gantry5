@@ -1,6 +1,6 @@
 {% assets with { priority: 10 } %}
     {% block stylesheets %}
-        {{ gantry.document.webassetmanager('com_gantry5.joomla-g-admin', 'style') }}
+        {{ gantry.document.useAsset('style', 'com_gantry5.joomla-g-admin') }}
     {% endblock %}
 
     {% block javascript %}

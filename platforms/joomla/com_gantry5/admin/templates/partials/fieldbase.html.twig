@@ -1,11 +1,11 @@
 {% assets with { priority: 10 } %}
     {% block stylesheets %}
-        {{ gantry.document.webassetmanager('com_gantry5.g-admin', 'style') }}
-        {{ gantry.document.webassetmanager('com_gantry5.joomla-g-admin', 'style') }}
+        {{ gantry.document.useAsset('style', 'com_gantry5.g-admin') }}
+        {{ gantry.document.useAsset('style', 'com_gantry5.joomla-g-admin') }}
     {% endblock %}
 
     {% block javascript %}
-        {{ gantry.document.webassetmanager('com_gantry5.main', 'script') }}
+        {{ gantry.document.useAsset('script', 'com_gantry5.main') }}
         <script>
             var GANTRY_AJAX_SUFFIX = '{{ gantry.ajax_suffix|raw }}';
             var GANTRY_AJAX_URL = '{{ gantry.route('%ajax%')|e }}';

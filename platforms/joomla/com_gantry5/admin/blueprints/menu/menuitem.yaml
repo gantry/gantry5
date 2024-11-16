@@ -132,6 +132,11 @@ form:
           type: input.imagepicker
           label: Image
 
+        .image_class:
+          type: text
+          label: Image Class
+          description: Enter image class name.
+
         .icon_only:
           type: input.checkbox
           label: Icon Only

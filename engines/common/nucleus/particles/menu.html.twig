@@ -54,17 +54,12 @@
         {% set rel = item.rel %}
 
         {% if item.target == '_blank' %}
-            {% if 'noopener' not in rel %}
-                {% set rel = rel ? rel ~ ' ' : rel %}
-                {% set rel = rel ~ 'noopener' %}
-            {% endif %}
-            {% if 'noreferrer' not in rel %}
-                {% set rel = rel ? rel ~ ' ' : rel %}
-                {% set rel = rel ~ 'noreferrer' %}
+			{% set rel = ['noopener', 'noreferrer']|join(' ') %}
+			{% if 'nofollow' in rel %}
+                {% set rel = rel ~ ['nofollow']|join(' ') %}
             {% endif %}
         {% endif %}
 
-        {% set listAttributes = item.attributes|attribute_array %}
         {% set linkAttributes = '' %}
 
         {% if item.link_attributes %}
@@ -92,17 +87,28 @@
 
         {% set rel = rel ? ' rel="' ~ rel|e('html_attr') ~ '"' %}
 
-        <li class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{% if not item.dropdown_hide %}{{ parent }}{% endif %}{{ active }}{{ dropdown }} {% if item.url and parent %}{% if not item.dropdown_hide %}g-menu-item-link-parent{% endif %}{% endif %} {{ item.class|default('') }}"
-                {{- self.getCustomWidth(item, menu, 'item', dropdown) }}
-                {%- if context.particle.renderTitles|default(0) %} title="{{ item.title }}"{% endif %}{{listAttributes|raw}}>
+        {% set listClass = [
+            'g-menu-item',
+            'g-menu-item-type-' ~ item.type,
+            'g-menu-item-' ~ item.id,
+            'level-' ~  (item.level - start_level + 1),
+            item.url and parent and not item.dropdown_hide ? 'g-menu-item-link-parent',
+            not item.dropdown_hide ? parent,
+            active,
+            dropdown,
+            item.class,
+        ]|join(' ') %}
+
+        <li class="{{ listClass|trim }}{{ item.attributes|attribute_array }}{{- self.getCustomWidth(item, menu, 'item', dropdown) }}>
             {% if item.url %}
                 <a class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" href="{{ item.url }}{{ item.hash }}"{{ (title ~ label ~ target ~ rel ~ linkAttributes)|raw }}>
             {% else %}
                 <div class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" data-g-menuparent=""{{ label|raw }}>{% endif %}
-                {% if item.image %}
-                    <img src="{{ url(item.image) }}" alt="{{ item.title }}" />
-                {% elseif item.icon %}
-                    <i class="{{ item.icon }}" aria-hidden="true"></i>
+                {% if item.icon %}
+                    <span class="{{ item.icon }}" aria-hidden="true"></span>
+                {% elseif item.image %}
+					{% set imageAttributes = item.image_class ? {'class': item.image_class} : {} %}
+					{{ gantry.platform.html('image', item.image, item.title, imageAttributes)|raw }}
                 {% endif %}
                 {% if item.url %}
                     <span class="g-menu-item-content">

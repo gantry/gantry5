@@ -17,6 +17,7 @@ use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Framework\Services\StreamsServiceProvider;
 use Joomla\CMS\Event\AbstractEvent;
 use Joomla\CMS\Factory;
+use Joomla\CMS\WebAsset\WebAssetManager;
 use Joomla\Event\DispatcherInterface;
 use RocketTheme\Toolbox\Event\EventDispatcher;
 
@@ -70,6 +71,10 @@ class Gantry extends Base\Gantry
 
         $instance['document'] = static function (): Document {
             return new Document();
+        };
+
+        $instance['webassetmanager'] = static function (): WebAssetManager {
+            return Factory::getApplication()->getDocument()->getWebAssetManager();
         };
 
         // Make sure that nobody modifies the original collection by making it a factory.
@@ -152,8 +157,6 @@ class Gantry extends Base\Gantry
      */
     protected function loadGlobal(): array
     {
-//TODO: replace with component settings insted of a plugin?!?!
-
         /** @var DispatcherInterface $dispatcher */
         $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
 

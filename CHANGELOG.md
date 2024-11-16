@@ -15,7 +15,8 @@
         - Updated Twig to 3.14
           - Remove deprecated spaceless tag
         - Updated Library, Component, Plugin and Template to support Joomla 5 natively
-        - Added WebAssetManager support in Documment (twig)
+        - Added WebAssetManager as a Gantry DI container
+        - Added WebAssetManager 'useAsset' to Document (twig)
         - Engine can be selected from theme.xml
 
 # 5.5.19

@@ -30,6 +30,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Database\ParameterType;
 use Joomla\Utilities\ArrayHelper;
 use RocketTheme\Toolbox\DI\Container;
 
@@ -798,32 +799,39 @@ class Platform extends BasePlatform
 
                     $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-                    $userId = $user->id;
-// TODO: fix query with bind
                     // Verify that no items are checked out.
                     $query = $db->createQuery()
-                        ->select('id')
+                        ->select($db->quoteName('id'))
                         ->from($db->quoteName('#__menu'))
-                        ->where('id=' . $db->quote($menu->id))
-                        ->where('checked_out !=' . (int) $userId)
-                        ->where('checked_out IS NOT null');
-                    $db->setQuery($query);
+                        ->where(
+                            [
+                                $db->quoteName('id') . ' = :menuid',
+                                $db->quoteName('checked_out') . ' != :userid',
+                                $db->quoteName('checked_out') . ' IS NOT null'
+                            ]
+                        )
+                        ->bind(':menuid', $menu->id, ParameterType::INTEGER)
+                        ->bind(':userid', $user->id, ParameterType::INTEGER);
 
-                    if ($db->loadRowList()) {
+                    if ($db->setQuery($query)->loadRowList()) {
                         return false;
                     }
-// TODO: fix query with bind
+
                     // Verify that no module for this menu are checked out.
                     $query->clear()
-                        ->select('id')
+                        ->select($db->quoteName('id'))
                         ->from($db->quoteName('#__modules'))
-                        ->where('module=' . $db->quote('mod_menu'))
-                        ->where('params LIKE ' . $db->quote('%"menutype":' . json_encode($id) . '%'))
-                        ->where('checked_out !=' . (int) $userId)
-                        ->where('checked_out IS NOT null');
-                    $db->setQuery($query);
+                        ->where(
+                            [
+                                $db->quoteName('module') . ' = ' . $db->quote('mod_menu'),
+                                $db->quoteName('params') . ' LIKE ' . $db->quote('%"menutype":' . \json_encode($id) . '%'),
+                                $db->quoteName('checked_out') . ' != :userid',
+                                $db->quoteName('checked_out') . ' IS NOT null'
+                            ]
+                        )
+                        ->bind(':userid', $user->id, ParameterType::INTEGER);
 
-                    return !$db->loadRowList();
+                    return !$db->setQuery($query)->loadRowList();
                 }
 
                 return $user->authorise('core.edit', 'com_menus');

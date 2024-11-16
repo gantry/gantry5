@@ -405,10 +405,10 @@ class Document extends HtmlDocument
     }
 
     /**
-     * @param string $name
      * @param string $type
+     * @param string $name
     */
-    public static function webassetmanager($name, $type): void
+    public static function useAsset($type, $name): void
     {
         if (!\in_array($type, ['style', 'script', 'preset'])) {
             return;

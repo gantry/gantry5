@@ -1,12 +1,12 @@
 {% extends "@gantry-admin/partials/page.html.twig" %}
 
 {% block stylesheets %}
-    {{ gantry.document.webassetmanager('com_gantry5.g-admin', 'style') }}
+    {{ gantry.document.useAsset('style', 'com_gantry5.g-admin') }}
     {{ parent() }}
 {% endblock %}
 
 {% block javascript %}
-    {{ gantry.document.webassetmanager('com_gantry5.main', 'script') }}
+    {{ gantry.document.useAsset('script','com_gantry5.main') }}
     {% include "@gantry-admin/partials/js-translations.html.twig" %}
     {{ parent() }}
 {% endblock %}
