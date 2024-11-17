@@ -111,7 +111,7 @@ final class Preset extends CMSPlugin implements SubscriberInterface
         $path   = $this->getApplication()->get('cookie_path', '/');
         $domain = $this->getApplication()->get('cookie_domain');
 
-        $input = $$this->getApplication()->getInput();
+        $input = $this->getApplication()->getInput();
         $input->cookie->set($name, $value, $expire, $path, $domain);
     }
 }

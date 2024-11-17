@@ -115,7 +115,7 @@ paths = {
     ],
     minify: [
         { // google fonts
-            in: './platforms/common/js/google-fonts.json',
+            in: './platforms/common/google/google-fonts.json',
             out: './platforms/common/js/google-fonts.json'
         }
     ]
