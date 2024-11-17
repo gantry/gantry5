@@ -11,6 +11,7 @@
 
 namespace Gantry\Framework;
 
+use Gantry\Component\Config\Config;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
@@ -110,6 +111,28 @@ class Menu extends AbstractMenu
 
     /**
      * @param array $params
+     * @param Config $menu
+     * @return AbstractMenu
+     */
+    public function instance(array $params = [], Config $menu = null)
+    {
+        if ($this->app->isClient('site')) {
+            if (Multilanguage::isEnabled() && ($params['menu'] === '-language-')) {
+                $tag = $this->app->getLanguage()->getTag();
+
+                $name = \strtolower($params['languageBaseName'] . '-' . $tag);
+
+                if (\array_key_exists($name, $this->getMenuOptions())) {
+                    $params['menu'] = $name;
+                }
+            }
+        }
+
+        return parent::instance($params, $menu);
+    }
+
+    /**
+     * @param array $params
      */
     public function init(&$params): void
     {
@@ -123,20 +146,6 @@ class Menu extends AbstractMenu
             $config = $this->config();
             $config->set('settings.title', $menuType->title);
             $config->set('settings.description', $menuType->description);
-        }
-
-        if ($this->app->isClient('site')) {
-            $enabled = $params['appendLanguageTag'] ?? false;
-
-            if (Multilanguage::isEnabled() && $enabled) {
-                $tag = $this->app->getLanguage()->getTag();
-
-                $menu = \strtolower($params['menu'] . '-' . $tag);
-
-                if (\array_key_exists($menu, $this->getMenuOptions())) {
-                    $params['menu'] = $menu;
-                }
-            }
         }
     }
 
