@@ -53,9 +53,11 @@ use RocketTheme\Toolbox\ArrayTraits\Export;
  */
 class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonSerializable
 {
-    use ArrayAccessWithGetters, Export, Serializable;
+    use ArrayAccessWithGetters;
+    use Export;
+    use Serializable;
 
-    const VERSION = 2;
+    public const VERSION = 2;
 
     /** @var array */
     public static $defaults = [
@@ -77,6 +79,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
         'rel' => '', // WP
         'icon' => '',
         'image' => '',
+        'image_class' => '',
         'subtitle' => '',
         'hash' => '',
         'class' => '',
@@ -265,7 +268,8 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
         if ($this->items['columns_count']) {
             $children = $this->children;
 
-            $i = 0; $start = 0;
+            $i = 0;
+            $start = 0;
             $list = [];
             foreach ($this->items['columns_count'] as $i => $count) {
                 $list[$i] = array_slice($children, $start, $count, true);

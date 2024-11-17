@@ -294,7 +294,7 @@ class EventListener implements EventSubscriberInterface
             }
 
             // Joomla params.
-            $enabled = $type !== 'particle' ? (int)$item['enabled'] : 0; // Hide particles from other menus.
+            $enabled = $type !== 'particle' ? (int) $item['enabled'] : 0; // Hide particles from other menus.
             $options = [
                 'menu-anchor_css' => $item['anchor_class'],
                 'menu_image'      => $item['image'],
@@ -380,18 +380,33 @@ class EventListener implements EventSubscriberInterface
     {
         $table = MenuHelper::getMenu();
         $db    = $table->getDbo();
+        $query = $db->createQuery();
         $name  = $table->getTableName();
         $key   = $table->getKeyName();
-// TODO: convert to proper query.
-        // Get the node and children as a tree.
-        $select = 'DISTINCT n.' . $key . ', n.parent_id, n.level, n.lft, n.path, n.type, n.access, n.params, n.language, n.published';
-        $query = $db->getQuery(true)
-            ->select($select)
-            ->from($name . ' AS n, ' . $name . ' AS p')
-            ->where('n.lft BETWEEN p.lft AND p.rgt')
-            ->where('n.menutype = ' . $db->quote($menutype))
-            ->where('n.client_id = 0')
-            ->order('n.lft');
+
+        $query->select(
+            [
+                'DISTINCT ' . $db->quoteName('n.' . $key),
+                $db->quoteName('n.parent_id'),
+                $db->quoteName('n.level'),
+                $db->quoteName('n.lft'),
+                $db->quoteName('n.path'),
+                $db->quoteName('n.type'),
+                $db->quoteName('n.access'),
+                $db->quoteName('n.params'),
+                $db->quoteName('n.language'),
+                $db->quoteName('n.published'),
+            ]
+        )
+            ->from($db->quoteName($name, 'n') . ' , ' . $db->quoteName($name, 'p'))
+            ->where(
+                [
+                    $db->quoteName('n.lft') . ' BETWEEN ' . $db->quoteName('p.lft') . ' AND ' . $db->quoteName('p.rgt'),
+                    $db->quoteName('n.menutype') . ' = ' . $db->quote($menutype),
+                    $db->quoteName('n.client_id') . ' = 0'
+                ]
+            )
+            ->order($db->quoteName('n.lft'));
 
         return $db->setQuery($query)->loadAssocList($key);
     }

@@ -18,6 +18,7 @@
         - Added WebAssetManager as a Gantry DI container
         - Added WebAssetManager 'useAsset' to Document (twig)
         - Engine can be selected from theme.xml
+        - Added support to append language tag to menu name in Menu particle
 
 # 5.5.19
 ## 05/23/2024

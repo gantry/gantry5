@@ -124,6 +124,20 @@ class Menu extends AbstractMenu
             $config->set('settings.title', $menuType->title);
             $config->set('settings.description', $menuType->description);
         }
+
+        if ($this->app->isClient('site')) {
+            $enabled = $params['appendLanguageTag'] ?? false;
+
+            if (Multilanguage::isEnabled() && $enabled) {
+                $tag = $this->app->getLanguage()->getTag();
+
+                $menu = \strtolower($params['menu'] . '-' . $tag);
+
+                if (\array_key_exists($menu, $this->getMenuOptions())) {
+                    $params['menu'] = $menu;
+                }
+            }
+        }
     }
 
     /**
@@ -135,6 +149,21 @@ class Menu extends AbstractMenu
     public function getMenus(): array
     {
         return \array_keys($this->getMenuOptions());
+    }
+
+    /**
+     * @return array
+     */
+    public function getItems()
+    {
+        $list = [];
+        foreach ($this->items as $key => $item) {
+            if ($key !== '') {
+                $list[$item->id] = $item;
+            }
+        }
+
+        return $list;
     }
 
     /**
@@ -724,8 +753,21 @@ class Menu extends AbstractMenu
                 'image_class'  => $params ? $params->get('menu_image_css', '') : '',
                 'icon'         => $params ? $params->get('menu_icon_css', '') : '',
                 'icon_only'    => $params ? !$params->get('menu_text', 1) : false,
-                'target'       => $target
+                'target'       => $target,
+                'deeper'       => $menuItem->deeper ?? null,
+                'shallower'    => $menuItem->shallower ?? null,
+                'level_diff'   => $menuItem->level_diff ?? null,
+                'current'      => $menuItem->current ?? null,
             ];
+
+            if ($this->app->isClient('site')) {
+                $properties += [
+                    'deeper'       => $menuItem->deeper ?? null,
+                    'shallower'    => $menuItem->shallower ?? null,
+                    'level_diff'   => $menuItem->level_diff ?? null,
+                    'current'      => $menuItem->current ?? null,
+                ];
+            }
         } else {
             // There is no Joomla menu item.
             $properties = $data;

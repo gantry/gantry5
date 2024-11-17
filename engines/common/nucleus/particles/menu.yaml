@@ -32,6 +32,12 @@ form:
         '': Use Default Menu
         '-active-': Use Active Menu
 
+    appendLanguageTag:
+      type: input.checkbox
+      label: Append Language Tag
+      description: 'Append the language tag to the end of the menu name, this should match the menus Unique Name. <br />Example: mainmenu -> mainmenu-en-gb'
+      default: 0
+
     base:
       type: menu.item
       label: Base Item

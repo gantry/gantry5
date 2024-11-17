@@ -41,10 +41,15 @@
 
 {% macro displayItem(item, menu, context, dropdown_type, start_level) %}
     {% import _self as self %}
-    {% if item.type == 'particle' and not item.options.particle.enabled %}
-        {% set enabled = 0 %}
-    {% endif %}
-    {% if item.visible and item.enabled and enabled|default(1) %}
+    {% if item.type == 'particle' and item.options.particle.enabled %}
+        {% set listClass = [
+            'g-menu-item',
+            'g-menu-item-type-' ~ item.type,
+            'g-menu-item-' ~ item.id,
+        ]|filter(value => value != '')|join(' ') %}
+        <li class="{{ listClass|trim }}">
+            {{ self.displayParticle(item, context) }}
+    {% elseif item.visible and item.enabled and enabled|default(1) %}
         {% set title = item.icon_only or item.link_title ? ' title="' ~ item.link_title|default(item.title)|e ~ '"' %}
         {% set label = item.icon_only and (item.image or item.icon) ? ' aria-label="' ~ item.title|e ~'"' %}
         {% set active = menu.isActive(item) ? ' active' %}
@@ -91,15 +96,14 @@
             'g-menu-item',
             'g-menu-item-type-' ~ item.type,
             'g-menu-item-' ~ item.id,
-            'level-' ~  (item.level - start_level + 1),
             item.url and parent and not item.dropdown_hide ? 'g-menu-item-link-parent',
             not item.dropdown_hide ? parent,
             active,
             dropdown,
             item.class,
-        ]|join(' ') %}
+        ]|filter(value => value != '')|join(' ') %}
 
-        <li class="{{ listClass|trim }}{{ item.attributes|attribute_array }}{{- self.getCustomWidth(item, menu, 'item', dropdown) }}>
+        <li class="{{ listClass|trim }}"{{ item.attributes|attribute_array }}{{- self.getCustomWidth(item, menu, 'item', dropdown) }}>
             {% if item.url %}
                 <a class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" href="{{ item.url }}{{ item.hash }}"{{ (title ~ label ~ target ~ rel ~ linkAttributes)|raw }}>
             {% else %}
@@ -118,9 +122,7 @@
                         <span class="g-menu-parent-indicator" data-g-menuparent=""></span>
                     {%- endif %}
                 {% else %}
-                    {% if item.type == 'particle' %}
-                        {{ self.displayParticle(item, context) }}
-                    {% elseif item.type == 'heading' %}
+                    {% if item.type == 'heading' %}
                         <span class="g-nav-header g-menu-item-content"{{ title|raw }}>{{ self.displayTitle(item) }}</span>
                     {% else %}
                         <span class="g-separator g-menu-item-content"{{ title|raw }}>{{ self.displayTitle(item) }}</span>
