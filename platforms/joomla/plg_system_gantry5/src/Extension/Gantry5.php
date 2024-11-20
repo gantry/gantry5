@@ -272,6 +272,15 @@ final class Gantry5 extends CMSPlugin implements SubscriberInterface
 
         $theme->language  = $document->language;
         $theme->direction = $document->direction;
+
+        $engine    = $theme->details()->get('configuration.gantry.engine');
+        $assetFile = "media/gantry5/engines/{$engine}/joomla.asset.json";
+
+        if (\file_exists(JPATH_ROOT . '/' . $assetFile)) {
+            $wa = $this->getApplication()->getDocument()->getWebAssetManager();
+            $wr = $wa->getRegistry();
+            $wr->addRegistryFile($assetFile);
+        }
     }
 
     /**

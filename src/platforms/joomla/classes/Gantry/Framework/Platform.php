@@ -108,7 +108,7 @@ class Platform extends BasePlatform
         // Support linked sample data.
         $theme = $this->container['theme.name'] ?? null;
 
-        if ($theme && is_dir(JPATH_ROOT . "/media/gantry5/themes/{$theme}/media-shared")) {
+        if ($theme && \is_dir(JPATH_ROOT . "/media/gantry5/themes/{$theme}/media-shared")) {
             $custom = JPATH_ROOT . "/media/gantry5/themes/{$theme}/custom";
 
             if (!is_dir($custom)) {
@@ -122,18 +122,18 @@ class Platform extends BasePlatform
                     throw new \RuntimeException(sprintf("Failed to create folder '%s'.", $custom), 500, $e);
                 }
 
-                if (is_dir("{$shared}/custom/config")) {
+                if (\is_dir("{$shared}/custom/config")) {
                     Folder::copy("{$shared}/custom/config", "{$custom}/config");
                 }
 
-                if (is_dir("{$demo}/custom/config")) {
+                if (\is_dir("{$demo}/custom/config")) {
                     Folder::copy("{$demo}/custom/config", "{$custom}/config");
                 }
             }
 
-            array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "media/gantry5/themes/{$theme}/template-shared");
-            array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "media/gantry5/themes/{$theme}/template-demo");
-            array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "media/gantry5/themes/{$theme}/custom");
+            \array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "media/gantry5/themes/{$theme}/template-shared");
+            \array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "media/gantry5/themes/{$theme}/template-demo");
+            \array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "media/gantry5/themes/{$theme}/custom");
         }
 
         // Add media stream locations

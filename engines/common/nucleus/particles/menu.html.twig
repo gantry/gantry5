@@ -112,7 +112,7 @@
                     <span class="{{ item.icon }}" aria-hidden="true"></span>
                 {% elseif item.image %}
 					{% set imageAttributes = item.image_class ? {'class': item.image_class} : {} %}
-					{{ gantry.platform.html('image', item.image, item.title, imageAttributes)|raw }}
+					<img src="{{ url(item.image) }}" alt="{{ item.title }}"{{ imageAttributes|attribute_array }} />
                 {% endif %}
                 {% if item.url %}
                     <span class="g-menu-item-content">
