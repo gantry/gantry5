@@ -19,8 +19,8 @@ use Gantry\Admin\Theme;
 use Gantry\Component\Controller\BaseController;
 use Gantry\Component\Filesystem\Streams;
 use Gantry\Component\Response\HtmlResponse;
-use Gantry\Component\Response\Response;
 use Gantry\Component\Response\JsonResponse;
+use Gantry\Component\Response\Response;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Services\ErrorServiceProvider;
 use Psr\Http\Message\ResponseInterface;
@@ -67,10 +67,8 @@ abstract class Router implements RouterInterface
         // Render the page or execute the task.
         try {
             $response = $this->execute($this->resource, $this->method, $this->path, $this->params, $this->format);
-
         } catch (ErrorException $e) {
             throw $e;
-
         } catch (\Exception $e) {
             // Handle errors.
             if ($this->container->debug()) {

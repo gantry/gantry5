@@ -1,35 +1,35 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<extension version="3.9" type="plugin" group="gantry5" method="upgrade">
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="gantry5" method="upgrade">
     <name>plg_gantry5_preset</name>
-    <version>@version@</version>
     <creationDate>@versiondate@</creationDate>
     <author>RocketTheme, LLC</author>
-    <authorEmail>support@rockettheme.com</authorEmail>
-    <authorUrl>http://www.rockettheme.com</authorUrl>
     <copyright>(C) 2005 - 2021 RocketTheme, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <description>PLG_GANTRY5_PRESET_DESCRIPTION</description>
-
+    <authorEmail>support@rockettheme.com</authorEmail>
+    <authorUrl>http://www.rockettheme.com</authorUrl>
+    <version>@version@</version>
+    <description>PLG_GANTRY5_PRESET_XML_DESCRIPTION</description>
+    <namespace path="src">Gantry\Plugin\Gantry5\Preset</namespace>
     <files>
-        <filename plugin="preset">preset.php</filename>
+        <folder plugin="preset">services</folder>
         <folder>language</folder>
+        <folder>src</folder>
     </files>
-
     <config>
         <fields name="params">
             <fieldset name="basic">
-                <field name="preset"
-                       type="text"
-                       default="presets"
-                       description="PLG_GANTRY5_OPTION_PRESET_DESC"
-                       label="PLG_GANTRY5_OPTION_PRESET_LABEL"
-                        />
-                <field name="reset"
-                       type="text"
-                       default="reset-settings"
-                       description="PLG_GANTRY5_OPTION_RESET_DESC"
-                       label="PLG_GANTRY5_OPTION_RESET_LABEL"
-                        />
+                <field
+                    name="preset"
+                    type="text"
+                    label="PLG_GANTRY5_OPTION_PRESET_LABEL"
+                    default="presets"
+                 />
+                <field
+                    name="reset"
+                    type="text"
+                    label="PLG_GANTRY5_OPTION_RESET_LABEL"
+                    default="reset-settings"
+                />
             </fieldset>
         </fields>
     </config>

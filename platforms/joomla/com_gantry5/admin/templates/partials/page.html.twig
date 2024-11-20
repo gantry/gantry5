@@ -1,6 +1,6 @@
 {% assets with { priority: 10 } %}
     {% block stylesheets %}
-        <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/joomla-g-admin.css')|e }}" type="text/css" />
+        {{ gantry.document.useAsset('style', 'com_gantry5.joomla-g-admin') }}
     {% endblock %}
 
     {% block javascript %}

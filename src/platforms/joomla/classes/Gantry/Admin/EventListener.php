@@ -20,9 +20,10 @@ use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\Manifest;
 use Gantry\Joomla\MenuHelper;
 use Gantry\Joomla\StyleHelper;
-use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Event\DispatcherInterface;
+use Joomla\Event\Event as CMSEvent;
 use Joomla\Registry\Registry;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
@@ -41,13 +42,13 @@ class EventListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            'admin.init.theme'  => ['onAdminThemeInit', 0],
-            'admin.global.save' => ['onGlobalSave', 0],
-            'admin.styles.save' => ['onStylesSave', 0],
-            'admin.settings.save' => ['onSettingsSave', 0],
-            'admin.layout.save' => ['onLayoutSave', 0],
+            'admin.init.theme'       => ['onAdminThemeInit', 0],
+            'admin.global.save'      => ['onGlobalSave', 0],
+            'admin.styles.save'      => ['onStylesSave', 0],
+            'admin.settings.save'    => ['onSettingsSave', 0],
+            'admin.layout.save'      => ['onLayoutSave', 0],
             'admin.assignments.save' => ['onAssignmentsSave', 0],
-            'admin.menus.save' => ['onMenusSave', 0]
+            'admin.menus.save'       => ['onMenusSave', 0]
         ];
     }
 
@@ -64,7 +65,7 @@ class EventListener implements EventSubscriberInterface
      */
     public function onGlobalSave(Event $event)
     {
-        $this->triggerEvent('onGantry5SaveConfig', [$event->data]);
+        $this->triggerEvent('onGantry5SaveConfig', ['data' => $event->data]);
     }
 
     /**
@@ -94,8 +95,9 @@ class EventListener implements EventSubscriberInterface
         $layout = $event->layout;
 
         $name = $layout->name;
+
         if ($name[0] !== '_' && $name !== 'default') {
-            $preset = isset($layout->preset['name']) ? $layout->preset['name'] : 'default';
+            $preset = $layout->preset['name'] ?? 'default';
 
             // Update Joomla template style.
             StyleHelper::update($layout->name, $preset);
@@ -104,7 +106,7 @@ class EventListener implements EventSubscriberInterface
         $theme = $gantry['theme.name'];
 
         /** @var Outlines $outlines */
-        $outlines = $gantry['outlines'];
+        $outlines  = $gantry['outlines'];
         $positions = $outlines->positions();
         $positions['debug'] = 'Debug';
 
@@ -113,16 +115,17 @@ class EventListener implements EventSubscriberInterface
         $manifest->save();
 
         $translations = [];
+
         foreach ($positions as $key => $translation) {
             // Encode translation key in Joomla way.
-            $key = preg_replace('/[^A-Z0-9_\-]/', '_', strtoupper("TPL_{$theme}_POSITION_{$key}"));
+            $key = \preg_replace('/[^A-Z0-9_\-]/', '_', \strtoupper("TPL_{$theme}_POSITION_{$key}"));
             $translations[$key] = $translation;
         }
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $filename = "gantry-theme://language/en-GB/en-GB.tpl_{$theme}_positions.ini";
+        $filename = "gantry-theme://language/en-GB/tpl_{$theme}_positions.ini";
 
         $ini = IniFile::instance($locator->findResource($filename, true, true));
         $ini->save($translations);
@@ -158,18 +161,21 @@ class EventListener implements EventSubscriberInterface
         /** @var string $resource */
         $resource = $event->resource;
         $menuType = MenuHelper::getMenuType();
+
         if (!$menuType->load(['menutype' => $resource])) {
             throw new \RuntimeException("Saving menu failed: Menu type {$resource} not found.", 400);
         }
+
         $options = [
-            'title' => $menu['settings.title'],
+            'title'       => $menu['settings.title'],
             'description' => $menu['settings.description']
         ];
 
         /** @var Gantry $gantry */
         $gantry = $event->gantry;
+
         if ($gantry->authorize('menu.edit') && !$menuType->save($options)) {
-            throw new \RuntimeException('Saving menu failed: '. $menuType->getError(), 400);
+            throw new \RuntimeException('Saving menu failed: ' . $menuType->getError(), 400);
         }
 
         unset($menu['settings']);
@@ -178,6 +184,7 @@ class EventListener implements EventSubscriberInterface
 
         // Create database id map to detect moved/deleted menu items.
         $idMap = [];
+
         foreach ($items as $path => $item) {
             if (!empty($item['id'])) {
                 $idMap[$item['id']] = $path;
@@ -187,7 +194,8 @@ class EventListener implements EventSubscriberInterface
         $table = MenuHelper::getMenu();
 
         foreach ($stored as $key => $info) {
-            $path = isset($idMap[$key]) ? $idMap[$key] : null;
+            $path = $idMap[$key] ?? null;
+
             if ($info['published'] <= 0) {
                 // Ignore trashed menu items.
                 continue;
@@ -195,94 +203,110 @@ class EventListener implements EventSubscriberInterface
 
             // Delete removed particles from the menu.
             if (null === $path && $info['type'] === 'heading') {
-                $params = json_decode($info['params'], true);
+                $params = \json_decode($info['params'], true);
+
                 if (!empty($params['gantry-particle'])) {
                     $table->delete($key, false);
+
                     unset($stored[$key]);
                 }
             }
         }
+
         $first = reset($stored);
 
         $menuObject = new Menu();
+
         foreach ($items as $key => &$item) {
             // Make sure we have all the default values.
             $item = (new Item($menuObject, $item))->toArray(true);
             $type = $item['type'];
 
             $id = !empty($item['id']) ? (int)$item['id'] : 0;
+
             if ($id && $table->load($item['id'], true)) {
                 // Loaded existing menu item.
                 $modified = false;
-                $params = new Registry($table->params);
+                $params   = new Registry($table->params);
 
                 // Move particles.
                 if ($type === 'particle') {
-                    $parentKey = dirname($key);
-                    $parent = isset($items[$parentKey]) ? $items[$parentKey] : null;
-                    $parentId = $parent ? $parent['id'] : null;
+                    $parentKey = \dirname($key);
+                    $parent    = $items[$parentKey] ?? null;
+                    $parentId  = $parent ? $parent['id'] : null;
+
                     if ($item['parent_id'] !== $parentId && $item['id'] !== $parentId) {
                         $table->setLocation($parentId ?: $table->getRootId(), 'last-child');
                     }
                 }
-
             } else {
                 // Add missing particles into the menu.
                 if ($type !== 'particle') {
                     throw new \RuntimeException("Failed to save /{$key}: New menu item is not a particle");
                 }
-                $modified = true;
-                $item['alias'] = strtolower($item['alias'] ?: Gantry::basename($key));
-                $parentKey = dirname($key);
-                $parentId = !empty($items[$parentKey]['id']) ? (int)$items[$parentKey]['id'] : $table->getRootId();
-                $model = isset($stored[$parentId]) ? $stored[$parentId] : $first;
+
+                $modified      = true;
+                $item['alias'] = \strtolower($item['alias'] ?: Gantry::basename($key));
+                $parentKey     = \dirname($key);
+                $parentId      = !empty($items[$parentKey]['id']) ? (int)$items[$parentKey]['id'] : $table->getRootId();
+                $model         = $stored[$parentId] ?? $first;
 
                 $table->reset();
+
                 $data = [
-                    'id' => 0,
-                    'menutype' => $resource,
-                    'alias' => $item['alias'],
-                    'note' =>  'Menu Particle',
-                    'type' => 'heading',
-                    'link' => '',
+                    'id'        => 0,
+                    'menutype'  => $resource,
+                    'alias'     => $item['alias'],
+                    'note'      => 'Menu Particle',
+                    'type'      => 'heading',
+                    'link'      => '',
                     'published' => 1,
                     'client_id' => 0,
-                    'access' => isset($model['access']) ? (int)$model['access'] : 1,
-                    'language' => isset($model['language']) ? $model['language'] : '*'
+                    'access'    => (int)$model['access'] ?? 1,
+                    'language'  => $model['language'] ?? '*'
                 ];
+
                 $table->bind($data);
                 $table->setLocation($parentId, 'last-child');
+
                 $params = new Registry($table->params);
             }
 
             $title = $item['title'];
+
             if ($table->title !== $title) {
                 $table->title = $title;
-                $modified = true;
+                $modified     = true;
             }
 
             $targets = [
-                '_self' => 0,
+                '_self'  => 0,
                 '_blank' => 1,
                 '_nonav' => 2
             ];
-            $target = $item['target'];
-            $browserNav = isset($targets[$target]) ? $targets[$target] : 0;
+
+            $target     = $item['target'];
+            $browserNav = $targets[$target] ?? 0;
+
             if ($table->browserNav != $browserNav) {
                 $table->browserNav = $browserNav;
                 $modified = true;
             }
 
             // Joomla params.
-            $enabled = $type !== 'particle' ? (int)$item['enabled'] : 0; // Hide particles from other menus.
+            $enabled = $type !== 'particle' ? (int) $item['enabled'] : 0; // Hide particles from other menus.
             $options = [
                 'menu-anchor_css' => $item['anchor_class'],
-                'menu_image' => $item['image'],
-                'menu_text' => (int)(!$item['icon_only']),
-                'menu_show' => $enabled,
+                'menu_image'      => $item['image'],
+                'menu_image_css'  => $item['image_class'],
+                'menu_icon_css'   => $item['icon'],
+                'menu_text'       => (int)(!$item['icon_only']),
+                'menu_show'       => $enabled,
             ];
+
             foreach ($options as $var => $value) {
                 $orig_value = $params->get($var);
+
                 if ($orig_value === null && $value === '') {
                 } elseif ($orig_value !== $value) {
                     $params->set($var, $value);
@@ -292,15 +316,17 @@ class EventListener implements EventSubscriberInterface
 
             // Gantry params.
             $modified = Menu::updateJParams($params, $item) | $modified;
+
             if ($modified && $gantry->authorize('menu.edit')) {
                 $table->params = (string) $params;
+
                 if (!$table->check() || !$table->store()) {
                     throw new \RuntimeException("Failed to save /{$key}: {$table->getError()}", 400);
                 }
             }
 
             $key = $table->getKeyName();
-            $item['id'] = (int)$table->{$key};
+            $item['id'] = (int) $table->{$key};
 
             // We do not need to save anything into a file anymore.
             //$item = $this->normalizeMenuItem($item);
@@ -310,6 +336,7 @@ class EventListener implements EventSubscriberInterface
 
         // Update database id map to reorder menu items.
         $idMap = [];
+
         foreach ($items as $path => $item) {
             if (!empty($item['id'])) {
                 $idMap[$item['id']] = $path;
@@ -317,16 +344,19 @@ class EventListener implements EventSubscriberInterface
         }
 
         // Finally reorder all menu items.
-        $i = isset($first['lft']) ? $first['lft'] : null;
+        $i = $first['lft'] ?? null;
+
         if ($i) {
             $exists = [];
             $ids = [];
             $lft = [];
+
             foreach ($idMap as $key => $path) {
                 $exists[$key] = true;
                 $ids[] = $key;
                 $lft[] = $i++;
             }
+
             foreach ($stored as $key => $info) {
                 // Move trashed/missing items into the end of the list.
                 if (!isset($exists[$key])) {
@@ -347,24 +377,39 @@ class EventListener implements EventSubscriberInterface
      * @return array
      */
     protected function getAll($menutype)
-	{
-	    $table = MenuHelper::getMenu();
-        $db = $table->getDbo();
-        $name = $table->getTableName();
-		$key = $table->getKeyName();
+    {
+        $table = MenuHelper::getMenu();
+        $db    = $table->getDbo();
+        $query = $db->createQuery();
+        $name  = $table->getTableName();
+        $key   = $table->getKeyName();
 
-		// Get the node and children as a tree.
-		$select = 'DISTINCT n.' . $key . ', n.parent_id, n.level, n.lft, n.path, n.type, n.access, n.params, n.language, n.published';
-		$query = $db->getQuery(true)
-			->select($select)
-			->from($name . ' AS n, ' . $name . ' AS p')
-			->where('n.lft BETWEEN p.lft AND p.rgt')
-			->where('n.menutype = ' . $db->quote($menutype))
-            ->where('n.client_id = 0')
-			->order('n.lft');
+        $query->select(
+            [
+                'DISTINCT ' . $db->quoteName('n.' . $key),
+                $db->quoteName('n.parent_id'),
+                $db->quoteName('n.level'),
+                $db->quoteName('n.lft'),
+                $db->quoteName('n.path'),
+                $db->quoteName('n.type'),
+                $db->quoteName('n.access'),
+                $db->quoteName('n.params'),
+                $db->quoteName('n.language'),
+                $db->quoteName('n.published'),
+            ]
+        )
+            ->from($db->quoteName($name, 'n') . ' , ' . $db->quoteName($name, 'p'))
+            ->where(
+                [
+                    $db->quoteName('n.lft') . ' BETWEEN ' . $db->quoteName('p.lft') . ' AND ' . $db->quoteName('p.rgt'),
+                    $db->quoteName('n.menutype') . ' = ' . $db->quote($menutype),
+                    $db->quoteName('n.client_id') . ' = 0'
+                ]
+            )
+            ->order($db->quoteName('n.lft'));
 
-		return $db->setQuery($query)->loadAssocList($key);
-	}
+        return $db->setQuery($query)->loadAssocList($key);
+    }
 
     /**
      * @param array $item
@@ -387,12 +432,10 @@ class EventListener implements EventSubscriberInterface
      */
     protected function triggerEvent($eventName, $args = [])
     {
-        PluginHelper::importPlugin('gantry5');
+        /** @var DispatcherInterface $dispatcher */
+        $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+        PluginHelper::importPlugin('gantry5', null, true, $dispatcher);
 
-        /** @var CMSApplication $app */
-        $app = Factory::getApplication();
-
-        // Trigger the onGantryThemeInit event.
-        $app->triggerEvent($eventName, $args);
+        $dispatcher->dispatch($eventName, new CMSEvent($eventName, $args));
     }
 }

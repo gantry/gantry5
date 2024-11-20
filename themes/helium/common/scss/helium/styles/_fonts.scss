@@ -1,4 +1,10 @@
-@include font-face('rockettheme-apps', 'gantry-theme://fonts/rockettheme-apps/rockettheme-apps');
+@font-face {
+	font-display: swap;
+	font-family: "normal";
+	font-style: normal;
+	font-weight: 400;
+	src: url('gantry-theme://fonts/rockettheme-apps/rockettheme-apps') format("woff2");
+  }
 
 // RocketTheme Apps Support
 i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full,

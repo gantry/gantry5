@@ -12,8 +12,8 @@
 namespace Gantry\Joomla\Category;
 
 use Gantry\Joomla\Object\Finder;
-use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 
 /**
  * Class CategoryFinder
@@ -23,8 +23,10 @@ class CategoryFinder extends Finder
 {
     /** @var string */
     protected $table = '#__categories';
+
     /** @var string */
     protected $extension = 'com_content';
+
     /** @var bool */
     protected $readonly = true;
 
@@ -71,7 +73,7 @@ class CategoryFinder extends Finder
             $idList = implode(',', $ids);
 
             // Create a subquery for the subcategory list
-            $subQuery = $this->db->getQuery(true)
+            $subQuery = $db->createQuery()
                 ->select('sub.id')
                 ->from('#__categories AS sub')
                 ->join('INNER', '#__categories AS this ON sub.lft > this.lft AND sub.rgt < this.rgt')
@@ -100,10 +102,7 @@ class CategoryFinder extends Finder
             return $this;
         }
         if ($language === true || is_numeric($language)) {
-            /** @var CMSApplication $application */
-            $application = Factory::getApplication();
-
-            $language = $application->getLanguage()->getTag();
+            $language = Factory::getApplication()->getLanguage()->getTag();
         }
         return $this->where('a.language', 'IN', [$language, '*']);
     }
@@ -137,12 +136,10 @@ class CategoryFinder extends Finder
             $this->where('a.id', 'NOT IN', $unpublished);
         }
 
-        /** @var CMSApplication $app */
-        $app = Factory::getApplication();
-
         // Check authorization.
-        $user = $app->getIdentity();
+        $user   = Factory::getApplication()->getIdentity();
         $groups = $user ? $user->getAuthorisedViewLevels() : [];
+
         if (!$groups) {
             $this->skip = true;
 
@@ -191,18 +188,17 @@ class CategoryFinder extends Finder
         static $list;
 
         if ($list === null) {
-            $db = Factory::getDbo();
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
+            $query = $db->createQuery();
 
-            $query = $db->getQuery(true)
-                ->select('cat.id AS id')
+            $query->select('cat.id AS id')
                 ->from('#__categories AS cat')
                 ->join('LEFT', '#__categories AS parent ON cat.lft BETWEEN parent.lft AND parent.rgt')
                 ->where('parent.extension = ' . $db->quote(static::getExtension($extension)))
                 ->where('parent.published != 1 AND cat.published < 1')
                 ->group('cat.id');
 
-            $db->setQuery($query);
-            $list = $db->loadColumn() ?: [];
+            $list = $db->setQuery($query)->loadColumn() ?: [];
         }
 
         return $list;

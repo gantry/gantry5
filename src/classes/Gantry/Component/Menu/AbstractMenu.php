@@ -30,7 +30,11 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
 {
-    use GantryTrait, ArrayAccessWithGetters, Iterator, Export, Countable;
+    use GantryTrait;
+    use ArrayAccessWithGetters;
+    use Iterator;
+    use Export;
+    use Countable;
 
     /** @var int|string|null */
     public $id;
@@ -67,6 +71,12 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         'highlightAlias' => true,
         'highlightParentAlias' => true
     ];
+
+    /**
+     * Internal memory based cache array of data.
+     * @var array
+     */
+    protected static $cache = [];
 
     /**
      * Create ordering lookup index [path => 1...n] from the nested ordering. Lookup has been sorted by accending ordering.
@@ -269,6 +279,12 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
      */
     public function instance(array $params = [], Config $menu = null)
     {
+        $store = \json_encode($params);
+
+        if (isset(static::$cache[$store])) {
+            return static::$cache[$store];
+        }
+
         $params += $this->defaults;
 
         $menus = $this->getMenus();
@@ -276,8 +292,10 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         if (!$menus) {
             throw new \RuntimeException('Site does not have menus', 404);
         }
+
         if (empty($params['menu'])) {
             $params['menu'] = $this->getDefaultMenuName();
+
             if (!$params['menu'] && !empty($params['admin'])) {
                 // In admin just select the first menu if there isn't default menu to be selected.
                 $params['menu'] = reset($menus);
@@ -285,9 +303,11 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         } elseif ($params['menu'] === '-active-') {
             $params['menu'] = $this->getActiveMenuName();
         }
+
         if (!$params['menu']) {
             throw new \RuntimeException('No menu selected', 404);
         }
+
         if (!\in_array($params['menu'], $menus, true)) {
             throw new \RuntimeException('Menu not found', 404);
         }
@@ -314,7 +334,6 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         if ($config->get('settings.type') !== 'custom') {
             // Get menu items from the CMS.
             $instance->getList($params, $items);
-
         } else {
             // Add custom menu items.
             $instance->addCustom($params, $items);
@@ -323,7 +342,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         // Sort menu items.
         $instance->sortAll();
 
-        return $instance;
+        return static::$cache[$store] = $instance;
     }
 
     /**

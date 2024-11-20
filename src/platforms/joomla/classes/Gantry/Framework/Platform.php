@@ -14,6 +14,7 @@ namespace Gantry\Framework;
 use Gantry\Admin\ThemeList;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Base\Platform as BasePlatform;
 use Gantry\Joomla\Category\CategoryFinder;
 use Gantry\Joomla\Content\Content;
@@ -28,7 +29,9 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Version;
+use Joomla\Database\DatabaseInterface;
+use Joomla\Database\ParameterType;
+use Joomla\Utilities\ArrayHelper;
 use RocketTheme\Toolbox\DI\Container;
 
 /**
@@ -42,40 +45,40 @@ class Platform extends BasePlatform
 {
     /** @var bool */
     public $no_base_layout = false;
+
     /** @var string */
-    public $module_wrapper;
+    public $module_wrapper = '%s';
+
     /** @var string */
-    public $component_wrapper;
+    public $component_wrapper = '%s';
+
     /** @var HtmlDocument|null */
     public $document;
 
     /** @var string */
     protected $name = 'joomla';
+
     /** @var array */
-    protected $features = ['modules' => true, 'fontawesome' => false];
+    protected $features = ['modules' => true];
+
     /** @var string */
     protected $settings_key = 'return';
+
     /** @var array|null */
     protected $modules;
 
+    /**
+     * @param Container $container
+     */
     public function __construct(Container $container)
     {
         parent::__construct($container);
-
-        $this->module_wrapper = '<div class="platform-content">%s</div>';
-
-        if (Version::MAJOR_VERSION < 4) {
-            $this->component_wrapper = '<div class="platform-content row-fluid"><div class="span12">%s</div></div>';
-        } else {
-            $this->features['fontawesome'] = true;
-            $this->component_wrapper = '<div class="platform-content container"><div class="row"><div class="col">%s</div></div></div>';
-        }
     }
 
     /**
      * @return string
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         return JVERSION;
     }
@@ -83,7 +86,7 @@ class Platform extends BasePlatform
     /**
      * @param string $html
      */
-    public function setModuleWrapper($html)
+    public function setModuleWrapper($html): void
     {
         $this->module_wrapper = $html;
     }
@@ -91,21 +94,23 @@ class Platform extends BasePlatform
     /**
      * @param string $html
      */
-    public function setComponentWrapper($html)
+    public function setComponentWrapper($html): void
     {
         $this->component_wrapper = $html;
     }
 
     /**
-     * @return BasePlatform
+     * @return Platform
      * @throws \RuntimeException
      */
-    public function init()
+    public function init(): Platform
     {
         // Support linked sample data.
-        $theme = isset($this->container['theme.name']) ? $this->container['theme.name'] : null;
-        if ($theme && is_dir(JPATH_ROOT . "/media/gantry5/themes/{$theme}/media-shared")) {
+        $theme = $this->container['theme.name'] ?? null;
+
+        if ($theme && \is_dir(JPATH_ROOT . "/media/gantry5/themes/{$theme}/media-shared")) {
             $custom = JPATH_ROOT . "/media/gantry5/themes/{$theme}/custom";
+
             if (!is_dir($custom)) {
                 // First run -- copy configuration into a single location.
                 $shared = JPATH_ROOT . "/media/gantry5/themes/{$theme}/template-shared";
@@ -117,16 +122,30 @@ class Platform extends BasePlatform
                     throw new \RuntimeException(sprintf("Failed to create folder '%s'.", $custom), 500, $e);
                 }
 
-                if (is_dir("{$shared}/custom/config")) {
+                if (\is_dir("{$shared}/custom/config")) {
                     Folder::copy("{$shared}/custom/config", "{$custom}/config");
                 }
-                if (is_dir("{$demo}/custom/config")) {
+
+                if (\is_dir("{$demo}/custom/config")) {
                     Folder::copy("{$demo}/custom/config", "{$custom}/config");
                 }
             }
-            array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "media/gantry5/themes/{$theme}/template-shared");
-            array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "media/gantry5/themes/{$theme}/template-demo");
-            array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "media/gantry5/themes/{$theme}/custom");
+
+            \array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "media/gantry5/themes/{$theme}/template-shared");
+            \array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "media/gantry5/themes/{$theme}/template-demo");
+            \array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "media/gantry5/themes/{$theme}/custom");
+        }
+
+        // Add media stream locations
+        $this->items['streams']['media-vendor'] = [
+            'type' => 'ReadOnlyStream',
+            'prefixes' => ['' => ['media/vendor']]
+        ];
+
+        if (!isset($this->items['streams']['media-templates'])) {
+            $this->items['streams']['media-templates'] = [
+                'prefixes' => ['' => []]
+            ];
         }
 
         return parent::init();
@@ -136,9 +155,10 @@ class Platform extends BasePlatform
      * @return string
      * @throws \RuntimeException
      */
-    public function getCachePath()
+    public function getCachePath(): string
     {
-        $path = Factory::getConfig()->get('cache_path', JPATH_SITE . '/cache');
+        $path = Factory::getApplication()->get('cache_path', JPATH_CACHE);
+
         if (!is_dir($path)) {
             throw new \RuntimeException('Joomla cache path does not exist!');
         }
@@ -149,7 +169,7 @@ class Platform extends BasePlatform
     /**
      * @return array
      */
-    public function getThemesPaths()
+    public function getThemesPaths(): array
     {
         return ['' => ['templates']];
     }
@@ -157,15 +177,16 @@ class Platform extends BasePlatform
     /**
      * @return array
      */
-    public function getMediaPaths()
+    public function getMediaPaths(): array
     {
         $paths = ['images'];
 
         // Support linked sample data.
-        $theme = isset($this->container['theme.name']) ? $this->container['theme.name'] : null;
-        if ($theme && is_dir(JPATH_ROOT . "/media/gantry5/themes/{$theme}/media-shared")) {
-            array_unshift($paths, "media/gantry5/themes/{$theme}/media-shared");
-            array_unshift($paths, "media/gantry5/themes/{$theme}/media-demo");
+        $theme = $this->container['theme.name'] ?? null;
+
+        if ($theme && \is_dir(JPATH_ROOT . "/media/gantry5/themes/{$theme}/media-shared")) {
+            \array_unshift($paths, "media/gantry5/themes/{$theme}/media-shared");
+            \array_unshift($paths, "media/gantry5/themes/{$theme}/media-demo");
         }
 
         /** @var Config $global */
@@ -174,7 +195,7 @@ class Platform extends BasePlatform
         if ($global->get('use_media_folder', false)) {
             $paths[] = 'gantry-theme://images';
         } else {
-            array_unshift($paths, 'gantry-theme://images');
+            \array_unshift($paths, 'gantry-theme://images');
         }
 
         return ['' => $paths];
@@ -183,23 +204,42 @@ class Platform extends BasePlatform
     /**
      * @return array
      */
-    public function getEnginesPaths()
+    public function getEnginePaths($name = 'nucleus'): array
     {
-        if (is_link(GANTRY5_ROOT . '/media/gantry5/engines')) {
+        $theme = $this->container['theme.name'] ?? null;
+        $path  = $this->container['theme.path'] ?? null;
+
+        if ($theme && $path) {
+            $cachePath = $this->getCachePath() . "/{$theme}/compiled/yaml";
+            $path      = $this->container['theme.path'];
+            $details   = new ThemeDetails($theme, $path, $cachePath);
+            $name      = $details->get('configuration.gantry.engine', $name);
+        }
+
+        return parent::getEnginePaths($name);
+    }
+
+    /**
+     * @return array
+     */
+    public function getEnginesPaths(): array
+    {
+        if ($this->container->isDev()) {
             // Development environment.
             return ['' => ["media/gantry5/engines/{$this->name}", 'media/gantry5/engines/common']];
         }
+
         return ['' => ['media/gantry5/engines']];
     }
 
     /**
      * @return array
      */
-    public function getAssetsPaths()
+    public function getAssetsPaths(): array
     {
-        if (is_link(GANTRY5_ROOT . '/media/gantry5/assets')) {
+        if ($this->container->isDev()) {
             // Development environment.
-            return ['' => ['gantry-theme://', "media/gantry5/assets/{$this->name}", 'media/gantry5/assets/common']];
+            return ['' => ['gantry-theme://', "media/gantry5/assets", 'media/gantry5/assets/common']];
         }
 
         return ['' => ['gantry-theme://', 'media/gantry5/assets']];
@@ -224,12 +264,9 @@ class Platform extends BasePlatform
      */
     public function getThemeAdminUrl($theme)
     {
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
-        $session = $application->getSession();
-        $token = $session::getFormToken();
+        $token = Factory::getApplication()->getFormToken();
 
-        return Route::_("index.php?option=com_gantry5&view=configurations/default/layout&theme={$theme}&{$token}=1" , false);
+        return Route::_("index.php?option=com_gantry5&view=configurations/default/layout&theme={$theme}&{$token}=1", false);
     }
 
     /**
@@ -245,22 +282,21 @@ class Platform extends BasePlatform
 
     /**
      * @param string $position
+     * @param ?bool $withContentOnly
      * @return int
      */
-    public function countModules($position)
+    public function countModules($position, $withContentOnly = false): int
     {
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
-        $document = $application->getDocument();
+        $doc = Factory::getApplication()->getDocument();
 
-        return ($document instanceof HtmlDocument) ? $document->countModules($position) : 0;
+        return ($doc instanceof HtmlDocument) ? $doc->countModules($position, $withContentOnly) : 0;
     }
 
     /**
      * @param string $position
      * @return array
      */
-    public function getModules($position)
+    public function getModules($position): array
     {
         // TODO:
         return [];
@@ -268,48 +304,56 @@ class Platform extends BasePlatform
 
     /**
      * @param string|object $id
-     * @param array $attribs
+     * @param ?array $attribs
      * @return string
      */
-    public function displayModule($id, $attribs = [])
+    public function displayModule($id, $attribs = []): string
     {
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
+        $app = Factory::getApplication();
 
-        $module = is_object($id) ? $id : $this->getModule($id);
+        $module = \is_object($id) ? $id : $this->getModule($id);
 
         // Make sure that module really exists.
-        if (!is_object($module)) {
+        if (!\is_object($module)) {
             return '';
         }
 
         if (empty($module->contentRendered)) {
-            $document = $application->getDocument();
-            if (!$document instanceof HtmlDocument) {
+            $doc = $app->getDocument();
+
+            if (!$doc instanceof HtmlDocument) {
                 return '';
             }
 
-            $renderer = $document->loadRenderer('module');
+            $renderer = $doc->loadRenderer('module');
 
-            $html = trim($renderer->render($module, $attribs));
+            $html = \trim($renderer->render($module, $attribs));
         } else {
-            $html = trim($module->content);
+            $html = \trim($module->content);
         }
 
         // Add frontend editing feature as it has only been defined for module positions.
-        $user = $application->getIdentity();
+        $user = $app->getIdentity();
 
-        $frontEditing = ($application->isClient('site') && $application->get('frontediting', 1) && $user && !$user->guest);
-        $menusEditing = ($application->get('frontediting', 1) == 2) && $user && $user->authorise('core.edit', 'com_menus');
+        $frontEditing = $app->isClient('site') && $app->get('frontediting', 1 && $user && !$user->guest);
+        $menusEditing = ($app->get('frontediting', 1) == 2) && $user && $user->authorise('core.edit', 'com_menus');
 
         $isGantry = \strpos($module->module, 'gantry5') !== false;
-        if (!$isGantry && $frontEditing && $html && $user && $user->authorise('module.edit.frontend', 'com_modules.module.' . $module->id)) {
+
+        if (
+            !$isGantry
+            && $frontEditing
+            && $html
+            && $user
+            && $user->authorise('module.edit.frontend', 'com_modules.module.' . $module->id)
+        ) {
             $displayData = [
-                'moduleHtml' => &$html,
-                'module' => $module,
-                'position' => isset($attribs['position']) ? $attribs['position'] : $module->position,
+                'moduleHtml'   => &$html,
+                'module'       => $module,
+                'position'     => $attribs['position'] ?? $module->position,
                 'menusediting' => $menusEditing
             ];
+
             LayoutHelper::render('joomla.edit.frontediting_modules', $displayData);
         }
 
@@ -317,7 +361,8 @@ class Platform extends BasePlatform
             /** @var Theme $theme */
             $theme = $this->container['theme'];
             $theme->joomla(true);
-            return sprintf($this->module_wrapper, $html);
+
+            return \sprintf($this->module_wrapper, $html);
         }
 
         return $html;
@@ -325,19 +370,19 @@ class Platform extends BasePlatform
 
     /**
      * @param string $position
-     * @param array $attribs
+     * @param ?array $attribs
      * @return string
      */
-    public function displayModules($position, $attribs = [])
+    public function displayModules($position, $attribs = []): string
     {
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
-        $document = $application->getDocument();
-        if (!$document instanceof HtmlDocument) {
+        $doc = Factory::getApplication()->getDocument();
+
+        if (!$doc instanceof HtmlDocument) {
             return '';
         }
 
         $html = '';
+
         foreach (ModuleHelper::getModules($position) as $module) {
             $html .= $this->displayModule($module, $attribs);
         }
@@ -346,10 +391,10 @@ class Platform extends BasePlatform
     }
 
     /**
-     * @param array $params
+     * @param ?array $params
      * @return string
      */
-    public function displaySystemMessages($params = [])
+    public function displaySystemMessages($params = []): string
     {
         // We cannot use DocumentHtml renderer here as it fires too early to display any messages.
         return '<jdoc:include type="message" />';
@@ -357,29 +402,28 @@ class Platform extends BasePlatform
 
     /**
      * @param string $content
-     * @param array $params
+     * @param ?array $params
      * @return string
      */
-    public function displayContent($content, $params = [])
+    public function displayContent($content, $params = []): string
     {
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
-        $document = $application->getDocument();
-        if (!$document instanceof HtmlDocument) {
+        $app = Factory::getApplication();
+        $doc = $app->getDocument();
+
+        if (!$doc instanceof HtmlDocument) {
             return $content;
         }
 
-        $renderer = $document->loadRenderer('component');
-
-        $html = trim($renderer->render(null, $params, $content ?: $document->getBuffer('component')));
-
-        $isGantry = \strpos($application->input->getCmd('option'), 'gantry5') !== false;
+        $renderer = $doc->loadRenderer('component');
+        $html     = \trim($renderer->render(null, $params, $content ?: $doc->getBuffer('component')));
+        $isGantry = \strpos($app->getInput()->getCmd('option'), 'gantry5') !== false;
 
         if ($html && !$isGantry) {
             /** @var Theme $theme */
             $theme = $this->container['theme'];
             $theme->joomla(true);
-            return sprintf($this->component_wrapper, $html);
+
+            return \sprintf($this->component_wrapper, $html);
         }
 
         return $html;
@@ -392,18 +436,20 @@ class Platform extends BasePlatform
     public function getModule($id)
     {
         $modules = $this->getModuleList();
+
         return $id && isset($modules[$id]) ? $modules[$id] : null;
     }
 
     /**
      * @return array|null
      */
-    protected function &getModuleList()
+    protected function getModuleList()
     {
         if ($this->modules === null) {
             $modules = ModuleHelper::getModuleList();
 
             $this->modules = [];
+
             foreach ($modules as $module) {
                 $this->modules[$module->id] = $module;
             }
@@ -416,23 +462,35 @@ class Platform extends BasePlatform
      */
     public function listModules()
     {
-        $db = Factory::getDbo();
-        $query = $db->getQuery(true);
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->createQuery();
 
-        $query->select('a.id, a.title, a.position, a.module, a.published AS enabled')
-            ->from('#__modules AS a');
-
-        // Join on the asset groups table.
-        $query->select('ag.title AS access')
-            ->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access')
-            ->where('a.published >= 0')
-            ->where('a.client_id = 0')
+        $query->select(
+            [
+                $db->quoteName('a.id'),
+                $db->quoteName('a.title'),
+                $db->quoteName('a.position'),
+                $db->quoteName('a.module'),
+                $db->quoteName('a.published', 'enabled'),
+                $db->quoteName('ag.title', 'access')
+            ]
+        )
+            ->from($db->quoteName('#__modules', 'a'))
+            ->join(
+                'LEFT',
+                $db->quoteName('#__viewlevels', 'ag'),
+                $db->quoteName('ag.id') . ' = ' . $db->quoteName('a.access')
+            )
+            ->where(
+                [
+                    $db->quoteName('a.published') . ' >= 0',
+                    $db->quoteName('a.client_id') . ' = 0'
+                ]
+            )
             ->order('a.position, a.module, a.ordering');
 
-        $db->setQuery($query);
-
         try {
-            $result = $db->loadObjectList();
+            $result = $db->setQuery($query)->loadObjectList();
         } catch (\RuntimeException $e) {
             return false;
         }
@@ -442,15 +500,16 @@ class Platform extends BasePlatform
 
     /**
      * @param string $name
-     * @param string $content
-     * @param string|int|null $width
-     * @param string|int|null $height
+     * @param ?string $content
+     * @param ?string|int|null $width
+     * @param ?string|int|null $height
      * @return string|null
      */
     public function getEditor($name, $content = '', $width = null, $height = null)
     {
-        $config = Factory::getConfig();
-        $editor = Editor::getInstance($config->get('editor'));
+        $app    = Factory::getApplication();
+        $editor = Editor::getInstance($app->get('editor'));
+
         if (!$height) {
             $height = 250;
         }
@@ -461,7 +520,7 @@ class Platform extends BasePlatform
     /**
      * @return array
      */
-    public function errorHandlerPaths()
+    public function errorHandlerPaths(): array
     {
         return ['|gantry5|'];
     }
@@ -469,7 +528,7 @@ class Platform extends BasePlatform
     /**
      * @return string
      */
-    public function settings()
+    public function settings(): string
     {
         if (!$this->authorize('platform.settings.manage')) {
             return '';
@@ -481,7 +540,7 @@ class Platform extends BasePlatform
     /**
      * @return string
      */
-    public function update()
+    public function update(): string
     {
         return Route::_('index.php?option=com_installer&view=update', false) ?: '';
     }
@@ -489,53 +548,85 @@ class Platform extends BasePlatform
     /**
      * @return array
      */
-    public function updates()
+    public function updates(): array
     {
         if (!$this->authorize('updates.manage')) {
             return [];
         }
 
+        $updateInformation = [
+            'installed' => \GANTRY5_VERSION,
+            'latest'    => null,
+            'object'    => null,
+            'hasUpdate' => false,
+            'current'   => GANTRY5_VERSION, // This is deprecated please use 'installed' or JVERSION directly
+        ];
+
         $styles = ThemeList::getThemes();
 
-        $extension_ids = array_unique(array_map(
-            function($item) {
+        $extensionIds = \array_unique(\array_map(
+            function ($item) {
                 return (int) $item->extension_id;
             },
-            $styles));
+            $styles
+        ));
 
-        $extension_ids = $extension_ids ? implode(',', $extension_ids) : '-1';
+        $ids = $extensionIds ?: ['-1'];
+        $ids = ArrayHelper::toInteger($ids);
 
-        $db = Factory::getDbo();
-        $query = $db->getQuery(true);
-        $query
-            ->select('*')
-            ->from('#__updates')
-            ->where("element='pkg_gantry5' OR extension_id IN ($extension_ids)");
+        /** @var DatabaseInterface $db */
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->createQuery();
 
-        $db->setQuery($query);
+        $query->select('*')
+            ->from($db->quoteName('#__updates'))
+            ->where(
+                [
+                    $db->quoteName('element') . ' = ' . $db->quote('pkg_gantry5'),
+                    $db->quoteName('extension_id') . ' IN (' . implode(',', $query->bindArray($ids)) . ')',
+                ],
+                'OR'
+            );
 
-        $updates = $db->loadObjectList();
+        $updateObject = $db->setQuery($query)->loadObjectList();
 
-        $list = [];
-        foreach ($updates as $update) {
+        if (empty($updateObject)) {
+            // We have not found any update in the database - we seem to be running the latest version.
+            $updateInformation['latest'] = GANTRY5_VERSION;
+
+            return $updateInformation;
+        }
+
+        foreach ($updateObject as $update) {
             if ($update->element === 'pkg_gantry5') {
                 // Rename Gantry 5 package.
                 $update->name = 'Gantry';
+
                 // Ignore git and CI installs and if the Gantry version is the same or higher than in the updates.
-                if (version_compare(GANTRY5_VERSION, 0) < 0 || version_compare($update->version, GANTRY5_VERSION) <= 0) {
+                if (
+                    \version_compare(GANTRY5_VERSION, 0) < 0
+                    || \version_compare($update->version, GANTRY5_VERSION) <= 0
+                ) {
                     continue;
                 }
+
+                $updateInformation['latest'] = $update->version;
             } else {
                 // Check if templates need to be updated.
-                $version = isset($styles[$update->element]) ? $styles[$update->element]->get('details.version') : null;
-                if (version_compare($version, 0) < 0 || version_compare($update->version, $version) <= 0) {
+                $version = $styles[$update->element]?->get('details.version');
+
+                if (
+                    \version_compare($version, 0) < 0
+                    || \version_compare($update->version, $version) <= 0
+                ) {
                     continue;
                 }
             }
-            $list[] = $update->name . ' ' . $update->version;
+
+            $updateInformation['hasUpdate'] = true;
         }
 
-        return $list;
+        return $updateInformation;
     }
 
     /**
@@ -543,26 +634,35 @@ class Platform extends BasePlatform
      */
     public function factory()
     {
-        $args = func_get_args();
-        $method = [Factory::class, 'get'. ucfirst((string) array_shift($args))];
-        return method_exists($method[0], $method[1]) ? \call_user_func_array($method, $args) : null;
+        $args   = \func_get_args();
+        $method = [Factory::class, 'get' . \ucfirst((string) \array_shift($args))];
+
+        return \method_exists($method[0], $method[1])
+            ? \call_user_func_array($method, $args)
+            : null;
     }
 
     /**
      * @return mixed|null
+     * @deprecated   5.6 will be removed in 5.7
+     *               Will be removed without replacement
      */
     public function instance()
     {
-        $args = func_get_args();
-        $class = ucfirst((string) array_shift($args));
+        @trigger_error(\sprintf('Use containers instead in %s.', __METHOD__), E_USER_DEPRECATED);
+
+        $args  = \func_get_args();
+        $class = \ucfirst((string) \array_shift($args));
+
         if (!$class) {
             return null;
         }
-        if (class_exists('J'. $class)) {
-            $class = 'J'. $class;
-        }
+
         $method = [$class, 'getInstance'];
-        return method_exists($method[0], $method[1]) ? \call_user_func_array($method, $args) : null;
+
+        return \method_exists($method[0], $method[1])
+            ? \call_user_func_array($method, $args)
+            : null;
     }
 
     /**
@@ -570,17 +670,17 @@ class Platform extends BasePlatform
      */
     public function route()
     {
-        return \call_user_func_array([Route::class, '_'], func_get_args()) ?: '';
+        return \call_user_func_array([Route::class, '_'], \func_get_args()) ?: '';
     }
 
     /**
      * @param string $layoutFile
-     * @param mixed $displayData
-     * @param string $basePath
-     * @param mixed $options
+     * @param ?mixed $displayData
+     * @param ?string $basePath
+     * @param ?mixed $options
      * @return string
      */
-    public function layout($layoutFile, $displayData = null, $basePath = '', $options = null)
+    public function layout($layoutFile, $displayData = null, $basePath = '', $options = null): string
     {
         return LayoutHelper::render($layoutFile, $displayData, $basePath, $options);
     }
@@ -590,10 +690,12 @@ class Platform extends BasePlatform
      */
     public function html()
     {
-        $args = func_get_args();
-        if (isset($args[0]) && method_exists(HTMLHelper::class, $args[0])) {
-            return \call_user_func_array([HTMLHelper::class, array_shift($args)], $args);
+        $args = \func_get_args();
+
+        if (isset($args[0]) && \method_exists(HTMLHelper::class, $args[0])) {
+            return \call_user_func_array([HTMLHelper::class, \array_shift($args)], $args);
         }
+
         return \call_user_func_array([HTMLHelper::class, '_'], $args);
     }
 
@@ -608,7 +710,7 @@ class Platform extends BasePlatform
 
     /**
      * @param string $domain
-     * @param array|null $options
+     * @param ?array|null $options
      * @return CategoryFinder|ContentFinder|null
      */
     public function finder($domain, $options = null)
@@ -637,7 +739,7 @@ class Platform extends BasePlatform
     /**
      * @param string $text
      * @param int $length
-     * @param bool $html
+     * @param ?bool $html
      * @return string
      */
     public function truncate($text, $length, $html = false)
@@ -647,15 +749,14 @@ class Platform extends BasePlatform
 
     /**
      * @param $action
-     * @param int|string|null $id
+     * @param ?int|string|null $id
      * @return bool
      * @throws \RuntimeException
      */
     public function authorize($action, $id = null)
     {
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
-        $user = $application->getIdentity();
+        $user = Factory::getApplication()->getIdentity();
+
         if (!$user) {
             return false;
         }
@@ -678,6 +779,7 @@ class Platform extends BasePlatform
                 }
 
                 $menus = $menus->getMenuIds();
+
                 foreach ($menus as $menuId) {
                     if ($user->authorise('core.manage', 'com_menus.menu.' . $menuId)) {
                         return true;
@@ -689,41 +791,47 @@ class Platform extends BasePlatform
                 if ($id) {
                     /** @var Menu $menus */
                     $menus = $this->container['menu'];
+                    $menu  = $menus->instance(['menu' => $id, 'admin' => true]);
 
-                    $menu = $menus->instance(['menu' => $id, 'admin' => true]);
                     if (!$user->authorise('core.edit', 'com_menus.menu.' . $menu->id)) {
                         return false;
                     }
 
-                    $db = Factory::getDbo();
-                    $userId = $user->id;
-
-                    $checked_out_default = Version::MAJOR_VERSION < 4 ? 'checked_out != 0' : 'checked_out IS NOT null';
+                    $db = Factory::getContainer()->get(DatabaseInterface::class);
 
                     // Verify that no items are checked out.
-                    $query = $db->getQuery(true)
-                        ->select('id')
+                    $query = $db->createQuery()
+                        ->select($db->quoteName('id'))
                         ->from($db->quoteName('#__menu'))
-                        ->where('id=' . $db->quote($menu->id))
-                        ->where('checked_out !=' . (int) $userId)
-                        ->where($checked_out_default);
-                    $db->setQuery($query);
+                        ->where(
+                            [
+                                $db->quoteName('id') . ' = :menuid',
+                                $db->quoteName('checked_out') . ' != :userid',
+                                $db->quoteName('checked_out') . ' IS NOT null'
+                            ]
+                        )
+                        ->bind(':menuid', $menu->id, ParameterType::INTEGER)
+                        ->bind(':userid', $user->id, ParameterType::INTEGER);
 
-                    if ($db->loadRowList()) {
+                    if ($db->setQuery($query)->loadRowList()) {
                         return false;
                     }
 
                     // Verify that no module for this menu are checked out.
                     $query->clear()
-                        ->select('id')
+                        ->select($db->quoteName('id'))
                         ->from($db->quoteName('#__modules'))
-                        ->where('module=' . $db->quote('mod_menu'))
-                        ->where('params LIKE ' . $db->quote('%"menutype":' . json_encode($id) . '%'))
-                        ->where('checked_out !=' . (int) $userId)
-                        ->where($checked_out_default);
-                    $db->setQuery($query);
+                        ->where(
+                            [
+                                $db->quoteName('module') . ' = ' . $db->quote('mod_menu'),
+                                $db->quoteName('params') . ' LIKE ' . $db->quote('%"menutype":' . \json_encode($id) . '%'),
+                                $db->quoteName('checked_out') . ' != :userid',
+                                $db->quoteName('checked_out') . ' IS NOT null'
+                            ]
+                        )
+                        ->bind(':userid', $user->id, ParameterType::INTEGER);
 
-                    return !$db->loadRowList();
+                    return !$db->setQuery($query)->loadRowList();
                 }
 
                 return $user->authorise('core.edit', 'com_menus');
@@ -732,11 +840,12 @@ class Platform extends BasePlatform
             case 'outline.create':
                 return $user->authorise('core.create', 'com_templates');
             case 'outline.delete':
-                 return $user->authorise('core.delete', 'com_templates');
+                return $user->authorise('core.delete', 'com_templates');
             case 'outline.rename':
                 return $user->authorise('core.edit', 'com_templates');
             case 'outline.assign':
-                return $user->authorise('core.edit.state', 'com_templates') && $user->authorise('core.edit', 'com_menu');
+                return $user->authorise('core.edit.state', 'com_templates')
+                    && $user->authorise('core.edit', 'com_menu');
             case 'outline.edit':
                 return true;
         }

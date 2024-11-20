@@ -12,8 +12,10 @@
 }
 
 // Clearfix
-.clearfix {
-	@include clearfix;
+.clearfix::after {
+    clear: both;
+    content: "";
+    display: block;
 }
 
 // Alignment

@@ -12,7 +12,6 @@
 defined('_JEXEC') or die;
 
 use Gantry\Framework\Gantry;
-use Gantry5\Loader;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
@@ -28,12 +27,14 @@ $gantry_theme_name = static function (Gantry $gantry = null) {
 
     // Joomla site also defines template name.
     $app = Factory::getApplication();
+
     if ($app->isClient('site')) {
         return $app->getTemplate();
     }
 
     // Finally fall back to folder name.
     $template = basename(dirname(__DIR__));
+
     if ($template === 'joomla') {
         // Git install.
         $template = basename(dirname(__DIR__, 2));
@@ -42,16 +43,7 @@ $gantry_theme_name = static function (Gantry $gantry = null) {
     return $template;
 };
 
-try
-{
-    $gantry = null;
-    if (!class_exists('Gantry5\Loader')) {
-        throw new RuntimeException(Text::_('GANTRY5_THEME_INSTALL_GANTRY'));
-    }
-
-    // Setup Gantry 5 Framework or throw exception.
-    Loader::setup();
-
+try {
     // Get Gantry instance and return it.
     $gantry = Gantry::instance();
 
@@ -67,9 +59,7 @@ try
     }
 
     return $gantry;
-}
-catch (Exception $e)
-{
+} catch (\Exception $e) {
     // Oops, something went wrong!
     header('HTTP/1.0 500 Internal Server Error');
 

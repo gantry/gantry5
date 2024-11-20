@@ -31,11 +31,11 @@
         </span>
     </h4>
     <div class="position-container inner-params" data-g5-position="{{ position.toJson(true)|e('html_attr') }}" data-g5-position-name="{{ position.name }}">
-        <ul>{% spaceless %}
+        <ul>
             {% for module in position %}
                 {% include 'pages/positions/item.html.twig' with { module: module } %}
             {% endfor %}
-        {% endspaceless %}</ul>
+        </ul>
     </div>
     <div class="inner-params">
         <div class="center position-actions">

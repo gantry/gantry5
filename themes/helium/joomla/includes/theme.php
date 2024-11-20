@@ -13,11 +13,6 @@ class_exists('\\Gantry\\Framework\\Gantry') or die;
 
 use Gantry\Framework\Theme;
 
-/**
- * Define the template.
- */
-class GantryTheme extends Theme {}
-
 // Initialize theme stream.
 /** @var \Gantry\Framework\Platform $platform */
 $platform = $gantry['platform'];
@@ -26,11 +21,12 @@ $platform->set(
     ['' => [
         "gantry-themes://{$gantry['theme.name']}/custom",
         "gantry-themes://{$gantry['theme.name']}",
-        "gantry-themes://{$gantry['theme.name']}/common"
+        "gantry-themes://{$gantry['theme.name']}/common",
     ]]
 );
 
+
 // Define Gantry services.
-$gantry['theme'] = static function ($c)  {
-    return new GantryTheme($c['theme.path'], $c['theme.name']);
+$gantry['theme'] = static function ($c) {
+    return new Theme($c['theme.path'], $c['theme.name']);
 };

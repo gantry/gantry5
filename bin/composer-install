@@ -15,9 +15,9 @@ composer_install('grav/gantry5', true);
 composer_install('grav/gantry5/compat', false);
 
 echo "# Running composer install for Joomla\n";
-composer_install('joomla/lib_gantry5', true);
-composer_install('joomla/plg_system_gantry5_debugbar', false);
-composer_install('joomla/lib_gantry5/compat', false);
+composer_install('joomla/lib_gantry5', false);
+// composer_install('joomla/plg_system_gantry5_debugbar', false);
+// composer_install('joomla/lib_gantry5/compat', false);
 
 echo "# Running composer install for WP\n";
 composer_install('wordpress/gantry5', true);

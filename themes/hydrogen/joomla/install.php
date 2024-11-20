@@ -9,114 +9,190 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 use Gantry\Framework\Gantry;
 use Gantry\Framework\ThemeInstaller;
-use Gantry5\Loader;
+use Joomla\CMS\Application\AdministratorApplication;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Installer\Adapter\PackageAdapter;
+use Joomla\CMS\Installer\InstallerAdapter;
+use Joomla\CMS\Installer\InstallerScriptInterface;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\DI\Container;
+use Joomla\DI\ServiceProviderInterface;
+use Joomla\Database\DatabaseInterface;
 
-/**
- * Class G5_HydrogenInstallerScript
- */
-class G5_HydrogenInstallerScript
+return new class () implements ServiceProviderInterface
 {
-    /** @var string */
-    public $requiredGantryVersion = '5.5';
-
-    /**
-     * @param string $type
-     * @param object $parent
-     * @return bool
-     * @throws Exception
-     */
-    public function preflight($type, $parent)
+    public function register(Container $container)
     {
-        if ($type === 'uninstall') {
-            return true;
-        }
+        $container->set(
+            InstallerScriptInterface::class,
+            new class (
+                $container->get(AdministratorApplication::class),
+                $container->get(DatabaseInterface::class)
+            ) implements InstallerScriptInterface {
+                /**
+                 * @var DatabaseInterface
+                 */
+                private $db;
 
-        $manifest = $parent->getManifest();
-        $name = Text::_($manifest->name);
+                /**
+                 * @var AdministratorApplication
+                 */
+                private $app;
 
-        // Prevent installation if Gantry 5 isn't enabled or is too old for this template.
-        try {
-            if (!class_exists('Gantry5\Loader')) {
-                throw new RuntimeException(sprintf('Please install Gantry 5 Framework before installing %s template!', $name));
+                /**
+                 * @var string
+                 * */
+                public $requiredGantryVersion = '5.5';
+
+                /**
+                 * The extension name. This should be set in the installer script.
+                 *
+                 * @var    string
+                 *
+                 * @since  5.6.0
+                 */
+                protected $extension;
+
+                public function __construct(AdministratorApplication $app, DatabaseInterface $db)
+                {
+                    $this->app = $app;
+                    $this->db  = $db;
+                }
+
+                /**
+                 * This method is called after extension is installed.
+                 *
+                 * @param   InstallerAdapter  $parent  Parent object calling object.
+                 *
+                 * @return  boolean True on success, false on failure.
+                 *
+                 * @since   5.6.0
+                 */
+                public function install(InstallerAdapter $parent): bool
+                {
+                    return true;
+                }
+
+                /**
+                 * This method is called after extension is updated.
+                 *
+                 * @param   InstallerAdapter  $parent  Parent object calling object.
+                 *
+                 * @return  boolean True on success, false on failure.
+                 *
+                 * @since   5.6.0
+                 */
+                public function update(InstallerAdapter $parent): bool
+                {
+                    return true;
+                }
+
+                /**
+                 * This method is called after extension is uninstalled.
+                 *
+                 * @param   InstallerAdapter  $parent  Parent object calling object.
+                 *
+                 * @return  boolean True on success, false on failure.
+                 *
+                 * @since   5.6.0
+                 */
+                public function uninstall(InstallerAdapter $parent): bool
+                {
+                    return true;
+                }
+
+                /**
+                 * Runs right before any installation action.
+                 *
+                 * @param   string                           $type    Type of PostFlight action.
+                 * @param   InstallerAdapter|PackageAdapter  $parent  Parent object calling object.
+                 *
+                 * @return  boolean True on success, false on failure.
+                 *
+                 * @since   5.6.0
+                */
+                public function preflight(string $type, InstallerAdapter $parent): bool
+                {
+                    if ($type === 'uninstall') {
+                        return true;
+                    }
+
+                    $manifest = $parent->getManifest();
+                    $name = Text::_($manifest->name);
+
+                    // Prevent installation if Gantry 5 isn't enabled or is too old for this template.
+                    try {
+                        if (!PluginHelper::isEnabled('system', 'gantry5')) {
+                            $this->app->enqueueMessage(
+                                sprintf('Please install Gantry 5 Framework before installing %s template!', $name),
+                                'error'
+                            );
+
+                            return false;
+                        }
+
+                        $gantry = Gantry::instance();
+
+                        if (!method_exists($gantry, 'isCompatible') || !$gantry->isCompatible($this->requiredGantryVersion)) {
+                            throw new \RuntimeException(sprintf(
+                                'Please upgrade Gantry 5 Framework to v%s (or later) before installing %s template!',
+                                strtoupper($this->requiredGantryVersion),
+                                $name
+                            ));
+                        }
+                    } catch (\Exception $e) {
+                        Factory::getApplication()->enqueueMessage(Text::sprintf($e->getMessage()), 'error');
+
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                /**
+                 * Runs right after any installation action.
+                 *
+                 * @param   string            $type    Type of PostFlight action. Possible values are:
+                 * @param   InstallerAdapter  $parent  Parent object calling object.
+                 *
+                 * @return  boolean True on success, false on failure.
+                 *
+                 * @since   5.6.0
+                 */
+                public function postflight(string $type, InstallerAdapter $parent): bool
+                {
+                    if ($type === 'uninstall') {
+                        return true;
+                    }
+
+                    $installer = new ThemeInstaller($parent);
+                    $installer->initialize();
+
+                    // Install sample data on first install.
+                    if (\in_array($type, ['install', 'discover_install'])) {
+                        try {
+                            $installer->installDefaults();
+
+                            echo $installer->render('install.html.twig');
+                        } catch (\Exception $e) {
+                            Factory::getApplication()->enqueueMessage(Text::sprintf($e->getMessage()), 'error');
+                        }
+                    } else {
+                        echo $installer->render('update.html.twig');
+                    }
+
+                    $installer->finalize();
+
+                    return true;
+                }
             }
-
-            Loader::setup();
-
-            $gantry = Gantry::instance();
-
-            if (!method_exists($gantry, 'isCompatible') || !$gantry->isCompatible($this->requiredGantryVersion)) {
-                throw new \RuntimeException(sprintf('Please upgrade Gantry 5 Framework to v%s (or later) before installing %s template!', strtoupper($this->requiredGantryVersion), $name));
-            }
-
-        } catch (Exception $e) {
-            $app = Factory::getApplication();
-            $app->enqueueMessage(Text::sprintf($e->getMessage()), 'error');
-
-            return false;
-        }
-
-        return true;
+        );
     }
-
-    /**
-     * @param string $type
-     * @param object $parent
-     * @throws Exception
-     */
-    public function postflight($type, $parent)
-    {
-        if ($type === 'uninstall') {
-            return true;
-        }
-
-        $installer = new ThemeInstaller($parent);
-        $installer->initialize();
-
-        // Install sample data on first install.
-        if (in_array($type, array('install', 'discover_install'))) {
-            try {
-                $installer->installDefaults();
-
-                echo $installer->render('install.html.twig');
-
-            } catch (Exception $e) {
-                $app = Factory::getApplication();
-                $app->enqueueMessage(Text::sprintf($e->getMessage()), 'error');
-            }
-        } else {
-            echo $installer->render('update.html.twig');
-        }
-
-        $installer->finalize();
-
-        return true;
-    }
-
-    /**
-     * Called by TemplateInstaller to customize post-installation.
-     *
-     * @param ThemeInstaller $installer
-     */
-    public function installDefaults(ThemeInstaller $installer)
-    {
-        // Create default outlines etc.
-        $installer->createDefaults();
-    }
-
-    /**
-     * Called by TemplateInstaller to customize sample data creation.
-     *
-     * @param ThemeInstaller $installer
-     */
-    public function installSampleData(ThemeInstaller $installer)
-    {
-        // Create sample data.
-        $installer->createSampleData();
-    }
-}
+};

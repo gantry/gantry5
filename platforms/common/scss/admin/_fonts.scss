@@ -1,7 +1,33 @@
-@include font-face('roboto', '../fonts/roboto_regular_macroman/Roboto-Regular-webfont', 400);
-@include font-face('roboto', '../fonts/roboto_medium_macroman/Roboto-Medium-webfont', 500);
-@include font-face('roboto', '../fonts/roboto_bold_macroman/Roboto-Bold-webfont', 700);
-@include font-face('rockettheme-apps', '../fonts/rockettheme-apps/rockettheme-apps');
+@font-face {
+    font-display: swap;
+    font-family: "roboto";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/roboto_regular_macroman/Roboto-Regular-webfont.woff2") format("woff2");
+}
+
+@font-face {
+    font-display: swap;
+    font-family: "roboto";
+    font-style: normal;
+    font-weight: 500;
+    src: url("../fonts/roboto_medium_macroman/Roboto-Medium-webfont.woff2") format("woff2");
+}
+
+@font-face {
+    font-display: swap;
+    font-family: "roboto";
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.woff2") format("woff2");
+}
+
+@font-face {
+    font-display: swap;
+    font-family: "rockettheme-apps";
+    font-style: normal;
+    src: url("../fonts/rockettheme-apps/rockettheme-apps.woff2") format("woff2");
+}
 
 .font-small, .fa.font-small {
     font-size: $core-font-size - 0.2rem;

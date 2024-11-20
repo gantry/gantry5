@@ -12,7 +12,9 @@
 namespace Gantry\Joomla\Object;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Service\Provider\Database;
+use Joomla\Database\DatabaseAwareTrait;
+use Joomla\Database\DatabaseInterface;
+use Joomla\Database\QueryInterface;
 
 /**
  * Class Finder
@@ -20,18 +22,26 @@ use Joomla\CMS\Service\Provider\Database;
  */
 abstract class Finder
 {
+    use DatabaseAwareTrait;
+
     /** @var string Table associated with the model. */
     protected $table;
+
     /** @var string */
     protected $primaryKey = 'id';
-    /** @var \JDatabaseQuery */
+
+    /** @var QueryInterface */
     protected $query;
-    /** @var Database */
+
+    /** @var DatabaseInterface */
     protected $db;
+
     /** @var int */
     protected $start = 0;
+
     /** @var int */
     protected $limit = 20;
+
     /** @var bool */
     protected $skip = false;
 
@@ -39,16 +49,23 @@ abstract class Finder
      * Finder constructor.
      *
      * @param array $options
+     * @param ?DatabaseInterface $db
      */
-    public function __construct(array $options = [])
+    public function __construct(array $options = [], ?DatabaseInterface $db = null)
     {
         if (!$this->table) {
             throw new \DomainException('Table name missing from ' . get_class($this));
         }
 
-        $this->db = Factory::getDbo();
-        $this->query = $this->db->getQuery(true);
-        $this->query->from($this->table . ' AS a');
+        if ($db === null) {
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
+        }
+
+        $this->setDatabase($db);
+
+        $this->db = $db;
+        $this->query = $db->createQuery();
+        $this->query->from($db->quoteName($this->table, 'a'));
 
         if ($options) {
             $this->parse($options);
@@ -123,6 +140,7 @@ abstract class Finder
         } else {
             $direction = strtolower((string)$direction) === 'desc' ? 'DESC' : 'ASC';
         }
+
         $by = (string)$alias . '.' . $this->db->quoteName($by);
         $this->query->order("{$by} {$direction}");
 
@@ -140,10 +158,10 @@ abstract class Finder
      */
     public function where($field, $operation, $value)
     {
-        $db = $this->db;
+        $db = $this->getDatabase();
         $operation = strtoupper($operation);
-        switch ($operation)
-        {
+
+        switch ($operation) {
             case '>':
             case '>=':
             case '<':
@@ -151,7 +169,7 @@ abstract class Finder
             case '=':
                 // Quote all non integer values.
                 $value = (string)(int)$value === (string)$value ? (int)$value : $db->quote($value);
-                $this->query->where("{$this->db->quoteName($field)} {$operation} {$value}");
+                $this->query->where("{$db->quoteName($field)} {$operation} {$value}");
                 break;
             case 'BETWEEN':
             case 'NOT BETWEEN':
@@ -159,7 +177,7 @@ abstract class Finder
                 // Quote all non integer values.
                 $a = (string)(int)$a === (string)$a ? (int)$a : $db->quote($a);
                 $b = (string)(int)$b === (string)$b ? (int)$b : $db->quote($b);
-                $this->query->where("{$this->db->quoteName($field)} {$operation} {$a} AND {$b}");
+                $this->query->where("{$db->quoteName($field)} {$operation} {$a} AND {$b}");
                 break;
             case 'IN':
             case 'NOT IN':
@@ -169,9 +187,11 @@ abstract class Finder
                     $this->query->where('0');
                 } else {
                     // Quote all non integer values.
-                    array_walk($value, function (&$value) use ($db) { $value = (string)(int)$value === (string)$value ? (int)$value : $db->quote($value); });
+                    array_walk($value, function (&$value) use ($db) {
+                        $value = (string)(int)$value === (string)$value ? (int)$value : $db->quote($value);
+                    });
                     $list = implode(',', $value);
-                    $this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
+                    $this->query->where("{$db->quoteName($field)} {$operation} ({$list})");
                 }
                 break;
         }

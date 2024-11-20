@@ -13,6 +13,7 @@ namespace Gantry\Joomla\MenuItem;
 
 use Gantry\Joomla\Object\AbstractObject;
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 
 /**
  * Class ContactDetails
@@ -21,15 +22,21 @@ use Joomla\CMS\Factory;
 class MenuItem extends AbstractObject
 {
     /** @var array */
-    static protected $instances = [];
-    /** @var string */
-    static protected $table = 'Menu';
-    /** @var string */
-    static protected $order = 'id';
+    protected static $instances = [];
 
+    /** @var string */
+    protected static $table = 'Menu';
+
+    /** @var string */
+    protected static $order = 'id';
+
+    /**
+     * @return string
+     */
     public function exportSql()
     {
         $component = $this->component_id;
+
         if ($component) {
             $components = static::getComponents();
             $component = $components[$component]->name;
@@ -37,8 +44,8 @@ class MenuItem extends AbstractObject
             $array = $this->getFieldValues(['asset_id', 'checked_out', 'checked_out_time']);
             $array['`component_id`'] = '`extension_id`';
 
-            $keys = implode(',', array_keys($array));
-            $values = implode(',', array_values($array));
+            $keys   = \implode(',', \array_keys($array));
+            $values = \implode(',', \array_values($array));
 
             return "INSERT INTO `#__menu` ($keys)\nSELECT {$values}\nFROM `#__extensions` WHERE `name` = '{$component}';";
         }
@@ -46,15 +53,18 @@ class MenuItem extends AbstractObject
         return $this->getCreateSql(['asset_id']) . ';';
     }
 
+    /**
+     * @return mixed
+     */
     protected static function getComponents()
     {
         static $components;
 
         if (null === $components) {
-            $db = Factory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-            $query = $db->getQuery(true);
-            $query->select('extension_id, name')->from('#__extensions');
+            $query = $db->createQuery()
+                ->select('extension_id, name')->from('#__extensions');
 
             $components = $db->setQuery($query)->loadObjectList('extension_id');
         }

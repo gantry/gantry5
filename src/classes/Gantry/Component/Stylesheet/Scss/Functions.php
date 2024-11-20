@@ -176,7 +176,11 @@ class Functions
             if ($font && !isset($this->usedFonts[$font])) {
                 $this->usedFonts[$font] = true;
 
-                return "url('//fonts.googleapis.com/css?{$value}')";
+                if (str_contains($value, 'wght@')) {
+                    return "url('//fonts.googleapis.com/css2?{$value}&display=swap')";
+                } else {
+                    return "url('//fonts.googleapis.com/css?{$value}')";
+                }
             }
         }
 

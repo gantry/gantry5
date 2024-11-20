@@ -23,23 +23,24 @@ class Site
 {
     /** @var string */
     public $theme;
+
     /** @var string */
     public $url;
+
     /** @var string */
     public $title;
+
     /** @var string */
     public $description;
 
     public function __construct()
     {
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
-        $document = $application->getDocument();
+        $document = Factory::getApplication()->getDocument();
 
         if ($document instanceof HtmlDocument) {
-            $this->theme = $document->template;
-            $this->url = $document->baseurl;
-            $this->title = $document->title;
+            $this->theme       = $document->template;
+            $this->url         = $document->baseurl;
+            $this->title       = $document->title;
             $this->description = $document->description;
         }
     }

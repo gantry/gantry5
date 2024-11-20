@@ -31,6 +31,13 @@ form:
       options:
         '': Use Default Menu
         '-active-': Use Active Menu
+        '-language-': Use Language Tag Menu
+
+    languageBaseName:
+      type: input.text
+      label: Language Base Menu
+      description: 'The base menu name to append the language tag too. <br />Example: mainmenu -> mainmenu-en-gb'
+      default: 'mainmenu'
 
     base:
       type: menu.item
@@ -50,12 +57,6 @@ form:
       type: input.text
       label: Max Levels
       description: Set the maximum number of menu levels to display.
-      default: 0
-
-    renderTitles:
-      type: input.checkbox
-      label: Render Titles
-      description: Renders the titles/tooltips of the Menu Items for accessibility.
       default: 0
 
     hoverExpand:

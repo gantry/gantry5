@@ -1,3 +1,21 @@
-textarea, select[multiple=multiple], #{$all-text-inputs} {
+input:not([type]),
+select,
+textarea,
+[type="color"],
+[type="date"],
+[type="datetime"],
+[type="datetime-local"],
+[type="email"],
+[type="month"],
+[type="month"],
+[type="number"],
+[type="password"],
+[type="search"],
+[type="tel"],
+[type="text"],
+[type="time"],
+[type="url"],
+[type="week"],
+select[multiple=multiple] {
 	border-radius: $core-border-radius;
 }

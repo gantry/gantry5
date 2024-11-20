@@ -367,22 +367,23 @@ class Page extends HtmlController
      * @param bool $onlyEnabled
      * @return array
      */
-    protected function getAtoms($onlyEnabled = false)
+    protected function getAtoms($onlyEnabled = false): array
     {
         $config = $this->container['config'];
 
         $atoms = $this->container['particles']->all();
 
         $list = [];
+
         foreach ($atoms as $name => $atom) {
-            $type     = isset($atom['type']) ? $atom['type'] : 'atom';
-            $atomName = isset($atom['name']) ? $atom['name'] : $name;
+            $type     = $atom['type'] ?? 'atom';
+            $atomName = $atom['name'] ?? $name;
 
             if (!$onlyEnabled || $config->get("particles.{$name}.enabled", true)) {
                 $list[$type][$name] = $atomName;
             }
         }
 
-        return $list['atom'];
+        return $list['atom'] ?? [];
     }
 }

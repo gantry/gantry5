@@ -11,10 +11,12 @@
 
 namespace Gantry\Joomla;
 
-use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\Cache\Cache;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
+use Joomla\CMS\Cache\Controller\CallbackController;
 use Joomla\CMS\Cache\Exception\CacheExceptionInterface;
+use Joomla\CMS\Event\Model;
 use Joomla\CMS\Factory;
+use Joomla\Event\DispatcherInterface;
 
 /**
  * Class CacheHelper
@@ -22,20 +24,20 @@ use Joomla\CMS\Factory;
  */
 class CacheHelper
 {
-    public static function cleanTemplates()
+    public static function cleanTemplates(): void
     {
         static::cleanSystem();
         self::cleanByType('com_templates', 0);
         self::cleanByType('com_templates', 1);
     }
 
-    public static function cleanModules()
+    public static function cleanModules(): void
     {
         static::cleanSystem();
         self::cleanByType('com_modules', 0);
     }
 
-    public static function cleanMenu()
+    public static function cleanMenu(): void
     {
         static::cleanSystem();
         self::cleanByType('mod_menu', 0);
@@ -43,46 +45,46 @@ class CacheHelper
         self::cleanByType('com_menus', 1);
     }
 
-    public static function cleanPlugin()
+    public static function cleanPlugin(): void
     {
         static::cleanSystem();
         self::cleanByType('com_plugins', 0);
         self::cleanByType('com_plugins', 1);
     }
 
-    public static function cleanSystem()
+    public static function cleanSystem(): void
     {
         self::cleanByType('_system', 0);
         self::cleanByType('_system', 1);
     }
 
     /**
-     * @param string|null $group
-     * @param int $client_id
-     * @param string $event
+     * @param ?string|null $group
+     * @param ?int $client_id
+     * @param ?string $event
      */
-    private static function cleanByType($group = null, $client_id = 0, $event = 'onContentCleanCache')
+    private static function cleanByType($group = null, $client_id = 0, $event = 'onContentCleanCache'): void
     {
-        $config = Factory::getConfig();
+        $app = Factory::getApplication();
 
         $options = [
             'defaultgroup' => $group,
-            'cachebase' => $client_id ? JPATH_ADMINISTRATOR . '/cache' : $config->get('cache_path', JPATH_SITE . '/cache'),
-            'result' => true
+            'cachebase'    => $client_id ? JPATH_ADMINISTRATOR . '/cache' : $app->get('cache_path', JPATH_CACHE),
+            'result'       => true,
         ];
 
         try {
-            /** @var Cache $cache */
-            $cache = Cache::getInstance('callback', $options);
+            /** @var CallbackController $cache */
+            $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)
+                ->createCacheController('callback', $options);
             $cache->clean();
-        } catch (CacheExceptionInterface $e) {
+        } catch (CacheExceptionInterface $exception) {
             $options['result'] = false;
         }
 
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
+        /** @var DispatcherInterface $dispatcher */
+        $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
 
-        // Trigger the onContentCleanCache event.
-        $application->triggerEvent($event, $options);
+        $dispatcher->dispatch($event, new Model\AfterCleanCacheEvent($event, $options));
     }
 }

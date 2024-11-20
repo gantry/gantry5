@@ -64,7 +64,11 @@
                     padding: 4px 16px 4px 4px;
                     white-space: pre;
                     position: relative;
-                    @include ellipsis();
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    line-clamp: 1;
+                    display: -webkit-box;
+                    overflow: hidden;
 
                     .g-bookmark-collapse {
                         position: absolute;
@@ -100,7 +104,11 @@
                         }
 
                         .path {
-                            @include ellipsis();
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 1;
+                            line-clamp: 1;
+                            display: -webkit-box;
+                            overflow: hidden;
                         }
                     }
                 }

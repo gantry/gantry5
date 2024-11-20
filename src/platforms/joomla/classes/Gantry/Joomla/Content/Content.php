@@ -21,6 +21,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\User\User;
+use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
 use Joomla\Component\Content\Site\Model\ArticleModel;
@@ -45,11 +46,11 @@ use Joomla\Component\Content\Site\Model\ArticleModel;
 class Content extends AbstractObject
 {
     /** @var array */
-    static protected $instances = [];
+    protected static $instances = [];
     /** @var string */
-    static protected $table = 'Content';
+    protected static $table = 'Content';
     /** @var string */
-    static protected $order = 'id';
+    protected static $order = 'id';
 
     /**
      * @return bool
@@ -60,15 +61,17 @@ class Content extends AbstractObject
             return false;
         }
 
-        $this->images = json_decode($this->images, false);
-        $this->urls = json_decode($this->urls, false);
-        $this->attribs = json_decode($this->attribs, false);
+        $this->images   = json_decode($this->images, false);
+        $this->urls     = json_decode($this->urls, false);
+        $this->attribs  = json_decode($this->attribs, false);
         $this->metadata = json_decode($this->metadata, false);
 
         $nullDate = Factory::getDbo()->getNullDate();
+
         if ($this->modified === $nullDate) {
             $this->modified = $this->created;
         }
+
         if ($this->publish_up === $nullDate) {
             $this->publish_up = $this->created;
         }
@@ -81,7 +84,7 @@ class Content extends AbstractObject
      */
     public function author()
     {
-        return User::getInstance($this->created_by);
+        return Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($this->created_by);
     }
 
     /**
@@ -131,7 +134,7 @@ class Content extends AbstractObject
      */
     public function readmore()
     {
-        return (bool)\strlen($this->fulltext);
+        return (bool) \strlen($this->fulltext);
     }
 
     /**
@@ -140,16 +143,9 @@ class Content extends AbstractObject
     public function route()
     {
         $category = $this->category();
+        $url = RouteHelper::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias);
 
-        if (version_compare(JVERSION, '4.0', '<')) {
-            require_once JPATH_SITE . '/components/com_content/helpers/route.php';
-
-            return htmlspecialchars_decode(Route::_(\ContentHelperRoute::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias), false), ENT_COMPAT);
-        }
-
-        require_once JPATH_SITE . '/components/com_content/src/Helper/RouteHelper.php';
-
-        return htmlspecialchars_decode(Route::_(RouteHelper::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias), false), ENT_COMPAT);
+        return \htmlspecialchars_decode(Route::_($url, false), ENT_COMPAT);
     }
 
     /**
@@ -157,20 +153,14 @@ class Content extends AbstractObject
      */
     public function edit()
     {
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
-        $user = $application->getIdentity();
+        $user  = Factory::getApplication()->getIdentity();
         $asset = "com_content.article.{$this->id}";
 
         if ($user && ($user->authorise('core.edit', $asset) || $user->authorise('core.edit.own', $asset))) {
-            if (version_compare(JVERSION, '4.0', '<')) {
-                return "index.php?option=com_content&task=article.edit&a_id={$this->id}&tmpl=component";
-            }
-
             $contentUrl = RouteHelper::getArticleRoute($this->id . ':' . $this->alias, $this->catid);
-		    $url = $contentUrl . '&task=article.edit&a_id=' . $this->id;
+            $url = $contentUrl . '&task=article.edit&a_id=' . $this->id;
 
-            return htmlspecialchars_decode(Route::_($url), ENT_COMPAT);
+            return \htmlspecialchars_decode(Route::_($url), ENT_COMPAT);
         }
 
         return false;
@@ -182,8 +172,10 @@ class Content extends AbstractObject
      */
     public function render($file)
     {
+        $gantry = Gantry::instance();
+
         /** @var Theme $theme */
-        $theme = Gantry::instance()['theme'];
+        $theme = $gantry['theme'];
 
         return $theme->render($file, ['article' => $this]);
     }
@@ -194,8 +186,10 @@ class Content extends AbstractObject
      */
     public function compile($string)
     {
+        $gantry = Gantry::instance();
+
         /** @var Theme $theme */
-        $theme = Gantry::instance()['theme'];
+        $theme = $gantry['theme'];
 
         return $theme->compile($string, ['article' => $this]);
     }
@@ -210,8 +204,8 @@ class Content extends AbstractObject
             'ignore_request' => true
         ];
 
-        $user = Factory::getUser();
-        $app = Factory::getApplication();
+        $app    = Factory::getApplication();
+        $user   = $app->getIdentity();
         $params = $app->getParams();
 
         $model = new ArticleModel($config);
@@ -221,8 +215,8 @@ class Content extends AbstractObject
 
         // If $pk is set then authorise on complete asset, else on component only
         $asset = empty($this->id) ? 'com_content' : 'com_content.article.' . $this->id;
-        if ((!$user->authorise('core.edit.state', $asset)) && (!$user->authorise('core.edit', $asset)))
-        {
+
+        if ((!$user->authorise('core.edit.state', $asset)) && (!$user->authorise('core.edit', $asset))) {
             $model->setState('filter.published', ContentComponent::CONDITION_PUBLISHED);
             $model->setState('filter.archived', ContentComponent::CONDITION_ARCHIVED);
         }
@@ -257,16 +251,25 @@ class Content extends AbstractObject
         return $properties;
     }
 
+    /**
+     * @return string
+     */
     public function exportSql()
     {
         return $this->getCreateSql(['asset_id', 'created_by', 'modified_by', 'checked_out', 'checked_out_time', 'publish_up', 'publish_down', 'version', 'xreference']) . ';';
     }
 
+    /**
+     * @param mixed $table
+     * @param mixed $k
+     * @param mixed $v
+     * @return string
+     */
     protected function fixValue($table, $k, $v)
     {
         if ($k === '`created`' || $k === '`modified`') {
             $v = 'NOW()';
-        } elseif (is_string($v)) {
+        } elseif (\is_string($v)) {
             $dbo = $table->getDbo();
             $v = $dbo->quote($v);
         }

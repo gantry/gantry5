@@ -3,27 +3,27 @@
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
     position: relative;
     vertical-align: middle;
-    @include transition (background-color 0.3s ease-in-out);
+    transition: background-color 0.3s ease-in-out;
 }
 
 %knob {
     position: absolute;
     background: $white;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
-    @include transition (all 0.3s ease-in-out);
+    transition: all 0.3s ease-in-out;
 }
 
 @mixin toggle-ui($size: 18px, $round: false){
     @extend %toggle;
     border-radius: $size;
 
-    @if $round == false { @include size(($size * 2) $size); }
-    @else               { @include size($size $size); }
+    @if $round == false { width: ($size * 2); height: $size; }
+    @else               { width: $size; height: $size; }
 
     .knob {
         @extend %knob;
-        @if $round == false { @include size(($size + 2) ($size - 2)); }
-        @else               { @include size(($size - 6) ($size - 6)); }
+        @if $round == false { width: ($size + 2); height: ($size - 2); }
+        @else               { width: ($size - 6); height: ($size - 6); }
         border-radius: $size + 2;
     }
 }

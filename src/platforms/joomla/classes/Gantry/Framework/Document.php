@@ -12,11 +12,10 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Content\Document\HtmlDocument;
-use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Version as JVersion;
+use Joomla\CMS\Version;
 use Joomla\CMS\WebAsset\WebAssetManager;
 
 /**
@@ -25,29 +24,32 @@ use Joomla\CMS\WebAsset\WebAssetManager;
  */
 class Document extends HtmlDocument
 {
+    /**
+     * @var array
+     */
     protected static $availableFrameworks = [
-        'jquery' => 'registerJquery',
-        'jquery.framework' => 'registerJquery',
-        'jquery.ui.core' => 'registerJqueryUiCore',
+        'jquery'             => 'registerJquery',
+        'jquery.framework'   => 'registerJquery',
+        'jquery.ui.core'     => 'registerJqueryUiCore',
         'jquery.ui.sortable' => 'registerJqueryUiSortable',
-        'bootstrap' => 'registerBootstrap',
-        'bootstrap.2' => 'registerBootstrap2',
-        'bootstrap.3' => 'registerBootstrap3',
-        'bootstrap.4' => 'registerBootstrap4',
-        'bootstrap.5' => 'registerBootstrap5',
-        'mootools' => 'registerMootools',
+        'bootstrap'          => 'registerBootstrap',
+        'bootstrap.2'        => 'registerBootstrap2',
+        'bootstrap.3'        => 'registerBootstrap3',
+        'bootstrap.4'        => 'registerBootstrap4',
+        'bootstrap.5'        => 'registerBootstrap5',
+        'mootools'           => 'registerMootools',
         'mootools.framework' => 'registerMootools',
-        'mootools.core' => 'registerMootools',
-        'mootools.more' => 'registerMootoolsMore',
-        'lightcase' => 'registerLightcase',
-        'lightcase.init' => 'registerLightcaseInit',
+        'mootools.core'      => 'registerMootools',
+        'mootools.more'      => 'registerMootoolsMore',
+        'lightcase'          => 'registerLightcase',
+        'lightcase.init'     => 'registerLightcaseInit',
     ];
 
     /**
      * @param string $framework
      * @return bool
      */
-    public static function addFramework($framework)
+    public static function addFramework($framework): bool
     {
         if (!parent::addFramework($framework)) {
             return false;
@@ -56,11 +58,12 @@ class Document extends HtmlDocument
         // Make sure that if Bootstap framework is loaded, also load CSS.
         if (
             $framework === 'bootstrap'
-            || ($framework === 'bootstrap.2' && JVersion::MAJOR_VERSION === 3)
-            || ($framework === 'bootstrap.5' && JVersion::MAJOR_VERSION >= 4)
+             || ($framework === 'bootstrap.5' && Version::MAJOR_VERSION >= 4)
         ) {
+            $gantry = Gantry::instance();
+
             /** @var Theme $theme */
-            $theme = Gantry::instance()['theme'];
+            $theme =  $gantry['theme'];
             $theme->joomla = true;
         }
 
@@ -68,9 +71,9 @@ class Document extends HtmlDocument
     }
 
     /**
-     *
+     * @return void
      */
-    public static function registerAssets()
+    public static function registerAssets(): void
     {
         static::registerFrameworks();
         static::registerStyles();
@@ -83,7 +86,7 @@ class Document extends HtmlDocument
      * @param bool|null $addDomain
      * @return string
      */
-    public static function domain($addDomain = null)
+    public static function domain($addDomain = null): string
     {
         if (!$addDomain) {
             return '';
@@ -98,16 +101,16 @@ class Document extends HtmlDocument
     /**
      * @return string
      */
-    public static function rootUri()
+    public static function rootUri(): string
     {
-        return rtrim(Uri::root(true), '/') ?: '/';
+        return \rtrim(Uri::root(true), '/') ?: '/';
     }
 
     /**
      * @param bool|null $new
      * @return bool
      */
-    public static function errorPage($new = null)
+    public static function errorPage($new = null): bool
     {
         static $error = false;
 
@@ -118,59 +121,115 @@ class Document extends HtmlDocument
         return $error;
     }
 
-    protected static function registerStyles()
+    /**
+     * @return void
+     */
+    protected static function registerStyles(): void
     {
         if (static::errorPage()) {
             return;
         }
 
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
-        $doc = $application->getDocument();
+        $doc = Factory::getApplication()->getDocument();
+
+        /** @var WebAssetManager $wa */
+        $wa = $doc->getWebAssetManager();
 
         $styles = static::$stack[0]->getStyles();
 
         foreach ($styles as $style) {
             switch ($style[':type']) {
                 case 'file':
-                    $attribs = array_replace(['type' => $style['type'], 'media' => $style['media']], $style['element']);
-                    $attribs = array_filter($attribs, static function($arg) { return null !== $arg; });
-                    $doc->addStyleSheet($style['href'], [], $attribs);
+                    $attribs = \array_replace([
+                        'media' => $style['media'],
+                    ], $style['element']);
+
+                    $attribs = \array_filter($attribs, static function ($arg): bool {
+                        return null !== $arg;
+                    });
+
+                    $uri   = \ltrim(\strtok($style['href'], '?'), '/');
+                    $asset = $attribs['asset'] ?? 'template.' . \explode('_', \basename($uri, '.css'))[0];
+
+                    $dependencies = isset($attribs['dependencies']) ? \explode(',', $attribs['dependencies']) : [];
+
+                    if (\array_key_exists('dependencies', $attribs)) {
+                        unset($attribs['dependencies']);
+                    }
+
+                    if (\array_key_exists('asset', $attribs)) {
+                        unset($attribs['asset']);
+                    }
+
+                    $wa->registerAndUseStyle($asset, $uri, [], $attribs, $dependencies);
+
                     break;
                 case 'inline':
-                    $doc->addStyleDeclaration($style['content'], $style['type']);
+                    $wa->addInlineStyle($style['content']);
+
                     break;
             }
         }
     }
 
-    protected static function registerScripts()
+    /**
+     * @return void
+     */
+    protected static function registerScripts(): void
     {
         if (static::errorPage()) {
             return;
         }
 
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
-        $doc = $application->getDocument();
+        /** @var WebAssetManager $wa */
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 
         $scripts = static::$stack[0]->getScripts();
 
         foreach ($scripts as $script) {
             switch ($script[':type']) {
                 case 'file':
-                    $attribs = ['mime' => $script['type'], 'defer' => $script['defer'], 'async' => $script['async']];
-                    $attribs = array_filter($attribs, static function($arg) { return null !== $arg; });
-                    $doc->addScript($script['src'], [], $attribs);
+                    $attribs = \array_replace([
+                        'defer' => $script['defer'],
+                        'async' => $script['async']
+                    ], $script['element']);
+
+                    unset($attribs['content']);
+
+                    $attribs = \array_filter($attribs, static function ($arg): bool {
+                        return null !== $arg;
+                    });
+
+                    $uri   = \strtok($script['src'], '?');
+                    $uri   = \ltrim($uri, '/');
+
+                    $asset        = $attribs['asset'] ?? 'template.' . basename($uri, '.js');
+                    $dependencies = isset($attribs['dependencies']) ? \explode(',', $attribs['dependencies']) : [];
+
+                    if (\array_key_exists('dependencies', $attribs)) {
+                        unset($attribs['dependencies']);
+                    }
+
+                    if (\array_key_exists('asset', $attribs)) {
+                        unset($attribs['asset']);
+                    }
+
+                    $wa->registerAndUseScript($asset, $uri, [], $attribs, $dependencies);
+
                     break;
                 case 'inline':
-                    $doc->addScriptDeclaration($script['content'], $script['type']);
+                    $wa->addInlineScript($script['content']);
                     break;
             }
         }
     }
 
-    protected static function registerJquery()
+    /**
+     * @return void
+     * @deprecated   5.6 will be removed in 5.7
+     *               Will be removed without replacement
+     */
+    protected static function registerJquery(): void
     {
         if (version_compare(JVERSION, '4.0', '>')) {
             if (!static::errorPage()) {
@@ -182,7 +241,7 @@ class Document extends HtmlDocument
             /** @var WebAssetManager $wa */
             $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 
-            array_map(
+            \array_map(
                 static function ($script) use ($wa) {
                     $asset = $wa->getAsset('script', $script);
 
@@ -198,136 +257,65 @@ class Document extends HtmlDocument
                 },
                 ['jquery', 'jquery-noconflict']
             );
-
-            return;
         }
-
-        // Joomla 3:
-        if (!static::errorPage()) {
-            HTMLHelper::_('jquery.framework');
-
-            return;
-        }
-
-        // Workaround for error document type.
-        static::addHeaderTag(
-            [
-                'tag' => 'script',
-                'src' => Uri::getInstance()->base(true) . '/media/jui/js/jquery.min.js'
-            ],
-            'head',
-            100
-        );
-        static::addHeaderTag(
-            [
-                'tag' => 'script',
-                'src' => Uri::getInstance()->base(true) . '/media/jui/js/jquery-noconflict.js'
-            ],
-            'head',
-            100
-        );
-        static::addHeaderTag(
-            [
-                'tag' => 'script',
-                'src' => Uri::getInstance()->base(true) . '/media/jui/js/jquery-migrate.min.js'
-            ],
-            'head',
-            100
-        );
     }
 
-    protected static function registerJqueryUiCore()
+    /**
+     * @return void
+     * @deprecated   5.6 will be removed in 5.7
+     *               Will be removed without replacement
+     */
+    protected static function registerJqueryUiCore(): void
     {
         if (version_compare(JVERSION, '4.0', '>')) {
-            //user_error('jQuery UI Core is not supported in Joomla 4, please remove the dependency!', E_USER_DEPRECATED);
+            @trigger_error('jQuery UI Core is not supported in Joomla 4, please remove the dependency!', E_USER_DEPRECATED);
 
             parent::registerJqueryUiSortable();
 
             return;
         }
-
-        if (!static::errorPage()) {
-            HTMLHelper::_('jquery.ui', ['core']);
-
-            return;
-        }
-
-        // Workaround for error document type.
-        static::registerJquery();
-        static::addHeaderTag(
-            [
-                'tag' => 'script',
-                'src' => Uri::getInstance()->base(true) . '/media/jui/js/jquery.ui.core.min.js'
-            ],
-            'head',
-            100
-        );
-
     }
 
-    protected static function registerJqueryUiSortable()
+    /**
+     * @return void
+     * @deprecated   5.6 will be removed in 5.7
+     *               Will be removed without replacement
+     */
+    protected static function registerJqueryUiSortable(): void
     {
         if (version_compare(JVERSION, '4.0', '>')) {
-            //user_error('jQuery UI Sortable is not supported in Joomla 4, please remove the dependency!', E_USER_DEPRECATED);
+            @trigger_error('jQuery UI Sortable is not supported in Joomla 4, please remove the dependency!', E_USER_DEPRECATED);
 
             parent::registerJqueryUiSortable();
 
             return;
         }
-
-        if (!static::errorPage()) {
-            HTMLHelper::_('jquery.ui', ['sortable']);
-
-            return;
-        }
-
-        // Workaround for error document type.
-        static::registerJqueryUiCore();
-        static::addHeaderTag(
-            [
-                'tag' => 'script',
-                'src' => Uri::getInstance()->base(true) . '/media/jui/js/jquery.ui.sortable.min.js'
-            ],
-            'head',
-            100
-        );
     }
 
+    /**
+     * @return void
+     */
     protected static function registerBootstrap()
     {
         if (version_compare(JVERSION, '4.0', '>')) {
             static::registerBootstrap5();
-        } else {
-            static::registerBootstrap2();
         }
     }
 
+    /**
+     * @return void
+     * @deprecated   5.6 will be removed in 5.7
+     *               Will be removed without replacement
+     */
     protected static function registerBootstrap2()
     {
         if (version_compare(JVERSION, '4.0', '>')) {
-            //user_error('Bootstrap 2 is not supported in Joomla 4, using Bootstrap 5 instead!', E_USER_DEPRECATED);
+            @trigger_error('Bootstrap 2 is not supported in Joomla 4, using Bootstrap 5 instead!', E_USER_DEPRECATED);
 
             static::registerBootstrap5();
 
             return;
         }
-
-        if (!static::errorPage()) {
-            HTMLHelper::_('bootstrap.framework');
-
-            return;
-        }
-
-        // Workaround for error document type.
-        static::registerJquery();
-        static::addHeaderTag(
-            [
-                'tag' => 'script',
-                'src' => Uri::getInstance()->base(true) . '/media/jui/js/bootstrap.min.js'
-            ],
-            'head',
-            100
-        );
     }
 
     protected static function registerBootstrap5()
@@ -342,7 +330,7 @@ class Document extends HtmlDocument
             /** @var WebAssetManager $wa */
             $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 
-            array_map(
+            \array_map(
                 static function ($script) use ($wa) {
                     $asset = $wa->getAsset('script', 'bootstrap.' . $script);
 
@@ -365,67 +353,36 @@ class Document extends HtmlDocument
         parent::registerBootstrap5();
     }
 
-    protected static function registerMootools()
+    /**
+     * @return void
+     * @deprecated   5.6 will be removed in 5.7
+     *               Will be removed without replacement
+     */
+    protected static function registerMootools(): void
     {
         if (version_compare(JVERSION, '4.0', '>')) {
-            //user_error('Mootools is no longer supported in Joomla 4!', E_USER_DEPRECATED);
+            @trigger_error('Mootools is no longer supported in Joomla 4!', E_USER_DEPRECATED);
 
             parent::registerMootools();
 
             return;
         }
-
-        if (!static::errorPage()) {
-            HTMLHelper::_('behavior.framework');
-
-            return;
-        }
-
-        // Workaround for error document type.
-        static::addHeaderTag(
-            [
-                'tag' => 'script',
-                'src' => Uri::getInstance()->base(true) . '/media/system/js/mootools-core.js'
-            ],
-            'head',
-            99
-        );
-        static::addHeaderTag(
-            [
-                'tag' => 'script',
-                'src' => Uri::getInstance()->base(true) . '/media/system/js/core.js'
-            ],
-            'head',
-            99
-        );
     }
 
-    protected static function registerMootoolsMore()
+    /**
+     * @return void
+     * @deprecated   5.6 will be removed in 5.7
+     *               Will be removed without replacement
+     */
+    protected static function registerMootoolsMore(): void
     {
         if (version_compare(JVERSION, '4.0', '>')) {
-            //user_error('Mootools is no longer supported in Joomla 4!', E_USER_DEPRECATED);
+            @trigger_error('Mootools is no longer supported in Joomla 4!', E_USER_DEPRECATED);
 
             parent::registerMootoolsMore();
 
             return;
         }
-
-        if (!static::errorPage()) {
-            HTMLHelper::_('behavior.framework', true);
-
-            return;
-        }
-
-        // Workaround for error document type.
-        static::registerMootools();
-        static::addHeaderTag(
-            [
-                'tag' => 'script',
-                'src' => Uri::getInstance()->base(true) . '/media/system/js/mootools-more.js'
-            ],
-            'head',
-            99
-        );
     }
 
     /**
@@ -437,12 +394,63 @@ class Document extends HtmlDocument
      */
     public static function linkHandler(array $matches)
     {
-        $url = trim($matches[3]);
-        if (strpos($url, 'index.php?') !== 0) {
-            list($domain, $timestamp_age) = static::$urlFilterParams;
-            $url = static::url(trim($matches[3]), $domain, $timestamp_age);
+        $url = \trim($matches[3]);
+
+        if (\strpos($url, 'index.php?') !== 0) {
+            [$domain, $timestamp_age] = static::$urlFilterParams;
+            $url = static::url(\trim($matches[3]), $domain, $timestamp_age);
         }
 
         return "{$matches[1]}{$matches[2]}=\"{$url}\"";
+    }
+
+    /**
+     * @param string $type
+     * @param string $name
+    */
+    public static function useAsset($type, $name): void
+    {
+        if (!\in_array($type, ['style', 'script', 'preset'])) {
+            return;
+        }
+
+        $app = Factory::getApplication();
+
+        /** @var WebAssetManager $wa */
+        $wa = $app->getDocument()->getWebAssetManager();
+        $wr = $wa->getRegistry();
+
+        if ($app->isClient('administrator')) {
+            $wr->addRegistryFile('media/com_gantry5/joomla.asset.json');
+        }
+
+        if ($wa->assetExists($type, $name)) {
+            $wa->useAsset($type, $name);
+        }
+    }
+
+    /**
+     * Adds `<link>` tags to the head of the document
+     *
+     * @param   string  $href      The link that is being related.
+     * @param   string  $relation  Relation of link.
+     * @param   ?string  $relType   Relation type attribute.  Either rel or rev (default: 'rel').
+     * @param   ?array   $attribs   Associative array of remaining attributes.
+     */
+    public static function addHeadLink($href, $relation, $relType = 'rel', $attribs = []): void
+    {
+        Factory::getApplication()->getDocument()->addHeadLink($href, $relation, $relType, $attribs);
+    }
+
+    /**
+     * Sets or alters a meta tag.
+     *
+     * @param   string  $name       Name of the meta HTML tag
+     * @param   mixed   $content    Value of the meta HTML tag as array or string
+     * @param   ?string  $attribute  Attribute to use in the meta HTML tag
+     */
+    public static function setMetaData($name, $content, $attribute = 'name'): void
+    {
+        Factory::getApplication()->getDocument()->setMetaData($name, $content, $attribute);
     }
 }

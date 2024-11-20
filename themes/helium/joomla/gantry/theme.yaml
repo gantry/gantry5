@@ -80,7 +80,7 @@ configuration:
       - custom
 
   dependencies:
-    gantry: '5.5'
+    gantry: '5.6'
 
   section-variations:
     Padding Variations:

@@ -11,7 +11,7 @@
 
 namespace Gantry\Joomla\Object;
 
-use \Gantry\Component\Collection\Collection as BaseCollection;
+use Gantry\Component\Collection\Collection as BaseCollection;
 
 /**
  * Class Collection

@@ -84,7 +84,11 @@
                     padding: 4px;
                     margin: 2px 0;
                     border-radius: 3px;
-                    @include ellipsis(190px);
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    line-clamp: 1;
+                    display: -webkit-box;
+                    overflow: hidden;
 
                     i {
                         color: #333;

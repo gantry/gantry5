@@ -31,11 +31,13 @@ use Joomla\Component\Content\Site\Helper\RouteHelper;
 class Category extends AbstractObject
 {
     /** @var array */
-    static protected $instances = [];
+    protected static $instances = [];
+
     /** @var string */
-    static protected $table = 'Category';
+    protected static $table = 'Category';
+
     /** @var string */
-    static protected $order = 'lft';
+    protected static $order = 'lft';
 
     /**
      * @return bool
@@ -46,8 +48,8 @@ class Category extends AbstractObject
             return false;
         }
 
-        $this->params = json_decode($this->params, false);
-        $this->metadata = json_decode($this->metadata, false);
+        $this->params   = \json_decode($this->params, false);
+        $this->metadata = \json_decode($this->metadata, false);
 
         return true;
     }
@@ -57,8 +59,7 @@ class Category extends AbstractObject
      */
     public function parent()
     {
-        if ($this->alias !== $this->path)
-        {
+        if ($this->alias !== $this->path) {
             $parent = Category::getInstance($this->parent_id);
         }
 
@@ -80,14 +81,6 @@ class Category extends AbstractObject
      */
     public function route()
     {
-        if (version_compare(JVERSION, '4.0', '<')) {
-            require_once JPATH_SITE . '/components/com_content/helpers/route.php';
-
-            return Route::_(\ContentHelperRoute::getCategoryRoute($this->id . ':' . $this->alias), false);
-        }
-
-        require_once JPATH_SITE . '/components/com_content/src/Helper/RouteHelper.php';
-
         return Route::_(RouteHelper::getCategoryRoute($this->id . ':' . $this->alias), false);
     }
 
@@ -97,8 +90,10 @@ class Category extends AbstractObject
      */
     public function render($file)
     {
+        $gantry = Gantry::instance();
+
         /** @var Theme $theme */
-        $theme = Gantry::instance()['theme'];
+        $theme = $gantry['theme'];
 
         return $theme->render($file, ['category' => $this]);
     }
@@ -109,8 +104,10 @@ class Category extends AbstractObject
      */
     public function compile($string)
     {
+        $gantry = Gantry::instance();
+
         /** @var Theme $theme */
-        $theme = Gantry::instance()['theme'];
+        $theme = $gantry['theme'];
 
         return $theme->compile($string, ['category' => $this]);
     }
@@ -123,7 +120,7 @@ class Category extends AbstractObject
         $properties = $this->getProperties(true);
 
         foreach ($properties as $key => $val) {
-            if (str_starts_with($key, '_')) {
+            if (\str_starts_with($key, '_')) {
                 unset($properties[$key]);
             }
         }
@@ -131,16 +128,25 @@ class Category extends AbstractObject
         return $properties;
     }
 
+    /**
+     * @return string
+     */
     public function exportSql()
     {
         return $this->getCreateSql(['asset_id', 'checked_out', 'checked_out_time', 'created_user_id', 'modified_user_id', 'hits', 'version']) . ';';
     }
 
+    /**
+     * @param mixed $table
+     * @param mixed $k
+     * @param mixed $v
+     * @return string
+     */
     protected function fixValue($table, $k, $v)
     {
         if ($k === '`created_time`' || $k === '`modified_time`') {
             $v = 'NOW()';
-        } elseif (is_string($v)) {
+        } elseif (\is_string($v)) {
             $dbo = $table->getDbo();
             $v = $dbo->quote($v);
         }

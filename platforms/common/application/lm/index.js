@@ -563,7 +563,7 @@ ready(function() {
                             if (response.body.data.block && size(response.body.data.block)) {
                                 block = builder.get(parentID);
 
-                                var sibling = block.block.nextSibling() || block.block.previousSibling(),
+                                var sibling = block.block.nextSibling(':not(.g-grid-settings)') || block.block.previousSibling(':not(.g-grid-settings)'),
                                     currentSize = block.getSize(),
                                     diffSize;
 

@@ -96,7 +96,7 @@ var LayoutManager = new prime({
     },
 
     clear: function(parent, options) {
-        var type, child,
+        var type, child, setting,
             filter = !parent ? [] : (parent.search('[data-lm-id]') || []).map(function(element) { return $(element).data('lm-id'); });
 
         options = options || { save: true, dropLastGrid: false, emptyInherits: false };
@@ -115,6 +115,11 @@ var LayoutManager = new prime({
                 if (obj.hasInheritance) {
                     obj.inherit = {};
                     obj.disableInheritance();
+                }
+            } else if (type == 'grid') {
+                var settings = obj.block.find('.g-grid-settings');
+                if (settings) {
+                    settings.remove();
                 }
             }
         }, this);
@@ -197,7 +202,7 @@ var LayoutManager = new prime({
             }).find('[data-lm-blocktype]');
 
             if (this.block.getType() === 'grid') {
-                var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header):not(.g-inherit):not(:empty)');
+                var siblings = this.block.block.siblings(':not(.original-placeholder):not(.g-grid-settings):not(.section-header):not(.g-inherit):not(:empty)');
                 if (siblings) {
                     siblings.search('[data-lm-id]').style({ 'pointer-events': 'none' });
                 }
@@ -242,7 +247,7 @@ var LayoutManager = new prime({
         if (dataType === 'grid' && (target.parent().data('lm-root') || (target.parent().data('lm-blocktype') === 'container' && target.parent().parent().data('lm-root')))) { return; }
 
         // Check for adjacents and avoid inserting any placeholder since it would be the same position
-        var exclude   = ':not(.placeholder):not([data-lm-id="' + this.original.data('lm-id') + '"])',
+        var exclude   = ':not(.placeholder):not(.g-grid-settings):not([data-lm-id="' + this.original.data('lm-id') + '"])',
             adjacents = {
                 before: this.original.previousSiblings(exclude),
                 after: this.original.nextSiblings(exclude)
@@ -275,7 +280,7 @@ var LayoutManager = new prime({
             case 'section':
                 break;
             case 'grid':
-                var empty = !target.children(':not(.placeholder)');
+                var empty = !target.children(':not(.placeholder):not(.g-grid-settings)');
                 // new particles cannot be dropped in existing grids, only empty ones
                 if (originalType !== 'grid' && !empty) { return; }
 
@@ -307,8 +312,8 @@ var LayoutManager = new prime({
         this.placeholder.style({ display: 'block' })[dataType !== 'block' ? 'removeClass' : 'addClass']('in-between');
 
         if (originalType === 'grid' && dataType === 'grid') {
-            var next     = this.placeholder.nextSibling(),
-                previous = this.placeholder.previousSibling();
+            var next     = this.placeholder.nextSibling(':not(.g-grid-settings)'),
+                previous = this.placeholder.previousSibling(':not(.g-grid-settings)');
 
             this.placeholder.addClass('in-between-grids');
             if (previous && !previous.data('lm-blocktype')) { this.placeholder.addClass('in-between-grids-first'); }
@@ -355,8 +360,7 @@ var LayoutManager = new prime({
             blocks.style({ 'pointer-events': 'inherit' });
         }
 
-        var siblings = this.block.block.siblings(':not(.original-placeholder)');
-
+        var siblings = this.block.block.siblings(':not(.original-placeholder):not(.g-grid-settings)');
         if (siblings && this.block.getType() == 'block') {
             var size                  = this.block.getSize(),
                 diff                  = size / siblings.length,
@@ -375,6 +379,13 @@ var LayoutManager = new prime({
                 size = last.getSize();
                 diff = 100 - total;
                 last.setSize(size + diff, true);
+            }
+        }
+
+        if (!siblings) {
+            var settings = this.block.block.siblings('.g-grid-settings');
+            if (settings) {
+                settings.remove();
             }
         }
 
@@ -420,7 +431,7 @@ var LayoutManager = new prime({
         }
 
         if (this.block.getType() === 'grid') {
-            var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header):not(.g-inherit):not(:empty)');
+            var siblings = this.block.block.siblings(':not(.original-placeholder):not(.g-grid-settings):not(.section-header):not(.g-inherit):not(:empty)');
             if (siblings) {
                 siblings.search('[data-lm-id]').style({ 'pointer-events': 'inherit' });
             }
@@ -486,13 +497,13 @@ var LayoutManager = new prime({
             //if (placeholderPrevious.find('!> [data-lm-blocktype="container"]')) { placeholderPrevious = placeholderPrevious.parent(); }
             if (placeholderPrevious !== previous) {
                 multiLocationResize = {
-                    from: this.block.block.siblings(':not(.placeholder)'),
-                    to: this.placeholder.siblings(':not(.placeholder)')
+                    from: this.block.block.siblings(':not(.placeholder):not(.g-grid-settings)'),
+                    to: this.placeholder.siblings(':not(.placeholder):not(.g-grid-settings)')
                 };
             }
 
             if (previous.find('!> [data-lm-blocktype="container"]')) { previous = previous.parent(); }
-            previous = previous.siblings(':not(.original-placeholder)');
+            previous = previous.siblings(':not(.original-placeholder):not(.g-grid-settings)');
             if (!this.block.isNew() && previous.length) { this.resizer.evenResize(previous); }
 
             this.block.block.attribute('style', null);
@@ -506,11 +517,17 @@ var LayoutManager = new prime({
 
         if (this.block.hasAttribute('size') && typeof this.block.getSize === 'function') { this.block.setSize(this.placeholder.compute('flex')); }
 
+        var settings = this.placeholder.parent().find('.g-grid-settings');
+        if (!settings) {
+            var grid = get(this.builder.map, this.placeholder.parent().data('lm-id'));
+            grid.addSettings();
+        }
+
         this.block.insert(this.placeholder);
         this.placeholder.remove();
 
         if (blockWasNew) {
-            if (resizeCase) { this.resizer.evenResize($([this.block.block, this.block.block.siblings()])); }
+            if (resizeCase) { this.resizer.evenResize($([this.block.block, this.block.block.siblings(':not(.g-grid-settings)')])); }
 
             this.element.attribute('style', null);
         }

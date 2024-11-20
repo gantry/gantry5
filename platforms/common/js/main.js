@@ -1758,8 +1758,10 @@ module.exports = Container;
 "use strict";
 var prime      = require('prime'),
     Base       = require('./base'),
+    zen        = require('elements/zen'),
     $          = require('elements'),
-    getAjaxURL = require('../../utils/get-ajax-url').config;
+    getAjaxURL = require('../../utils/get-ajax-url').config,
+    translate  = require('../../utils/translate');
 
 var Grid = new prime({
     inherits: Base,
@@ -1777,7 +1779,7 @@ var Grid = new prime({
         return '<div class="g-grid nowrap" data-lm-id="' + this.getId() + '" ' + this.dropzone() + '  data-lm-samewidth data-lm-blocktype="grid"></div>';
     },
 
-    onRendered: function() {
+    onRendered: function(element) {
         var parent = this.block.parent();
         if (parent && parent.data('lm-blocktype') == 'atoms') {
             this.block.removeClass('nowrap');
@@ -1786,6 +1788,8 @@ var Grid = new prime({
         if (parent && parent.data('lm-root') || (parent.data('lm-blocktype') == 'container' && parent.parent().data('lm-root'))) {
             this.removeDropzone();
         }
+
+        this.addSettings(element);
     },
 
     hasChanged: function(state) {
@@ -1798,12 +1802,25 @@ var Grid = new prime({
         if (!parent || !id) { return; }
 
         if (this.options.builder) { this.options.builder.get(id).emit('changed', state, this); }
+    },
+
+    addSettings: function() {
+        var parent = this.block.parent();
+
+        if (parent.hasClass('g-lm-container')) {
+            return;
+        }
+
+        var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId()),
+            actions = zen('div.g-grid-settings').top(this.block);
+
+        actions.html('<span data-tip="' + translate('GANTRY5_PLATFORM_JS_LM_SETTINGS', 'Grid') + '" data-tip-place="top-right"><i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_CONFIGURE_SETTINGS', 'Grid') + '" class="fa fa-cog" aria-hidden="true" data-lm-settings="' + settings_uri + '"></i></span>');
     }
 });
 
 module.exports = Grid;
 
-},{"../../utils/get-ajax-url":71,"./base":12,"elements":113,"prime":301}],16:[function(require,module,exports){
+},{"../../utils/get-ajax-url":71,"../../utils/translate":78,"./base":12,"elements":113,"elements/zen":137,"prime":301}],16:[function(require,module,exports){
 module.exports = {
     base: require('./base'),
     atom: require('./atom'),
@@ -2017,7 +2034,7 @@ var Particle = new prime({
     getLimits: function(parent) {
         if (!parent) { return false; }
 
-        var sibling = parent.block.nextSibling() || parent.block.previousSibling() || false;
+        var sibling = parent.block.nextSibling(':not(.g-grid-settings)') || parent.block.previousSibling(':not(.g-grid-settings)') || false;
 
         if (!sibling) { return [100, 100]; }
 
@@ -2259,7 +2276,7 @@ var Section = new prime({
     getLimits: function(parent) {
         if (!parent) { return false; }
 
-        var sibling = parent.block.nextSibling() || parent.block.previousSibling() || false;
+        var sibling = parent.block.nextSibling(':not(.g-grid-settings)') || parent.block.previousSibling(':not(.g-grid-settings)') || false;
 
         if (!sibling) { return [100, 100]; }
 
@@ -2647,8 +2664,8 @@ var Resizer = new prime({
         this.siblings = {
             occupied: 0,
             elements: siblings,
-            next: this.element.nextSibling(),
-            prevs: this.element.previousSiblings(),
+            next: this.element.nextSibling(':not(.g-grid-settings)'),
+            prevs: this.element.previousSiblings(':not(.g-grid-settings)'),
             sizeBefore: 0
         };
 
@@ -2683,7 +2700,7 @@ var Resizer = new prime({
             down: offset
         };
 
-        this.origin.offset.parentRect.left = this.element.parent().find('> [data-lm-id]:first-child')[0].getBoundingClientRect().left;
+        this.origin.offset.parentRect.left = this.element.parent().find('> :not(.g-grid-settings) [data-lm-id]:first-child')[0].getBoundingClientRect().left;
         this.origin.offset.parentRect.right = this.element.parent().find('> [data-lm-id]:last-child')[0].getBoundingClientRect().right;
 
         this.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
@@ -2728,7 +2745,7 @@ var Resizer = new prime({
         this.getBlock(this.siblings.next).setSize(diff, true);
 
         // Hack to handle cases where size is not an integer
-        var siblings = this.element.siblings(),
+        var siblings = this.element.siblings(':not(.g-grid-settings)'),
             amount = siblings ? siblings.length + 1 : 1;
         if (amount == 3 || amount == 6 || amount == 7 || amount == 8 || amount == 9 || amount == 11 || amount == 12) {
             var total = 0, blocks;
@@ -3489,7 +3506,7 @@ ready(function() {
                             if (response.body.data.block && size(response.body.data.block)) {
                                 block = builder.get(parentID);
 
-                                var sibling = block.block.nextSibling() || block.block.previousSibling(),
+                                var sibling = block.block.nextSibling(':not(.g-grid-settings)') || block.block.previousSibling(':not(.g-grid-settings)'),
                                     currentSize = block.getSize(),
                                     diffSize;
 
@@ -3909,7 +3926,7 @@ var LayoutManager = new prime({
     },
 
     clear: function(parent, options) {
-        var type, child,
+        var type, child, setting,
             filter = !parent ? [] : (parent.search('[data-lm-id]') || []).map(function(element) { return $(element).data('lm-id'); });
 
         options = options || { save: true, dropLastGrid: false, emptyInherits: false };
@@ -3928,6 +3945,11 @@ var LayoutManager = new prime({
                 if (obj.hasInheritance) {
                     obj.inherit = {};
                     obj.disableInheritance();
+                }
+            } else if (type == 'grid') {
+                var settings = obj.block.find('.g-grid-settings');
+                if (settings) {
+                    settings.remove();
                 }
             }
         }, this);
@@ -4010,7 +4032,7 @@ var LayoutManager = new prime({
             }).find('[data-lm-blocktype]');
 
             if (this.block.getType() === 'grid') {
-                var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header):not(.g-inherit):not(:empty)');
+                var siblings = this.block.block.siblings(':not(.original-placeholder):not(.g-grid-settings):not(.section-header):not(.g-inherit):not(:empty)');
                 if (siblings) {
                     siblings.search('[data-lm-id]').style({ 'pointer-events': 'none' });
                 }
@@ -4055,7 +4077,7 @@ var LayoutManager = new prime({
         if (dataType === 'grid' && (target.parent().data('lm-root') || (target.parent().data('lm-blocktype') === 'container' && target.parent().parent().data('lm-root')))) { return; }
 
         // Check for adjacents and avoid inserting any placeholder since it would be the same position
-        var exclude   = ':not(.placeholder):not([data-lm-id="' + this.original.data('lm-id') + '"])',
+        var exclude   = ':not(.placeholder):not(.g-grid-settings):not([data-lm-id="' + this.original.data('lm-id') + '"])',
             adjacents = {
                 before: this.original.previousSiblings(exclude),
                 after: this.original.nextSiblings(exclude)
@@ -4088,7 +4110,7 @@ var LayoutManager = new prime({
             case 'section':
                 break;
             case 'grid':
-                var empty = !target.children(':not(.placeholder)');
+                var empty = !target.children(':not(.placeholder):not(.g-grid-settings)');
                 // new particles cannot be dropped in existing grids, only empty ones
                 if (originalType !== 'grid' && !empty) { return; }
 
@@ -4120,8 +4142,8 @@ var LayoutManager = new prime({
         this.placeholder.style({ display: 'block' })[dataType !== 'block' ? 'removeClass' : 'addClass']('in-between');
 
         if (originalType === 'grid' && dataType === 'grid') {
-            var next     = this.placeholder.nextSibling(),
-                previous = this.placeholder.previousSibling();
+            var next     = this.placeholder.nextSibling(':not(.g-grid-settings)'),
+                previous = this.placeholder.previousSibling(':not(.g-grid-settings)');
 
             this.placeholder.addClass('in-between-grids');
             if (previous && !previous.data('lm-blocktype')) { this.placeholder.addClass('in-between-grids-first'); }
@@ -4168,8 +4190,7 @@ var LayoutManager = new prime({
             blocks.style({ 'pointer-events': 'inherit' });
         }
 
-        var siblings = this.block.block.siblings(':not(.original-placeholder)');
-
+        var siblings = this.block.block.siblings(':not(.original-placeholder):not(.g-grid-settings)');
         if (siblings && this.block.getType() == 'block') {
             var size                  = this.block.getSize(),
                 diff                  = size / siblings.length,
@@ -4188,6 +4209,13 @@ var LayoutManager = new prime({
                 size = last.getSize();
                 diff = 100 - total;
                 last.setSize(size + diff, true);
+            }
+        }
+
+        if (!siblings) {
+            var settings = this.block.block.siblings('.g-grid-settings');
+            if (settings) {
+                settings.remove();
             }
         }
 
@@ -4233,7 +4261,7 @@ var LayoutManager = new prime({
         }
 
         if (this.block.getType() === 'grid') {
-            var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header):not(.g-inherit):not(:empty)');
+            var siblings = this.block.block.siblings(':not(.original-placeholder):not(.g-grid-settings):not(.section-header):not(.g-inherit):not(:empty)');
             if (siblings) {
                 siblings.search('[data-lm-id]').style({ 'pointer-events': 'inherit' });
             }
@@ -4299,13 +4327,13 @@ var LayoutManager = new prime({
             //if (placeholderPrevious.find('!> [data-lm-blocktype="container"]')) { placeholderPrevious = placeholderPrevious.parent(); }
             if (placeholderPrevious !== previous) {
                 multiLocationResize = {
-                    from: this.block.block.siblings(':not(.placeholder)'),
-                    to: this.placeholder.siblings(':not(.placeholder)')
+                    from: this.block.block.siblings(':not(.placeholder):not(.g-grid-settings)'),
+                    to: this.placeholder.siblings(':not(.placeholder):not(.g-grid-settings)')
                 };
             }
 
             if (previous.find('!> [data-lm-blocktype="container"]')) { previous = previous.parent(); }
-            previous = previous.siblings(':not(.original-placeholder)');
+            previous = previous.siblings(':not(.original-placeholder):not(.g-grid-settings)');
             if (!this.block.isNew() && previous.length) { this.resizer.evenResize(previous); }
 
             this.block.block.attribute('style', null);
@@ -4319,11 +4347,17 @@ var LayoutManager = new prime({
 
         if (this.block.hasAttribute('size') && typeof this.block.getSize === 'function') { this.block.setSize(this.placeholder.compute('flex')); }
 
+        var settings = this.placeholder.parent().find('.g-grid-settings');
+        if (!settings) {
+            var grid = get(this.builder.map, this.placeholder.parent().data('lm-id'));
+            grid.addSettings();
+        }
+
         this.block.insert(this.placeholder);
         this.placeholder.remove();
 
         if (blockWasNew) {
-            if (resizeCase) { this.resizer.evenResize($([this.block.block, this.block.block.siblings()])); }
+            if (resizeCase) { this.resizer.evenResize($([this.block.block, this.block.block.siblings(':not(.g-grid-settings)')])); }
 
             this.element.attribute('style', null);
         }
@@ -8313,7 +8347,7 @@ var Fonts = new prime({
     },
 
     selectFromValue: function() {
-        var value = this.field.value(), name, variants, subset, isLocal = false;
+        var value = this.field.value(), name, variants = [], isLocal = false;
 
         if (!value.match('family=')) {
             var locals = $('[data-category="local-fonts"][data-font]') || [], intersect;
@@ -8326,12 +8360,22 @@ var Fonts = new prime({
             name = intersect.shift();
         } else {
             var split  = value.split('&'),
-                family = split[0],
-                split2 = family.split(':');
+                font   = split[0],
+                [family, variations] = font.split(':');
 
-            name = split2[0].replace('family=', '').replace(/\+/g, ' ');
-            variants = split2[1] ? split2[1].split(',') : ['regular'];
-            subset = split[1] ? split[1].replace('subset=', '').split(',') : ['latin'];
+            name = family.replace('family=', '').replace(/\+/g, ' ');
+
+            if (variations.includes('ital')) {
+                let variation = variations.replace('ital,wght@', '').split(';');
+
+                variation.forEach(function(value) {
+                    let [type, variant] = value.split(',');
+
+                    variants.push(variant + (type == 0 ? 'italic' : ''));
+                });
+            } else {
+                variants = variations ? variations.replace('wght@', '').split(';') : ['regular'];
+            }
         }
 
         var noConflict = isLocal ? '[data-category="local-fonts"]' : ':not([data-category="local-fonts"])',
@@ -8355,7 +8399,6 @@ var Fonts = new prime({
             variants: variants,
             selected: [],
             local: isLocal,
-            charsets: subset,
             availableVariants: element.data('variants').split(','),
             expanded: isLocal,
             loaded: isLocal
@@ -8366,12 +8409,6 @@ var Fonts = new prime({
             variant = element.find('> ul > [data-variant="' + variant + '"]');
             if (variant) { variant.removeClass('g-variant-hide'); }
         }, this);
-
-        var charsetSelected = element.find('.font-charsets-selected');
-        if (charsetSelected) {
-            var subsetsLength = element.data('subsets').split(',').length;
-            charsetSelected.html('(<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>  <span class="font-charsets-details">' + subset.length + ' of ' + subsetsLength + '</span> selected)');
-        }
 
         if (!isLocal) { $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop; }
 
@@ -8385,13 +8422,6 @@ var Fonts = new prime({
             isLocal     = !baseVariant;
 
         if (!this.selected || this.selected.element != element) {
-            if (variant && this.selected) {
-                var charsetSelected = this.selected.element.find('.font-charsets-selected');
-                if (charsetSelected) {
-                    var subsetsLength = element.data('subsets').split(',').length;
-                    charsetSelected.html('(<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>  <span class="font-charsets-details">1 of ' + subsetsLength + '</span> selected)');
-                }
-            }
             this.selected = {
                 font: element.data('font'),
                 baseVariant: baseVariant,
@@ -8399,7 +8429,6 @@ var Fonts = new prime({
                 variants: [baseVariant],
                 selected: [],
                 local: isLocal,
-                charsets: ['latin'],
                 availableVariants: element.data('variants').split(','),
                 expanded: isLocal,
                 loaded: isLocal
@@ -8409,7 +8438,6 @@ var Fonts = new prime({
         if (!variant) {
             this.toggleExpansion();
         }
-
 
         if (variant || isLocal) {
             var selected = ($('ul.g-fonts-list > [data-font]:not([data-font="' + this.selected.font + '"]) input[type="checkbox"]:checked'));
@@ -8547,48 +8575,8 @@ var Fonts = new prime({
         if (search) { search.on('keyup', bind(this.search, this, search)); }
         if (preview) { preview.on('keyup', bind(this.updatePreview, this, preview)); }
 
-        this.attachCharsets(container);
         this.attachLocalVariants(container);
         this.attachFooter(container);
-    },
-
-    attachCharsets: function(container) {
-        container.delegate('mouseover', '.font-charsets-selected', bind(function(event, element) {
-            if (!element.PopoverDefined) {
-                var popover = element.getPopover({
-                    placement: 'auto',
-                    width: '200',
-                    trigger: 'mouse',
-                    style: 'font-categories, above-modal'
-                });
-
-                element.on('beforeshow.popover', bind(function(popover) {
-                    var subsets = element.parent('[data-subsets]').data('subsets').split(','),
-                        content = popover.$target.find('.g5-popover-content'),
-                        checked;
-
-                    content.empty();
-
-                    var div, current;
-                    subsets.forEach(function(cs) {
-                        current = contains(this.selected.charsets, cs) ? (cs == 'latin' ? 'checked disabled' : 'checked') : '';
-                        zen('div').html('<label><input type="checkbox" ' + current + ' value="' + cs + '"/> ' + properCase(unhyphenate(cs.replace('ext', 'extended'))) + '</label>').bottom(content);
-                    }, this);
-
-                    content.delegate('click', 'input[type="checkbox"]', bind(function(event, input) {
-                        input = $(input);
-                        checked = content.search('input[type="checkbox"]:checked');
-                        this.selected.charsets = checked ? checked.map('value') : [];
-
-                        element.html('(<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>  <span class="font-charsets-details">' + this.selected.charsets.length + ' of ' + subsets.length + '</span> selected)');
-                    }, this));
-
-                    popover.displayContent();
-                }, this));
-
-                element.getPopover().show();
-            }
-        }, this));
     },
 
     attachLocalVariants: function(container) {
@@ -8622,7 +8610,6 @@ var Fonts = new prime({
         var footer     = container.find('.g-particles-footer'),
             select     = footer.find('button.button-primary'),
             categories = footer.find('.font-category'),
-            subsets    = footer.find('.font-subsets'),
             current;
 
         select.on('click', bind(function() {
@@ -8634,10 +8621,9 @@ var Fonts = new prime({
 
             var name      = this.selected.font.replace(/\s/g, '+'),
                 variation = this.selected.selected,
-                charset   = this.selected.charsets;
+                variations;
 
             if (variation && variation.length == 1 && variation[0] == 'regular') { variation = []; }
-            if (charset && charset.length == 1 && charset[0] == 'latin') { charset = []; }
 
             if (contains(variation, 'regular')) {
                 removeAll(variation, 'regular');
@@ -8649,7 +8635,28 @@ var Fonts = new prime({
             }
 
             if (!this.selected.local) {
-                this.field.value('family=' + name + (variation.length ? ':' + variation.join(',') : '') + (charset.length ? '&subset=' + charset.join(',') : ''));
+                if (variation.length) {
+                    let regex = /italic/i;
+                    let match = variation.some(item => regex.test(item));
+
+                    if (match) {
+                        let italic = [], regular = [];
+
+                        variation.forEach(function(value) {
+                            if (value.includes('italic')) {
+                                italic.push(value.replace('italic', ''));
+                            } else {
+                                regular.push(value);
+                            }
+                        });
+
+                        variations = ':ital,wght@0,' + italic.sort((a, b) => a - b).join(';0,') + ';1,' + regular.sort((a, b) => a - b).join(';1,');
+                    } else {
+                        variations = ':wght@' + variation.sort((a, b) => a - b).join(';');
+                    }
+                }
+
+                this.field.value('family=' + name + variations);
             } else {
                 this.field.value(name);
             }
@@ -8689,35 +8696,6 @@ var Fonts = new prime({
             popover.displayContent();
         }, this));
 
-        subsets.popover({
-            placement: 'top',
-            width: '200',
-            trigger: 'mouse',
-            style: 'font-subsets, above-modal'
-        }).on('beforeshow.popover', bind(function(popover) {
-            var subs    = subsets.data('font-subsets').split(','),
-                content = popover.$target.find('.g5-popover-content');
-
-            content.empty();
-
-            var div;
-            subs.forEach(function(sub) {
-                current = sub == this.filters.script ? 'checked' : '';
-                zen('div').html('<label><input name="font-subset[]" type="radio" ' + current + ' value="' + sub + '"/> ' + properCase(unhyphenate(sub.replace('ext', 'extended'))) + '</label>').bottom(content);
-            }, this);
-
-            content.delegate('change', 'input[type="radio"]', bind(function(event, input) {
-                input = $(input);
-                this.filters.script = input.value();
-                $('.g-particles-header input.font-preview').value(this.previewSentence[this.filters.script]);
-                subsets.find('small').text(properCase(unhyphenate(input.value().replace('ext', 'extended'))));
-                this.search();
-                this.updatePreview();
-            }, this));
-
-            popover.displayContent();
-        }, this));
-
         return container;
     },
 
@@ -8725,23 +8703,16 @@ var Fonts = new prime({
         input = input || $('.g-particles-header input.font-search');
         var list  = $('.g-fonts-list'),
             value = input.value(),
-            name, subsets, category, data;
+            name, category, data;
 
         list.search('> [data-font]').forEach(function(font) {
             font = $(font);
             name = font.data('font');
-            subsets = font.data('subsets').split(',');
             category = font.data('category');
             font.removeClass('g-font-hide');
 
             // We dont want to hide selected fonts
             if (this.selected && this.selected.font == name && this.selected.selected.length) { return; }
-
-            // Filter by Subset
-            if (!contains(subsets, this.filters.script)) {
-                font.addClass('g-font-hide');
-                return;
-            }
 
             // Filter by Category
             if (!contains(this.filters.categories, category)) {
@@ -10398,7 +10369,7 @@ var DragDrop = new prime({
         if ((offset < 6 && this.element.parent().find(':last-child') !== this.element) || (columns && offset > 3 && offset < 10)) {
             if (this.element.parent('[data-lm-blocktype="atoms"]')) { return false; }
 
-            this.emit('dragdrop:resize', event, this.element, (this.element.parent('[data-mm-id]') || this.element).siblings(':not(.placeholder)'), this.origin.offset.x);
+            this.emit('dragdrop:resize', event, this.element, (this.element.parent('[data-mm-id]') || this.element).siblings(':not(.placeholder):not(.g-grid-settings)'), this.origin.offset.x);
             return false;
         }
 

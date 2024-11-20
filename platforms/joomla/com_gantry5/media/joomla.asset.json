@@ -1,0 +1,27 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "com_gantry5",
+  "version": "@version@",
+  "description": "Gantry 5",
+  "license": "GPL-2.0-or-later",
+  "assets": [
+    {
+        "name": "com_gantry5.joomla-g-admin",
+        "type": "style",
+        "uri": "com_gantry5/joomla-g-admin.css"
+    },
+    {
+        "name": "com_gantry5.g-admin",
+        "type": "style",
+        "uri": "com_gantry5/g-admin.css"
+    },
+    {
+		"name": "com_gantry5.main",
+		"type": "script",
+		"uri": "com_gantry5/main.js",
+		"attributes": {
+			"async": true
+		}
+	  }
+  ]
+}

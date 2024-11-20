@@ -37,7 +37,7 @@
             background-color: $navbar-bg;
             position: relative;
             z-index: 2;
-            @include transition (background-color 0.2s ease-in-out);
+            transition: background-color 0.2s ease-in-out;
 
             &:hover {
                 background-color: darken($navbar-bg, 7%);

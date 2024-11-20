@@ -19,16 +19,20 @@
                 ],
                 "components":[
                     {
+                        "source":"/platforms/joomla/com_gantry5/admin",
+                        "destination":"/administrator/components/com_gantry5",
+                    },
+                    {
+                        "source":"/platforms/common/blueprints",
+                        "destination":"/administrator/components/com_gantry5/common/blueprints"
+                    },
+                    {
+                        "source":"/platforms/common/templates",
+                        "destination":"/administrator/components/com_gantry5/common/templates"
+                    },
+                    {
                         "source":"/platforms/joomla/com_gantry5/site",
                         "destination":"/components/com_gantry5"
-                    },
-                    {
-                        "source":"/platforms/joomla/com_gantry5/admin",
-                        "destination":"/administrator/components/com_gantry5"
-                    },
-                    {
-                        "source":"/platforms/common",
-                        "destination":"/administrator/components/com_gantry5/common"
                     }
                 ],
                 "library":[
@@ -37,15 +41,15 @@
                         "destination":"/libraries/gantry5"
                     },
                     {
-                        "source":"/src",
+                        "source":"/src/classes/Gantry",
                         "destination":"/libraries/gantry5/src"
+                    },
+                    {
+                        "source":"/src/platforms/joomla/classes/Gantry",
+                        "destination":"/libraries/gantry5/src/platforms/joomla"
                     }
                 ],
                 "plugins":[
-                    {
-                        "source":"/platforms/joomla/plg_gantry5_preset",
-                        "destination":"/plugins/gantry5/preset"
-                    },
                     {
                         "source":"/platforms/joomla/plg_system_gantry5",
                         "destination":"/plugins/system/gantry5"
@@ -55,8 +59,8 @@
                         "destination":"/plugins/quickicon/gantry5"
                     },
                     {
-                        "source":"/platforms/joomla/plg_system_gantry5_debugbar",
-                        "destination":"/plugins/system/gantry5_debugbar"
+                        "source":"/platforms/joomla/plg_gantry5_preset",
+                        "destination":"/plugins/gantry5/preset"
                     }
                 ],
                 "modules":[
@@ -67,12 +71,20 @@
                 ],
                 "media":[
                     {
-                        "source":"/assets",
-                        "destination":"/media/gantry5/assets"
+                        "source":"/platforms/joomla/com_gantry5/media",
+                        "destination":"/media/com_gantry5"
+                    },
+                    {
+                        "source":"/platforms/common/js",
+                        "destination":"/media/com_gantry5/js"
                     },
                     {
                         "source":"/engines",
                         "destination":"/media/gantry5/engines"
+                    },
+                    {
+                        "source":"/assets/common",
+                        "destination":"/media/gantry5/assets"
                     }
                 ],
                 "templates":[

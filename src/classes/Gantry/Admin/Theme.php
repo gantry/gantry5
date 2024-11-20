@@ -51,17 +51,17 @@ class Theme extends AbstractTheme
             return new Page($c);
         };
 
-        $gantry['defaults'] = function($c) {
+        $gantry['defaults'] = function ($c) {
             /** @var UniformResourceLocator $locator */
             $locator = $c['locator'];
 
             $cache = $locator->findResource('gantry-cache://theme/compiled/config', true, true);
             $paths = $locator->findResources('gantry-config://default');
 
-            $files = (new ConfigFileFinder)->locateFiles($paths);
+            $files = (new ConfigFileFinder())->locateFiles($paths);
 
             $config = new CompiledConfig($cache, $files, GANTRY5_ROOT);
-            $config->setBlueprints(function() use ($c) {
+            $config->setBlueprints(function () use ($c) {
                 return $c['blueprints'];
             });
 
@@ -82,12 +82,10 @@ class Theme extends AbstractTheme
         } else {
             $relpath = Folder::getRelativePath($this->path);
         }
-        $patform->set(
-            'streams.gantry-admin.prefixes', [
-                ''        => ['gantry-theme://admin', $relpath, $relpath . '/common', 'gantry-engine://admin'],
-                'assets/' => array_merge([$relpath, $relpath . '/common'], $nucleus, ['gantry-assets://'])
-            ]
-        );
+        $patform->set('streams.gantry-admin.prefixes', [
+            ''        => ['gantry-theme://admin', $relpath, $relpath . '/common', 'gantry-engine://admin'],
+            'assets/' => array_merge([$relpath, $relpath . '/common'], $nucleus, ['gantry-assets://'])
+        ]);
 
         // Add admin paths.
         foreach ($patform->get('streams.gantry-admin.prefixes') as $prefix => $paths) {

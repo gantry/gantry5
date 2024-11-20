@@ -1,0 +1,25 @@
+{% assets with { priority: 10 } %}
+    {% block stylesheets %}
+        {{ gantry.document.useAsset('style', 'com_gantry5.g-admin') }}
+        {{ gantry.document.useAsset('style', 'com_gantry5.joomla-g-admin') }}
+    {% endblock %}
+
+    {% block javascript %}
+        {{ gantry.document.useAsset('script', 'com_gantry5.main') }}
+        <script>
+            var GANTRY_AJAX_SUFFIX = '{{ gantry.ajax_suffix|raw }}';
+            var GANTRY_AJAX_URL = '{{ gantry.route('%ajax%')|e }}';
+            var GANTRY_AJAX_CONF_URL = '{{ gantry.route('configurations/%ajax%')|e }}';
+            var GANTRY_AJAX_NONCE = null;
+            var GANTRY_PLATFORM = 'joomla';
+        </script>
+    {% endblock %}
+{% endassets -%}
+
+{% block content %}
+    <div id="g5-container">
+        {{ content|raw }}
+    </div>
+{% endblock %}
+
+{% do gantry.platform.finalize() %}

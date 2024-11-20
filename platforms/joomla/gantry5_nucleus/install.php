@@ -8,52 +8,87 @@
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
-defined('_JEXEC') or die;
 
+use Joomla\CMS\Application\AdministratorApplication;
 use Joomla\CMS\Installer\InstallerAdapter;
-use Joomla\Filesystem\File;
+use Joomla\CMS\Installer\InstallerScriptInterface;
+use Joomla\CMS\Language\Text;
+use Joomla\DI\Container;
+use Joomla\DI\ServiceProviderInterface;
+use Joomla\Database\DatabaseInterface;
+use Joomla\Filesystem\Exception\FilesystemException;
 use Joomla\Filesystem\Folder;
 
-/**
- * Gantry 5 Nucleus installer script.
- */
-class Gantry5_NucleusInstallerScript
-{
-    /**
-     * @param InstallerAdapter $parent
-     * @return bool
-     */
-    public function uninstall($parent)
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
+return new class () implements ServiceProviderInterface {
+    public function register(Container $container)
     {
-        // Remove all Nucleus files manually as file installer only uninstalls files.
-        $manifest = $parent->getManifest();
+        $container->set(
+            InstallerScriptInterface::class,
+            new class (
+                $container->get(AdministratorApplication::class),
+                $container->get(DatabaseInterface::class)
+            ) implements InstallerScriptInterface {
+                private AdministratorApplication $app;
+                private DatabaseInterface $db;
 
-        // Loop through all elements and get list of files and folders
-        foreach ($manifest->fileset->files as $eFiles) {
-            $target = (string) $eFiles->attributes()->target;
-            $targetFolder = empty($target) ? JPATH_ROOT : JPATH_ROOT . '/' . $target;
+                public function __construct(AdministratorApplication $app, DatabaseInterface $db)
+                {
+                    $this->app = $app;
+                    $this->db  = $db;
+                }
 
-            // Check if all children exists
-            if (count($eFiles->children()) > 0) {
-                // Loop through all filenames elements
-                foreach ($eFiles->children() as $eFileName) {
-                    if ($eFileName->getName() === 'folder')
-                    {
-                        $folder = $targetFolder . '/' . $eFileName;
+                public function install(InstallerAdapter $parent): bool
+                {
+                    return true;
+                }
 
-                        $files = Folder::files($folder, '.', false, true);
-                        foreach ($files as $name) {
-                            File::delete($name);
-                        }
-                        $subFolders = Folder::folders($folder, '.', false, true);
-                        foreach ($subFolders as $name) {
-                            Folder::delete($name);
+                public function update(InstallerAdapter $parent): bool
+                {
+                    return true;
+                }
+
+                public function uninstall(InstallerAdapter $parent): bool
+                {
+                    return true;
+                }
+
+                public function preflight(string $type, InstallerAdapter $parent): bool
+                {
+                    return true;
+                }
+
+                public function postflight(string $type, InstallerAdapter $parent): bool
+                {
+                    if ($type === 'uninstall') {
+                        $this->deleteFiles($parent);
+                    }
+
+                    return true;
+                }
+
+                private function deleteFiles($parent)
+                {
+                    // Remove all Nucleus files manually as file installer only uninstalls files.
+                    $manifest = $parent->getManifest();
+
+                    foreach ($manifest->fileset->files as $files) {
+                        $target = (string) $files->attributes()->target;
+                        $folder = JPATH_ROOT . '/' . $target;
+
+                        if (\is_dir($folder)) {
+                            try {
+                                Folder::delete($folder);
+                            } catch (FilesystemException $e) {
+                                echo Text::sprintf('FILES_JOOMLA_ERROR_FILE_FOLDER', $folder) . '<br>';
+                            }
                         }
                     }
                 }
             }
-        }
-
-        return true;
+        );
     }
-}
+};

@@ -15,12 +15,10 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\ThemeInstaller;
-use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Table\Table;
-use Joomla\Component\Templates\Administrator\Model\StyleModel; // Joomla 4
-use Joomla\Component\Templates\Administrator\Table\StyleTable; // Joomla 4
+use Joomla\Component\Templates\Administrator\Model\StyleModel;
+use Joomla\Component\Templates\Administrator\Table\StyleTable;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -30,22 +28,23 @@ class StyleHelper
 {
     /**
      * @param int|array|null $id
-     * @return StyleTable|\TemplatesTableStyle
+     * @return StyleTable
      */
     public static function getStyle($id = null)
     {
-        $model = static::loadModel();
-        $style = $model->getTable('Style');
+        /** @var StyleTable $table */
+        $table = Factory::getApplication()->bootComponent('com_templates')
+                ->getMVCFactory()->createTable('Style', 'Administrator');
 
         if (null !== $id) {
-            if (!is_array($id)) {
+            if (!\is_array($id)) {
                 $id = ['id' => $id, 'client_id' => 0];
             }
 
-            $style->load($id);
+            $table->load($id);
         }
 
-        return $style;
+        return $table;
     }
 
     /**
@@ -77,7 +76,7 @@ class StyleHelper
     }
 
     /**
-     * @return StyleTable|\TemplatesTableStyle
+     * @return StyleTable
      */
     public static function getDefaultStyle()
     {
@@ -85,19 +84,15 @@ class StyleHelper
     }
 
     /**
-     * @param ThemeDetails|StyleTable|\TemplatesTableStyle $style
+     * @param ThemeDetails|StyleTable $style
      * @param string $old
      * @param string $new
      */
     public static function copy($style, $old, $new)
     {
-        if ($style instanceof ThemeDetails) {
-            $name = $style->name;
-        } else {
-            $name = $style->template;
-        }
-
         $gantry = Gantry::instance();
+
+        $name = $style instanceof ThemeDetails ? $style->name : $style->template;
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
@@ -105,7 +100,7 @@ class StyleHelper
         $oldPath = $locator->findResource('gantry-config://' . $old, true, true);
         $newPath = $locator->findResource('gantry-config://' . $new, true, true);
 
-        if (file_exists($oldPath)) {
+        if (\file_exists($oldPath)) {
             Folder::copy($oldPath, $newPath);
         }
 
@@ -138,48 +133,25 @@ class StyleHelper
 
         $path = $locator->findResource('gantry-config://' . $id, true, true);
 
-        if (is_dir($path)) {
+        if (\is_dir($path)) {
             Folder::delete($path, true);
         }
     }
 
     /**
      * @param string $name
-     * @return StyleModel|\TemplatesModelStyle
+     * @return StyleModel
      */
-    public static function loadModel($name = 'Style')
+    public static function loadModel(): StyleModel
     {
-        static $model = [];
+        static $model;
 
-        if (!isset($model[$name])) {
-            if (version_compare(JVERSION, '4', '<')) {
-                // Joomla 3 support.
-                $path = JPATH_ADMINISTRATOR . '/components/com_templates/';
-                $filename = strtolower($name);
-                $className = "\\TemplatesModel{$name}";
-
-                Table::addIncludePath("{$path}/tables");
-
-                require_once "{$path}/models/{$filename}.php";
-
-                /** @var CMSApplication $application */
-                $application = Factory::getApplication();
-
-                // Load language strings.
-                $language = $application->getLanguage();
-                $language->load('com_templates');
-
-                // Load the model.
-                $model[$name] = new $className();
-            } else {
-                // Joomla 4 support.
-                $application = Factory::getApplication();
-                $model[$name] = $application->bootComponent('com_templates')
-                    ->getMVCFactory()
-                    ->createModel($name, 'Administrator', ['ignore_request' => true]);
-            }
+        if (!isset($model)) {
+            /** @var \Joomla\Component\Templates\Administrator\Model\StyleModel $model */
+            $model = Factory::getApplication()->bootComponent('com_templates')->getMVCFactory()
+                ->createModel('Style', 'Administrator', ['ignore_request' => true]);
         }
 
-        return $model[$name];
+        return $model;
     }
 }

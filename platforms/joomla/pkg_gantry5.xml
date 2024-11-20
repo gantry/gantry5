@@ -1,40 +1,29 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<extension version="3.9" type="package" method="upgrade">
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="package" method="upgrade">
     <name>pkg_gantry5</name>
     <packagename>gantry5</packagename>
-    <version>@version@</version>
-    <creationDate>@versiondate@</creationDate>
     <author>RocketTheme, LLC</author>
-    <authorEmail>support@rockettheme.com</authorEmail>
-    <authorUrl>http://www.rockettheme.com</authorUrl>
+    <creationDate>@versiondate@</creationDate>
     <copyright>(C) 2005 - 2021 RocketTheme, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2</license>
+    <authorEmail>support@rockettheme.com</authorEmail>
+    <authorUrl>http://www.rockettheme.com</authorUrl>
+    <version>@version@</version>
     <description>PKG_GANTRY5_DESCRIPTION</description>
-
     <scriptfile>install.php</scriptfile>
-
     <blockChildUninstall>true</blockChildUninstall>
     <files folder="packages">
-        <!-- Mandatory system plugin -->
-        <file type="plugin"    group="system"     id="gantry5"              enabled="1">plg_system_gantry5_v@version@.zip</file>
-        <!-- Quick icons -->
-        <file type="plugin"    group="quickicon"  id="gantry5"              enabled="1">plg_quickicon_gantry5_v@version@.zip</file>
-        <!-- Mandatory system plugin -->
-        <file type="plugin"    group="gantry5"    id="preset"                          >plg_gantry5_preset_v@version@.zip</file>
-        <!-- Particle module -->
-        <file type="module"    client="site"      id="mod_gantry5_particle" enabled="1">mod_gantry5_particle_v@version@.zip</file>
-        <!-- Gantry framework library -->
-        <file type="library"                      id="gantry5"              enabled="1">lib_gantry5_v@version@.zip</file>
-        <!-- Common media files -->
-        <file type="file"                         id="gantry5_nucleus"      enabled="1">gantry5_nucleus_v@version@.zip</file>
-        <!-- Administration component -->
-        <file type="component"                    id="com_gantry5"          enabled="1">com_gantry5_v@version@.zip</file>
+        <file type="plugin" group="system" id="gantry5" enabled="1">plg_system_gantry5_v@version@.zip</file>
+        <file type="plugin" group="quickicon" id="gantry5" enabled="1">plg_quickicon_gantry5_v@version@.zip</file>
+        <file type="plugin" group="gantry5" id="preset">plg_gantry5_preset_v@version@.zip</file>
+        <file type="module" client="site" id="mod_gantry5_particle" enabled="1">mod_gantry5_particle_v@version@.zip</file>
+        <file type="library" id="gantry5" enabled="1">lib_gantry5_v@version@.zip</file>
+        <file type="file" id="gantry5_nucleus" enabled="1">gantry5_nucleus_v@version@.zip</file>
+        <file type="component" id="com_gantry5" enabled="1">com_gantry5_v@version@.zip</file>
     </files>
-
     <languages folder="language">
-        <language tag="en-GB">en-GB/en-GB.pkg_gantry5.sys.ini</language>
+        <language tag="en-GB">en-GB/pkg_gantry5.sys.ini</language>
     </languages>
-
     <updateservers>
         <server type="extension" priority="1" name="Gantry 5">http://updates.gantry.org/5.0/joomla/pkg_gantry5.xml</server>
         <server type="collection" priority="2" name="Gantry 5">http://updates.gantry.org/5.0/joomla/list.xml</server>

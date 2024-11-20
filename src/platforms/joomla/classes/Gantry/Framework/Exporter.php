@@ -330,7 +330,7 @@ class Exporter
     {
         // Tokenize all PRE and CODE tags to avoid modifying any src|href|url in them
         $tokens = [];
-        $temp = preg_replace_callback('#<(pre|code).*?>.*?</\\1>#is', function($matches) use (&$tokens) {
+        $temp = preg_replace_callback('#<(pre|code).*?>.*?</\\1>#is', function ($matches) use (&$tokens) {
             $token = uniqid('__g5_token', false);
             $tokens['#' . $token . '#'] = $matches[0];
 

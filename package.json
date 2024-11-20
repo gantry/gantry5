@@ -1,45 +1,45 @@
 {
-  "name": "gantry5",
-  "version": "5.4.0",
-  "description": "Gantry 5 / JS and CSS bundler",
-  "main": "gulpfile.js",
-  "dependencies": {
-    "npm": "^7.20.5"
-  },
-  "devDependencies": {
-    "browserify": "^17.0.0",
-    "gulp": "^4.0.2",
-    "gulp-if": "^3.0.0",
-    "gulp-jsonminify": "1.1.0",
-    "gulp-rename": "^2.0.0",
-    "gulp-sass": "^4.1.0",
-    "gulp-sourcemaps": "^3.0.0",
-    "gulp-uglify": "^3.0.2",
-    "gulp-util": "^3.0.8",
-    "merge-stream": "^2.0.0",
-    "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0",
-    "watchify": "^4.0.0",
-    "yargs": "^16.2.0"
-  },
-  "resolutions": {
-    "graceful-fs": "^4.2.4"
-  },
-  "scripts": {
-    "preinstall": "npx npm-force-resolutions",
-    "list-paths": "echo './' && echo 'assets/common' && echo 'platforms/common' && echo 'engines/common/nucleus'",
-    "build-assets": "rm -rf node_modules && rm -rf assets/common/node_modules && rm -rf platforms/common/node_modules && rm -rf engines/common/nucleus/node_modules && yarn install && cd assets/common && yarn install && cd ../../ && cd platforms/common && yarn install && cd ../../ && cd engines/common/nucleus && yarn install && cd ../../../",
-    "ncu": "ncu && cd assets/common && ncu && cd ../../ && cd platforms/common && ncu && cd ../../ && cd engines/common/nucleus && ncu && cd ../../../",
-    "ncu-update": "ncu -a && yarn upgrade && cd assets/common && ncu -a && yarn upgrade && cd ../../ && cd platforms/common && ncu -a && yarn upgrade && cd ../../ && cd engines/common/nucleus && ncu -a && yarn upgrade && cd ../../../"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gantry/gantry5.git"
-  },
-  "author": "Djamil Legato",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/gantry/gantry5/issues"
-  },
-  "homepage": "https://github.com/gantry/gantry5"
+    "name": "gantry5",
+    "version": "5.6.0",
+    "description": "Gantry 5 / JS and CSS bundler",
+    "main": "gulpfile.js",
+    "dependencies": {
+        "npm": "^10.9.0"
+    },
+    "devDependencies": {
+        "ansi-colors": "^4.1.3",
+        "browserify": "^17.0.1",
+        "fancy-log": "^2.0.0",
+        "gulp": "^5.0.0",
+        "gulp-if": "^3.0.0",
+        "gulp-jsonminify": "^1.1.0",
+        "gulp-rename": "^2.0.0",
+        "gulp-sass": "^5.1.0",
+        "gulp-sourcemaps": "^3.0.0",
+        "gulp-uglify": "^3.0.2",
+        "merge-stream": "^2.0.0",
+        "sass": "^1.80.6",
+        "vinyl-buffer": "^1.0.1",
+        "vinyl-source-stream": "^2.0.0",
+        "watchify": "^4.0.0",
+        "yargs": "^17.7.2"
+    },
+    "scripts": {
+        "preinstall": "npx npm-force-resolutions",
+        "list-paths": "echo './' && echo 'assets/common' && echo 'platforms/common' && echo 'engines/common/nucleus'",
+        "build-assets": "rm -rf node_modules && rm -rf assets/common/node_modules && rm -rf platforms/common/node_modules && rm -rf engines/common/nucleus/node_modules && yarn install && cd assets/common && yarn install && cd ../../ && cd platforms/common && yarn install && cd ../../ && cd engines/common/nucleus && yarn install && cd ../../../",
+        "ncu": "ncu && cd assets/common && ncu && cd ../../ && cd platforms/common && ncu && cd ../../ && cd engines/common/nucleus && ncu && cd ../../../",
+        "ncu-update": "ncu -a && yarn upgrade && cd assets/common && ncu -a && yarn upgrade && cd ../../ && cd platforms/common && ncu -a && yarn upgrade && cd ../../ && cd engines/common/nucleus && ncu -a && yarn upgrade && cd ../../../"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gantry/gantry5.git"
+    },
+    "author": "Djamil Legato",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/gantry/gantry5/issues"
+    },
+    "homepage": "https://github.com/gantry/gantry5",
+    "packageManager": "yarn@4.5.1"
 }

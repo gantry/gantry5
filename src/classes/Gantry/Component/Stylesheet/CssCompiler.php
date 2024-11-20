@@ -17,9 +17,10 @@ namespace Gantry\Component\Stylesheet;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Framework\Gantry;
-use ScssPhp\ScssPhp\Colors;
+use Gantry\Framework\Theme;
 use RocketTheme\Toolbox\File\PhpFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+use ScssPhp\ScssPhp\Colors;
 
 /**
  * Class CssCompiler
@@ -50,7 +51,7 @@ abstract class CssCompiler implements CssCompilerInterface
     /** @var array */
     protected $realPaths;
     /** @var array */
-    protected $files;
+    protected $files = [];
     /** @var bool */
     protected $production;
 
@@ -177,7 +178,7 @@ abstract class CssCompiler implements CssCompilerInterface
      */
     public function getCssUrl($name)
     {
-        $out = $name . ($this->configuration !== 'default' ? '_'. $this->configuration : '');
+        $out = $name . ($this->configuration !== 'default' ? '_' . $this->configuration : '');
 
         return "{$this->target}/{$out}.css";
     }
@@ -307,16 +308,25 @@ abstract class CssCompiler implements CssCompilerInterface
     {
         $this->variables = array_filter($variables);
 
-        foreach($this->variables as $var => &$value) {
-            if (strpos($var, 'breakpoints-') === 0) {
+        $gantry = static::gantry();
+
+        /** @var Theme $theme */
+        $theme  = $gantry['theme'];
+        $config = $theme->configuration();
+
+        // Bootstrap requires breakpoints to be px,
+        $convertBreakpoints = $config['css']['options']['convert-breakpoints'] ?? true;
+
+        foreach ($this->variables as $var => &$value) {
+            if ($convertBreakpoints && strpos($var, 'breakpoints-') === 0) {
                 // Breakpoints need to be in rem
                 $len = strlen($value);
+
                 if (strpos($value, 'px', $len - 2)) {
                     $value = ((float)substr($value, 0, $len - 2) / 16.0) . 'rem';
                 } else {
                     $value = preg_replace('/(\d+(\.\d+))em$/i', '\1rem', $value);
                 }
-
             }
 
             if (is_numeric($value)) {

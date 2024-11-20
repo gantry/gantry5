@@ -88,8 +88,12 @@ abstract class Page
         $params = array_merge_recursive($params, $extra);
 
         $list = [];
+
         foreach ($params as $param => $value) {
-            if (!$value) { continue; }
+            if (!$value) {
+                continue;
+            }
+
             if (!is_array($value) || !count(array_filter($value, 'is_array'))) {
                 $value = array_filter(array_unique((array) $value));
                 $list[] = $param . '="' . implode(' ', $value) . '"';
@@ -100,7 +104,6 @@ abstract class Page
                     $list[] = $iparam . '="' . implode(' ', $ivalue) . '"';
                 }
             }
-
         }
 
         return $list ? ' ' . implode(' ', $list) : '';

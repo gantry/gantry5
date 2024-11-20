@@ -3,16 +3,17 @@
 ehthumbs.db
 Thumbs.db
 
-# PhpStorm
+# Ides
 .idea
+.vscode
 
 # Composer
 **/vendor/**
 !**/scss/vendor/**
 
 # Builds
-bin/build/tmp
-bin/build/package
+bin/builder/tmp
+bin/builder/package
 dist
 
 # Tester
@@ -25,9 +26,17 @@ platforms/*/*/src
 platforms/*/*/assets
 platforms/*/*/engines
 
+!platforms/*/plg_gantry5_preset/src
+!platforms/*/plg_system_gantry5/src
+!platforms/*/plg_quickicon_gantry5/src
+!platforms/*/mod_gantry5_particle/src
+
 # Symbolic links in themes
 themes/*/*/common
 themes/*/*/custom
+
+# Symbolic links in src
+src/classes/Gantry/platforms
 
 # Compiled
 **/.sass-cache
@@ -36,6 +45,7 @@ themes/*/*/custom
 platforms/**/cache
 themes/**/cache
 npm-debug.log
-.vscode/launch.json
 sass-convert.sh
-.vscode/settings.json
+local.hebe.json
+.yarn
+.yarnrc.yml

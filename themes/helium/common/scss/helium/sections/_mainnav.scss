@@ -3,7 +3,7 @@
     font-weight: bold;
     padding: $content-padding/2 0;
     white-space: normal;
-    @include word-wrap(break-word);
+    word-wrap: break-word;
     transition: 0.35s ease;
 }
 

@@ -13,7 +13,6 @@ namespace Gantry\Joomla\Contact;
 
 use Gantry\Joomla\Object\Collection;
 use Gantry\Joomla\Object\Finder;
-use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 
 /**
@@ -24,8 +23,10 @@ class ContactFinder extends Finder
 {
     /** @var string */
     protected $table = '#__contact_details';
+
     /** @var bool */
     protected $readonly = true;
+
     /** @var array */
     protected $state = [];
 
@@ -77,9 +78,7 @@ class ContactFinder extends Finder
             return $this;
         }
         if ($language === true || is_numeric($language)) {
-            /** @var CMSApplication $application */
-            $application = Factory::getApplication();
-            $language = $application->getLanguage()->getTag();
+            $language = Factory::getApplication()->getLanguage()->getTag();
         }
         return $this->where('a.language', 'IN', [$language, '*']);
     }
@@ -115,6 +114,9 @@ class ContactFinder extends Finder
         return $this;
     }
 
+    /**
+     * @return void
+     */
     protected function prepare()
     {
         foreach ($this->state as $key => $list) {

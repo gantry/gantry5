@@ -1,14 +1,17 @@
 {%- do gantry.debugger.assets() -%}
 {%- do gantry.theme.loadAtoms() -%}
 
+{% set webassetmanager = gantry.theme.configuration.css.webassetmanager|default(0) %}
 {% set faEnabled = gantry.config.page.fontawesome.enable|default(1) %}
-{% set faVersion = gantry.config.page.fontawesome.version ?? gantry.config.page.fontawesome.default_version ?? 'fa4' %}
+{% set faVersion = gantry.config.page.fontawesome.version ?? gantry.config.page.fontawesome.default_version ?? 'fa6css' %}
 
 {% assets with { priority: 10 } %}
     {% block head_stylesheets -%}
-        <link rel="stylesheet" href="gantry-engine://css-compiled/nucleus.css" type="text/css"/>
+        {% if not webassetmanager %}
+        <link rel="stylesheet" href="gantry-engine://css-compiled/nucleus.css" />
+        {% endif %}
         {% for scss in gantry.theme.configuration.css.persistent|default(gantry.theme.configuration.css.files) %}
-        <link rel="stylesheet" href="{{ scss }}.scss" type="text/css"/>
+        <link rel="stylesheet" href="{{ scss }}.scss" />
         {%- endfor %}
     {% endblock -%}
 
@@ -16,13 +19,11 @@
         {% if faEnabled %}
             {% if faVersion == 'manual' or gantry.config.page.fontawesome.html_js_import|trim %}
                 {{ gantry.config.page.fontawesome.html_js_import|html|raw -}}
-            {% elseif faVersion == 'fa5js' %}
-                <script type="text/javascript" src="{{ url('gantry-assets://js/font-awesome6-all.min.js') }}"></script>
-                {% if gantry.config.page.fontawesome.fa4_compatibility|default(1) %}
-                    <script type="text/javascript" src="{{ url('gantry-assets://js/font-awesome6-shim.min.js') }}"></script>
-                {% endif %}
             {% endif %}
         {% endif %}
+        {% if not webassetmanager %}
+        <script src="{{ url('gantry-assets://js/main.js') }}" defer=""></script>
+        {%- endif %}
     {% endblock -%}
 
     {% block head_platform %}{% endblock %}
@@ -31,19 +32,12 @@
         {% if faEnabled %}
             {% if faVersion == 'manual' or gantry.config.page.fontawesome.html_css_import|trim %}
                 {{ gantry.config.page.fontawesome.html_css_import|html|raw -}}
-            {% elseif faVersion == 'fa4' %}
-                <link rel="stylesheet" href="gantry-assets://css/font-awesome.min.css" type="text/css"/>
-            {% elseif faVersion == 'fa5css' %}
-                <link rel="stylesheet" href="gantry-assets://css/font-awesome6-all.min.css" type="text/css">
-                {% if gantry.config.page.fontawesome.fa4_compatibility|default(1) %}
-
-                {% endif %}
-            {% elseif (faVersion == 'fa5js' or (faVersion == 'manual' and gantry.config.page.fontawesome.html_js_import)) and (gantry.config.page.fontawesome.content_compatibility|default(1)) %}
-                <link rel="stylesheet" href="gantry-assets://css/font-awesome6-pseudo.min.css" type="text/css">
+            {% else %}
+                <link rel="stylesheet" href="{{ url('media/system/css/joomla-fontawesome.min.css') }}" />
             {% endif %}
         {% endif %}
         {% for scss in gantry.theme.configuration.css.overrides %}
-        <link rel="stylesheet" href="{{ scss }}.scss" type="text/css"/>
+        <link rel="stylesheet" href="{{ scss }}.scss" />
         {%- endfor %}
     {% endblock -%}
 {% endassets -%}
@@ -51,8 +45,7 @@
 <head>
     {{ gantry.document.getHtml('head_top')|join("\n    ")|raw }}
     {% block head_meta %}
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        {{ gantry.document.setMetaData('viewport', 'width=device-width, initial-scale=1') }}
         {% if gantry.config.page.head.meta -%}
             {% for attributes in gantry.config.page.head.meta -%}
                 {%- for key, value in attributes %}
@@ -85,9 +78,6 @@
         {{ gantry.styles('head')|join("\n")|raw }}
         {{ gantry.scripts('head')|join("\n")|raw }}
     {%- endblock %}
-
-    {% block head_ie_stylesheets -%}
-    {% endblock -%}
 
     {% block head %}{% endblock -%}
     {% block head_custom %}

@@ -14,6 +14,7 @@
 
 namespace Gantry\Framework\Base;
 
+use Gantry5\Loader;
 use Gantry\Component\Config\Config;
 use Gantry\Component\System\Messages;
 use Gantry\Debugger;
@@ -28,7 +29,6 @@ use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Framework\Services\StreamsServiceProvider;
 use Gantry\Framework\Site;
 use Gantry\Framework\Translator;
-use Gantry5\Loader;
 use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventDispatcher;
@@ -398,13 +398,8 @@ abstract class Gantry extends Container
      */
     public function isCompatible($version)
     {
-        // If requested version is smaller than 5.0-rc, it's not compatible.
-        if (version_compare($version, '5.0-rc', '<')) {
-            return false;
-        }
-
         // Development version support.
-        if ($version === '5.3' || $this->isDev()) {
+        if ($this->isDev()) {
             return true;
         }
 

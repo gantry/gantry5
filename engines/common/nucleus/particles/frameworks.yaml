@@ -2,6 +2,7 @@ name: JavaScript Frameworks
 description: Loads selected frameworks for the page.
 type: atom
 icon: far fa-file-code
+deprecated: 5.6 will be removed in 5.7, will be removed without replacement, use WebAssetManager
 
 form:
   fields:
