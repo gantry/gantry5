@@ -3,6 +3,8 @@
 1. [Common](#common)
     1. [](#new)
         - Added PHP 8.3 compatibility
+        - Dark mode for Joomla
+        - Gulp tasks fix
     2. [](#improved)
         - Replaced deprecated utf8_encode/utf8_decode functions with mb_convert_encoding
         - Updated dependency versions for PHP 8.3 compatibility

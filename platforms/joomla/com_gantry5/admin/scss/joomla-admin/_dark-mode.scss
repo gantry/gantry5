@@ -1,0 +1,1072 @@
+// Dark mode styles for Joomla Gantry admin
+// These styles apply when the g5-dark-mode class is present on the #g5-container element
+
+#g5-container.g5-dark-mode {
+    // Base colors to match Joomla dark theme
+    color: $white;
+    background-color: #1a2537 !important;
+    
+    .inner-container {
+        background-color: #2a394f !important;
+        color: $white;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    }
+    
+    // Tabs styling - UK tabs
+    .g-tabs .uk-tab {
+        background-color: #1a2537 !important;
+        
+        > li > a {
+            color: #cbd9e8 !important;
+            
+            &:hover {
+                background-color: #2a394f !important;
+            }
+        }
+        
+        > li.uk-active > a {
+            background-color: #2a394f !important;
+            color: $white !important;
+        }
+    }
+    
+    // G-tabs styling
+    .g5-tabs-container {
+        border-bottom-color: #374f6b !important;
+        
+        .g-tabs {
+            ul {
+                border-bottom-color: #374f6b !important;
+                background-color: #1a2537 !important;
+            }
+            
+            li {
+                background-color: transparent !important;
+                
+                a {
+                    color: #cbd9e8 !important;
+                    
+                    &:hover {
+                        color: $white !important;
+                    }
+                    
+                    span {
+                        &:hover {
+                            background-color: #273042 !important;
+                        }
+                    }
+                }
+                
+                &.active {
+                    a span {
+                        color: $white !important;
+                        background-color: $core-accent !important;
+                    }
+                }
+            }
+        }
+        
+        .g-panes {
+            border-color: #374f6b !important;
+            
+            .settings-param {
+                background-color: #1a2537 !important;
+                border-bottom-color: #273042 !important;
+            }
+            
+            .g-pane {
+                background-color: #1a2537 !important;
+            }
+        }
+    }
+    
+    // Main content area
+    .main-block {
+        background-color: #2a394f !important;
+    }
+    
+    #g-main {
+        background-color: #2a394f !important;
+    }
+    
+    .g-content {
+        background-color: #2a394f !important;
+    }
+    
+    // Input elements styling
+    input, select, textarea, .g-colorpicker {
+        background-color: #374f6b;
+        border-color: #415a79;
+        color: $white;
+        
+        &:focus {
+            background-color: #43587a;
+            border-color: $core-accent;
+        }
+    }
+    
+    // Cards styling
+    .cards-wrapper .card {
+        background-color: #1a2537;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        
+        &:hover {
+            background-color: #273042;
+        }
+    }
+    
+    // Buttons
+    .button, button {
+        background-color: #3a547a;
+        color: $white;
+        
+        &:hover {
+            background-color: lighten(#3a547a, 5%);
+        }
+        
+        &.button-primary {
+            background-color: $core-accent;
+            
+            &:hover {
+                background-color: lighten($core-accent, 5%);
+            }
+        }
+    }
+    
+    // Dropdowns
+    .dropdown .dropdown-menu {
+        background-color: #1a2537;
+        box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+        
+        li {
+            a {
+                color: $white;
+                
+                &:hover {
+                    background-color: #273042;
+                }
+            }
+        }
+    }
+    
+    // Modal windows
+    .g5-dialog {
+        .g5-content {
+            background-color: #2a394f !important;
+            color: $white !important;
+        }
+        
+        .g5-close {
+            &:before {
+                color: #cbd9e8 !important;
+                background-color: transparent !important;
+            }
+            
+            &:hover:before, &:active:before {
+                color: $white !important;
+                background-color: #374f6b !important;
+            }
+        }
+        
+        .g-modal-actions {
+            background-color: #1a2537 !important;
+            border-top-color: #374f6b !important;
+        }
+        
+        .g-menuitem-path {
+            color: lighten($core-accent, 10%) !important;
+        }
+    }
+    
+    // Dialog loading spinner
+    .g5-dialog-loading-spinner.g5-dialog-theme-default {
+        box-shadow: 0 0 0 0.5em #2a394f, 0 0 1px 0.5em rgba(0, 0, 0, 0.5) !important;
+        background: #2a394f !important;
+        border-top-color: #6a85a0 !important;
+    }
+    
+    // Fix any contrasting elements
+    .g-panel-filters, .g-pane, .g-filters {
+        background-color: #273042 !important;
+    }
+    
+    // Settings blocks specific styling
+    .settings-block {
+        background-color: #1a2537 !important;
+        
+        // Panel header and filters
+        .g-panel-filters {
+            background-color: #273042 !important;
+            border-color: #374f6b !important;
+            
+            // Search field
+            .search input {
+                background-color: #1a2537 !important;
+                border-color: #374f6b !important;
+                color: $white !important;
+                
+                &:focus {
+                    border-color: $core-accent !important;
+                    background-color: #374f6b !important;
+                }
+            }
+        }
+        
+        // Disabled settings block
+        &.disabled {
+            opacity: 0.4 !important;
+        }
+    }
+    
+    // Configuration sections
+    .g-grid .g-block {
+        background-color: #2a394f !important;
+    }
+    
+    // Configuration cards and panels
+    .card-block, .g-card, .g-panel {
+        background-color: #1a2537 !important;
+        
+        &:hover {
+            background-color: #273042 !important;
+        }
+    }
+    
+    // Outline selection
+    .gantry-outlines {
+        background-color: #2a394f !important;
+        
+        .g-switch {
+            background-color: #1a2537 !important;
+        }
+    }
+    
+    // Layout editor
+    .g-grid .g-block .g-block-content {
+        background-color: #1a2537 !important;
+    }
+    
+    .g-section {
+        background-color: #273042 !important;
+    }
+    
+    // Developer mode
+    .g-devprev {
+        background-color: #1a2537 !important;
+    }
+    
+    // Headers
+    .g-toplevel-header {
+        background-color: #1a2537;
+    }
+    
+    // Notices, alerts, and feedback messages
+    .alert {
+        background-color: #273042;
+        color: $white;
+        
+        &.alert-success {
+            background-color: #2a6e32; // Hardcoded dark green
+        }
+        
+        &.alert-error, &.alert-danger {
+            background-color: #8b2c2c; // Hardcoded dark red
+        }
+        
+        &.alert-warning {
+            background-color: #7d6608; // Hardcoded dark yellow
+        }
+        
+        &.alert-info {
+            background-color: #164b69; // Hardcoded dark blue
+        }
+    }
+    
+    // Toggle switches
+    .g-toggle-switch {
+        .g-toggle-switch-value {
+            background-color: #1a2537;
+        }
+    }
+    
+    // Block picker
+    .g-block-picker {
+        background-color: #1a2537;
+    }
+    
+    // Filepicker
+    .g-filepicker {
+        background-color: #374f6b;
+    }
+    
+    // Tooltips and popovers
+    .tooltip, .popover {
+        background-color: #1a2537;
+        color: $white;
+    }
+    
+    // Admin menu
+    .g-menu-selector {
+        background-color: #1a2537;
+        
+        .g-menu-item.active {
+            background-color: #2a394f;
+        }
+    }
+    
+    // Position panels
+    .g-pos-header {
+        background-color: #1a2537;
+    }
+    
+    // Tables
+    table.g-table-settings {
+        background-color: #1a2537;
+        
+        thead th {
+            background-color: #273042;
+            color: $white;
+        }
+        
+        tbody tr:nth-child(odd) {
+            background-color: #1e2b3e;
+        }
+        
+        tbody tr:nth-child(even) {
+            background-color: #1a2537;
+        }
+    }
+    
+    // Panel titles
+    .g-panel-title, h4, h5, h6 {
+        color: $white;
+    }
+    
+    // Content blocks
+    .g-panel, .g-content {
+        color: $white;
+    }
+    
+    // Links
+    a:not(.button) {
+        color: lighten($core-accent, 10%);
+        
+        &:hover {
+            color: lighten($core-accent, 20%);
+        }
+    }
+    
+    // Additional specific UI elements
+    
+    // Configuration manager
+    .configurations-list {
+        background-color: #1a2537 !important;
+        color: $white !important;
+    }
+    
+    // Menu editor elements
+    .menu-selector-wrapper, .menu-editor {
+        background-color: #2a394f !important;
+    }
+    
+    // Particle picker
+    .g-particles {
+        background-color: #1a2537 !important;
+        
+        .g-particles-header {
+            background-color: #273042 !important;
+        }
+    }
+    
+    // Breadcrumbs
+    .g-breadcrumbs, .g-breadcrumbs li {
+        color: #cbd9e8 !important;
+    }
+    
+    // Template preview
+    .outline-home .preview {
+        background-color: #1a2537 !important;
+    }
+    
+    // Selectize dropdown elements
+    .g-selectize-control {
+        .g-selectize-input {
+            background-color: #1a2537 !important;
+            color: $white !important;
+            border-color: #374f6b !important;
+            
+            &:after {
+                color: #cbd9e8 !important;
+            }
+            
+            &.g-dropdown-active {
+                background-color: #1a2537 !important;
+                border-color: #374f6b !important;
+            }
+            
+            > input {
+                color: $white !important;
+            }
+        }
+    }
+    
+    .g-selectize-dropdown {
+        background-color: #1a2537 !important;
+        border-color: #374f6b !important;
+        color: $white !important;
+        
+        .g-active {
+            background-color: #273042 !important;
+            color: $white !important;
+        }
+        
+        [data-selectable]:hover {
+            background-color: #273042 !important;
+            color: $white !important;
+        }
+        
+        .g-optgroup-header {
+            background-color: #12192b !important;
+            color: #cbd9e8 !important;
+        }
+    }
+    
+    // Font Awesome icons
+    .fa-fw {
+        color: #cbd9e8 !important;
+    }
+    
+    // Code editors (e.g. for custom CSS)
+    .CodeMirror, .cm-s-default {
+        background-color: #1a2537 !important;
+        color: #cbd9e8 !important;
+        
+        .CodeMirror-gutters {
+            background-color: #12192b !important;
+            border-color: #273042 !important;
+        }
+        
+        .CodeMirror-linenumber {
+            color: #5d7896 !important;
+        }
+        
+        .CodeMirror-cursor {
+            border-color: $white !important;
+        }
+        
+        .cm-comment {
+            color: #5d7896 !important;
+        }
+        
+        .cm-keyword {
+            color: #c679dd !important;
+        }
+        
+        .cm-string {
+            color: #98c379 !important;
+        }
+        
+        .cm-property {
+            color: #61afef !important;
+        }
+        
+        .cm-variable {
+            color: #e6e6e6 !important;
+        }
+        
+        .cm-operator {
+            color: #56b6c2 !important;
+        }
+        
+        .cm-number {
+            color: #d19a66 !important;
+        }
+    }
+    
+    // Navbar styling
+     .navbar-block {
+        background-color: #1a2537 !important;
+        border-color: #374f6b !important;
+    }
+    
+  
+
+    #navbar {
+        background-color: #1a2537 !important;
+        
+        ul {
+            background-color: #1a2537 !important;
+            
+            li:not(.config-select-wrap), li {
+                background-color: #1a2537 !important;
+                
+                &:hover {
+                    background-color: #273042 !important;
+                }
+                
+                &.active {
+                    background-color: #2a394f !important;
+                    
+                    a {
+                        color: $white !important;
+                    }
+                }
+                
+                a {
+                    color: #cbd9e8 !important;
+                    border-color: #374f6b !important;
+                    
+                    &:focus, &:hover {
+                        background-color: #273042 !important;
+                        color: $white !important;
+                    }
+                }
+            }
+        }
+    }
+    
+    // Dialog and popover tabs styling
+    .g5-dialog, .g5-popover-content {
+        > .g-tabs, form > .g-tabs, .g5-content > .g-tabs {
+            background-color: #1a2537 !important;
+            
+            ul {
+                background-color: #1a2537 !important;
+                border-color: #374f6b !important;
+                
+                li:not(.config-select-wrap) {
+                    background-color: #1a2537 !important;
+                    
+                    &:hover {
+                        background-color: #273042 !important;
+                    }
+                    
+                    &.active {
+                        background-color: #2a394f !important;
+                        
+                        a {
+                            color: $white !important;
+                        }
+                    }
+                    
+                    a {
+                        color: #cbd9e8 !important;
+                        
+                        &:hover {
+                            color: $white !important;
+                        }
+                    }
+                }
+            }
+        }
+        
+        .g-pane {
+            background-color: #2a394f !important;
+            
+            li[data-switch] {
+                &:hover:not(.g-switch-title) {
+                    background-color: #374f6b !important;
+                }
+                
+                i {
+                    color: #cbd9e8 !important;
+                }
+            }
+            
+            .g-switch-title {
+                color: #98aabf !important;
+            }
+        }
+    }
+    
+    // Card blocks and settings blocks
+    .card, .card-block, .settings-block, .swatches-block {
+        background-color: #1a2537 !important;
+        border-color: #374f6b !important;
+        
+        // Swatch elements
+        .swatch {
+            background-color: #1a2537 !important;
+            border-color: #374f6b !important;
+            
+            &:focus {
+                box-shadow: 0 0 7px rgba(255, 255, 255, 0.3) !important;
+            }
+        }
+        
+        .swatch-description {
+            color: #cbd9e8 !important;
+            background-color: #1a2537 !important;
+            border-color: #374f6b !important;
+        }
+        
+        .inner-params {
+            border-top-color: #273042 !important; // Darker border color for inner params
+            
+            > :first-child:not(.alert) {
+                border-top-color: #273042 !important; // Darker border color for first child element
+            }
+        }
+        
+        .settings-param {
+            border-bottom-color: #273042 !important;
+            
+            .settings-param-override {
+                background-color: rgba(26, 37, 55, 0.85) !important; // Semi-transparent dark overlay - darker for more visibility
+                
+            }
+            
+            .settings-param-field {
+                .g-reset-field {
+                    color: #cbd9e8 !important;
+                    
+                    &:hover {
+                        color: $white !important;
+                    }
+                }
+            }
+            
+            // Settings param title
+            .settings-param-title {
+                color: #cbd9e8 !important;
+            }
+            
+            // Settings param wrapper for collections
+            .settings-param-wrapper {
+                background-color: #1a2537 !important;
+                border-color: #273042 !important;
+            }
+            
+            // Advanced setting
+            .advanced {
+                color: #ff9a56 !important; // Brighter orange for better visibility on dark backgrounds
+            }
+        }
+        
+        // Settings param hidden
+        .settings-param.input-hidden {
+            background-color: #1a2537 !important;
+        }
+        
+        h4.card-overrideable {
+            .enabler {
+                color: #cbd9e8 !important;
+            }
+        }
+        
+        .advanced {
+            color: #ff9a56 !important; // Brighter orange for dark background
+        }
+        
+        // Dealing with other possible border elements in cards
+        hr, .divider, [class*="border"] {
+            border-color: #273042 !important;
+        }
+    }
+    
+    // Outline styles in configurations
+    #configurations {
+        .outline-is-default {
+            border-color: $core-accent !important;
+            
+            &:after {
+                background-color: $core-accent !important;
+                color: $white !important;
+            }
+        }
+    }
+    
+    // Common border elements
+    .g-footer-actions {
+        border-top-color: #374f6b !important;
+    }
+    
+    // Page Settings and Atoms styling
+    #page-settings #atoms {
+        // Atoms list
+        .atoms-list {
+            &:empty {
+                background-color: #1a2537 !important;
+                
+                &:after {
+                    color: #6a85a0 !important;
+                }
+            }
+        }
+        
+        // Atoms picker and atoms list
+        .atoms-picker, .atoms-list {
+            .atom-settings {
+                color: #cbd9e8 !important;
+                
+                &:hover {
+                    color: $white !important;
+                }
+            }
+            
+            li {
+                color: #c795e0 !important; // Lighter purple for atom text
+                border-color: #9055AF !important; // Original atom color
+                
+                &.atom-dragging:not(.atom-disabled) {
+                    border-color: #9055AF !important;
+                    background-color: #9055AF !important;
+                    color: $white !important;
+                    
+                    .atom-settings {
+                        color: $white !important;
+                    }
+                }
+                
+                &.g-inheriting {
+                    color: $white !important;
+                    
+                    i {
+                        color: $white !important;
+                    }
+                }
+                
+                &.atom-disabled {
+                    border-color: rgba(255, 255, 255, 0.1) !important;
+                    color: #cbd9e8 !important;
+                    
+                    &.g-inheriting {
+                        color: $white !important;
+                        
+                        i {
+                            color: $white !important;
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Atoms picker
+        .atoms-picker li {
+            color: #cbd9e8 !important;
+            border-color: #374f6b !important;
+        }
+    }
+    
+    // Gantry specific border fixes
+    .g-collapse {
+        border-color: #374f6b !important;
+        color: #cbd9e8 !important;
+        
+        &:hover {
+            color: $white !important;
+            background-color: #273042 !important;
+        }
+    }
+    
+    // Changelog styles
+    .changelog {
+        .changelog-version {
+            border-bottom-color: #374f6b !important;
+        }
+        
+        .changelog-date {
+            color: #cbd9e8 !important;
+        }
+    }
+    
+    // Menu editor
+    .menu-select-wrap {
+        border-color: #374f6b !important;
+    }
+    
+    .menu-item-container {
+        border-left-color: #374f6b !important;
+    }
+    
+    // Input groups
+    .input-group-btn .button {
+        border-color: #374f6b !important;
+    }
+    
+    // Style variations
+    .styles-selector {
+        border-color: #374f6b !important;
+    }
+    
+    // Swatch preview and matched indicators
+    .swatch-preview, .swatch-matched {
+        background: rgba(0, 0, 0, 0.6) !important;
+        
+        &:hover {
+            background: rgba(0, 0, 0, 0.9) !important;
+        }
+    }
+    
+    .swatch-matched {
+        color: #ffdd57 !important; // Brighter yellow for dark mode
+        
+        &:hover {
+            background: rgba(0, 0, 0, 0.6) !important;
+        }
+    }
+    
+    // Assignments
+    .g-assignments-list {
+        border-top-color: #374f6b !important;
+    }
+    
+    #assignments, .settings-assignments {
+        .settings-param {
+            border-top-color: #273042 !important;
+            
+            .settings-param-title {
+                color: $white !important;
+            }
+        }
+        
+        .g-panel-filters {
+            [data-g-assignments-check], [data-g-assignments-uncheck] {
+                border-left-color: #374f6b !important;
+                color: #cbd9e8 !important;
+                
+                &:hover {
+                    color: $white !important;
+                }
+            }
+        }
+        
+        .settings-param-wrapper {
+            border-color: #273042 !important;
+        }
+    }
+    
+    // General border color fixes
+    .border,
+    [class*="border-"],
+    .border-primary,
+    .border-secondary,
+    .border-light,
+    .pagination,
+    .btn-outline-secondary,
+    .dropdown-menu,
+    .table td,
+    .table th,
+    table.dataTable tbody td,
+    table.dataTable tbody th,
+    .form-control,
+    .input-group-text,
+    .nav-tabs,
+    hr,
+    .g-divider,
+    .list-group-item,
+    .card-footer,
+    .card-header,
+    .sidebar-block {
+        border-color: #374f6b !important;
+    }
+    
+    .table thead th {
+        border-bottom-color: #374f6b !important;
+    }
+    
+    // Platform specific borders and footer styling
+    #g5-container #footer,
+    .com_gantry5 #footer, 
+    .gantry5 #footer, 
+    .admin-block #footer {
+        border-top-color: #374f6b !important;
+        background-color: #1a2537 !important;
+        color: #cbd9e8 !important;
+        
+        .g-version, .g-version-date {
+            color: lighten($update-header-bg, 10%) !important;
+        }
+        
+        a {
+            color: lighten($core-accent, 10%) !important;
+            
+            &:hover {
+                color: lighten($core-accent, 20%) !important;
+            }
+        }
+    }
+
+    // Force any other elements with white background
+    [style*="background-color: white"], 
+    [style*="background-color: #fff"],
+    [style*="background-color: #ffffff"],
+    [style*="background: white"],
+    [style*="background: #fff"],
+    [style*="background: #ffffff"] {
+        background-color: #2a394f !important;
+        color: $white !important;
+    }
+    
+    // Layout manager blocks
+    .lm-blocks {
+        &.empty {
+            border-color: #374f6b !important;
+        }
+        
+        [data-lm-blocktype="container"] {
+            background-color: #12192b !important;
+            
+            .container-wrapper {
+                color: #cbd9e8 !important;
+            }
+        }
+        
+        .section, .atoms-section, .offcanvas-section, .wrapper-section {
+            background: #2a394f !important;
+            
+            .section-header {
+                h4 {
+                    color: $white !important;
+                }
+                
+                i {
+                    color: #cbd9e8 !important;
+                }
+            }
+        }
+        
+        .atoms-section, .offcanvas-section {
+            border-top-color: #374f6b !important; // Darker border color for offcanvas and atoms sections
+        }
+        
+        .g-grid {
+            background-color: #1a2537 !important;
+            
+            &:hover:not(:empty) {
+                box-shadow: 0 0 0 1px #374f6b !important;
+            }
+            
+            &:not(:empty):not(.no-hover):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
+                background: #1a2537 !important;
+                border-color: #374f6b !important;
+                color: #cbd9e8 !important;
+            }
+            
+            &:empty:after {
+                color: #6a85a0 !important;
+            }
+        }
+        
+        .g-grid > .g-block {
+            &:after {
+                background: #00baaa !important; // Keep the original accent color for resizing
+            }
+            
+            > .g-block {
+                background: #2a394f !important;
+                
+                > .section {
+                    border-bottom-color: #1a2537 !important;
+                }
+            }
+        }
+        
+        .particle, .position, .spacer, .system, .atom {
+            color: $white !important;
+        }
+    }
+    
+    // Layout manager particles picker
+    .g5-lm-particles-picker {
+        li {
+            &[data-lm-blocktype="spacer"] {
+                color: #cbd9e8 !important;
+                border-color: #374f6b !important;
+                
+                .particle-icon {
+                    background-color: #374f6b !important;
+                }
+            }
+            
+            &[data-lm-blocktype="particle"] {
+                color: #6ec6e7 !important; // Lightened particle color
+                border-color: #2A82B7 !important; // Direct particle color
+            }
+            
+            &[data-lm-blocktype="position"] {
+                color: #8ecbef !important; // Lightened position color
+                border-color: #359AD9 !important; // Direct position color
+            }
+            
+            &[data-lm-blocktype="atom"] {
+                color: $white !important;
+                background-color: #9055AF !important; // Direct atom color
+            }
+        }
+    }
+    
+    // Joomla navbar styling
+    #header .header-items .header-item:not(.active) .header-item-content, 
+    #subhead .header-items .header-item:not(.active) .header-item-content {
+        color: #cbd9e8 !important;
+    }
+    
+    #navbar, nav.navbar, .navbar, .subhead, #subhead {
+        background-color: #1a2537 !important;
+        
+        a, span, .nav-link {
+            color: #cbd9e8 !important;
+            
+            &:hover, &:focus, &.active {
+                color: #ffffff !important;
+                background-color: #273042 !important;
+            }
+        }
+        
+        .nav-item.active, .nav-item.active > a, .active {
+            background-color: #273042 !important;
+            color: $white !important;
+        }
+        
+        .btn, button {
+            background-color: #3a547a !important;
+            color: $white !important;
+            
+            &:hover {
+                background-color: #4a6490 !important;
+            }
+        }
+        
+        // Dropdown menus in navbar
+        .dropdown-menu {
+            background-color: #1a2537 !important;
+            border-color: #273042 !important;
+            
+            a {
+                color: #cbd9e8 !important;
+                
+                &:hover, &:focus {
+                    background-color: #273042 !important;
+                    color: #ffffff !important;
+                }
+            }
+        }
+    }
+
+  
+}
+
+    // Platform specific borders and footer styling
+ [data-color-scheme="dark"] {
+    #g5-container #footer,
+    .com_gantry5 #footer, 
+    .gantry5 #footer, 
+    .admin-block #footer {
+        border-top-color: #374f6b !important;
+        background-color: #1a2537 !important;
+        color: #cbd9e8 !important;
+        
+        .g-version, .g-version-date {
+            color: lighten($update-header-bg, 10%) !important;
+        }
+        
+        a {
+            color: lighten($core-accent, 10%) !important;
+            
+            &:hover {
+                color: lighten($core-accent, 20%) !important;
+            }
+        }
+    }
+}
