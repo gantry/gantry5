@@ -1,3 +1,15 @@
+# 5.5.20
+## 02/25/2025
+1. [Common](#common)
+    1. [](#new)
+        - Added PHP 8.3 compatibility
+    2. [](#improved)
+        - Replaced deprecated utf8_encode/utf8_decode functions with mb_convert_encoding
+        - Updated dependency versions for PHP 8.3 compatibility
+        - Added explicit extension requirements (mbstring, json, dom, xml, simplexml)
+        - Modified composer scripts to handle missing PHP extensions
+        - Removed abandoned leafo/scssphp package in favor of scssphp/scssphp
+
 # 5.5.19
 ## 05/23/2024
 1. [Common](#common)

@@ -5,9 +5,10 @@
     "license": "MIT",
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.6.20",
+        "php": ">=7.3.6 <8.4.0",
         "ext-zip": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-mbstring": "*"
     },
     "scripts": {
         "install-deps": "bin/composer-install",

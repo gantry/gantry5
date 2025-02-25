@@ -5,8 +5,8 @@ setlocale(LC_ALL, ['en_GB.utf8', 'en_GB']);
 date_default_timezone_set('America/Denver');
 chdir(__DIR__ . '/..');
 
-//echo "# Running composer update for build script\n";
-//composer_update('bin/builder', false);
+echo "# Running composer update for build script\n";
+composer_update('bin/builder', false);
 
 chdir('platforms');
 
@@ -30,7 +30,7 @@ function composer_update($folder, $link)
     if ($link && !file_exists('src')) {
         symlink('../../../src', 'src');
     }
-    if (false === exec('composer update --no-dev --no-progress', $output, $result) || $result) {
+    if (false === exec('composer update --no-dev --no-progress --ignore-platform-req=ext-dom --ignore-platform-req=ext-xml --ignore-platform-req=ext-simplexml --ignore-platform-req=ext-xmlwriter', $output, $result) || $result) {
         echo implode("\n", $output);
         throw new \RuntimeException('Failed to run composer update in ' . $folder);
     }
