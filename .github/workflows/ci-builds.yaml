@@ -11,12 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
-          extensions: opcache, gd
+          php-version: 8.1
+          extensions: opcache, gd, zip
           tools: composer:v2
           coverage: none
         env:
@@ -24,12 +24,12 @@ jobs:
       - name: Install packages
         run: |
           sudo apt-get -y update -qq  < /dev/null > /dev/null
-          sudo apt-get -y install -qq git zip < /dev/null > /dev/null
+          sudo apt-get -y install -qq git zip php-zip < /dev/null > /dev/null
       - name: Get composer cache directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir -d bin/builder)"
+        run: echo "dir=$(composer config cache-files-dir -d bin/builder)" >> $GITHUB_OUTPUT
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
