@@ -101,6 +101,25 @@ bin/composer-install
 
 After that, you need to properly symlink Gantry into your CMS installation.
 
+## Testing PHP 8.3 Compatibility
+
+The framework includes a PHPUnit test suite specifically for validating PHP 8.3 compatibility. To run these tests:
+
+```bash
+# Install composer dependencies if not already done
+bin/composer-install
+
+# Run the PHP 8.3 compatibility tests
+vendor/bin/phpunit
+```
+
+This will execute tests that verify key components work correctly with PHP 8.3 including:
+- Type system compatibility (nullable and union types)
+- Trait implementation compatibility
+- Core framework functionality
+- Platform-specific features
+- Twig integration
+
 ## Bundling JS and Compiling SCSS
 
 In our development environment, we use **Gulp** to bundle **JavaScript** and compile **SCSS** with the capability of `watch` so that any change on target files will automatically trigger the recompilation.
