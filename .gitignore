@@ -2,6 +2,10 @@
 .DS_Store
 ehthumbs.db
 Thumbs.db
+.phpunit.result.cache
+
+# Claude
+CLAUDE.md
 
 # PhpStorm
 .idea
