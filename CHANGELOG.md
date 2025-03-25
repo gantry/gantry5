@@ -16,6 +16,7 @@
     3. [](#bugfix)
         - Fixed incorrect formatting in changelog file (#3305)
         - Fixed missing translation on WordPress for "Content" tab (#3302)
+        - Fixed unwanted whitespace before DOCTYPE in Grav platform HTML output (#3287)
 2. [Joomla](#joomla)
     1. [](#improved)
         - Removed support for Joomla 3.x
