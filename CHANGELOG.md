@@ -19,6 +19,8 @@
         - Fixed unwanted whitespace before DOCTYPE in Grav platform HTML output (#3287)
         - Fixed SVG images display issues on login and 404 pages in Joomla 5 (#3277)
         - Fixed potential infinite recursion with large menus in multi-column layouts (#3266)
+        - Fixed PHP compile error in NullLogger class for method signature compatibility (#3264)
+        - Fixed PSR compatibility issues with Joomla 5.1.1 by updating dependencies (#3259)
 2. [Joomla](#joomla)
     1. [](#improved)
         - Removed support for Joomla 3.x
