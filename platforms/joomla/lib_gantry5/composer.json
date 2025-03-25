@@ -4,7 +4,7 @@
     "license": "GPLv2",
 
     "require": {
-        "php": ">=7.3.6 <8.4.0",
+        "php": ">=8.1.0 <8.4.0",
         "ext-mbstring": "*",
         "ext-json": "*",
         "ext-dom": "*",

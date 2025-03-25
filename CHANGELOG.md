@@ -1,16 +1,29 @@
 # 5.5.20
-## 02/25/2025
+## 03/25/2025
 1. [Common](#common)
     1. [](#new)
         - Added PHP 8.3 compatibility
         - Dark mode for Joomla
         - Gulp tasks fix
+        - Updated minimum PHP version to 8.1.0
     2. [](#improved)
         - Replaced deprecated utf8_encode/utf8_decode functions with mb_convert_encoding
         - Updated dependency versions for PHP 8.3 compatibility
         - Added explicit extension requirements (mbstring, json, dom, xml, simplexml)
         - Modified composer scripts to handle missing PHP extensions
         - Removed abandoned leafo/scssphp package in favor of scssphp/scssphp
+        - Removed support for PHP versions below 8.1
+2. [Joomla](#joomla)
+    1. [](#improved)
+        - Removed support for Joomla 3.x
+        - Added support for Joomla 4.x only (4.0.0 or higher)
+3. [Wordpress](#wordpress)
+    1. [](#improved)
+        - Updated PHP version check to require 8.1.0 minimum
+4. [Grav](#grav)
+    1. [](#improved)
+        - Added explicit PHP 8.1.0 minimum requirement
+        - Updated Grav dependencies to newer versions
 
 # 5.5.19
 ## 05/23/2024
