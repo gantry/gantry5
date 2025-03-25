@@ -18,10 +18,13 @@
         - Fixed missing translation on WordPress for "Content" tab (#3302)
         - Fixed unwanted whitespace before DOCTYPE in Grav platform HTML output (#3287)
         - Fixed SVG images display issues on login and 404 pages in Joomla 5 (#3277)
+        - Fixed potential infinite recursion with large menus in multi-column layouts (#3266)
 2. [Joomla](#joomla)
     1. [](#improved)
         - Removed support for Joomla 3.x
         - Added support for Joomla 4.x only (4.0.0 or higher)
+    2. [](#todo)
+        - Update Bootstrap from 5.0.2 to 5.3.3 to match Joomla 5.2+ (#3275)
 3. [Wordpress](#wordpress)
     1. [](#improved)
         - Updated PHP version check to require 8.1.0 minimum
