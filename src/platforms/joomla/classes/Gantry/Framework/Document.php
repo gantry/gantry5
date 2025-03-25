@@ -16,7 +16,7 @@ use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Version as JVersion;
+use Joomla\CMS\Version;
 use Joomla\CMS\WebAsset\WebAssetManager;
 
 /**
@@ -56,8 +56,8 @@ class Document extends HtmlDocument
         // Make sure that if Bootstap framework is loaded, also load CSS.
         if (
             $framework === 'bootstrap'
-            || ($framework === 'bootstrap.2' && JVersion::MAJOR_VERSION === 3)
-            || ($framework === 'bootstrap.5' && JVersion::MAJOR_VERSION >= 4)
+            || ($framework === 'bootstrap.2' && version_compare(JVERSION, '4.0', '<'))
+            || ($framework === 'bootstrap.5' && version_compare(JVERSION, '4.0', '>='))
         ) {
             /** @var Theme $theme */
             $theme = Gantry::instance()['theme'];
@@ -130,15 +130,33 @@ class Document extends HtmlDocument
 
         $styles = static::$stack[0]->getStyles();
 
+        // Check if we're using WebAssetManager (Joomla 4+) or need to fall back
+        $useWebAssetManager = method_exists($doc, 'getWebAssetManager') && version_compare(JVERSION, '4.0', '>=');
+        $webAssetManager = $useWebAssetManager ? $doc->getWebAssetManager() : null;
+
         foreach ($styles as $style) {
             switch ($style[':type']) {
                 case 'file':
                     $attribs = array_replace(['type' => $style['type'], 'media' => $style['media']], $style['element']);
                     $attribs = array_filter($attribs, static function($arg) { return null !== $arg; });
-                    $doc->addStyleSheet($style['href'], [], $attribs);
+                    
+                    if ($useWebAssetManager) {
+                        $webAssetManager->registerAndUseStyle(
+                            md5($style['href']), 
+                            $style['href'], 
+                            [], 
+                            $attribs
+                        );
+                    } else {
+                        $doc->addStyleSheet($style['href'], [], $attribs);
+                    }
                     break;
                 case 'inline':
-                    $doc->addStyleDeclaration($style['content'], $style['type']);
+                    if ($useWebAssetManager) {
+                        $webAssetManager->addInlineStyle($style['content'], ['type' => $style['type']]);
+                    } else {
+                        $doc->addStyleDeclaration($style['content'], $style['type']);
+                    }
                     break;
             }
         }
@@ -156,15 +174,36 @@ class Document extends HtmlDocument
 
         $scripts = static::$stack[0]->getScripts();
 
+        // Check if we're using WebAssetManager (Joomla 4+) or need to fall back
+        $useWebAssetManager = method_exists($doc, 'getWebAssetManager') && version_compare(JVERSION, '4.0', '>=');
+        $webAssetManager = $useWebAssetManager ? $doc->getWebAssetManager() : null;
+
         foreach ($scripts as $script) {
             switch ($script[':type']) {
                 case 'file':
-                    $attribs = ['mime' => $script['type'], 'defer' => $script['defer'], 'async' => $script['async']];
+                    $attribs = ['defer' => $script['defer'], 'async' => $script['async']];
+                    if (!$useWebAssetManager) {
+                        $attribs['mime'] = $script['type'];
+                    }
                     $attribs = array_filter($attribs, static function($arg) { return null !== $arg; });
-                    $doc->addScript($script['src'], [], $attribs);
+                    
+                    if ($useWebAssetManager) {
+                        $webAssetManager->registerAndUseScript(
+                            md5($script['src']), 
+                            $script['src'], 
+                            [], 
+                            $attribs
+                        );
+                    } else {
+                        $doc->addScript($script['src'], [], $attribs);
+                    }
                     break;
                 case 'inline':
-                    $doc->addScriptDeclaration($script['content'], $script['type']);
+                    if ($useWebAssetManager) {
+                        $webAssetManager->addInlineScript($script['content'], ['type' => $script['type']]);
+                    } else {
+                        $doc->addScriptDeclaration($script['content'], $script['type']);
+                    }
                     break;
             }
         }

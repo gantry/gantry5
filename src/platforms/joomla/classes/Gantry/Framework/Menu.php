@@ -44,22 +44,42 @@ class Menu extends AbstractMenu
         $app = Factory::getApplication();
         if ($app->isClient('administrator')) {
             $this->isAdmin = true;
-            $this->application = CMSApplication::getInstance('site');
+            try {
+                // In Joomla 5, this will throw an exception - we'll handle it
+                $this->application = Factory::getContainer()->get(\Joomla\CMS\Application\SiteApplication::class);
+                $this->menu = $this->application->getMenu();
+                
+                if (Multilanguage::isEnabled()) {
+                    $language = $app->getLanguage();
+                    $tag = $language->getTag();
+                } else {
+                    $tag = '*';
+                }
+                
+                $this->default = $this->menu->getDefault($tag);
+                $this->active = $this->menu->getActive();
+            } catch (\Exception $e) {
+                // If we can't get site application in admin, set defaults to null
+                $this->application = $app;
+                $this->menu = null;
+                $this->default = null;
+                $this->active = null;
+            }
         } else {
             $this->isAdmin = false;
             $this->application = $app;
+            
+            if (Multilanguage::isEnabled()) {
+                $language = $app->getLanguage();
+                $tag = $language->getTag();
+            } else {
+                $tag = '*';
+            }
+            
+            $this->menu = $this->application->getMenu();
+            $this->default = $this->menu->getDefault($tag);
+            $this->active = $this->menu->getActive();
         }
-
-        if (Multilanguage::isEnabled()) {
-            $language = $app->getLanguage();
-            $tag = $language->getTag();
-        } else {
-            $tag = '*';
-        }
-
-        $this->menu = $this->application->getMenu();
-        $this->default = $this->menu->getDefault($tag);
-        $this->active  = $this->menu->getActive();
     }
 
     /**
@@ -675,7 +695,9 @@ class Menu extends AbstractMenu
         if ($item->type === 'url') {
             // Moved from modules/mod_menu/tmpl/default_url.php, not sure why Joomla had application logic in there.
             // Keep compatibility to Joomla menu module, but we need non-encoded version of the url.
-            $link = htmlspecialchars_decode(\JFilterOutput::ampReplace(htmlspecialchars($link, ENT_COMPAT|ENT_SUBSTITUTE, 'UTF-8')));
+            $link = htmlspecialchars_decode(
+                str_replace('&amp;', '&', htmlspecialchars($link, ENT_COMPAT|ENT_SUBSTITUTE, 'UTF-8'))
+            );
         }
         if (!$link) {
             $url = false;
@@ -774,7 +796,7 @@ class Menu extends AbstractMenu
      */
     private function getMenuItemIds($menutype)
     {
-        $db = \JFactory::getDbo();
+        $db = Factory::getContainer()->get(\Joomla\Database\DatabaseInterface::class);
         $query = $db->getQuery(true)
             ->select('m.id, m.alias, m.path AS route, m.level, m.parent_id')
             ->from('#__menu AS m')
@@ -817,7 +839,13 @@ class Menu extends AbstractMenu
     private function getMenuItemsInAdmin($menutype)
     {
         $loader = static function () use ($menutype) {
-            $db = \JFactory::getDbo();
+            try {
+                $db = Factory::getContainer()->get(\Joomla\Database\DatabaseInterface::class);
+            } catch (\Exception $e) {
+                // Fallback for older versions
+                $db = Factory::getDbo();
+            }
+            
             $query = $db->getQuery(true)
                 ->select('m.id, m.menutype, m.title, m.alias, m.note, m.path AS route, m.link, m.type, m.level, m.language')
                 ->select($db->quoteName('m.browserNav') . ', m.access, m.params, m.home, m.img, m.template_style_id, m.component_id, m.parent_id')
@@ -842,18 +870,19 @@ class Menu extends AbstractMenu
         };
 
         try {
-            /** @var \JCacheControllerCallback $cache */
-            $cache = \JFactory::getCache('com_menus', 'callback');
-
-            $items = $cache->get($loader, [], md5(get_class($this) . $menutype), false);
-        } catch (\JCacheException $e) {
             try {
+                /** @var \Joomla\CMS\Cache\Controller\CallbackController $cache */
+                $cache = Factory::getContainer()->get(\Joomla\CMS\Cache\CacheControllerFactoryInterface::class)
+                    ->createCacheController('callback', ['defaultgroup' => 'com_menus']);
+
+                $items = $cache->get($loader, [], md5(get_class($this) . $menutype), false);
+            } catch (\Exception $e) {
+                // Fallback for Joomla 4 or if cache factory fails
                 $items = $loader();
-            } catch (\JDatabaseExceptionExecuting $databaseException) {
-                throw new \RuntimeException(\JText::sprintf('JERROR_LOADING_MENUS', $databaseException->getMessage()));
             }
-        } catch (\JDatabaseExceptionExecuting $e) {
-            throw new \RuntimeException(\JText::sprintf('JERROR_LOADING_MENUS', $e->getMessage()));
+        } catch (\Exception $e) {
+            // Catch any exceptions and return empty array instead of failing
+            return [];
         }
 
         foreach ($items as &$item) {

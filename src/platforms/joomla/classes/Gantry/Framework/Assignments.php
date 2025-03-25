@@ -44,16 +44,23 @@ class Assignments extends AbstractAssignments
             return [];
         }
 
-        // Get current template, style id and rules.
-        $template = $application->getTemplate();
-        $menu = $application->getMenu();
-        $active = $menu ? $menu->getActive() : null;
-        if ($active) {
-            $style = (int) $active->template_style_id;
-            $rules = [$active->menutype => [$active->id => true]];
-        } else {
+        try {
+            // Get current template, style id and rules.
+            $template = $application->getTemplate();
+            $menu = $application->getMenu();
+            $active = $menu ? $menu->getActive() : null;
+            if ($active) {
+                $style = (int) $active->template_style_id;
+                $rules = [$active->menutype => [$active->id => true]];
+            } else {
+                $style = 0;
+                $rules = [];
+            }
+        } catch (\Exception $e) {
+            // Catch errors when trying to get site properties from admin
             $style = 0;
             $rules = [];
+            $template = '';
         }
 
         // Load saved assignments.

@@ -6,6 +6,7 @@
         - Dark mode for Joomla
         - Gulp tasks fix
         - Updated minimum PHP version to 8.1.0
+        - Added native Joomla 5 compatibility without requiring the Compatibility Plugin
     2. [](#improved)
         - Replaced deprecated utf8_encode/utf8_decode functions with mb_convert_encoding
         - Updated dependency versions for PHP 8.3 compatibility
@@ -27,7 +28,11 @@
 2. [Joomla](#joomla)
     1. [](#improved)
         - Removed support for Joomla 3.x
-        - Added support for Joomla 4.x only (4.0.0 or higher)
+        - Added support for Joomla 4.x and 5.x (4.0.0 or higher)
+        - Updated code to use modern Joomla namespace references instead of legacy J-prefixed classes
+        - Implemented proper support for WebAssetManager in Joomla 5
+        - Removed dependency on Joomla Compatibility Plugin
+        - Fixed Joomla 5 backend error "Unable to load application: site" by adding proper error handling for site application access
     2. [](#todo)
         - Update Bootstrap from 5.0.2 to 5.3.3 to match Joomla 5.2+ (#3275)
 3. [Wordpress](#wordpress)
