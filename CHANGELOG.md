@@ -15,6 +15,7 @@
         - Removed support for PHP versions below 8.1
     3. [](#bugfix)
         - Fixed incorrect formatting in changelog file (#3305)
+        - Fixed missing translation on WordPress for "Content" tab (#3302)
 2. [Joomla](#joomla)
     1. [](#improved)
         - Removed support for Joomla 3.x
