@@ -688,4 +688,22 @@ th .tooltip-inner {
   padding: 20px 0 0;
 }
 
+svg {
+  vertical-align: middle;
+}
+
+.plg_system_webauthn_login_button svg {
+  width: 30px;
+  margin: 4px;
+  margin-inline-end: 2px;
+}
+
+.plg_system_webauthn_login_button svg path {
+  fill: var(--template-text-dark);
+}
+
+.button-webauthn svg {
+  margin-inline-end: 2px;
+}
+
 /*# sourceMappingURL=joomla.css.map */
