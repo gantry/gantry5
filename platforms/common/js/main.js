@@ -1246,7 +1246,13 @@ var submit = function(elements, container, options) {
             }
 
             if (override && !override.checked()) { return; }
-            if (!validateField(input)) { invalid.push(input); }
+            
+            // Fix for large collections (issue #3243): ensure Block Size field is properly handled
+            // Skip validation for empty block size field but still include it in the form submission
+            var skipValidation = name && name.indexOf('block-size') !== -1 && (!value || value === '');
+            if (!skipValidation && !validateField(input)) { 
+                invalid.push(input); 
+            }
 
             if (isArray(value)) {
                 value.forEach(function(selection) {

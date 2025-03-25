@@ -15,6 +15,7 @@
         - Removed support for PHP versions below 8.1
         - Added documentation about CSP requirements - 'unsafe-eval' is needed for admin functionality (#3255)
     3. [](#bugfix)
+        - Fixed "INVALID FIELDS" alert and block size formatting issues with large collections like Infolist particle (#3243)
         - Fixed incorrect formatting in changelog file (#3305)
         - Fixed missing translation on WordPress for "Content" tab (#3302)
         - Fixed unwanted whitespace before DOCTYPE in Grav platform HTML output (#3287)
