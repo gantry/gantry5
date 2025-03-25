@@ -13,6 +13,8 @@
         - Modified composer scripts to handle missing PHP extensions
         - Removed abandoned leafo/scssphp package in favor of scssphp/scssphp
         - Removed support for PHP versions below 8.1
+    3. [](#bugfix)
+        - Fixed incorrect formatting in changelog file (#3305)
 2. [Joomla](#joomla)
     1. [](#improved)
         - Removed support for Joomla 3.x
@@ -31,6 +33,7 @@
     1. [](#bugfix)
         - Fix Joomla 5.1 "Invalid extension update" bug
         - FontAwesome 6 Fix (#3253)
+
 # 5.5.18
 ## 05/22/2024
 1. [Common](#common)
@@ -41,6 +44,7 @@
         - Minor english translation bugfixes
         - Contentarray issue with Pagination (#3239)
         - Minor Joomla 5 compatibility fixes
+
 # 5.5.17
 ## 10/30/2023
 1. [Common](#common)
@@ -56,7 +60,8 @@
         - Hydrogen login and register forms css styling bugfixes (#3185)
         - Fix for Joomla 5.x debug css (#3190)
         - Basic support for Joomla 5
-2. [Wordpress](#wordpress)
+3. [Wordpress](#wordpress)
+    1. [](#improved)
         - Timber updated to 1.23
 
 # 5.5.16
@@ -149,13 +154,13 @@
 1. [Common](#common)
     1. [](#improved)
         - Reworked backwards compatibility code
-1. [Joomla](#joomla)
+2. [Joomla](#joomla)
     1. [](#new)
         - Added Joomla 4.1 support
     2. [](#bugfix)
         - Fixed platform check to be PHP >= 5.6.20 (#2998)
         - Fixed parent menu item showing dropdown icon and empty dropdown if all children disabled (#2968, #2997)
-1. [WordPress](#wordpress)
+3. [WordPress](#wordpress)
     1. [](#bugfix)
         - Fixed platform check to be PHP >= 5.6.20 (#2998)
 
@@ -182,11 +187,11 @@
     2. [](#improved)
         - Removed CSS hacks for IE6-9 (#2979)
         - Improved error when stream cannot be registered (#2984)
-    4. [](#bugfix)
+    3. [](#bugfix)
        - Fixed regression in menu: downdown submenu is not rendered properly if it is inside a column (#2972)
        - Fixed regression in menu: downdown direction classes not being rendered (#2972)
        - Fixed menu issues in servers with non-UTF-8 locale (#2974)
-3. [WordPress](#wordpress)
+2. [WordPress](#wordpress)
     1. [](#bugfix)
        - Fixed `Invalid argument supplied for foreach()` if the menu item has been orphaned
 
