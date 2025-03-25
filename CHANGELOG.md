@@ -13,6 +13,7 @@
         - Modified composer scripts to handle missing PHP extensions
         - Removed abandoned leafo/scssphp package in favor of scssphp/scssphp
         - Removed support for PHP versions below 8.1
+        - Added documentation about CSP requirements - 'unsafe-eval' is needed for admin functionality (#3255)
     3. [](#bugfix)
         - Fixed incorrect formatting in changelog file (#3305)
         - Fixed missing translation on WordPress for "Content" tab (#3302)
