@@ -9,6 +9,9 @@
         - Added native Joomla 5 compatibility without requiring the Compatibility Plugin
         - Fixed Joomla 5 compatibility issues with JForm classes to support both J4 and J5
         - Fixed JObject not found errors in Joomla 5 by using namespaced CMSObject (#3308)
+        - Fixed ContentHelperRoute class references to use namespaced RouteHelper in Joomla 5
+        - Fixed JTableMenu and JTableMenuType references for Joomla 5 compatibility
+        - Fixed JDatabaseQuery references to use namespaced DatabaseQuery in Joomla 5
     2. [](#improved)
         - Replaced deprecated utf8_encode/utf8_decode functions with mb_convert_encoding
         - Updated dependency versions for PHP 8.3 compatibility

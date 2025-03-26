@@ -520,7 +520,7 @@ abstract class AbstractObject extends \Joomla\CMS\Object\CMSObject
     }
 
     /**
-     * @return \JDatabaseQuery
+     * @return \Joomla\Database\DatabaseQuery
      */
     static protected function getQuery()
     {

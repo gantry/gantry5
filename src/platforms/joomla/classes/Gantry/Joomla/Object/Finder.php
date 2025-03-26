@@ -24,7 +24,7 @@ abstract class Finder
     protected $table;
     /** @var string */
     protected $primaryKey = 'id';
-    /** @var \JDatabaseQuery */
+    /** @var \Joomla\Database\DatabaseQuery */
     protected $query;
     /** @var Database */
     protected $db;
