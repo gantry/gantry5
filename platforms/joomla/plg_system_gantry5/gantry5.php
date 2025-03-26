@@ -691,7 +691,7 @@ class plgSystemGantry5 extends CMSPlugin
                 $isGantry = !empty($data->params['gantry']) || is_array(Menu::decodeJParams($data->params));
                 if ($isNew || $isGantry) {
                     // Add Gantry Menu tab to the form.
-                    JForm::addFormPath(__DIR__ . '/forms');
+                    \Joomla\CMS\Form\Form::addFormPath(__DIR__ . '/forms');
                     $form->loadFile('menu_item', false);
                 }
 
