@@ -13,6 +13,7 @@ namespace Gantry\Joomla\Object;
 
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseQuery;
@@ -20,7 +21,7 @@ use Joomla\Database\DatabaseQuery;
 /**
  * Abstract base class for database objects.
  */
-abstract class AbstractObject extends \JObject
+abstract class AbstractObject extends \Joomla\CMS\Object\CMSObject
 {
     /** @var array If you don't have global instance ids, override this in extending class. */
     static protected $instances = [];

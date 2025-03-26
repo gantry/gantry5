@@ -8,6 +8,7 @@
         - Updated minimum PHP version to 8.1.0
         - Added native Joomla 5 compatibility without requiring the Compatibility Plugin
         - Fixed Joomla 5 compatibility issues with JForm classes to support both J4 and J5
+        - Fixed JObject not found errors in Joomla 5 by using namespaced CMSObject (#3308)
     2. [](#improved)
         - Replaced deprecated utf8_encode/utf8_decode functions with mb_convert_encoding
         - Updated dependency versions for PHP 8.3 compatibility
