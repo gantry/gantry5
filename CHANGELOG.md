@@ -7,6 +7,7 @@
         - Gulp tasks fix
         - Updated minimum PHP version to 8.1.0
         - Added native Joomla 5 compatibility without requiring the Compatibility Plugin
+        - Fixed Joomla 5 compatibility issues with JForm classes to support both J4 and J5
     2. [](#improved)
         - Replaced deprecated utf8_encode/utf8_decode functions with mb_convert_encoding
         - Updated dependency versions for PHP 8.3 compatibility
