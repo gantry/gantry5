@@ -657,7 +657,7 @@ class plgSystemGantry5 extends CMSPlugin
     public function onContentPrepareForm($form, $data)
     {
         // Check that we are manipulating a valid form.
-        if (!($form instanceof Form)) {
+        if (!($form instanceof \Joomla\CMS\Form\Form)) {
             $this->_subject->setError('JERROR_NOT_A_FORM');
 
             return false;

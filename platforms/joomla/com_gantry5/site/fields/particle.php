@@ -22,7 +22,12 @@ use Joomla\CMS\Form\FormField;
 /**
  * Class JFormFieldParticle
  */
-class JFormFieldParticle extends FormField
+// Compatibility alias for Joomla 4
+if (!class_exists('JFormFieldParticle') && version_compare(JVERSION, '5.0', '<')) {
+    class_alias('ParticleField', 'JFormFieldParticle');
+}
+
+class ParticleField extends FormField
 {
     protected $type = 'Particle';
     protected $container;
