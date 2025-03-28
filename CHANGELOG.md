@@ -30,6 +30,7 @@
         - Fixed PHP compile error in NullLogger class for method signature compatibility (#3264)
         - Fixed PSR compatibility issues with Joomla 5.1.1 by updating dependencies (#3259)
         - Fixed pageblock head_top and head_meta not working in WordPress particles (#3250)
+        - Fixed the source URL of some CSS and Javascript assets is prefixed with an extra slash (Gantry 5.5.20) #3309
 2. [Joomla](#joomla)
     1. [](#improved)
         - Removed support for Joomla 3.x
