@@ -88,7 +88,7 @@ class Document extends HtmlDocument
                 $path_append .= $active_language ? '/' . $active_language : '';
             }
 
-            $url = rtrim($grav['base_url'] . $path_append, '/') ?: '/';
+            $url = rtrim($grav['base_url_absolute'] . $path_append, '/') ?: '/';
         }
 
         return $url;

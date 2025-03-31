@@ -32,6 +32,7 @@
         - Fixed pageblock head_top and head_meta not working in WordPress particles (#3250)
         - Fixed the source URL of some CSS and Javascript assets is prefixed with an extra slash (Gantry 5.5.20) #3309
         - Fixed Grav's Extras Menu Prod/Dev Toggle creating deprecated custom environment path instead of using user/config/plugins/ (#3169)
+        - Fixed Grav's siteUrl() returning just '/' instead of the full site URL (#2605)
 2. [Joomla](#joomla)
     1. [](#improved)
         - Removed support for Joomla 3.x
