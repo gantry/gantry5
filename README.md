@@ -1,5 +1,5 @@
 > [!IMPORTANT]
-> ROCKETTHEME IS CLOSING JUNE 30, 2025 - [Read about it here](https://rockettheme.com/blog/news/284-farewell-and-thank-you-reflecting-on-20-years-of-rockettheme)
+> **ROCKETTHEME IS CLOSING JUNE 30, 2025** - [Read about it here](https://rockettheme.com/blog/news/284-farewell-and-thank-you-reflecting-on-20-years-of-rockettheme)
 >
 > Gantry is a RocketTheme supported opensource project, and without RocketTheme and its resources, we won't be able to continue support and development of Gantry. We are looking for a
 > volunteer owner to take over the Gantry Framework project, and it will be archived (read-only mode) in the meantime.  If you are interested in taking over the project,
