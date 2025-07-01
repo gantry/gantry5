@@ -1,11 +1,10 @@
 > [!IMPORTANT]
-> **ROCKETTHEME IS CLOSING JUNE 30, 2025** - [Read about it here](https://rockettheme.com/blog/news/284-farewell-and-thank-you-reflecting-on-20-years-of-rockettheme)
+> **A NEW CHAPTER FOR GANTRY** - [Read about it here](https://tiger12.com/gantry/)
 >
-> Gantry is a RocketTheme supported opensource project, and without RocketTheme and its resources, we won't be able to continue support and development of Gantry. We are looking for a
-> volunteer owner to take over the Gantry Framework project, and it will be archived (read-only mode) in the meantime.  If you are interested in taking over the project,
-> please contact me at andy@gantry.org
+Tiger12 is now the official steward of Gantry and gantry.org, the powerful theming framework that has shaped websites across WordPress, Joomla, and Grav for over a decade. Gantry has long been trusted by developers and organizations for its flexibility, speed, and clean design principles. We’ve crafted with it. We’ve relied on it. And now—we’re building its future.
 
-Gantry Framework [![Build Status](https://travis-ci.org/gantry/gantry5.svg)](https://travis-ci.org/gantry/gantry5)
+Gantry’s success is built on the vision and dedication of Andy Miller and the team at RocketTheme. Their innovative work laid the foundation for a framework trusted by thousands. We are honored that they have officially chosen us to carry this legacy forward and continue the development of Gantry into the future.
+
 ================
 
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat)](https://github.com/phpstan/phpstan)
