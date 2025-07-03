@@ -3,7 +3,7 @@
 >
 Tiger12 is now the official steward of Gantry and gantry.org, the powerful theming framework that has shaped websites across WordPress, Joomla, and Grav for over a decade. Gantry has long been trusted by developers and organizations for its flexibility, speed, and clean design principles. We’ve crafted with it. We’ve relied on it. And now—we’re building its future.
 
-Gantry’s success is built on the vision and dedication of Andy Miller and the team at RocketTheme. Their innovative work laid the foundation for a framework trusted by thousands. We are honored that they have officially chosen us to carry this legacy forward and continue the development of Gantry into the future.
+Gantry’s success is built on the vision and dedication of Andy Miller and the team at RocketTheme. Their innovative work laid the foundation for a framework trusted by thousands. We are honored that they have officially chosen us to carry this legacy forward and continue the development of Gantry into the future. 
 
 ================
 
