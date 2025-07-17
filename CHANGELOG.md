@@ -1,5 +1,5 @@
 # 5.5.20
-## 07/23/2025 (Set for release - This list has been marked from prior proposed release (March 2025)
+## 07/23/2025 (Set for release - This list has been marked from prior dev changelog (March 2025)
 1. [Common](#common)
     1. [](#new)
         - Added PHP 8.3 compatibility
