@@ -1,5 +1,5 @@
 # 5.5.20
-## 03/25/2025
+## 07/23/2025 (Set for release - This list has been marked from prior proposed release (March 2025))
 1. [Common](#common)
     1. [](#new)
         - Added PHP 8.3 compatibility
@@ -42,7 +42,9 @@
         - Removed dependency on Joomla Compatibility Plugin
         - Fixed Joomla 5 backend error "Unable to load application: site" by adding proper error handling for site application access
     2. [](#todo)
-        - Update Bootstrap from 5.0.2 to 5.3.3 to match Joomla 5.2+ (#3275)
+        - ~~Update Bootstrap from 5.0.2 to 5.3.3 to match Joomla 5.2+ (#3275)~~  
+This will be released in the next version - Note this prior comment: https://github.com/gantry/gantry5/issues/3275
+
 3. [Wordpress](#wordpress)
     1. [](#improved)
         - Updated PHP version check to require 8.1.0 minimum
