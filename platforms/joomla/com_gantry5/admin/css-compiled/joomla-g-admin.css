@@ -246,10 +246,99 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   background-color: #1a2537 !important;
 }
 
+#g5-container.g5-dark-mode .g-files ul li {
+  background: #fff;
+}
+
+#g5-container.g5-dark-mode .g-files ul li span {
+  color: #000;
+}
+
+#g5-container.g5-dark-mode .g-files ul li.selected span {
+  color: #fff;
+}
+
+#g5-container.g5-dark-mode svg path {
+  fill: #fff !important;
+}
+
+#g5-container.g5-dark-mode svg polygon {
+  fill: #fff !important;
+}
+
+#g5-container.g5-dark-mode .overview-header .theme-version {
+  color: #12192b;
+}
+
 #g5-container.g5-dark-mode .inner-container {
   background-color: #2a394f !important;
   color: #fff;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+#g5-container.g5-dark-mode .g5-popover-generic a {
+  color: #fff !important;
+}
+
+#g5-container.g5-dark-mode .g5-popover-generic a:hover {
+  background-color: #374f6b;
+}
+
+#g5-container.g5-dark-mode .g-fonts-list li.g-font-heading {
+  background-color: transparent !important;
+}
+
+#g5-container.g5-dark-mode .g-fonts-list li {
+  background-color: #1a2537 !important;
+}
+
+#g5-container.g5-dark-mode .g-fonts-list li .family {
+  color: #fff !important;
+}
+
+#g5-container.g5-dark-mode .g-fonts-list li ul li .variant {
+  color: #fff !important;
+}
+
+#g5-container.g5-dark-mode a svg path {
+  fill: #fff !important;
+}
+
+#g5-container.g5-dark-mode .menu-selector-bar {
+  background-color: #1a2537;
+}
+
+#g5-container.g5-dark-mode .column-container .submenu-selector {
+  background-color: #1a2537;
+  border-color: #1a2537;
+}
+
+#g5-container.g5-dark-mode .column-container .submenu-selector .submenu-ratio {
+  background: #1a2537;
+}
+
+#g5-container.g5-dark-mode .column-container .submenu-selector .submenu-column {
+  background: #1a2537;
+}
+
+#g5-container.g5-dark-mode .column-container .submenu-selector .submenu-column .submenu-items {
+  background: #48B0D7;
+}
+
+#g5-container.g5-dark-mode .column-container .submenu-selector .submenu-column .submenu-items::before, #g5-container.g5-dark-mode .column-container .submenu-selector .submenu-column .submenu-items::after {
+  color: #fff;
+}
+
+#g5-container.g5-dark-mode .column-container .submenu-selector .submenu-column .submenu-reorder {
+  background: #48B0D7;
+}
+
+#g5-container.g5-dark-mode .column-container .submenu-selector .submenu-column .submenu-reorder i {
+  color: #fff;
+}
+
+#g5-container.g5-dark-mode .column-container span {
+  color: #fff;
 }
 
 #g5-container.g5-dark-mode .g-tabs .uk-tab {
@@ -310,6 +399,12 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
 
 #g5-container.g5-dark-mode .g5-tabs-container .g-panes .g-pane {
   background-color: #1a2537 !important;
+  color: #fff;
+}
+
+#g5-container.g5-dark-mode .g-inherit .g-inherit-content {
+  color: black;
+  opacity: 1;
 }
 
 #g5-container.g5-dark-mode .main-block {
@@ -324,13 +419,19 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   background-color: #2a394f !important;
 }
 
-#g5-container.g5-dark-mode input, #g5-container.g5-dark-mode select, #g5-container.g5-dark-mode textarea, #g5-container.g5-dark-mode .g-colorpicker {
+#g5-container.g5-dark-mode input,
+#g5-container.g5-dark-mode select,
+#g5-container.g5-dark-mode textarea,
+#g5-container.g5-dark-mode .g-colorpicker {
   background-color: #374f6b;
   border-color: #415a79;
   color: #fff;
 }
 
-#g5-container.g5-dark-mode input:focus, #g5-container.g5-dark-mode select:focus, #g5-container.g5-dark-mode textarea:focus, #g5-container.g5-dark-mode .g-colorpicker:focus {
+#g5-container.g5-dark-mode input:focus,
+#g5-container.g5-dark-mode select:focus,
+#g5-container.g5-dark-mode textarea:focus,
+#g5-container.g5-dark-mode .g-colorpicker:focus {
   background-color: #43587a;
   border-color: #3180C2;
 }
@@ -344,20 +445,28 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   background-color: #273042;
 }
 
-#g5-container.g5-dark-mode .button, #g5-container.g5-dark-mode button {
+#g5-container.g5-dark-mode .cards-wrapper .card .g-panel-filters {
+  background: transparent !important;
+}
+
+#g5-container.g5-dark-mode .button,
+#g5-container.g5-dark-mode button {
   background-color: #3a547a;
   color: #fff;
 }
 
-#g5-container.g5-dark-mode .button:hover, #g5-container.g5-dark-mode button:hover {
+#g5-container.g5-dark-mode .button:hover,
+#g5-container.g5-dark-mode button:hover {
   background-color: #42608b;
 }
 
-#g5-container.g5-dark-mode .button.button-primary, #g5-container.g5-dark-mode button.button-primary {
+#g5-container.g5-dark-mode .button.button-primary,
+#g5-container.g5-dark-mode button.button-primary {
   background-color: #3180C2;
 }
 
-#g5-container.g5-dark-mode .button.button-primary:hover, #g5-container.g5-dark-mode button.button-primary:hover {
+#g5-container.g5-dark-mode .button.button-primary:hover,
+#g5-container.g5-dark-mode button.button-primary:hover {
   background-color: #3e8dce;
 }
 
@@ -404,7 +513,9 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   border-top-color: #6a85a0 !important;
 }
 
-#g5-container.g5-dark-mode .g-panel-filters, #g5-container.g5-dark-mode .g-pane, #g5-container.g5-dark-mode .g-filters {
+#g5-container.g5-dark-mode .g-panel-filters,
+#g5-container.g5-dark-mode .g-pane,
+#g5-container.g5-dark-mode .g-filters {
   background-color: #273042 !important;
 }
 
@@ -433,14 +544,18 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
 }
 
 #g5-container.g5-dark-mode .g-grid .g-block {
-  background-color: #2a394f !important;
+  background: #2a394f !important;
 }
 
-#g5-container.g5-dark-mode .card-block, #g5-container.g5-dark-mode .g-card, #g5-container.g5-dark-mode .g-panel {
+#g5-container.g5-dark-mode .card-block,
+#g5-container.g5-dark-mode .g-card,
+#g5-container.g5-dark-mode .g-panel {
   background-color: #1a2537 !important;
 }
 
-#g5-container.g5-dark-mode .card-block:hover, #g5-container.g5-dark-mode .g-card:hover, #g5-container.g5-dark-mode .g-panel:hover {
+#g5-container.g5-dark-mode .card-block:hover,
+#g5-container.g5-dark-mode .g-card:hover,
+#g5-container.g5-dark-mode .g-panel:hover {
   background-color: #273042 !important;
 }
 
@@ -501,7 +616,8 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   background-color: #374f6b;
 }
 
-#g5-container.g5-dark-mode .tooltip, #g5-container.g5-dark-mode .popover {
+#g5-container.g5-dark-mode .tooltip,
+#g5-container.g5-dark-mode .popover {
   background-color: #1a2537;
   color: #fff;
 }
@@ -535,11 +651,15 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   background-color: #1a2537;
 }
 
-#g5-container.g5-dark-mode .g-panel-title, #g5-container.g5-dark-mode h4, #g5-container.g5-dark-mode h5, #g5-container.g5-dark-mode h6 {
+#g5-container.g5-dark-mode .g-panel-title,
+#g5-container.g5-dark-mode h4,
+#g5-container.g5-dark-mode h5,
+#g5-container.g5-dark-mode h6 {
   color: #fff;
 }
 
-#g5-container.g5-dark-mode .g-panel, #g5-container.g5-dark-mode .g-content {
+#g5-container.g5-dark-mode .g-panel,
+#g5-container.g5-dark-mode .g-content {
   color: #fff;
 }
 
@@ -556,7 +676,8 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   color: #fff !important;
 }
 
-#g5-container.g5-dark-mode .menu-selector-wrapper, #g5-container.g5-dark-mode .menu-editor {
+#g5-container.g5-dark-mode .menu-selector-wrapper,
+#g5-container.g5-dark-mode .menu-editor {
   background-color: #2a394f !important;
 }
 
@@ -568,7 +689,8 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   background-color: #273042 !important;
 }
 
-#g5-container.g5-dark-mode .g-breadcrumbs, #g5-container.g5-dark-mode .g-breadcrumbs li {
+#g5-container.g5-dark-mode .g-breadcrumbs,
+#g5-container.g5-dark-mode .g-breadcrumbs li {
   color: #cbd9e8 !important;
 }
 
@@ -620,49 +742,60 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   color: #cbd9e8 !important;
 }
 
-#g5-container.g5-dark-mode .CodeMirror, #g5-container.g5-dark-mode .cm-s-default {
+#g5-container.g5-dark-mode .CodeMirror,
+#g5-container.g5-dark-mode .cm-s-default {
   background-color: #1a2537 !important;
   color: #cbd9e8 !important;
 }
 
-#g5-container.g5-dark-mode .CodeMirror .CodeMirror-gutters, #g5-container.g5-dark-mode .cm-s-default .CodeMirror-gutters {
+#g5-container.g5-dark-mode .CodeMirror .CodeMirror-gutters,
+#g5-container.g5-dark-mode .cm-s-default .CodeMirror-gutters {
   background-color: #12192b !important;
   border-color: #273042 !important;
 }
 
-#g5-container.g5-dark-mode .CodeMirror .CodeMirror-linenumber, #g5-container.g5-dark-mode .cm-s-default .CodeMirror-linenumber {
+#g5-container.g5-dark-mode .CodeMirror .CodeMirror-linenumber,
+#g5-container.g5-dark-mode .cm-s-default .CodeMirror-linenumber {
   color: #5d7896 !important;
 }
 
-#g5-container.g5-dark-mode .CodeMirror .CodeMirror-cursor, #g5-container.g5-dark-mode .cm-s-default .CodeMirror-cursor {
+#g5-container.g5-dark-mode .CodeMirror .CodeMirror-cursor,
+#g5-container.g5-dark-mode .cm-s-default .CodeMirror-cursor {
   border-color: #fff !important;
 }
 
-#g5-container.g5-dark-mode .CodeMirror .cm-comment, #g5-container.g5-dark-mode .cm-s-default .cm-comment {
+#g5-container.g5-dark-mode .CodeMirror .cm-comment,
+#g5-container.g5-dark-mode .cm-s-default .cm-comment {
   color: #5d7896 !important;
 }
 
-#g5-container.g5-dark-mode .CodeMirror .cm-keyword, #g5-container.g5-dark-mode .cm-s-default .cm-keyword {
+#g5-container.g5-dark-mode .CodeMirror .cm-keyword,
+#g5-container.g5-dark-mode .cm-s-default .cm-keyword {
   color: #c679dd !important;
 }
 
-#g5-container.g5-dark-mode .CodeMirror .cm-string, #g5-container.g5-dark-mode .cm-s-default .cm-string {
+#g5-container.g5-dark-mode .CodeMirror .cm-string,
+#g5-container.g5-dark-mode .cm-s-default .cm-string {
   color: #98c379 !important;
 }
 
-#g5-container.g5-dark-mode .CodeMirror .cm-property, #g5-container.g5-dark-mode .cm-s-default .cm-property {
+#g5-container.g5-dark-mode .CodeMirror .cm-property,
+#g5-container.g5-dark-mode .cm-s-default .cm-property {
   color: #61afef !important;
 }
 
-#g5-container.g5-dark-mode .CodeMirror .cm-variable, #g5-container.g5-dark-mode .cm-s-default .cm-variable {
+#g5-container.g5-dark-mode .CodeMirror .cm-variable,
+#g5-container.g5-dark-mode .cm-s-default .cm-variable {
   color: #e6e6e6 !important;
 }
 
-#g5-container.g5-dark-mode .CodeMirror .cm-operator, #g5-container.g5-dark-mode .cm-s-default .cm-operator {
+#g5-container.g5-dark-mode .CodeMirror .cm-operator,
+#g5-container.g5-dark-mode .cm-s-default .cm-operator {
   color: #56b6c2 !important;
 }
 
-#g5-container.g5-dark-mode .CodeMirror .cm-number, #g5-container.g5-dark-mode .cm-s-default .cm-number {
+#g5-container.g5-dark-mode .CodeMirror .cm-number,
+#g5-container.g5-dark-mode .cm-s-default .cm-number {
   color: #d19a66 !important;
 }
 
@@ -679,151 +812,277 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   background-color: #1a2537 !important;
 }
 
-#g5-container.g5-dark-mode #navbar ul li:not(.config-select-wrap), #g5-container.g5-dark-mode #navbar ul li {
+#g5-container.g5-dark-mode #navbar ul li:not(.config-select-wrap),
+#g5-container.g5-dark-mode #navbar ul li {
   background-color: #1a2537 !important;
 }
 
-#g5-container.g5-dark-mode #navbar ul li:not(.config-select-wrap):hover, #g5-container.g5-dark-mode #navbar ul li:hover {
+#g5-container.g5-dark-mode #navbar ul li:not(.config-select-wrap):hover,
+#g5-container.g5-dark-mode #navbar ul li:hover {
   background-color: #273042 !important;
 }
 
-#g5-container.g5-dark-mode #navbar ul li:not(.config-select-wrap).active, #g5-container.g5-dark-mode #navbar ul li.active {
+#g5-container.g5-dark-mode #navbar ul li:not(.config-select-wrap).active,
+#g5-container.g5-dark-mode #navbar ul li.active {
   background-color: #2a394f !important;
 }
 
-#g5-container.g5-dark-mode #navbar ul li:not(.config-select-wrap).active a, #g5-container.g5-dark-mode #navbar ul li.active a {
+#g5-container.g5-dark-mode #navbar ul li:not(.config-select-wrap).active a,
+#g5-container.g5-dark-mode #navbar ul li.active a {
   color: #fff !important;
 }
 
-#g5-container.g5-dark-mode #navbar ul li:not(.config-select-wrap) a, #g5-container.g5-dark-mode #navbar ul li a {
+#g5-container.g5-dark-mode #navbar ul li:not(.config-select-wrap) a,
+#g5-container.g5-dark-mode #navbar ul li a {
   color: #cbd9e8 !important;
   border-color: #374f6b !important;
 }
 
-#g5-container.g5-dark-mode #navbar ul li:not(.config-select-wrap) a:focus, #g5-container.g5-dark-mode #navbar ul li:not(.config-select-wrap) a:hover, #g5-container.g5-dark-mode #navbar ul li a:focus, #g5-container.g5-dark-mode #navbar ul li a:hover {
+#g5-container.g5-dark-mode #navbar ul li:not(.config-select-wrap) a:focus, #g5-container.g5-dark-mode #navbar ul li:not(.config-select-wrap) a:hover,
+#g5-container.g5-dark-mode #navbar ul li a:focus,
+#g5-container.g5-dark-mode #navbar ul li a:hover {
   background-color: #273042 !important;
   color: #fff !important;
 }
 
-#g5-container.g5-dark-mode .g5-dialog > .g-tabs, #g5-container.g5-dark-mode .g5-dialog form > .g-tabs, #g5-container.g5-dark-mode .g5-dialog .g5-content > .g-tabs, #g5-container.g5-dark-mode .g5-popover-content > .g-tabs, #g5-container.g5-dark-mode .g5-popover-content form > .g-tabs, #g5-container.g5-dark-mode .g5-popover-content .g5-content > .g-tabs {
+#g5-container.g5-dark-mode .g5-popover-extras [data-g-devprod],
+#g5-container.g5-dark-mode .g5-popover-extras a {
+  color: #fff !important;
+}
+
+#g5-container.g5-dark-mode .g5-popover-extras [data-g-devprod]:hover,
+#g5-container.g5-dark-mode .g5-popover-extras a:hover {
+  background-color: #374f6b;
+}
+
+#g5-container.g5-dark-mode .g5-dialog,
+#g5-container.g5-dark-mode .g5-popover-content {
+  background-color: #2a394f;
+}
+
+#g5-container.g5-dark-mode .g5-dialog > .g-tabs,
+#g5-container.g5-dark-mode .g5-dialog form > .g-tabs,
+#g5-container.g5-dark-mode .g5-dialog .g5-content > .g-tabs,
+#g5-container.g5-dark-mode .g5-popover-content > .g-tabs,
+#g5-container.g5-dark-mode .g5-popover-content form > .g-tabs,
+#g5-container.g5-dark-mode .g5-popover-content .g5-content > .g-tabs {
   background-color: #1a2537 !important;
 }
 
-#g5-container.g5-dark-mode .g5-dialog > .g-tabs ul, #g5-container.g5-dark-mode .g5-dialog form > .g-tabs ul, #g5-container.g5-dark-mode .g5-dialog .g5-content > .g-tabs ul, #g5-container.g5-dark-mode .g5-popover-content > .g-tabs ul, #g5-container.g5-dark-mode .g5-popover-content form > .g-tabs ul, #g5-container.g5-dark-mode .g5-popover-content .g5-content > .g-tabs ul {
+#g5-container.g5-dark-mode .g5-dialog > .g-tabs ul,
+#g5-container.g5-dark-mode .g5-dialog form > .g-tabs ul,
+#g5-container.g5-dark-mode .g5-dialog .g5-content > .g-tabs ul,
+#g5-container.g5-dark-mode .g5-popover-content > .g-tabs ul,
+#g5-container.g5-dark-mode .g5-popover-content form > .g-tabs ul,
+#g5-container.g5-dark-mode .g5-popover-content .g5-content > .g-tabs ul {
   background-color: #1a2537 !important;
   border-color: #374f6b !important;
 }
 
-#g5-container.g5-dark-mode .g5-dialog > .g-tabs ul li:not(.config-select-wrap), #g5-container.g5-dark-mode .g5-dialog form > .g-tabs ul li:not(.config-select-wrap), #g5-container.g5-dark-mode .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap), #g5-container.g5-dark-mode .g5-popover-content > .g-tabs ul li:not(.config-select-wrap), #g5-container.g5-dark-mode .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap), #g5-container.g5-dark-mode .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap) {
+#g5-container.g5-dark-mode .g5-dialog > .g-tabs ul li:not(.config-select-wrap),
+#g5-container.g5-dark-mode .g5-dialog form > .g-tabs ul li:not(.config-select-wrap),
+#g5-container.g5-dark-mode .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap),
+#g5-container.g5-dark-mode .g5-popover-content > .g-tabs ul li:not(.config-select-wrap),
+#g5-container.g5-dark-mode .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap),
+#g5-container.g5-dark-mode .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap) {
   background-color: #1a2537 !important;
 }
 
-#g5-container.g5-dark-mode .g5-dialog > .g-tabs ul li:not(.config-select-wrap):hover, #g5-container.g5-dark-mode .g5-dialog form > .g-tabs ul li:not(.config-select-wrap):hover, #g5-container.g5-dark-mode .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap):hover, #g5-container.g5-dark-mode .g5-popover-content > .g-tabs ul li:not(.config-select-wrap):hover, #g5-container.g5-dark-mode .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap):hover, #g5-container.g5-dark-mode .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap):hover {
+#g5-container.g5-dark-mode .g5-dialog > .g-tabs ul li:not(.config-select-wrap):hover,
+#g5-container.g5-dark-mode .g5-dialog form > .g-tabs ul li:not(.config-select-wrap):hover,
+#g5-container.g5-dark-mode .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap):hover,
+#g5-container.g5-dark-mode .g5-popover-content > .g-tabs ul li:not(.config-select-wrap):hover,
+#g5-container.g5-dark-mode .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap):hover,
+#g5-container.g5-dark-mode .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap):hover {
   background-color: #273042 !important;
 }
 
-#g5-container.g5-dark-mode .g5-dialog > .g-tabs ul li:not(.config-select-wrap).active, #g5-container.g5-dark-mode .g5-dialog form > .g-tabs ul li:not(.config-select-wrap).active, #g5-container.g5-dark-mode .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap).active, #g5-container.g5-dark-mode .g5-popover-content > .g-tabs ul li:not(.config-select-wrap).active, #g5-container.g5-dark-mode .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap).active, #g5-container.g5-dark-mode .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap).active {
+#g5-container.g5-dark-mode .g5-dialog > .g-tabs ul li:not(.config-select-wrap).active,
+#g5-container.g5-dark-mode .g5-dialog form > .g-tabs ul li:not(.config-select-wrap).active,
+#g5-container.g5-dark-mode .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap).active,
+#g5-container.g5-dark-mode .g5-popover-content > .g-tabs ul li:not(.config-select-wrap).active,
+#g5-container.g5-dark-mode .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap).active,
+#g5-container.g5-dark-mode .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap).active {
   background-color: #2a394f !important;
 }
 
-#g5-container.g5-dark-mode .g5-dialog > .g-tabs ul li:not(.config-select-wrap).active a, #g5-container.g5-dark-mode .g5-dialog form > .g-tabs ul li:not(.config-select-wrap).active a, #g5-container.g5-dark-mode .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap).active a, #g5-container.g5-dark-mode .g5-popover-content > .g-tabs ul li:not(.config-select-wrap).active a, #g5-container.g5-dark-mode .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap).active a, #g5-container.g5-dark-mode .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap).active a {
+#g5-container.g5-dark-mode .g5-dialog > .g-tabs ul li:not(.config-select-wrap).active a,
+#g5-container.g5-dark-mode .g5-dialog form > .g-tabs ul li:not(.config-select-wrap).active a,
+#g5-container.g5-dark-mode .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap).active a,
+#g5-container.g5-dark-mode .g5-popover-content > .g-tabs ul li:not(.config-select-wrap).active a,
+#g5-container.g5-dark-mode .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap).active a,
+#g5-container.g5-dark-mode .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap).active a {
   color: #fff !important;
 }
 
-#g5-container.g5-dark-mode .g5-dialog > .g-tabs ul li:not(.config-select-wrap) a, #g5-container.g5-dark-mode .g5-dialog form > .g-tabs ul li:not(.config-select-wrap) a, #g5-container.g5-dark-mode .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap) a, #g5-container.g5-dark-mode .g5-popover-content > .g-tabs ul li:not(.config-select-wrap) a, #g5-container.g5-dark-mode .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap) a, #g5-container.g5-dark-mode .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap) a {
+#g5-container.g5-dark-mode .g5-dialog > .g-tabs ul li:not(.config-select-wrap) a,
+#g5-container.g5-dark-mode .g5-dialog form > .g-tabs ul li:not(.config-select-wrap) a,
+#g5-container.g5-dark-mode .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap) a,
+#g5-container.g5-dark-mode .g5-popover-content > .g-tabs ul li:not(.config-select-wrap) a,
+#g5-container.g5-dark-mode .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap) a,
+#g5-container.g5-dark-mode .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap) a {
   color: #cbd9e8 !important;
 }
 
-#g5-container.g5-dark-mode .g5-dialog > .g-tabs ul li:not(.config-select-wrap) a:hover, #g5-container.g5-dark-mode .g5-dialog form > .g-tabs ul li:not(.config-select-wrap) a:hover, #g5-container.g5-dark-mode .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap) a:hover, #g5-container.g5-dark-mode .g5-popover-content > .g-tabs ul li:not(.config-select-wrap) a:hover, #g5-container.g5-dark-mode .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap) a:hover, #g5-container.g5-dark-mode .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap) a:hover {
+#g5-container.g5-dark-mode .g5-dialog > .g-tabs ul li:not(.config-select-wrap) a:hover,
+#g5-container.g5-dark-mode .g5-dialog form > .g-tabs ul li:not(.config-select-wrap) a:hover,
+#g5-container.g5-dark-mode .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap) a:hover,
+#g5-container.g5-dark-mode .g5-popover-content > .g-tabs ul li:not(.config-select-wrap) a:hover,
+#g5-container.g5-dark-mode .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap) a:hover,
+#g5-container.g5-dark-mode .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap) a:hover {
   color: #fff !important;
 }
 
-#g5-container.g5-dark-mode .g5-dialog .g-pane, #g5-container.g5-dark-mode .g5-popover-content .g-pane {
+#g5-container.g5-dark-mode .g5-dialog .g-pane,
+#g5-container.g5-dark-mode .g5-popover-content .g-pane {
   background-color: #2a394f !important;
+  color: #fff;
 }
 
-#g5-container.g5-dark-mode .g5-dialog .g-pane li[data-switch]:hover:not(.g-switch-title), #g5-container.g5-dark-mode .g5-popover-content .g-pane li[data-switch]:hover:not(.g-switch-title) {
+#g5-container.g5-dark-mode .g5-dialog .g-pane li[data-switch]:hover:not(.g-switch-title),
+#g5-container.g5-dark-mode .g5-popover-content .g-pane li[data-switch]:hover:not(.g-switch-title) {
   background-color: #374f6b !important;
 }
 
-#g5-container.g5-dark-mode .g5-dialog .g-pane li[data-switch] i, #g5-container.g5-dark-mode .g5-popover-content .g-pane li[data-switch] i {
+#g5-container.g5-dark-mode .g5-dialog .g-pane li[data-switch] i,
+#g5-container.g5-dark-mode .g5-popover-content .g-pane li[data-switch] i {
   color: #cbd9e8 !important;
 }
 
-#g5-container.g5-dark-mode .g5-dialog .g-pane .g-switch-title, #g5-container.g5-dark-mode .g5-popover-content .g-pane .g-switch-title {
+#g5-container.g5-dark-mode .g5-dialog .g-pane .g-switch-title,
+#g5-container.g5-dark-mode .g5-popover-content .g-pane .g-switch-title {
   color: #98aabf !important;
 }
 
-#g5-container.g5-dark-mode .card, #g5-container.g5-dark-mode .card-block, #g5-container.g5-dark-mode .settings-block, #g5-container.g5-dark-mode .swatches-block {
+#g5-container.g5-dark-mode .card,
+#g5-container.g5-dark-mode .card-block,
+#g5-container.g5-dark-mode .settings-block,
+#g5-container.g5-dark-mode .swatches-block {
   background-color: #1a2537 !important;
   border-color: #374f6b !important;
 }
 
-#g5-container.g5-dark-mode .card .swatch, #g5-container.g5-dark-mode .card-block .swatch, #g5-container.g5-dark-mode .settings-block .swatch, #g5-container.g5-dark-mode .swatches-block .swatch {
+#g5-container.g5-dark-mode .card .swatch,
+#g5-container.g5-dark-mode .card-block .swatch,
+#g5-container.g5-dark-mode .settings-block .swatch,
+#g5-container.g5-dark-mode .swatches-block .swatch {
   background-color: #1a2537 !important;
   border-color: #374f6b !important;
 }
 
-#g5-container.g5-dark-mode .card .swatch:focus, #g5-container.g5-dark-mode .card-block .swatch:focus, #g5-container.g5-dark-mode .settings-block .swatch:focus, #g5-container.g5-dark-mode .swatches-block .swatch:focus {
+#g5-container.g5-dark-mode .card .swatch:focus,
+#g5-container.g5-dark-mode .card-block .swatch:focus,
+#g5-container.g5-dark-mode .settings-block .swatch:focus,
+#g5-container.g5-dark-mode .swatches-block .swatch:focus {
   box-shadow: 0 0 7px rgba(255, 255, 255, 0.3) !important;
 }
 
-#g5-container.g5-dark-mode .card .swatch-description, #g5-container.g5-dark-mode .card-block .swatch-description, #g5-container.g5-dark-mode .settings-block .swatch-description, #g5-container.g5-dark-mode .swatches-block .swatch-description {
+#g5-container.g5-dark-mode .card .swatch-description,
+#g5-container.g5-dark-mode .card-block .swatch-description,
+#g5-container.g5-dark-mode .settings-block .swatch-description,
+#g5-container.g5-dark-mode .swatches-block .swatch-description {
   color: #cbd9e8 !important;
   background-color: #1a2537 !important;
   border-color: #374f6b !important;
 }
 
-#g5-container.g5-dark-mode .card .inner-params, #g5-container.g5-dark-mode .card-block .inner-params, #g5-container.g5-dark-mode .settings-block .inner-params, #g5-container.g5-dark-mode .swatches-block .inner-params {
+#g5-container.g5-dark-mode .card .inner-params,
+#g5-container.g5-dark-mode .card-block .inner-params,
+#g5-container.g5-dark-mode .settings-block .inner-params,
+#g5-container.g5-dark-mode .swatches-block .inner-params {
   border-top-color: #273042 !important;
 }
 
-#g5-container.g5-dark-mode .card .inner-params > :first-child:not(.alert), #g5-container.g5-dark-mode .card-block .inner-params > :first-child:not(.alert), #g5-container.g5-dark-mode .settings-block .inner-params > :first-child:not(.alert), #g5-container.g5-dark-mode .swatches-block .inner-params > :first-child:not(.alert) {
+#g5-container.g5-dark-mode .card .inner-params > :first-child:not(.alert),
+#g5-container.g5-dark-mode .card-block .inner-params > :first-child:not(.alert),
+#g5-container.g5-dark-mode .settings-block .inner-params > :first-child:not(.alert),
+#g5-container.g5-dark-mode .swatches-block .inner-params > :first-child:not(.alert) {
   border-top-color: #273042 !important;
 }
 
-#g5-container.g5-dark-mode .card .settings-param, #g5-container.g5-dark-mode .card-block .settings-param, #g5-container.g5-dark-mode .settings-block .settings-param, #g5-container.g5-dark-mode .swatches-block .settings-param {
+#g5-container.g5-dark-mode .card .settings-param,
+#g5-container.g5-dark-mode .card-block .settings-param,
+#g5-container.g5-dark-mode .settings-block .settings-param,
+#g5-container.g5-dark-mode .swatches-block .settings-param {
   border-bottom-color: #273042 !important;
 }
 
-#g5-container.g5-dark-mode .card .settings-param .settings-param-override, #g5-container.g5-dark-mode .card-block .settings-param .settings-param-override, #g5-container.g5-dark-mode .settings-block .settings-param .settings-param-override, #g5-container.g5-dark-mode .swatches-block .settings-param .settings-param-override {
+#g5-container.g5-dark-mode .card .settings-param .settings-param-override,
+#g5-container.g5-dark-mode .card-block .settings-param .settings-param-override,
+#g5-container.g5-dark-mode .settings-block .settings-param .settings-param-override,
+#g5-container.g5-dark-mode .swatches-block .settings-param .settings-param-override {
   background-color: rgba(26, 37, 55, 0.85) !important;
 }
 
-#g5-container.g5-dark-mode .card .settings-param .settings-param-field .g-reset-field, #g5-container.g5-dark-mode .card-block .settings-param .settings-param-field .g-reset-field, #g5-container.g5-dark-mode .settings-block .settings-param .settings-param-field .g-reset-field, #g5-container.g5-dark-mode .swatches-block .settings-param .settings-param-field .g-reset-field {
+#g5-container.g5-dark-mode .card .settings-param .settings-param-field .g-reset-field,
+#g5-container.g5-dark-mode .card-block .settings-param .settings-param-field .g-reset-field,
+#g5-container.g5-dark-mode .settings-block .settings-param .settings-param-field .g-reset-field,
+#g5-container.g5-dark-mode .swatches-block .settings-param .settings-param-field .g-reset-field {
   color: #cbd9e8 !important;
 }
 
-#g5-container.g5-dark-mode .card .settings-param .settings-param-field .g-reset-field:hover, #g5-container.g5-dark-mode .card-block .settings-param .settings-param-field .g-reset-field:hover, #g5-container.g5-dark-mode .settings-block .settings-param .settings-param-field .g-reset-field:hover, #g5-container.g5-dark-mode .swatches-block .settings-param .settings-param-field .g-reset-field:hover {
+#g5-container.g5-dark-mode .card .settings-param .settings-param-field .g-reset-field:hover,
+#g5-container.g5-dark-mode .card-block .settings-param .settings-param-field .g-reset-field:hover,
+#g5-container.g5-dark-mode .settings-block .settings-param .settings-param-field .g-reset-field:hover,
+#g5-container.g5-dark-mode .swatches-block .settings-param .settings-param-field .g-reset-field:hover {
   color: #fff !important;
 }
 
-#g5-container.g5-dark-mode .card .settings-param .settings-param-title, #g5-container.g5-dark-mode .card-block .settings-param .settings-param-title, #g5-container.g5-dark-mode .settings-block .settings-param .settings-param-title, #g5-container.g5-dark-mode .swatches-block .settings-param .settings-param-title {
+#g5-container.g5-dark-mode .card .settings-param .settings-param-title,
+#g5-container.g5-dark-mode .card-block .settings-param .settings-param-title,
+#g5-container.g5-dark-mode .settings-block .settings-param .settings-param-title,
+#g5-container.g5-dark-mode .swatches-block .settings-param .settings-param-title {
   color: #cbd9e8 !important;
 }
 
-#g5-container.g5-dark-mode .card .settings-param .settings-param-wrapper, #g5-container.g5-dark-mode .card-block .settings-param .settings-param-wrapper, #g5-container.g5-dark-mode .settings-block .settings-param .settings-param-wrapper, #g5-container.g5-dark-mode .swatches-block .settings-param .settings-param-wrapper {
+#g5-container.g5-dark-mode .card .settings-param .settings-param-wrapper,
+#g5-container.g5-dark-mode .card-block .settings-param .settings-param-wrapper,
+#g5-container.g5-dark-mode .settings-block .settings-param .settings-param-wrapper,
+#g5-container.g5-dark-mode .swatches-block .settings-param .settings-param-wrapper {
   background-color: #1a2537 !important;
   border-color: #273042 !important;
 }
 
-#g5-container.g5-dark-mode .card .settings-param .advanced, #g5-container.g5-dark-mode .card-block .settings-param .advanced, #g5-container.g5-dark-mode .settings-block .settings-param .advanced, #g5-container.g5-dark-mode .swatches-block .settings-param .advanced {
+#g5-container.g5-dark-mode .card .settings-param .advanced,
+#g5-container.g5-dark-mode .card-block .settings-param .advanced,
+#g5-container.g5-dark-mode .settings-block .settings-param .advanced,
+#g5-container.g5-dark-mode .swatches-block .settings-param .advanced {
   color: #ff9a56 !important;
 }
 
-#g5-container.g5-dark-mode .card .settings-param.input-hidden, #g5-container.g5-dark-mode .card-block .settings-param.input-hidden, #g5-container.g5-dark-mode .settings-block .settings-param.input-hidden, #g5-container.g5-dark-mode .swatches-block .settings-param.input-hidden {
+#g5-container.g5-dark-mode .card .settings-param.input-hidden,
+#g5-container.g5-dark-mode .card-block .settings-param.input-hidden,
+#g5-container.g5-dark-mode .settings-block .settings-param.input-hidden,
+#g5-container.g5-dark-mode .swatches-block .settings-param.input-hidden {
   background-color: #1a2537 !important;
 }
 
-#g5-container.g5-dark-mode .card h4.card-overrideable .enabler, #g5-container.g5-dark-mode .card-block h4.card-overrideable .enabler, #g5-container.g5-dark-mode .settings-block h4.card-overrideable .enabler, #g5-container.g5-dark-mode .swatches-block h4.card-overrideable .enabler {
+#g5-container.g5-dark-mode .card h4.card-overrideable .enabler,
+#g5-container.g5-dark-mode .card-block h4.card-overrideable .enabler,
+#g5-container.g5-dark-mode .settings-block h4.card-overrideable .enabler,
+#g5-container.g5-dark-mode .swatches-block h4.card-overrideable .enabler {
   color: #cbd9e8 !important;
 }
 
-#g5-container.g5-dark-mode .card .advanced, #g5-container.g5-dark-mode .card-block .advanced, #g5-container.g5-dark-mode .settings-block .advanced, #g5-container.g5-dark-mode .swatches-block .advanced {
+#g5-container.g5-dark-mode .card .advanced,
+#g5-container.g5-dark-mode .card-block .advanced,
+#g5-container.g5-dark-mode .settings-block .advanced,
+#g5-container.g5-dark-mode .swatches-block .advanced {
   color: #ff9a56 !important;
 }
 
-#g5-container.g5-dark-mode .card hr, #g5-container.g5-dark-mode .card .divider, #g5-container.g5-dark-mode .card [class*="border"], #g5-container.g5-dark-mode .card-block hr, #g5-container.g5-dark-mode .card-block .divider, #g5-container.g5-dark-mode .card-block [class*="border"], #g5-container.g5-dark-mode .settings-block hr, #g5-container.g5-dark-mode .settings-block .divider, #g5-container.g5-dark-mode .settings-block [class*="border"], #g5-container.g5-dark-mode .swatches-block hr, #g5-container.g5-dark-mode .swatches-block .divider, #g5-container.g5-dark-mode .swatches-block [class*="border"] {
+#g5-container.g5-dark-mode .card hr,
+#g5-container.g5-dark-mode .card .divider,
+#g5-container.g5-dark-mode .card [class*="border"],
+#g5-container.g5-dark-mode .card-block hr,
+#g5-container.g5-dark-mode .card-block .divider,
+#g5-container.g5-dark-mode .card-block [class*="border"],
+#g5-container.g5-dark-mode .settings-block hr,
+#g5-container.g5-dark-mode .settings-block .divider,
+#g5-container.g5-dark-mode .settings-block [class*="border"],
+#g5-container.g5-dark-mode .swatches-block hr,
+#g5-container.g5-dark-mode .swatches-block .divider,
+#g5-container.g5-dark-mode .swatches-block [class*="border"] {
   border-color: #273042 !important;
 }
 
@@ -848,47 +1107,57 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   color: #6a85a0 !important;
 }
 
-#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker .atom-settings, #g5-container.g5-dark-mode #page-settings #atoms .atoms-list .atom-settings {
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker .atom-settings,
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-list .atom-settings {
   color: #cbd9e8 !important;
 }
 
-#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker .atom-settings:hover, #g5-container.g5-dark-mode #page-settings #atoms .atoms-list .atom-settings:hover {
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker .atom-settings:hover,
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-list .atom-settings:hover {
   color: #fff !important;
 }
 
-#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker li, #g5-container.g5-dark-mode #page-settings #atoms .atoms-list li {
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker li,
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-list li {
   color: #c795e0 !important;
   border-color: #9055AF !important;
 }
 
-#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker li.atom-dragging:not(.atom-disabled), #g5-container.g5-dark-mode #page-settings #atoms .atoms-list li.atom-dragging:not(.atom-disabled) {
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker li.atom-dragging:not(.atom-disabled),
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-list li.atom-dragging:not(.atom-disabled) {
   border-color: #9055AF !important;
   background-color: #9055AF !important;
   color: #fff !important;
 }
 
-#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker li.atom-dragging:not(.atom-disabled) .atom-settings, #g5-container.g5-dark-mode #page-settings #atoms .atoms-list li.atom-dragging:not(.atom-disabled) .atom-settings {
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker li.atom-dragging:not(.atom-disabled) .atom-settings,
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-list li.atom-dragging:not(.atom-disabled) .atom-settings {
   color: #fff !important;
 }
 
-#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker li.g-inheriting, #g5-container.g5-dark-mode #page-settings #atoms .atoms-list li.g-inheriting {
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker li.g-inheriting,
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-list li.g-inheriting {
   color: #fff !important;
 }
 
-#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker li.g-inheriting i, #g5-container.g5-dark-mode #page-settings #atoms .atoms-list li.g-inheriting i {
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker li.g-inheriting i,
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-list li.g-inheriting i {
   color: #fff !important;
 }
 
-#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker li.atom-disabled, #g5-container.g5-dark-mode #page-settings #atoms .atoms-list li.atom-disabled {
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker li.atom-disabled,
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-list li.atom-disabled {
   border-color: rgba(255, 255, 255, 0.1) !important;
   color: #cbd9e8 !important;
 }
 
-#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker li.atom-disabled.g-inheriting, #g5-container.g5-dark-mode #page-settings #atoms .atoms-list li.atom-disabled.g-inheriting {
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker li.atom-disabled.g-inheriting,
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-list li.atom-disabled.g-inheriting {
   color: #fff !important;
 }
 
-#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker li.atom-disabled.g-inheriting i, #g5-container.g5-dark-mode #page-settings #atoms .atoms-list li.atom-disabled.g-inheriting i {
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-picker li.atom-disabled.g-inheriting i,
+#g5-container.g5-dark-mode #page-settings #atoms .atoms-list li.atom-disabled.g-inheriting i {
   color: #fff !important;
 }
 
@@ -923,6 +1192,14 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   border-left-color: #374f6b !important;
 }
 
+#g5-container.g5-dark-mode .g-colorpicker input {
+  color: #000;
+}
+
+#g5-container.g5-dark-mode .g-colorpicker.light-text input {
+  color: #fff;
+}
+
 #g5-container.g5-dark-mode .input-group-btn .button {
   border-color: #374f6b !important;
 }
@@ -931,11 +1208,13 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   border-color: #374f6b !important;
 }
 
-#g5-container.g5-dark-mode .swatch-preview, #g5-container.g5-dark-mode .swatch-matched {
+#g5-container.g5-dark-mode .swatch-preview,
+#g5-container.g5-dark-mode .swatch-matched {
   background: rgba(0, 0, 0, 0.6) !important;
 }
 
-#g5-container.g5-dark-mode .swatch-preview:hover, #g5-container.g5-dark-mode .swatch-matched:hover {
+#g5-container.g5-dark-mode .swatch-preview:hover,
+#g5-container.g5-dark-mode .swatch-matched:hover {
   background: rgba(0, 0, 0, 0.9) !important;
 }
 
@@ -951,24 +1230,33 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   border-top-color: #374f6b !important;
 }
 
-#g5-container.g5-dark-mode #assignments .settings-param, #g5-container.g5-dark-mode .settings-assignments .settings-param {
+#g5-container.g5-dark-mode #assignments .settings-param,
+#g5-container.g5-dark-mode .settings-assignments .settings-param {
   border-top-color: #273042 !important;
 }
 
-#g5-container.g5-dark-mode #assignments .settings-param .settings-param-title, #g5-container.g5-dark-mode .settings-assignments .settings-param .settings-param-title {
+#g5-container.g5-dark-mode #assignments .settings-param .settings-param-title,
+#g5-container.g5-dark-mode .settings-assignments .settings-param .settings-param-title {
   color: #fff !important;
 }
 
-#g5-container.g5-dark-mode #assignments .g-panel-filters [data-g-assignments-check], #g5-container.g5-dark-mode #assignments .g-panel-filters [data-g-assignments-uncheck], #g5-container.g5-dark-mode .settings-assignments .g-panel-filters [data-g-assignments-check], #g5-container.g5-dark-mode .settings-assignments .g-panel-filters [data-g-assignments-uncheck] {
+#g5-container.g5-dark-mode #assignments .g-panel-filters [data-g-assignments-check],
+#g5-container.g5-dark-mode #assignments .g-panel-filters [data-g-assignments-uncheck],
+#g5-container.g5-dark-mode .settings-assignments .g-panel-filters [data-g-assignments-check],
+#g5-container.g5-dark-mode .settings-assignments .g-panel-filters [data-g-assignments-uncheck] {
   border-left-color: #374f6b !important;
   color: #cbd9e8 !important;
 }
 
-#g5-container.g5-dark-mode #assignments .g-panel-filters [data-g-assignments-check]:hover, #g5-container.g5-dark-mode #assignments .g-panel-filters [data-g-assignments-uncheck]:hover, #g5-container.g5-dark-mode .settings-assignments .g-panel-filters [data-g-assignments-check]:hover, #g5-container.g5-dark-mode .settings-assignments .g-panel-filters [data-g-assignments-uncheck]:hover {
+#g5-container.g5-dark-mode #assignments .g-panel-filters [data-g-assignments-check]:hover,
+#g5-container.g5-dark-mode #assignments .g-panel-filters [data-g-assignments-uncheck]:hover,
+#g5-container.g5-dark-mode .settings-assignments .g-panel-filters [data-g-assignments-check]:hover,
+#g5-container.g5-dark-mode .settings-assignments .g-panel-filters [data-g-assignments-uncheck]:hover {
   color: #fff !important;
 }
 
-#g5-container.g5-dark-mode #assignments .settings-param-wrapper, #g5-container.g5-dark-mode .settings-assignments .settings-param-wrapper {
+#g5-container.g5-dark-mode #assignments .settings-param-wrapper,
+#g5-container.g5-dark-mode .settings-assignments .settings-param-wrapper {
   border-color: #273042 !important;
 }
 
@@ -1009,7 +1297,8 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   color: #cbd9e8 !important;
 }
 
-#g5-container.g5-dark-mode #g5-container #footer .g-version, #g5-container.g5-dark-mode #g5-container #footer .g-version-date,
+#g5-container.g5-dark-mode #g5-container #footer .g-version,
+#g5-container.g5-dark-mode #g5-container #footer .g-version-date,
 #g5-container.g5-dark-mode .com_gantry5 #footer .g-version,
 #g5-container.g5-dark-mode .com_gantry5 #footer .g-version-date,
 #g5-container.g5-dark-mode .gantry5 #footer .g-version,
@@ -1043,6 +1332,10 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   color: #fff !important;
 }
 
+#g5-container.g5-dark-mode .lm-blocks .particle-size {
+  color: #fff;
+}
+
 #g5-container.g5-dark-mode .lm-blocks.empty {
   border-color: #374f6b !important;
 }
@@ -1055,19 +1348,29 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   color: #cbd9e8 !important;
 }
 
-#g5-container.g5-dark-mode .lm-blocks .section, #g5-container.g5-dark-mode .lm-blocks .atoms-section, #g5-container.g5-dark-mode .lm-blocks .offcanvas-section, #g5-container.g5-dark-mode .lm-blocks .wrapper-section {
+#g5-container.g5-dark-mode .lm-blocks .section,
+#g5-container.g5-dark-mode .lm-blocks .atoms-section,
+#g5-container.g5-dark-mode .lm-blocks .offcanvas-section,
+#g5-container.g5-dark-mode .lm-blocks .wrapper-section {
   background: #2a394f !important;
 }
 
-#g5-container.g5-dark-mode .lm-blocks .section .section-header h4, #g5-container.g5-dark-mode .lm-blocks .atoms-section .section-header h4, #g5-container.g5-dark-mode .lm-blocks .offcanvas-section .section-header h4, #g5-container.g5-dark-mode .lm-blocks .wrapper-section .section-header h4 {
+#g5-container.g5-dark-mode .lm-blocks .section .section-header h4,
+#g5-container.g5-dark-mode .lm-blocks .atoms-section .section-header h4,
+#g5-container.g5-dark-mode .lm-blocks .offcanvas-section .section-header h4,
+#g5-container.g5-dark-mode .lm-blocks .wrapper-section .section-header h4 {
   color: #fff !important;
 }
 
-#g5-container.g5-dark-mode .lm-blocks .section .section-header i, #g5-container.g5-dark-mode .lm-blocks .atoms-section .section-header i, #g5-container.g5-dark-mode .lm-blocks .offcanvas-section .section-header i, #g5-container.g5-dark-mode .lm-blocks .wrapper-section .section-header i {
+#g5-container.g5-dark-mode .lm-blocks .section .section-header i,
+#g5-container.g5-dark-mode .lm-blocks .atoms-section .section-header i,
+#g5-container.g5-dark-mode .lm-blocks .offcanvas-section .section-header i,
+#g5-container.g5-dark-mode .lm-blocks .wrapper-section .section-header i {
   color: #cbd9e8 !important;
 }
 
-#g5-container.g5-dark-mode .lm-blocks .atoms-section, #g5-container.g5-dark-mode .lm-blocks .offcanvas-section {
+#g5-container.g5-dark-mode .lm-blocks .atoms-section,
+#g5-container.g5-dark-mode .lm-blocks .offcanvas-section {
   border-top-color: #374f6b !important;
 }
 
@@ -1101,7 +1404,23 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   border-bottom-color: #1a2537 !important;
 }
 
-#g5-container.g5-dark-mode .lm-blocks .particle, #g5-container.g5-dark-mode .lm-blocks .position, #g5-container.g5-dark-mode .lm-blocks .spacer, #g5-container.g5-dark-mode .lm-blocks .system, #g5-container.g5-dark-mode .lm-blocks .atom {
+#g5-container.g5-dark-mode .lm-blocks .particle,
+#g5-container.g5-dark-mode .lm-blocks .position,
+#g5-container.g5-dark-mode .lm-blocks .system,
+#g5-container.g5-dark-mode .lm-blocks .atom,
+#g5-container.g5-dark-mode .lm-blocks .spacer {
+  color: #fff !important;
+}
+
+#g5-container.g5-dark-mode .lm-blocks .spacer {
+  background: #2A82B7;
+}
+
+#g5-container.g5-dark-mode .lm-blocks .spacer .particle-size {
+  color: #fff !important;
+}
+
+#g5-container.g5-dark-mode .lm-blocks .spacer .font-small {
   color: #fff !important;
 }
 
@@ -1134,45 +1453,161 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   color: #cbd9e8 !important;
 }
 
-#g5-container.g5-dark-mode #navbar, #g5-container.g5-dark-mode nav.navbar, #g5-container.g5-dark-mode .navbar, #g5-container.g5-dark-mode .subhead, #g5-container.g5-dark-mode #subhead {
+#g5-container.g5-dark-mode #navbar,
+#g5-container.g5-dark-mode nav.navbar,
+#g5-container.g5-dark-mode .navbar,
+#g5-container.g5-dark-mode .subhead,
+#g5-container.g5-dark-mode #subhead {
   background-color: #1a2537 !important;
 }
 
-#g5-container.g5-dark-mode #navbar a, #g5-container.g5-dark-mode #navbar span, #g5-container.g5-dark-mode #navbar .nav-link, #g5-container.g5-dark-mode nav.navbar a, #g5-container.g5-dark-mode nav.navbar span, #g5-container.g5-dark-mode nav.navbar .nav-link, #g5-container.g5-dark-mode .navbar a, #g5-container.g5-dark-mode .navbar span, #g5-container.g5-dark-mode .navbar .nav-link, #g5-container.g5-dark-mode .subhead a, #g5-container.g5-dark-mode .subhead span, #g5-container.g5-dark-mode .subhead .nav-link, #g5-container.g5-dark-mode #subhead a, #g5-container.g5-dark-mode #subhead span, #g5-container.g5-dark-mode #subhead .nav-link {
+#g5-container.g5-dark-mode #navbar a,
+#g5-container.g5-dark-mode #navbar span,
+#g5-container.g5-dark-mode #navbar .nav-link,
+#g5-container.g5-dark-mode nav.navbar a,
+#g5-container.g5-dark-mode nav.navbar span,
+#g5-container.g5-dark-mode nav.navbar .nav-link,
+#g5-container.g5-dark-mode .navbar a,
+#g5-container.g5-dark-mode .navbar span,
+#g5-container.g5-dark-mode .navbar .nav-link,
+#g5-container.g5-dark-mode .subhead a,
+#g5-container.g5-dark-mode .subhead span,
+#g5-container.g5-dark-mode .subhead .nav-link,
+#g5-container.g5-dark-mode #subhead a,
+#g5-container.g5-dark-mode #subhead span,
+#g5-container.g5-dark-mode #subhead .nav-link {
   color: #cbd9e8 !important;
 }
 
-#g5-container.g5-dark-mode #navbar a:hover, #g5-container.g5-dark-mode #navbar a:focus, #g5-container.g5-dark-mode #navbar a.active, #g5-container.g5-dark-mode #navbar span:hover, #g5-container.g5-dark-mode #navbar span:focus, #g5-container.g5-dark-mode #navbar span.active, #g5-container.g5-dark-mode #navbar .nav-link:hover, #g5-container.g5-dark-mode #navbar .nav-link:focus, #g5-container.g5-dark-mode #navbar .nav-link.active, #g5-container.g5-dark-mode nav.navbar a:hover, #g5-container.g5-dark-mode nav.navbar a:focus, #g5-container.g5-dark-mode nav.navbar a.active, #g5-container.g5-dark-mode nav.navbar span:hover, #g5-container.g5-dark-mode nav.navbar span:focus, #g5-container.g5-dark-mode nav.navbar span.active, #g5-container.g5-dark-mode nav.navbar .nav-link:hover, #g5-container.g5-dark-mode nav.navbar .nav-link:focus, #g5-container.g5-dark-mode nav.navbar .nav-link.active, #g5-container.g5-dark-mode .navbar a:hover, #g5-container.g5-dark-mode .navbar a:focus, #g5-container.g5-dark-mode .navbar a.active, #g5-container.g5-dark-mode .navbar span:hover, #g5-container.g5-dark-mode .navbar span:focus, #g5-container.g5-dark-mode .navbar span.active, #g5-container.g5-dark-mode .navbar .nav-link:hover, #g5-container.g5-dark-mode .navbar .nav-link:focus, #g5-container.g5-dark-mode .navbar .nav-link.active, #g5-container.g5-dark-mode .subhead a:hover, #g5-container.g5-dark-mode .subhead a:focus, #g5-container.g5-dark-mode .subhead a.active, #g5-container.g5-dark-mode .subhead span:hover, #g5-container.g5-dark-mode .subhead span:focus, #g5-container.g5-dark-mode .subhead span.active, #g5-container.g5-dark-mode .subhead .nav-link:hover, #g5-container.g5-dark-mode .subhead .nav-link:focus, #g5-container.g5-dark-mode .subhead .nav-link.active, #g5-container.g5-dark-mode #subhead a:hover, #g5-container.g5-dark-mode #subhead a:focus, #g5-container.g5-dark-mode #subhead a.active, #g5-container.g5-dark-mode #subhead span:hover, #g5-container.g5-dark-mode #subhead span:focus, #g5-container.g5-dark-mode #subhead span.active, #g5-container.g5-dark-mode #subhead .nav-link:hover, #g5-container.g5-dark-mode #subhead .nav-link:focus, #g5-container.g5-dark-mode #subhead .nav-link.active {
+#g5-container.g5-dark-mode #navbar a:hover, #g5-container.g5-dark-mode #navbar a:focus, #g5-container.g5-dark-mode #navbar a.active,
+#g5-container.g5-dark-mode #navbar span:hover,
+#g5-container.g5-dark-mode #navbar span:focus,
+#g5-container.g5-dark-mode #navbar span.active,
+#g5-container.g5-dark-mode #navbar .nav-link:hover,
+#g5-container.g5-dark-mode #navbar .nav-link:focus,
+#g5-container.g5-dark-mode #navbar .nav-link.active,
+#g5-container.g5-dark-mode nav.navbar a:hover,
+#g5-container.g5-dark-mode nav.navbar a:focus,
+#g5-container.g5-dark-mode nav.navbar a.active,
+#g5-container.g5-dark-mode nav.navbar span:hover,
+#g5-container.g5-dark-mode nav.navbar span:focus,
+#g5-container.g5-dark-mode nav.navbar span.active,
+#g5-container.g5-dark-mode nav.navbar .nav-link:hover,
+#g5-container.g5-dark-mode nav.navbar .nav-link:focus,
+#g5-container.g5-dark-mode nav.navbar .nav-link.active,
+#g5-container.g5-dark-mode .navbar a:hover,
+#g5-container.g5-dark-mode .navbar a:focus,
+#g5-container.g5-dark-mode .navbar a.active,
+#g5-container.g5-dark-mode .navbar span:hover,
+#g5-container.g5-dark-mode .navbar span:focus,
+#g5-container.g5-dark-mode .navbar span.active,
+#g5-container.g5-dark-mode .navbar .nav-link:hover,
+#g5-container.g5-dark-mode .navbar .nav-link:focus,
+#g5-container.g5-dark-mode .navbar .nav-link.active,
+#g5-container.g5-dark-mode .subhead a:hover,
+#g5-container.g5-dark-mode .subhead a:focus,
+#g5-container.g5-dark-mode .subhead a.active,
+#g5-container.g5-dark-mode .subhead span:hover,
+#g5-container.g5-dark-mode .subhead span:focus,
+#g5-container.g5-dark-mode .subhead span.active,
+#g5-container.g5-dark-mode .subhead .nav-link:hover,
+#g5-container.g5-dark-mode .subhead .nav-link:focus,
+#g5-container.g5-dark-mode .subhead .nav-link.active,
+#g5-container.g5-dark-mode #subhead a:hover,
+#g5-container.g5-dark-mode #subhead a:focus,
+#g5-container.g5-dark-mode #subhead a.active,
+#g5-container.g5-dark-mode #subhead span:hover,
+#g5-container.g5-dark-mode #subhead span:focus,
+#g5-container.g5-dark-mode #subhead span.active,
+#g5-container.g5-dark-mode #subhead .nav-link:hover,
+#g5-container.g5-dark-mode #subhead .nav-link:focus,
+#g5-container.g5-dark-mode #subhead .nav-link.active {
   color: #ffffff !important;
   background-color: #273042 !important;
 }
 
-#g5-container.g5-dark-mode #navbar .nav-item.active, #g5-container.g5-dark-mode #navbar .nav-item.active > a, #g5-container.g5-dark-mode #navbar .active, #g5-container.g5-dark-mode nav.navbar .nav-item.active, #g5-container.g5-dark-mode nav.navbar .nav-item.active > a, #g5-container.g5-dark-mode nav.navbar .active, #g5-container.g5-dark-mode .navbar .nav-item.active, #g5-container.g5-dark-mode .navbar .nav-item.active > a, #g5-container.g5-dark-mode .navbar .active, #g5-container.g5-dark-mode .subhead .nav-item.active, #g5-container.g5-dark-mode .subhead .nav-item.active > a, #g5-container.g5-dark-mode .subhead .active, #g5-container.g5-dark-mode #subhead .nav-item.active, #g5-container.g5-dark-mode #subhead .nav-item.active > a, #g5-container.g5-dark-mode #subhead .active {
+#g5-container.g5-dark-mode #navbar .nav-item.active,
+#g5-container.g5-dark-mode #navbar .nav-item.active > a,
+#g5-container.g5-dark-mode #navbar .active,
+#g5-container.g5-dark-mode nav.navbar .nav-item.active,
+#g5-container.g5-dark-mode nav.navbar .nav-item.active > a,
+#g5-container.g5-dark-mode nav.navbar .active,
+#g5-container.g5-dark-mode .navbar .nav-item.active,
+#g5-container.g5-dark-mode .navbar .nav-item.active > a,
+#g5-container.g5-dark-mode .navbar .active,
+#g5-container.g5-dark-mode .subhead .nav-item.active,
+#g5-container.g5-dark-mode .subhead .nav-item.active > a,
+#g5-container.g5-dark-mode .subhead .active,
+#g5-container.g5-dark-mode #subhead .nav-item.active,
+#g5-container.g5-dark-mode #subhead .nav-item.active > a,
+#g5-container.g5-dark-mode #subhead .active {
   background-color: #273042 !important;
   color: #fff !important;
 }
 
-#g5-container.g5-dark-mode #navbar .btn, #g5-container.g5-dark-mode #navbar button, #g5-container.g5-dark-mode nav.navbar .btn, #g5-container.g5-dark-mode nav.navbar button, #g5-container.g5-dark-mode .navbar .btn, #g5-container.g5-dark-mode .navbar button, #g5-container.g5-dark-mode .subhead .btn, #g5-container.g5-dark-mode .subhead button, #g5-container.g5-dark-mode #subhead .btn, #g5-container.g5-dark-mode #subhead button {
+#g5-container.g5-dark-mode #navbar .btn,
+#g5-container.g5-dark-mode #navbar button,
+#g5-container.g5-dark-mode nav.navbar .btn,
+#g5-container.g5-dark-mode nav.navbar button,
+#g5-container.g5-dark-mode .navbar .btn,
+#g5-container.g5-dark-mode .navbar button,
+#g5-container.g5-dark-mode .subhead .btn,
+#g5-container.g5-dark-mode .subhead button,
+#g5-container.g5-dark-mode #subhead .btn,
+#g5-container.g5-dark-mode #subhead button {
   background-color: #3a547a !important;
   color: #fff !important;
 }
 
-#g5-container.g5-dark-mode #navbar .btn:hover, #g5-container.g5-dark-mode #navbar button:hover, #g5-container.g5-dark-mode nav.navbar .btn:hover, #g5-container.g5-dark-mode nav.navbar button:hover, #g5-container.g5-dark-mode .navbar .btn:hover, #g5-container.g5-dark-mode .navbar button:hover, #g5-container.g5-dark-mode .subhead .btn:hover, #g5-container.g5-dark-mode .subhead button:hover, #g5-container.g5-dark-mode #subhead .btn:hover, #g5-container.g5-dark-mode #subhead button:hover {
+#g5-container.g5-dark-mode #navbar .btn:hover,
+#g5-container.g5-dark-mode #navbar button:hover,
+#g5-container.g5-dark-mode nav.navbar .btn:hover,
+#g5-container.g5-dark-mode nav.navbar button:hover,
+#g5-container.g5-dark-mode .navbar .btn:hover,
+#g5-container.g5-dark-mode .navbar button:hover,
+#g5-container.g5-dark-mode .subhead .btn:hover,
+#g5-container.g5-dark-mode .subhead button:hover,
+#g5-container.g5-dark-mode #subhead .btn:hover,
+#g5-container.g5-dark-mode #subhead button:hover {
   background-color: #4a6490 !important;
 }
 
-#g5-container.g5-dark-mode #navbar .dropdown-menu, #g5-container.g5-dark-mode nav.navbar .dropdown-menu, #g5-container.g5-dark-mode .navbar .dropdown-menu, #g5-container.g5-dark-mode .subhead .dropdown-menu, #g5-container.g5-dark-mode #subhead .dropdown-menu {
+#g5-container.g5-dark-mode #navbar .dropdown-menu,
+#g5-container.g5-dark-mode nav.navbar .dropdown-menu,
+#g5-container.g5-dark-mode .navbar .dropdown-menu,
+#g5-container.g5-dark-mode .subhead .dropdown-menu,
+#g5-container.g5-dark-mode #subhead .dropdown-menu {
   background-color: #1a2537 !important;
   border-color: #273042 !important;
 }
 
-#g5-container.g5-dark-mode #navbar .dropdown-menu a, #g5-container.g5-dark-mode nav.navbar .dropdown-menu a, #g5-container.g5-dark-mode .navbar .dropdown-menu a, #g5-container.g5-dark-mode .subhead .dropdown-menu a, #g5-container.g5-dark-mode #subhead .dropdown-menu a {
+#g5-container.g5-dark-mode #navbar .dropdown-menu a,
+#g5-container.g5-dark-mode nav.navbar .dropdown-menu a,
+#g5-container.g5-dark-mode .navbar .dropdown-menu a,
+#g5-container.g5-dark-mode .subhead .dropdown-menu a,
+#g5-container.g5-dark-mode #subhead .dropdown-menu a {
   color: #cbd9e8 !important;
 }
 
-#g5-container.g5-dark-mode #navbar .dropdown-menu a:hover, #g5-container.g5-dark-mode #navbar .dropdown-menu a:focus, #g5-container.g5-dark-mode nav.navbar .dropdown-menu a:hover, #g5-container.g5-dark-mode nav.navbar .dropdown-menu a:focus, #g5-container.g5-dark-mode .navbar .dropdown-menu a:hover, #g5-container.g5-dark-mode .navbar .dropdown-menu a:focus, #g5-container.g5-dark-mode .subhead .dropdown-menu a:hover, #g5-container.g5-dark-mode .subhead .dropdown-menu a:focus, #g5-container.g5-dark-mode #subhead .dropdown-menu a:hover, #g5-container.g5-dark-mode #subhead .dropdown-menu a:focus {
+#g5-container.g5-dark-mode #navbar .dropdown-menu a:hover, #g5-container.g5-dark-mode #navbar .dropdown-menu a:focus,
+#g5-container.g5-dark-mode nav.navbar .dropdown-menu a:hover,
+#g5-container.g5-dark-mode nav.navbar .dropdown-menu a:focus,
+#g5-container.g5-dark-mode .navbar .dropdown-menu a:hover,
+#g5-container.g5-dark-mode .navbar .dropdown-menu a:focus,
+#g5-container.g5-dark-mode .subhead .dropdown-menu a:hover,
+#g5-container.g5-dark-mode .subhead .dropdown-menu a:focus,
+#g5-container.g5-dark-mode #subhead .dropdown-menu a:hover,
+#g5-container.g5-dark-mode #subhead .dropdown-menu a:focus {
   background-color: #273042 !important;
   color: #ffffff !important;
+}
+
+#g5-container.g5-dark-mode .collection-list .settings-param-field [data-collection-item] a {
+  color: #fff;
+}
+
+#g5-container.g5-dark-mode .collection-list .settings-param-field ul:not(.collection-sorting) li[data-collection-item]:hover a {
+  color: #FFF;
 }
 
 [data-color-scheme="dark"] #g5-container #footer,
@@ -1184,7 +1619,8 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   color: #cbd9e8 !important;
 }
 
-[data-color-scheme="dark"] #g5-container #footer .g-version, [data-color-scheme="dark"] #g5-container #footer .g-version-date,
+[data-color-scheme="dark"] #g5-container #footer .g-version,
+[data-color-scheme="dark"] #g5-container #footer .g-version-date,
 [data-color-scheme="dark"] .com_gantry5 #footer .g-version,
 [data-color-scheme="dark"] .com_gantry5 #footer .g-version-date,
 [data-color-scheme="dark"] .gantry5 #footer .g-version,
