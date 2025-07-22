@@ -10,6 +10,7 @@
  */
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Factory;
@@ -204,7 +205,7 @@ class Pkg_Gantry5InstallerScript
 
             $clientName = (string) $attributes->client;
             if (!empty($clientName)) {
-                $client = JApplicationHelper::getClientInfo($clientName, true);
+                $client = ApplicationHelper::getClientInfo($clientName, true);
                 $search +=  array('client_id' => $client->id);
             }
 
