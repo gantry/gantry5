@@ -1,3 +1,9 @@
+# 5.5.21
+## 07/23/2025
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Fixed the installation error in Joomla 5 with the compatibility plugin disabled (#3328)
+
 # 5.5.20
 ## 07/23/2025 (Set for release - This list has been marked from prior dev changelog (March 2025)
 1. [Common](#common)
