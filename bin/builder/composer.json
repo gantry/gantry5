@@ -1,7 +1,12 @@
 {
     "require": {
-        "phing/phing": "3.0.0-RC5",
-        "guzzlehttp/guzzle": "7.7.x-dev"
+        "php": ">=8.1.0 <8.4.0",
+        "ext-dom": "*",
+        "ext-xml": "*",
+        "ext-simplexml": "*",
+        "ext-mbstring": "*",
+        "phing/phing": "^3.0.0",
+        "guzzlehttp/guzzle": "^7.7"
     },
     "minimum-stability": "dev",
     "autoload": {
@@ -9,7 +14,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.4"
+            "php": "8.1"
         },
         "allow-plugins": {
             "phing/phing-composer-configurator": true

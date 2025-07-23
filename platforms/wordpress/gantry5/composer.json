@@ -4,31 +4,31 @@
     "license": "MIT",
 
     "require": {
-        "php": ">=5.6.20",
-        "symfony/event-dispatcher": "~3.4",
-        "symfony/yaml": "5.4.0",
-        "pimple/pimple": "~3.2",
-        "filp/whoops": "~2.5",
-        "rockettheme/toolbox": "~1.5",
-        "erusev/parsedown-extra": "~0.7",
-        "timber/timber": "1.23",
+        "php": ">=7.3.6 <8.4.0",
+        "ext-mbstring": "*",
+        "ext-json": "*",
+        "ext-dom": "*",
+        "ext-xml": "*",
+        "ext-simplexml": "*",
+        "symfony/event-dispatcher": "^3.4|^4.0|^5.4",
+        "symfony/yaml": "^5.4",
+        "pimple/pimple": "^3.5",
+        "filp/whoops": "^2.15.2",
+        "rockettheme/toolbox": "^1.6.4",
+        "erusev/parsedown-extra": "^0.8.0",
+        "timber/timber": "^1.23",
 
-        "twig/twig": "1.44.7",
-        "scssphp/scssphp": "1.10",
-        "leafo/scssphp": "dev-master"
+        "twig/twig": "^2.15",
+        "scssphp/scssphp": "^1.11.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "3.7.*"
+        "phpunit/phpunit": "^9.0"
     },
     "repositories": [
         {
             "type": "vcs",
             "url": "https://github.com/rockettheme/toolbox"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/rockettheme/scssphp"
-          }
+        }
     ],
     "autoload": {
         "psr-4": {
@@ -40,7 +40,7 @@
             "composer/installers": true
         },
         "platform": {
-            "php": "7.2.5"
+            "php": "8.1"
         }
     }
 }

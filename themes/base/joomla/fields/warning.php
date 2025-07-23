@@ -13,9 +13,9 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
 /**
- * Class JFormFieldWarning
+ * Class WarningField
  */
-class JFormFieldWarning extends JFormField
+class WarningField extends \Joomla\CMS\Form\FormField
 {
     /** @var string */
     protected $type = 'Warning';
@@ -35,4 +35,9 @@ class JFormFieldWarning extends JFormField
 
         return '';
     }
+}
+
+// Compatibility alias for Joomla 4
+if (!class_exists('JFormFieldWarning') && version_compare(JVERSION, '5.0', '<')) {
+    class_alias('WarningField', 'JFormFieldWarning');
 }

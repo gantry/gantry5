@@ -32,15 +32,23 @@ class Site
 
     public function __construct()
     {
-        /** @var CMSApplication $application */
-        $application = Factory::getApplication();
-        $document = $application->getDocument();
+        try {
+            /** @var CMSApplication $application */
+            $application = Factory::getApplication();
+            $document = $application->getDocument();
 
-        if ($document instanceof HtmlDocument) {
-            $this->theme = $document->template;
-            $this->url = $document->baseurl;
-            $this->title = $document->title;
-            $this->description = $document->description;
+            if ($document instanceof HtmlDocument) {
+                $this->theme = $document->template;
+                $this->url = $document->baseurl;
+                $this->title = $document->title;
+                $this->description = $document->description;
+            }
+        } catch (\Exception $e) {
+            // Catch errors when trying to get site properties from admin
+            $this->theme = '';
+            $this->url = '';
+            $this->title = '';
+            $this->description = '';
         }
     }
 }

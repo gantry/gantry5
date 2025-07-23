@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        php: [ 8.1, 8.0, 7.4]
+        php: [ 8.3, 8.2, 8.1 ]
         os: [ubuntu-latest]
     timeout-minutes: 10
     steps:
@@ -20,7 +20,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: opcache, gd
+          extensions: opcache, gd, zip
           tools: composer:v2, phpunit
           coverage: none
         env:
@@ -28,7 +28,7 @@ jobs:
       - name: Install packages
         run: |
           sudo apt-get -y update -qq  < /dev/null > /dev/null
-          sudo apt-get -y install -qq git zip < /dev/null > /dev/null
+          sudo apt-get -y install -qq git zip php-zip < /dev/null > /dev/null
       - name: Get composer cache directory
         id: composer-cache
         run: echo "dir=$(composer config cache-files-dir -d bin/builder)" >> $GITHUB_OUTPUT
@@ -40,8 +40,9 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
       - name: Build Gantry packages
         run: composer build-dev
-#      - name: Run test suite
-#        run: vendor/bin/codecept run
+      - name: Run PHP 8.3 compatibility tests
+        if: matrix.php == '8.3'
+        run: ./tests/php83/scripts/run-tests.sh
 
 #  slack:
 #      name: Slack

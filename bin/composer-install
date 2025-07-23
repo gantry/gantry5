@@ -30,7 +30,7 @@ function composer_install($folder, $link)
     if ($link && !file_exists('src')) {
         symlink('../../../src', 'src');
     }
-    if (false === exec('composer install --no-dev --no-progress', $output, $result) || $result) {
+    if (false === exec('composer install --no-dev --no-progress --ignore-platform-req=ext-dom --ignore-platform-req=ext-xml --ignore-platform-req=ext-simplexml --ignore-platform-req=ext-xmlwriter', $output, $result) || $result) {
         echo implode("\n", $output);
         throw new \RuntimeException('Failed to run composer install in ' . $folder);
     }

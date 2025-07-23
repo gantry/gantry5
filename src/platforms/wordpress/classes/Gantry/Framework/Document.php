@@ -23,6 +23,8 @@ class Document extends HtmlDocument
     public static $wp_styles = [];
     /** @var array */
     public static $wp_scripts = ['head' => [], 'footer' => []];
+    /** @var array */
+    public static $wp_html_blocks = [];
 
     /** @var array */
     protected static $script_info = [];
@@ -50,6 +52,8 @@ class Document extends HtmlDocument
         static::registerStyles();
         static::registerScripts('head');
         static::registerScripts('footer');
+        static::registerHtmlBlocks('head_top');
+        static::registerHtmlBlocks('head_meta');
     }
 
     public static function registerStyles()
@@ -112,6 +116,24 @@ class Document extends HtmlDocument
         }
 
         static::$stack[0]->clearScripts($pos);
+    }
+    
+    /**
+     * @param string $location
+     */
+    public static function registerHtmlBlocks($location)
+    {
+        $htmls = static::$stack[0]->getHtml($location);
+        
+        if (!empty($htmls)) {
+            if (!isset(self::$wp_html_blocks[$location])) {
+                self::$wp_html_blocks[$location] = [];
+            }
+            
+            foreach ($htmls as $html) {
+                self::$wp_html_blocks[$location][] = $html['html'];
+            }
+        }
     }
 
     /**
@@ -238,5 +260,23 @@ class Document extends HtmlDocument
     protected static function registerMootoolsMore()
     {
         \wp_enqueue_script('mootools-more', 'https://cdnjs.cloudflare.com/ajax/libs/mootools-more/1.5.2/mootools-more-compat-compressed.js');
+    }
+    
+    /**
+     * Override getHtml method to include WordPress-specific block handling
+     * 
+     * @param string $location
+     * @return array
+     */
+    public static function getHtml($location = 'bottom')
+    {
+        $htmls = parent::getHtml($location);
+        
+        // Include any additional HTML blocks that were added via WordPress-specific methods
+        if (isset(self::$wp_html_blocks[$location])) {
+            $htmls = array_merge($htmls, self::$wp_html_blocks[$location]);
+        }
+        
+        return $htmls;
     }
 }

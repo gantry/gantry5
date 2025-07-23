@@ -70,7 +70,8 @@ class plgSystemGantry5 extends CMSPlugin
 
         $this->loadLanguage('plg_system_gantry5.sys');
 
-        JLoader::register('Gantry5\Loader', JPATH_LIBRARIES . '/gantry5/src/Loader.php');
+        // Use Joomla's class loader instead of JLoader which is deprecated in Joomla 5
+        require_once JPATH_LIBRARIES . '/gantry5/src/Loader.php';
 
         // Detect Gantry Framework or fail gracefully.
         if (!class_exists('Gantry5\Loader')) {
@@ -337,8 +338,8 @@ class plgSystemGantry5 extends CMSPlugin
         $task   = $input->getCmd('task');
 
         if (in_array($option, array('com_templates', 'com_advancedtemplates'), true)) {
-            JLoader::register('JFormFieldWarning', __DIR__ . '/fields/warning.php');
-            class_exists(JFormFieldWarning::class, true);
+            // Register field class with namespace
+            require_once __DIR__ . '/fields/warning.php';
 
             if ($task && strpos($task, 'style') === 0 && $this->params->get('use_assignments', true)) {
                 // Get all ids.
@@ -656,7 +657,7 @@ class plgSystemGantry5 extends CMSPlugin
     public function onContentPrepareForm($form, $data)
     {
         // Check that we are manipulating a valid form.
-        if (!($form instanceof Form)) {
+        if (!($form instanceof \Joomla\CMS\Form\Form)) {
             $this->_subject->setError('JERROR_NOT_A_FORM');
 
             return false;
@@ -690,7 +691,7 @@ class plgSystemGantry5 extends CMSPlugin
                 $isGantry = !empty($data->params['gantry']) || is_array(Menu::decodeJParams($data->params));
                 if ($isNew || $isGantry) {
                     // Add Gantry Menu tab to the form.
-                    JForm::addFormPath(__DIR__ . '/forms');
+                    \Joomla\CMS\Form\Form::addFormPath(__DIR__ . '/forms');
                     $form->loadFile('menu_item', false);
                 }
 

@@ -13,6 +13,8 @@ namespace Gantry\Joomla;
 
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Table\Menu;
+use Joomla\CMS\Table\MenuType;
 use Joomla\CMS\Table\Table;
 use Joomla\Component\Menus\Administrator\Model\ItemModel; // Joomla 4
 use Joomla\Component\Menus\Administrator\Table\MenuTable; // Joomla 4
@@ -25,7 +27,7 @@ class MenuHelper
 {
     /**
      * @param int|array|null $id
-     * @return \JTableMenu|MenuTable
+     * @return \JTableMenu|MenuTable|\Joomla\CMS\Table\Menu
      */
     public static function getMenu($id = null)
     {
@@ -45,7 +47,7 @@ class MenuHelper
 
     /**
      * @param int|array|null $id
-     * @return \JTableMenuType|MenuTypeTable
+     * @return \JTableMenuType|MenuTypeTable|\Joomla\CMS\Table\MenuType
      */
     public static function getMenuType($id = null)
     {

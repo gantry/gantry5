@@ -1,0 +1,27 @@
+// Fix SVG icon display issues with Joomla 5
+// This is to be compatible with Cassiopeia SVG handling
+
+// Add the basic vertical alignment from Bootstrap
+svg {
+  vertical-align: middle;
+}
+
+// Fix WebAuthn SVG icons for login page
+.plg_system_webauthn_login_button {
+  svg {
+    width: 30px;
+    margin: 4px;
+    margin-inline-end: 2px;
+  }
+  
+  svg path {
+    fill: var(--template-text-dark);
+  }
+}
+
+// Fix other specific Joomla icon buttons
+.button-webauthn {
+  svg {
+    margin-inline-end: 2px;
+  }
+}

@@ -12,8 +12,10 @@ keywords: gantry, gantry5, theme, framework
 bugs: 'https://github.com/gantry/gantry5/issues'
 license: MIT
 dependencies:
-   - { name: grav, version: '>=1.7.22' }
-   - { name: admin, version: '>=1.10.22' }
+   - { name: grav, version: '>=1.7.25' }
+   - { name: admin, version: '>=1.10.25' }
+php:
+   minimum: 8.1.0
 
 form:
   validation: loose

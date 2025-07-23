@@ -4,93 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8db773bd92bd4a34b26352bda32203ca",
+    "content-hash": "dae652f962d7af9ddc38525e251a9fd8",
     "packages": [
         {
-            "name": "leafo/scssphp",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/rockettheme/scssphp.git",
-                "reference": "0a06cb2188fcda02f78c9c972f8df1c4c962971e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/scssphp/zipball/0a06cb2188fcda02f78c9c972f8df1c4c962971e",
-                "reference": "0a06cb2188fcda02f78c9c972f8df1c4c962971e",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.4.0 || ^7"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.6",
-                "squizlabs/php_codesniffer": "~2.5",
-                "twbs/bootstrap": "~4.3",
-                "zurb/foundation": "~6.5"
-            },
-            "default-branch": true,
-            "bin": [
-                "bin/pscss"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Leafo\\ScssPhp\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "Leafo\\ScssPhp\\Test\\": "tests/"
-                }
-            },
-            "archive": {
-                "exclude": [
-                    "/Makefile",
-                    "/.gitattributes",
-                    "/.gitignore",
-                    "/.travis.yml",
-                    "/phpunit.xml.dist",
-                    "/tests"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Leaf Corcoran",
-                    "email": "leafot@gmail.com",
-                    "homepage": "http://leafo.net"
-                }
-            ],
-            "description": "scssphp is a compiler for SCSS written in PHP.",
-            "homepage": "http://leafo.github.io/scssphp/",
-            "keywords": [
-                "css",
-                "less",
-                "sass",
-                "scss",
-                "stylesheet"
-            ],
-            "support": {
-                "source": "https://github.com/rockettheme/scssphp/tree/master"
-            },
-            "abandoned": "scssphp/scssphp",
-            "time": "2023-10-23T17:52:37+00:00"
-        },
-        {
             "name": "scssphp/scssphp",
-            "version": "v1.11.1",
+            "version": "v1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scssphp/scssphp.git",
-                "reference": "ace2503684bab0dcc817d7614c8a54b865122414"
+                "reference": "63d1157457e5554edf00b0c1fabab4c1511d2520"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/scssphp/scssphp/zipball/ace2503684bab0dcc817d7614c8a54b865122414",
-                "reference": "ace2503684bab0dcc817d7614c8a54b865122414",
+                "url": "https://api.github.com/repos/scssphp/scssphp/zipball/63d1157457e5554edf00b0c1fabab4c1511d2520",
+                "reference": "63d1157457e5554edf00b0c1fabab4c1511d2520",
                 "shasum": ""
             },
             "require": {
@@ -119,8 +46,8 @@
             "type": "library",
             "extra": {
                 "bamarni-bin": {
-                    "forward-command": false,
-                    "bin-links": false
+                    "bin-links": false,
+                    "forward-command": false
                 }
             },
             "autoload": {
@@ -155,25 +82,28 @@
             ],
             "support": {
                 "issues": "https://github.com/scssphp/scssphp/issues",
-                "source": "https://github.com/scssphp/scssphp/tree/v1.11.1"
+                "source": "https://github.com/scssphp/scssphp/tree/v1.13.0"
             },
-            "time": "2023-09-24T13:38:17+00:00"
+            "time": "2024-08-17T21:02:11+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "leafo/scssphp": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.3.6"
+        "php": ">=7.3.6 <8.4.0",
+        "ext-mbstring": "*",
+        "ext-json": "*",
+        "ext-dom": "*",
+        "ext-xml": "*",
+        "ext-simplexml": "*"
     },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "7.3.6"
+        "php": "8.1"
     },
     "plugin-api-version": "2.3.0"
 }

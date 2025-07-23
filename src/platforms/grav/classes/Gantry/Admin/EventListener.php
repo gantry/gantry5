@@ -57,7 +57,8 @@ class EventListener implements EventSubscriberInterface
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $filename = 'config://plugins/gantry5.yaml';
+        // Use the main configuration file path to avoid multisite domain-specific paths
+        $filename = 'user://config/plugins/gantry5.yaml';
         $file = YamlFile::instance($locator->findResource($filename, true, true));
 
         $content = $file->content();

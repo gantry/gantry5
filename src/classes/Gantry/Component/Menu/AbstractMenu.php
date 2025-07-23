@@ -646,7 +646,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         // Ordering in menu item itself.
         $item = $this->items[$key];
         if (!$ordering) {
-            $this->setGroupToChildren($item);
+            $this->setGroupToChildren($item, 0, 20);
 
             return;
         }
@@ -690,14 +690,22 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
 
     /**
      * @param Item $item
+     * @param int $depth Current recursion depth
+     * @param int $maxDepth Maximum allowed recursion depth (safety limit)
      */
-    protected function setGroupToChildren($item)
+    protected function setGroupToChildren($item, $depth = 0, $maxDepth = 20)
     {
+        // Prevent infinite recursion by checking depth
+        if ($depth >= $maxDepth) {
+            return;
+        }
+        
         $groups = $item->groups();
         foreach ($groups as $group => $children) {
             foreach ($children as $child) {
                 $child->group = $group;
-                $this->setGroupToChildren($child);
+                // Increment depth for each level of recursion
+                $this->setGroupToChildren($child, $depth + 1, $maxDepth);
             }
         }
     }

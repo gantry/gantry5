@@ -1,7 +1,12 @@
 <?php
 
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Language\Language;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
+use Joomla\Database\DatabaseInterface;
 
 /**
  * @package   Gantry 5
@@ -12,7 +17,8 @@ use Joomla\CMS\Language\Text;
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-class JFormFieldWarning extends JFormField
+// Use namespaced class for Joomla 5 compatibility
+class WarningField extends FormField
 {
     protected $type = 'Warning';
 
@@ -24,7 +30,7 @@ class JFormFieldWarning extends JFormField
     protected function getInput()
     {
         /** @var CMSApplication $app */
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
         $input = $app->input;
 
         $route = '';
@@ -35,7 +41,7 @@ class JFormFieldWarning extends JFormField
             if ($selected) {
                 $theme = reset($selected);
                 $id = key($selected);
-                $token = JSession::getFormToken();
+                $token = Session::getFormToken();
                 $route = "index.php?option=com_gantry5&view=configurations/{$id}";
             }
         }
@@ -44,7 +50,8 @@ class JFormFieldWarning extends JFormField
             return '<a href="index.php?option=com_gantry5" class="btn" style="background:#439a86; color:#fff;">Gantry 5</a>';
         }
 
-        $lang = JFactory::getLanguage();
+        /** @var Language $lang */
+        $lang = Factory::getLanguage();
         $lang->load('com_gantry5', JPATH_ADMINISTRATOR) || $lang->load('com_gantry5', JPATH_ADMINISTRATOR . '/components/com_gantry5');
 
         $title1 = Text::_('GANTRY5_PLATFORM_LAYOUT');
@@ -67,7 +74,7 @@ HTML;
 
         if ($list === null) {
             // Load styles
-            $db = JFactory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db
                 ->getQuery(true)
                 ->select('s.id, s.template')
@@ -99,4 +106,9 @@ HTML;
     {
         return file_exists(JPATH_SITE . "/templates/{$name}/gantry/theme.yaml");
     }
+}
+
+// Compatibility alias for Joomla 4
+if (!class_exists('JFormFieldWarning') && version_compare(JVERSION, '5.0', '<')) {
+    class_alias('WarningField', 'JFormFieldWarning');
 }

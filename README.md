@@ -1,4 +1,10 @@
-Gantry Framework [![Build Status](https://travis-ci.org/gantry/gantry5.svg)](https://travis-ci.org/gantry/gantry5)
+> [!IMPORTANT]
+> **A NEW CHAPTER FOR GANTRY** - [Read about it here](https://tiger12.com/gantry/)
+>
+Tiger12 is now the official steward of Gantry and gantry.org, the powerful theming framework that has shaped websites across WordPress, Joomla, and Grav for over a decade. Gantry has long been trusted by developers and organizations for its flexibility, speed, and clean design principles. We’ve crafted with it. We’ve relied on it. And now—we’re building its future.
+
+Gantry’s success is built on the vision and dedication of Andy Miller and the team at RocketTheme. Their innovative work laid the foundation for a framework trusted by thousands. We are honored that they have officially chosen us to carry this legacy forward and continue the development of Gantry into the future.
+
 ================
 
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat)](https://github.com/phpstan/phpstan)
@@ -100,6 +106,25 @@ bin/composer-install
 ```
 
 After that, you need to properly symlink Gantry into your CMS installation.
+
+## Testing PHP 8.3 Compatibility
+
+The framework includes a PHPUnit test suite specifically for validating PHP 8.3 compatibility. To run these tests:
+
+```bash
+# Install composer dependencies if not already done
+bin/composer-install
+
+# Run the PHP 8.3 compatibility tests
+vendor/bin/phpunit
+```
+
+This will execute tests that verify key components work correctly with PHP 8.3 including:
+- Type system compatibility (nullable and union types)
+- Trait implementation compatibility
+- Core framework functionality
+- Platform-specific features
+- Twig integration
 
 ## Bundling JS and Compiling SCSS
 

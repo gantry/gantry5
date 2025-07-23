@@ -1,9 +1,65 @@
+# 5.5.20
+## 07/23/2025 (Set for release - This list has been marked from prior dev changelog (March 2025)
+1. [Common](#common)
+    1. [](#new)
+        - Added PHP 8.3 compatibility
+        - Dark mode for Joomla
+        - Gulp tasks fix
+        - Updated minimum PHP version to 8.1.0
+        - Added native Joomla 5 compatibility without requiring the Compatibility Plugin
+        - Fixed Joomla 5 compatibility issues with JForm classes to support both J4 and J5
+        - Fixed JObject not found errors in Joomla 5 by using namespaced CMSObject (#3308)
+        - Fixed ContentHelperRoute class references to use namespaced RouteHelper in Joomla 5
+        - Fixed JTableMenu and JTableMenuType references for Joomla 5 compatibility
+        - Fixed JDatabaseQuery references to use namespaced DatabaseQuery in Joomla 5
+    2. [](#improved)
+        - Replaced deprecated utf8_encode/utf8_decode functions with mb_convert_encoding
+        - Updated dependency versions for PHP 8.3 compatibility
+        - Added explicit extension requirements (mbstring, json, dom, xml, simplexml)
+        - Modified composer scripts to handle missing PHP extensions
+        - Removed abandoned leafo/scssphp package in favor of scssphp/scssphp
+        - Removed support for PHP versions below 8.1
+        - Added documentation about CSP requirements - 'unsafe-eval' is needed for admin functionality (#3255)
+    3. [](#bugfix)
+        - Fixed "INVALID FIELDS" alert and block size formatting issues with large collections like Infolist particle (#3243)
+        - Fixed incorrect formatting in changelog file (#3305)
+        - Fixed missing translation on WordPress for "Content" tab (#3302)
+        - Fixed unwanted whitespace before DOCTYPE in Grav platform HTML output (#3287)
+        - Fixed SVG images display issues on login and 404 pages in Joomla 5 (#3277)
+        - Fixed potential infinite recursion with large menus in multi-column layouts (#3266)
+        - Fixed PHP compile error in NullLogger class for method signature compatibility (#3264)
+        - Fixed PSR compatibility issues with Joomla 5.1.1 by updating dependencies (#3259)
+        - Fixed pageblock head_top and head_meta not working in WordPress particles (#3250)
+        - Fixed the source URL of some CSS and Javascript assets is prefixed with an extra slash (Gantry 5.5.20) #3309
+        - Fixed Grav's Extras Menu Prod/Dev Toggle creating deprecated custom environment path instead of using user/config/plugins/ (#3169)
+        - Fixed Grav's siteUrl() returning just '/' instead of the full site URL (#2605)
+2. [Joomla](#joomla)
+    1. [](#improved)
+        - Removed support for Joomla 3.x
+        - Added support for Joomla 4.x and 5.x (4.0.0 or higher)
+        - Updated code to use modern Joomla namespace references instead of legacy J-prefixed classes
+        - Implemented proper support for WebAssetManager in Joomla 5
+        - Removed dependency on Joomla Compatibility Plugin
+        - Fixed Joomla 5 backend error "Unable to load application: site" by adding proper error handling for site application access
+    2. [](#todo)
+        - ~~Update Bootstrap from 5.0.2 to 5.3.3 to match Joomla 5.2+ (#3275)~~  
+This will be released in the next version - Note this prior comment: https://github.com/gantry/gantry5/issues/3275
+
+3. [Wordpress](#wordpress)
+    1. [](#improved)
+        - Updated PHP version check to require 8.1.0 minimum
+4. [Grav](#grav)
+    1. [](#improved)
+        - Added explicit PHP 8.1.0 minimum requirement
+        - Updated Grav dependencies to newer versions
+
 # 5.5.19
 ## 05/23/2024
 1. [Common](#common)
     1. [](#bugfix)
         - Fix Joomla 5.1 "Invalid extension update" bug
         - FontAwesome 6 Fix (#3253)
+
 # 5.5.18
 ## 05/22/2024
 1. [Common](#common)
@@ -14,6 +70,7 @@
         - Minor english translation bugfixes
         - Contentarray issue with Pagination (#3239)
         - Minor Joomla 5 compatibility fixes
+
 # 5.5.17
 ## 10/30/2023
 1. [Common](#common)
@@ -29,7 +86,8 @@
         - Hydrogen login and register forms css styling bugfixes (#3185)
         - Fix for Joomla 5.x debug css (#3190)
         - Basic support for Joomla 5
-2. [Wordpress](#wordpress)
+3. [Wordpress](#wordpress)
+    1. [](#improved)
         - Timber updated to 1.23
 
 # 5.5.16
@@ -122,13 +180,13 @@
 1. [Common](#common)
     1. [](#improved)
         - Reworked backwards compatibility code
-1. [Joomla](#joomla)
+2. [Joomla](#joomla)
     1. [](#new)
         - Added Joomla 4.1 support
     2. [](#bugfix)
         - Fixed platform check to be PHP >= 5.6.20 (#2998)
         - Fixed parent menu item showing dropdown icon and empty dropdown if all children disabled (#2968, #2997)
-1. [WordPress](#wordpress)
+3. [WordPress](#wordpress)
     1. [](#bugfix)
         - Fixed platform check to be PHP >= 5.6.20 (#2998)
 
@@ -155,11 +213,11 @@
     2. [](#improved)
         - Removed CSS hacks for IE6-9 (#2979)
         - Improved error when stream cannot be registered (#2984)
-    4. [](#bugfix)
+    3. [](#bugfix)
        - Fixed regression in menu: downdown submenu is not rendered properly if it is inside a column (#2972)
        - Fixed regression in menu: downdown direction classes not being rendered (#2972)
        - Fixed menu issues in servers with non-UTF-8 locale (#2974)
-3. [WordPress](#wordpress)
+2. [WordPress](#wordpress)
     1. [](#bugfix)
        - Fixed `Invalid argument supplied for foreach()` if the menu item has been orphaned
 

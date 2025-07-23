@@ -126,7 +126,7 @@ paths = {
 
 // -- DO NOT EDIT BELOW --
 
-var compileCSS = function(app) {
+var compileCSS = function(app, done) {
     var _in   = app.in,
         _load = app.load || false,
         _dest = app.out.substring(0, app.out.lastIndexOf('/')),
@@ -141,14 +141,20 @@ var compileCSS = function(app) {
         outputStyle: prod ? 'compact' : 'expanded'
     };
 
-    return gulp.src(_in)
-        .pipe(sass(options).on('error', sass.logError))
+    var stream = gulp.src(_in, { sourcemaps: !prod })
+        .pipe(sass(options).on('error', function(err) {
+            sass.logError.call(this, err);
+            if (done) done(err);
+        }))
         .on('end', function() {
             gutil.log(gutil.colors.green('√'), 'Saved ' + _in);
+            if (done) done();
         })
         .pipe(gulpif(!prod, sourcemaps.write('.', { sourceRoot: _maps, sourceMappingURL: function() { return _out + '.map'; }})))
         .pipe(rename(_out))
         .pipe(gulp.dest(_dest));
+    
+    return stream;
 };
 
 var compileJS = function(app, watching) {
@@ -243,16 +249,24 @@ function minify(done) {
     return minifyJS();
 }
 
-function watchify() {
-    if (watchType != 'js' && watchType != 'all') { return; }
+function watchify(done) {
+    if (watchType != 'js' && watchType != 'all') { 
+        // Signal task completion if not processing JS
+        if (done) done();
+        return; 
+    }
+    
     watch = true;
 
     // watch js
+    const streams = [];
     paths.js.forEach(function(app) {
         // var _path = app.in.substring(0, app.in.lastIndexOf('/'));
-        return compileJS(app, true);
+        streams.push(compileJS(app, true));
     });
-
+    
+    // Signal task completion
+    if (done) done();
 }
 
 function js() {
@@ -267,24 +281,88 @@ function js() {
 function css(done) {
     var streams = [];
     paths.css.forEach(function(app) {
-        streams.push(compileCSS(app, done));
+        streams.push(compileCSS(app));
     });
 
-    return merge(streams);
+    // If there are no streams, call done and return
+    if (streams.length === 0) {
+        if (done) done();
+        return;
+    }
+
+    // Merge all streams and signal completion when finished
+    return merge(streams)
+        .on('end', function() {
+            if (done) done();
+        })
+        .on('error', function(err) {
+            if (done) done(err);
+        });
 }
 
 exports.watchify = watchify;
-exports.watch = gulp.series(watchify, function() {
-    if (watchType != 'css' && watchType != 'all') { return; }
+exports.watch = gulp.series(watchify, function(done) {
+    if (watchType != 'css' && watchType != 'all') { 
+        // Signal task completion if not processing CSS
+        done();
+        return; 
+    }
 
     // watch css
+    const watchers = [];
+    
     paths.css.forEach(function(app) {
         var _path = app.in.substring(0, app.in.lastIndexOf('/'));
-        gulp.watch(_path + '/**/*.scss', function(event) {
-            gutil.log(gutil.colors.red('>'), 'File', event.path, 'was', event.type);
-            return compileCSS(app);
+        
+        // Get all potential scss directories to watch
+        var watchPaths = [
+            _path + '/**/*.scss',  // Watch the current app's directory
+        ];
+        
+        // If the app has additional load paths, watch those too
+        if (app.load) {
+            watchPaths.push(app.load + '/**/*.scss');
+        }
+        
+        // Create a watch function for this app
+        function watchAndCompile(cb) {
+            gutil.log(gutil.colors.blue('*'), 'Compiling CSS for', app.out);
+            return compileCSS(app, cb);
+        }
+        
+        // Initial message
+        gutil.log(gutil.colors.blue('*'), 'Watching', watchPaths.join(', '));
+        
+        // Create watch tasks for each path
+        const watcher = gulp.watch(watchPaths);
+        
+        // Add event handlers
+        watcher.on('change', function(path) {
+            gutil.log(gutil.colors.red('>'), 'File', path, 'was changed');
+            watchAndCompile();
         });
+        
+        watcher.on('add', function(path) {
+            gutil.log(gutil.colors.green('+'), 'File', path, 'was added');
+            watchAndCompile();
+        });
+        
+        watcher.on('unlink', function(path) {
+            gutil.log(gutil.colors.yellow('-'), 'File', path, 'was removed');
+            watchAndCompile();
+        });
+        
+        watchers.push(watcher);
     });
+    
+    // Compile all CSS files initially
+    css(function() {
+        gutil.log(gutil.colors.green('√'), 'Initial CSS compilation complete');
+    });
+    
+    // This is an ongoing task that doesn't complete
+    // Signal async completion to continue the gulp task
+    done();
 });
 
 exports.css = css;
