@@ -624,6 +624,8 @@ $atom: #9055AF;
             &.in-between-grids {
                 background-color: #555;
                 margin: -5px 0;
+                opacity: 1; 
+                min-height: inherit;
 
                 &.in-between-grids-first {
                     margin: 0 0 -2px;

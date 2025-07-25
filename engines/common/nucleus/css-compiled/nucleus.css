@@ -269,6 +269,18 @@ th {
   }
 }
 
+.plg_system_webauthn_login_button svg#Passkey {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+}
+
+#g-page-surround .mod-login button.input-password-toggle {
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  margin-left: -1px;
+}
+
 .g-container {
   margin: 0 auto;
   padding: 0;

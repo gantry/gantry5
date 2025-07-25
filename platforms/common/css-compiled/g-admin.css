@@ -312,6 +312,18 @@
   }
 }
 
+#g5-container .plg_system_webauthn_login_button svg#Passkey {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+}
+
+#g5-container #g-page-surround .mod-login button.input-password-toggle {
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  margin-left: -1px;
+}
+
 #g5-container .g-container {
   margin: 0 auto;
   padding: 0;
@@ -4598,6 +4610,8 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container .lm-blocks .placeholder.in-between-grids {
   background-color: #555;
   margin: -5px 0;
+  opacity: 1;
+  min-height: inherit;
 }
 
 #g5-container .lm-blocks .placeholder.in-between-grids.in-between-grids-first {
