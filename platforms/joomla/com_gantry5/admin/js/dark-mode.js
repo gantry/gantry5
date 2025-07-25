@@ -9,8 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         htmlElement.getAttribute('data-color-scheme') === 'dark' || 
         htmlElement.getAttribute('data-bs-theme') === 'dark' ||
         htmlElement.classList.contains('dark-mode') ||
-        bodyElement.classList.contains('dark-mode') ||
-        window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        bodyElement.classList.contains('dark-mode') ;
     
     console.log('Gantry5 Dark Mode: Joomla dark mode detected:', isJoomlaDarkMode);
     
@@ -46,24 +45,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
-    // Watch for system color scheme changes
-    if (window.matchMedia) {
-        const colorSchemeMedia = window.matchMedia('(prefers-color-scheme: dark)');
-        colorSchemeMedia.addEventListener('change', function(e) {
-            const isDark = e.matches;
-            const gantryContainer = document.getElementById('g5-container');
-            if (gantryContainer) {
-                if (isDark) {
-                    gantryContainer.classList.add('g5-dark-mode');
-                    console.log('Gantry5 Dark Mode: Applied dark mode to Gantry container (media)');
-                } else {
-                    gantryContainer.classList.remove('g5-dark-mode');
-                    console.log('Gantry5 Dark Mode: Removed dark mode from Gantry container (media)');
-                }
-            }
-        });
-    }
     
     // Start observing HTML element for attribute and class changes
     observeHtml.observe(htmlElement, { 
