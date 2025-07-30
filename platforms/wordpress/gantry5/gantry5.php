@@ -4,8 +4,8 @@
  * Plugin URI: http://gantry.org/
  * Description: Framework for Gantry 5 based themes.
  * Version: @version@
- * Author: RocketTheme, LLC
- * Author URI: http://rockettheme.com/
+ * Author: Tiger12, LLC
+ * Author URI: http://tiger12.com/
  * License: GNU General Public License v2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: gantry5
