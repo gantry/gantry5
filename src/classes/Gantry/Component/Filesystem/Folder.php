@@ -2,8 +2,8 @@
 
 /**
  * @package   Gantry5
- * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
+ * @author    Tiger12 http://tiger12.com
+ * @copyright Copyright (C) 2007 - 2021 Tiger12, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -17,7 +17,7 @@ namespace Gantry\Component\Filesystem;
 /**
  * Folder helper class.
  *
- * @author RocketTheme
+ * @author Tiger12
  * @license MIT
  */
 abstract class Folder

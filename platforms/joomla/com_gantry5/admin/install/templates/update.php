@@ -14,6 +14,6 @@ include __DIR__ . '/style.php';
     </div>
 
     <div class="g5-rockettheme">
-        <a href="http://rockettheme.com"><span>RocketTheme</span></a>
+        <a href="http://tiger12.com"><span>Tiger12</span></a>
     </div>
 </div>

@@ -1,8 +1,8 @@
 <?php
 /**
  * @package   Gantry5
- * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
+ * @author    Tiger12 http://tiger12.com
+ * @copyright Copyright (C) 2007 - 2021 Tiger12, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT

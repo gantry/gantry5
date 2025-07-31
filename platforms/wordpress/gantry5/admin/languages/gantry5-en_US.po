@@ -336,7 +336,7 @@ msgid "GANTRY5_PLATFORM_PLATFORM_SETTINGS"
 msgstr "Platform Settings"
 
 msgid "GANTRY5_PLATFORM_FOOTER"
-msgstr "<a href=http://gantry.org>Gantry Administration</a> by <a href=http://www.rockettheme.com>RocketTheme</a>"
+msgstr "<a href=http://gantry.org>Gantry Administration</a> by <a href=http://tiger12.com>Tiger12</a>"
 
 msgid "GANTRY5_PLATFORM_BASE_OUTLINE"
 msgstr "Base Outline"
