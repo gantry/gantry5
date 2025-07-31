@@ -116,3 +116,19 @@ function gantry5_php_version_error()
     echo sprintf("You are running <b>PHP %s</b>, but <b>Gantry 5 Framework</b> needs at least <b>PHP %s</b> to run.", PHP_VERSION, '8.1.0');
     echo '</p></div>';
 }
+
+// Include the plugin update checker library
+require_once plugin_dir_path(__FILE__) . 'plugin-update-checker/plugin-update-checker.php';
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+// g5_helium theme update
+$heliumUpdater = PucFactory::buildUpdateChecker(
+    'http://updates.gantry.org/wp-updates/g5_helium.json',
+    get_theme_root() . '/g5_helium/style.css',
+    'g5_helium'
+);
+// g5_hydrogen theme update
+$hydrogenUpdater = PucFactory::buildUpdateChecker(
+    'http://updates.gantry.org/wp-updates/g5_hydrogen.json',
+    get_theme_root() . '/g5_hydrogen/style.css',
+    'g5_hydrogen'
+);
