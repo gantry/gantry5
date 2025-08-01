@@ -117,7 +117,7 @@ function gantry5_php_version_error()
     echo '</p></div>';
 }
 
-// Include the plugin update checker library
+// Include the plugin/theme update checker library
 require_once plugin_dir_path(__FILE__) . 'plugin-update-checker/plugin-update-checker.php';
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
