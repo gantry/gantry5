@@ -10,6 +10,9 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: gantry5_debugbar
  * Domain Path: /admin/languages
+ * 
+ * originalCreator: RocketTheme (Gantry Framework)
+ * currentDeveloper: Tiger12, LLC
  */
 
 defined('ABSPATH') or die;
