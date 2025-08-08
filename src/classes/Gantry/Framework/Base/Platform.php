@@ -2,8 +2,10 @@
 
 /**
  * @package   Gantry5
- * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
+ * @author    Tiger12 http://tiger12.com
+ * @originalCreator  RocketTheme (Gantry Framework) 
+ * @currentDeveloper  Tiger12, LLC 
+ * @copyright Copyright (C) 2007 - 2021 Tiger12, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -23,7 +25,7 @@ use RocketTheme\Toolbox\DI\Container;
 /**
  * The Platform Configuration class contains configuration information.
  *
- * @author RocketTheme
+ * @author Tiger12
  * @license MIT
  */
 abstract class Platform

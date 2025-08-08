@@ -4,9 +4,9 @@ details:
   icon: paper-plane
   date: '@versiondate@'
   author:
-    name: 'RocketTheme, LLC'
-    email: 'support@rockettheme.com'
-    link: 'http://www.rockettheme.com'
+    name: 'Tiger12, LLC'
+    email: 'gantry@tiger12.com'
+    link: 'http://tiger12.com'
 
   documentation:
     link: 'http://docs.gantry.org/gantry5'
@@ -17,7 +17,7 @@ details:
   updates:
     link: 'http://updates.rockettheme.com/themes/helium.yaml'
 
-  copyright: '(C) 2007 - 2022 RocketTheme, LLC. All rights reserved.'
+  copyright: '(C) 2007 - 2022 Tiger12, LLC. All rights reserved.'
   license: GPLv2
   description: Helium Theme
   images:
