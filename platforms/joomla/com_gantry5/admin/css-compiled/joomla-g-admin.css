@@ -979,6 +979,10 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   background-color: transparent;
 }
 
+#g5-container.g5-dark-mode .g5-dialog #g-changelog {
+  background-color: #1a2537;
+}
+
 #g5-container.g5-dark-mode .card,
 #g5-container.g5-dark-mode .card-block,
 #g5-container.g5-dark-mode .settings-block,
