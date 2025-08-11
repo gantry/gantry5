@@ -7,15 +7,15 @@ items:
   -
     icon: 'fa fa-twitter fa-fw'
     text: ''
-    link: 'http://www.twitter.com/rockettheme'
+    link: '#'
     name: Twitter
   -
     icon: 'fa fa-facebook fa-fw'
     text: ''
-    link: 'http://www.facebook.com/RocketTheme'
+    link: '#'
     name: Facebook
   -
     icon: 'fa fa-google-plus fa-fw'
     text: ''
-    link: 'https://plus.google.com/+rockettheme'
+    link: '#'
     name: Google+

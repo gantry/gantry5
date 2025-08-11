@@ -99,7 +99,7 @@ GANTRY5_PLATFORM_MENU_EDITOR: "Editor de menú"
 GANTRY5_PLATFORM_MODULE: "Módulo"
 GANTRY5_PLATFORM_AVAILABLE_THEMES: "Temas Disponibles"
 GANTRY5_PLATFORM_PLATFORM_SETTINGS: "Ajustes Gantry"
-GANTRY5_PLATFORM_FOOTER: '<a href="http://gantry.org">Administración de Gantry</a> por <a href="http://www.rockettheme.com">RocketTheme</a>'
+GANTRY5_PLATFORM_FOOTER: '<a href="http://gantry.org">Administración de Gantry</a> por <a href="http://tiger12.com">Tiger12</a>'
 GANTRY5_PLATFORM_BASE_OUTLINE: "Plantilla Base"
 GANTRY5_PLATFORM_GLOBAL_DEFAULTS: "Valores Globales por defecto"
 GANTRY5_PLATFORM_GANTRY_DETAILS: '<p>Gantry 5 es la versión más personalizable y poderosa del marco hasta el momento. Repleto de funciones, como la creación de diseños de arrastrar y soltar y el potente sistema de partículas, Gantry 5 ha sido diseñado desde cero para ser ultrarrápido y sin complicaciones.</p><ul class="overview-list"><li><i class="fa fa-asterisk" aria-hidden="true"></i>Framework rápido, flexible y fácil de usar</li><li><i class="fa fa-asterisk" aria-hidden="true"></i>Controles de diseño de arrastrar y soltar</li><li><i class="fa fa-asterisk" aria-hidden="true"></i>Potente dinámica sistema de partículas</li></ul>'

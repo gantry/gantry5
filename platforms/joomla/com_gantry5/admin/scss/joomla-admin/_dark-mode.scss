@@ -107,12 +107,18 @@
                 background: #1a2537;
 
                 .submenu-items {
-                    background: #48B0D7;
+                    background: #3a547a;
 
                     &::before,
                     &::after {
                         color: $white;
                     }
+                    li{
+                        &:hover{
+                        background: #48B0D7;
+                    }
+                    }
+                    
                 }
 
                 .submenu-reorder {
@@ -233,6 +239,14 @@
         &:focus {
             background-color: #43587a;
             border-color: $core-accent;
+        }
+        i {
+            color: #000;
+        }
+        &.light-text {
+            input, i {
+                color: $white;
+            }
         }
     }
 
@@ -438,7 +452,7 @@
 
     // Filepicker
     .g-filepicker {
-        background-color: #374f6b;
+        background-color: transparent;
     }
 
     // Tooltips and popovers
@@ -746,6 +760,12 @@
             .g-switch-title {
                 color: #98aabf !important;
             }
+        }
+    }
+    .g5-dialog{
+        background-color: transparent;
+        #g-changelog{
+            background-color: #1a2537;
         }
     }
 

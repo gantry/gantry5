@@ -322,11 +322,15 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
 }
 
 #g5-container.g5-dark-mode .column-container .submenu-selector .submenu-column .submenu-items {
-  background: #48B0D7;
+  background: #3a547a;
 }
 
 #g5-container.g5-dark-mode .column-container .submenu-selector .submenu-column .submenu-items::before, #g5-container.g5-dark-mode .column-container .submenu-selector .submenu-column .submenu-items::after {
   color: #fff;
+}
+
+#g5-container.g5-dark-mode .column-container .submenu-selector .submenu-column .submenu-items li:hover {
+  background: #48B0D7;
 }
 
 #g5-container.g5-dark-mode .column-container .submenu-selector .submenu-column .submenu-reorder {
@@ -434,6 +438,23 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
 #g5-container.g5-dark-mode .g-colorpicker:focus {
   background-color: #43587a;
   border-color: #3180C2;
+}
+
+#g5-container.g5-dark-mode input i,
+#g5-container.g5-dark-mode select i,
+#g5-container.g5-dark-mode textarea i,
+#g5-container.g5-dark-mode .g-colorpicker i {
+  color: #000;
+}
+
+#g5-container.g5-dark-mode input.light-text input, #g5-container.g5-dark-mode input.light-text i,
+#g5-container.g5-dark-mode select.light-text input,
+#g5-container.g5-dark-mode select.light-text i,
+#g5-container.g5-dark-mode textarea.light-text input,
+#g5-container.g5-dark-mode textarea.light-text i,
+#g5-container.g5-dark-mode .g-colorpicker.light-text input,
+#g5-container.g5-dark-mode .g-colorpicker.light-text i {
+  color: #fff;
 }
 
 #g5-container.g5-dark-mode .cards-wrapper .card {
@@ -613,7 +634,7 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
 }
 
 #g5-container.g5-dark-mode .g-filepicker {
-  background-color: #374f6b;
+  background-color: transparent;
 }
 
 #g5-container.g5-dark-mode .tooltip,
@@ -952,6 +973,14 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
 #g5-container.g5-dark-mode .g5-dialog .g-pane .g-switch-title,
 #g5-container.g5-dark-mode .g5-popover-content .g-pane .g-switch-title {
   color: #98aabf !important;
+}
+
+#g5-container.g5-dark-mode .g5-dialog {
+  background-color: transparent;
+}
+
+#g5-container.g5-dark-mode .g5-dialog #g-changelog {
+  background-color: #1a2537;
 }
 
 #g5-container.g5-dark-mode .card,

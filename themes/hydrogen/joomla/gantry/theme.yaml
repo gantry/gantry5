@@ -4,9 +4,9 @@ details:
   icon: paper-plane
   date: 'May 24, 2024'
   author:
-    name: RocketTheme, LLC
-    email: support@rockettheme.com
-    link: http://www.rockettheme.com
+    name: Tiger12, LLC
+    email: gantry@tiger12.com
+    link: http://tiger12.com
 
   documentation:
     link: http://docs.gantry.org/gantry5
@@ -18,7 +18,7 @@ details:
     link: 'https://gantry.org/downloads#joomla'
     server: 'https://updates.gantry.org/5.0/joomla/tpl_g5_hydrogen.xml'
 
-  copyright: (C) 2005 - 2022 RocketTheme, LLC. All rights reserved.
+  copyright: (C) 2005 - 2022 Tiger12, LLC. All rights reserved.
   license: GPLv2
   description: Hydrogen Theme
   images:

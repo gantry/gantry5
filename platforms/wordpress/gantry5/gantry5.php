@@ -4,12 +4,15 @@
  * Plugin URI: http://gantry.org/
  * Description: Framework for Gantry 5 based themes.
  * Version: @version@
- * Author: RocketTheme, LLC
- * Author URI: http://rockettheme.com/
+ * Author: Tiger12, LLC
+ * Author URI: http://tiger12.com/
  * License: GNU General Public License v2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: gantry5
  * Domain Path: /admin/languages
+ * 
+ * originalCreator: RocketTheme (Gantry Framework)
+ * currentDeveloper: Tiger12, LLC
  */
 
 defined('ABSPATH') or die;
@@ -115,4 +118,28 @@ function gantry5_php_version_error()
     echo '<div class="error"><p>';
     echo sprintf("You are running <b>PHP %s</b>, but <b>Gantry 5 Framework</b> needs at least <b>PHP %s</b> to run.", PHP_VERSION, '8.1.0');
     echo '</p></div>';
+}
+
+// Include the plugin/theme update checker library
+require_once plugin_dir_path(__FILE__) . 'plugin-update-checker/plugin-update-checker.php';
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
+// Check and update for g5_helium theme
+$helium_theme_path = get_theme_root() . '/g5_helium/style.css';
+if (file_exists($helium_theme_path)) {
+    $heliumUpdater = PucFactory::buildUpdateChecker(
+        'http://updates.gantry.org/wp-updates/g5_helium.json',
+        $helium_theme_path,
+        'g5_helium'
+    );
+}
+
+// Check and update for g5_hydrogen theme
+$hydrogen_theme_path = get_theme_root() . '/g5_hydrogen/style.css';
+if (file_exists($hydrogen_theme_path)) {
+    $hydrogenUpdater = PucFactory::buildUpdateChecker(
+        'http://updates.gantry.org/wp-updates/g5_hydrogen.json',
+        $hydrogen_theme_path,
+        'g5_hydrogen'
+    );
 }
