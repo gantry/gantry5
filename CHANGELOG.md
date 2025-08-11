@@ -1,3 +1,20 @@
+# 5.5.23
+## 08/11/2025
+1. [Common](#common)
+    1. [](#improved)
+        - Updated author name.
+2. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Fixed dark mode dialog background — (#3336)
+3. [Wordpress](#wordpress)
+    1. [](#improved)
+        - Updated readme.txt file for Requires PHP 8.1.0
+    2. [](#new)
+        - Added a feature to display notifications for new releases in themes.
+4. [Grav](#grav)
+    1. [](#improved)
+        - Updated changelog to fix the Grav parser issue (removed: Set for release – This list has been marked from prior dev changelog (March 2025) beside version 5.5.20) — (#3334)
+
 # 5.5.22
 ## 07/28/2025
 1. [Common](#common)
@@ -47,9 +64,7 @@
         - Fixed issue where Joomla modules used as Gantry 5 particles did not render correctly, especially in Joomla 5 environment(#3326)
         - Fixed Gantry template edit page opening in dark mode even if dark mode is turned off (#3329 )
     2. [](#todo)
-        - ~~Update Bootstrap from 5.0.2 to 5.3.3 to match Joomla 5.2+ (#3275)~~  
-This will be released in the next version - Note this prior comment: https://github.com/gantry/gantry5/issues/3275
-
+        - ~~Update Bootstrap from 5.0.2 to 5.3.3 to match Joomla 5.2+ (#3275)~~ (This will be released in the next version - Note this prior comment: https://github.com/gantry/gantry5/issues/3275)
 3. [Wordpress](#wordpress)
     1. [](#improved)
         - Updated PHP version check to require 8.1.0 minimum
@@ -103,9 +118,7 @@ This will be released in the next version - Note this prior comment: https://git
         - Fixed Joomla 5 backend error "Unable to load application: site" by adding proper error handling for site application access
         - Fixed the installation error in Joomla 5 with the compatibility plugin disabled (#3328)
     2. [](#todo)
-        - ~~Update Bootstrap from 5.0.2 to 5.3.3 to match Joomla 5.2+ (#3275)~~  
-This will be released in the next version - Note this prior comment: https://github.com/gantry/gantry5/issues/3275
-
+        - ~~Update Bootstrap from 5.0.2 to 5.3.3 to match Joomla 5.2+ (#3275)~~ (This will be released in the next version - Note this prior comment: https://github.com/gantry/gantry5/issues/3275)
 3. [Wordpress](#wordpress)
     1. [](#improved)
         - Updated PHP version check to require 8.1.0 minimum
@@ -158,9 +171,7 @@ This will be released in the next version - Note this prior comment: https://git
         - Removed dependency on Joomla Compatibility Plugin
         - Fixed Joomla 5 backend error "Unable to load application: site" by adding proper error handling for site application access
     2. [](#todo)
-        - ~~Update Bootstrap from 5.0.2 to 5.3.3 to match Joomla 5.2+ (#3275)~~  
-This will be released in the next version - Note this prior comment: https://github.com/gantry/gantry5/issues/3275
-
+        - ~~Update Bootstrap from 5.0.2 to 5.3.3 to match Joomla 5.2+ (#3275)~~ (This will be released in the next version - Note this prior comment: https://github.com/gantry/gantry5/issues/3275)
 3. [Wordpress](#wordpress)
     1. [](#improved)
         - Updated PHP version check to require 8.1.0 minimum
