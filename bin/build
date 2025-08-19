@@ -58,9 +58,17 @@ if (false === $hasVersion) {
     }
 
     $argv[] = '-Dxml.version=' . $version;
+
+    $blueprints = "{$base}/platforms/grav/gantry5/blueprints.yaml";
+    if (file_exists($blueprints)) {
+        $content = file_get_contents($blueprints);
+        $content = preg_replace("/version:\s*['\"]?@version@['\"]?/", "version: '{$version}'", $content);
+        file_put_contents($blueprints, $content);
+    }
+
 }
 
-$command = 'vendor/bin/phing ' . implode(' ', $argv);
+$command = escapeshellarg($base . '/vendor/bin/phing') . ' ' . implode(' ', $argv);
 if (false === system($command, $result) || $result) {
     throw new \RuntimeException('Failed to run build script');
 }
