@@ -218,4 +218,50 @@ class ContentFinder extends Finder
             }
         }
     }
+
+     public function tags($tagIds = [])
+    {
+        if (empty($tagIds['id'][0])) {
+            return $this;
+        }
+
+        $input = $tagIds['id'][0];
+        $tagIdsArray = [];
+        $tagNamesArray = [];
+        
+        // Separate IDs and names
+        $items = array_map('trim', explode(',', $input));
+        
+        foreach ($items as $item) {
+            if (is_numeric($item)) {
+                $tagIdsArray[] = (int)$item;
+            } else {
+                $tagNamesArray[] = $item;
+            }
+        }
+        
+        // If we have tag names, get their IDs
+        if (!empty($tagNamesArray)) {
+            // Use the same database object as other methods in this class
+            $query = $this->db->getQuery(true)
+                ->select($this->db->quoteName('id'))
+                ->from($this->db->quoteName('#__tags'))
+                ->where($this->db->quoteName('title') . ' IN (' . implode(',', array_map([$this->db, 'quote'], $tagNamesArray)) . ')');
+            
+            $this->db->setQuery($query);
+            $tagIdsFromNames = $this->db->loadColumn();
+            
+            if (!empty($tagIdsFromNames)) {
+                $tagIdsArray = array_merge($tagIdsArray, $tagIdsFromNames);
+            }
+        }
+        
+        if (empty($tagIdsArray)) {
+            return $this;
+        }
+        
+        $this->query->join('INNER', '#__contentitem_tag_map AS t ON t.content_item_id = a.id');
+        
+        return $this->where('t.tag_id', 'IN', $tagIdsArray)->where('t.type_alias', '=', 'com_content.article');
+    }
 }

@@ -31,6 +31,12 @@ form:
               description: Select the categories the articles should be taken from.
               overridable: false
 
+            article.filter.tags:
+              type: input.text
+              label: Tags
+              description: Enter tag IDs or names to filter the articles that should be shown. Use a comma-separated list (i.e. 1,2,tag1,tag2,5). You can mix IDs and names in the same list.
+              overridable: false  
+
             article.filter.articles:
               type: input.text
               label: Articles
