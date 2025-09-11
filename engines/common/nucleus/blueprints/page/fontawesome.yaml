@@ -25,6 +25,8 @@ form:
         fa4: Font Awesome 4 (legacy)
         fa5css: Font Awesome 6 Free (Webfont / CSS)
         fa5js: Font Awesome 6 Free (SVG / JS)
+        fa7css: Font Awesome 7 Free (Webfont / CSS)
+        fa7js: Font Awesome 7 Free (SVG / JS)
 
     fa4_compatibility:
       type: enable.enable
