@@ -1,3 +1,16 @@
+# 5.5.25
+## 09/15/2025
+1. [Common](#common)
+    1. [](#improved)
+        - Added support for Font awesome 7
+        - Implemented preg_split function support in twig file (#2590, thanks @thexmanxyz)
+2. [Joomla](#joomla)
+    1. [](#improved)
+        - Implemented joomla article filter tag name and tag id (#2561,thanks @Kubik-Rubik)
+3. [Wordpress](#wordpress)
+    1. [](#bugfix)
+        - Fixed issue with WordPress theme update notification (#3342 and #3343)
+
 # 5.5.24
 ## 09/15/2025
 1. [Common](#common)
