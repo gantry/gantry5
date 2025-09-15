@@ -128,7 +128,7 @@ use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 $helium_theme_path = get_theme_root() . '/g5_helium/style.css';
 if (file_exists($helium_theme_path)) {
     $heliumUpdater = PucFactory::buildUpdateChecker(
-        'http://updates.gantry.org/wp-updates/g5_helium.json',
+        'http://updates.gantry.org/wp-updates/g5_helium_copy.json',
         $helium_theme_path,
         'g5_helium'
     );
@@ -138,8 +138,45 @@ if (file_exists($helium_theme_path)) {
 $hydrogen_theme_path = get_theme_root() . '/g5_hydrogen/style.css';
 if (file_exists($hydrogen_theme_path)) {
     $hydrogenUpdater = PucFactory::buildUpdateChecker(
-        'http://updates.gantry.org/wp-updates/g5_hydrogen.json',
+        'http://updates.gantry.org/wp-updates/g5_hydrogen_copy.json',
         $hydrogen_theme_path,
         'g5_hydrogen'
     );
 }
+// === Preserve Gantry theme settings on update ===
+add_action('upgrader_pre_install', function($return, $hook_extra) {
+    if (!empty($hook_extra['theme']) && in_array($hook_extra['theme'], ['g5_helium','g5_hydrogen'])) {
+        $themeDir = get_theme_root() . '/' . $hook_extra['theme'];
+        $backupDir = WP_CONTENT_DIR . '/gantry-theme-backups/' . $hook_extra['theme'];
+     require_once ABSPATH . 'wp-admin/includes/file.php';
+WP_Filesystem();
+
+global $wp_filesystem;
+
+if ($wp_filesystem->is_dir($backupDir)) {
+    $wp_filesystem->delete($backupDir, true); 
+}
+
+        wp_mkdir_p($backupDir);
+        if (is_dir("$themeDir/custom")) {
+            copy_dir("$themeDir/custom", "$backupDir/custom");
+        }
+        if (is_dir("$themeDir/config")) {
+            copy_dir("$themeDir/config", "$backupDir/config");
+        }
+    }
+    return $return;
+}, 10, 2);
+add_action('upgrader_post_install', function($return, $hook_extra) {
+    if (!empty($hook_extra['theme']) && in_array($hook_extra['theme'], ['g5_helium','g5_hydrogen'])) {
+        $themeDir = get_theme_root() . '/' . $hook_extra['theme'];
+        $backupDir = WP_CONTENT_DIR . '/gantry-theme-backups/' . $hook_extra['theme'];
+        if (is_dir("$backupDir/custom")) {
+            copy_dir("$backupDir/custom", "$themeDir/custom");
+        }
+        if (is_dir("$backupDir/config")) {
+            copy_dir("$backupDir/config", "$themeDir/config");
+        }
+    }
+    return $return;
+}, 10, 2);

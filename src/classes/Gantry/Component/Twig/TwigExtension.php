@@ -126,6 +126,8 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
         $functions = array_merge($functions, [
             new TwigFunction('array', [$this, 'arrayFilter']),
             new TwigFunction('json_decode', [$this, 'jsonDecodeFilter']),
+            new TwigFunction('preg_split', [$this, 'pregSplit']),
+
         ]);
 //        }
 
@@ -760,5 +762,10 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
         }
 
         return $list;
+    }
+
+     public function pregSplit($pattern, $subject, $limit = -1)
+    {
+        return preg_split($pattern, $subject, $limit);
     }
 }

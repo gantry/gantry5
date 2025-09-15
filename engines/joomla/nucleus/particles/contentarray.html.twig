@@ -17,6 +17,11 @@
     {% set article_finder = joomla.finder('content', article_options).published(1).language() %}
 {% else %}
     {% set article_finder = joomla.finder('content').category(categories).published(1).language() %}
+    {# Tags - now supports both IDs and names #}
+    {% if filter.tags %}
+        {% set tags_options = {id: [filter.tags|replace(' ', '')]} %}
+        {% do article_finder.tags(tags_options) %}
+    {% endif %}
 {% endif %}
 
 {% set featured = filter.featured|default('include') %}
