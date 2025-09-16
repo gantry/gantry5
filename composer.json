@@ -21,5 +21,8 @@
             "bin/composer-install",
             "bin/build prod"
         ]
+    },
+    "require-dev": {
+        "phing/phing": "^3.0"
     }
 }

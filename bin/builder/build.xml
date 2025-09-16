@@ -21,7 +21,11 @@
     -Dupdate_versions=false                (= true / for CI and automated push)
 -->
 <project name="gantry5" basedir="." description="Phing Build Script" default="prod">
-    <taskdef name="jsonmap" classname="JsonMapTask" />
+    <property name="builder.classes.dir" value="${phing.dir}/classes" />
+    <path id="project.class.path">
+        <pathelement path="${builder.classes.dir}" />
+    </path>
+    <taskdef name="jsonmap" classname="JsonMapTask" classpathref="project.class.path" />
 
     <!-- Setup of any global settings that will apply to the entire build script -->
     <property file="${phing.dir}/build.ini" />
