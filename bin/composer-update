@@ -28,7 +28,28 @@ function composer_update($folder, $link)
 {
     chdir($folder);
     if ($link && !file_exists('src')) {
-        symlink('../../../src', 'src');
+        $projectRoot = realpath(__DIR__ . '/..');
+        $source = $projectRoot ? $projectRoot . DIRECTORY_SEPARATOR . 'src' : __DIR__ . '/..' . DIRECTORY_SEPARATOR . 'src';
+        // Try symlink first
+        try {
+            @symlink($source, 'src');
+        } catch (\Throwable $e) {
+            // ignore
+        }
+
+        // Fallback: copy directory when symlink is not available (Windows)
+        if (!file_exists('src') && $source && is_dir($source)) {
+            $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($source, \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::SELF_FIRST);
+            @mkdir('src');
+            foreach ($iterator as $item) {
+                $dest = 'src' . DIRECTORY_SEPARATOR . ltrim(str_replace($source, '', $item->getPathname()), DIRECTORY_SEPARATOR);
+                if ($item->isDir()) {
+                    @mkdir($dest);
+                } else {
+                    copy($item->getPathname(), $dest);
+                }
+            }
+        }
     }
     if (false === exec('composer update --no-dev --no-progress --ignore-platform-req=ext-dom --ignore-platform-req=ext-xml --ignore-platform-req=ext-simplexml --ignore-platform-req=ext-xmlwriter', $output, $result) || $result) {
         echo implode("\n", $output);

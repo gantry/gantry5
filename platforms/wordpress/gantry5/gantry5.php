@@ -93,14 +93,19 @@ function add_gantry5_streams_to_kses($protocols)
     return $protocols;
 }
 
-// Initialize plugin language and fallback to en_US if the .mo file can't be found
-$domain         = 'gantry5';
-$languages_path = basename(GANTRY5_PATH) . '/admin/languages';
+// Initialize plugin language on init to avoid WP 6.7+ early translation notices.
+add_action('init', 'gantry5_load_textdomain', 1);
 
-if (load_plugin_textdomain($domain, false, $languages_path) === false) {
-    add_filter('plugin_locale', 'modify_gantry5_locale', 10, 2);
-    load_plugin_textdomain($domain, false, $languages_path);
-    remove_filter('plugin_locale', 'modify_gantry5_locale', 10);
+function gantry5_load_textdomain()
+{
+    $domain = 'gantry5';
+    $languages_path = basename(GANTRY5_PATH) . '/admin/languages';
+
+    if (load_plugin_textdomain($domain, false, $languages_path) === false) {
+        add_filter('plugin_locale', 'modify_gantry5_locale', 10, 2);
+        load_plugin_textdomain($domain, false, $languages_path);
+        remove_filter('plugin_locale', 'modify_gantry5_locale', 10);
+    }
 }
 
 function modify_gantry5_locale($locale, $domain = null)

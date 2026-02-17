@@ -24,10 +24,7 @@ use Joomla\CMS\Form\FormField;
 /**
  * Class JFormFieldParticle
  */
-// Compatibility alias for Joomla 4
-// if (!class_exists('JFormFieldParticle') && version_compare(JVERSION, '5.0', '<')) {
-//     class_alias('ParticleField', 'JFormFieldParticle');
-// }
+
 
 class JFormFieldParticle extends FormField
 {

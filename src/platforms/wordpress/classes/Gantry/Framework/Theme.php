@@ -557,22 +557,8 @@ class Theme extends AbstractTheme
 
         $this->preset_styles_init();
 
-        // Load theme text domains
-        $domain = $this->details()->get('configuration.gantry.engine', 'nucleus');
-        $lookup = '/engines/' . $domain . '/languages';
-        if (!file_exists(GANTRY5_PATH . $lookup)) {
-            $lookup = '/engines/wordpress/' . $domain . '/languages';
-        }
-        $lookup = basename(GANTRY5_PATH) . $lookup;
-
-        if (\load_plugin_textdomain($domain, false, $lookup) === false) {
-            \add_filter('plugin_locale', 'modify_gantry5_locale', 10, 2);
-            \load_plugin_textdomain($domain, false, $lookup);
-            \remove_filter('plugin_locale', 'modify_gantry5_locale', 10);
-        }
-
-        $domain = $this->details()->get('configuration.theme.textdomain', $this->name);
-        \load_theme_textdomain($domain, $this->path . '/languages');
+        // Load text domains on init or later to avoid WP 6.7+ early translation notices.
+        $this->loadTextDomains();
 
         $this->url = $gantry['site']->theme->link;
 
@@ -610,6 +596,36 @@ class Theme extends AbstractTheme
         $domain = COOKIE_DOMAIN;
 
         setcookie($name, $value, $expire, $path, $domain);
+    }
+
+    protected function loadTextDomains()
+    {
+        $engineDomain = $this->details()->get('configuration.gantry.engine', 'nucleus');
+        $lookup = '/engines/' . $engineDomain . '/languages';
+        if (!file_exists(GANTRY5_PATH . $lookup)) {
+            $lookup = '/engines/wordpress/' . $engineDomain . '/languages';
+        }
+        $lookup = basename(GANTRY5_PATH) . $lookup;
+
+        $themeDomain = $this->details()->get('configuration.theme.textdomain', $this->name);
+        $themePath = $this->path . '/languages';
+
+        $loader = static function () use ($engineDomain, $lookup, $themeDomain, $themePath) {
+            if (\load_plugin_textdomain($engineDomain, false, $lookup) === false) {
+                \add_filter('plugin_locale', 'modify_gantry5_locale', 10, 2);
+                \load_plugin_textdomain($engineDomain, false, $lookup);
+                \remove_filter('plugin_locale', 'modify_gantry5_locale', 10);
+            }
+
+            \load_theme_textdomain($themeDomain, $themePath);
+        };
+
+        if (\did_action('init')) {
+            $loader();
+            return;
+        }
+
+        \add_action('init', $loader, 1);
     }
 
     /**

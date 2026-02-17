@@ -42,13 +42,6 @@ class Contact extends AbstractObject
      */
     protected static function getTable()
     {
-        if (\JVersion::MAJOR_VERSION === 3) {
-            require_once JPATH_ADMINISTRATOR . '/components/com_contact/tables/contact.php';
-
-            static::$table = 'Contact';
-            static::$tablePrefix = 'ContactTable';
-        }
-
         return parent::getTable();
     }
 }

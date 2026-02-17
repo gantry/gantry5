@@ -48,12 +48,19 @@
     <property name="path.platforms" value="${project_dir}/platforms" />
     <property name="path.src" value="${project_dir}/src" />
     <property name="path.themes" value="${project_dir}/themes" />
-    <tstamp>
-        <format property="str.datefmt" pattern="MMMM d, yyyy" locale="en"/>
-    </tstamp>
-    <tstamp>
-        <format property="str.datexml" pattern="MMMM d, yyyy" locale="en"/>
-    </tstamp>
+    <!-- Use PHP to generate human-readable dates to avoid Intl dependency in Phing TstampTask -->
+    <exec executable="php" outputproperty="php.datefmt">
+        <arg value="-r"/>
+        <arg value="echo date('F j, Y');"/>
+    </exec>
+    <property name="str.datefmt" value="${php.datefmt}" />
+
+    <exec executable="php" outputproperty="php.datexml">
+        <arg value="-r"/>
+        <arg value="echo date('F j, Y');"/>
+    </exec>
+    <property name="str.datexml" value="${php.datexml}" />
+
     <property name="version.date" value="${str.datexml}" />
 
     <condition property="str.version" value="_${cfg.versionprefix}${xml.version}">

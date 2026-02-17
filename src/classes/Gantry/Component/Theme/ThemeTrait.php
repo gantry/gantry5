@@ -3,8 +3,8 @@
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2021 Tiger12, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
@@ -796,7 +796,14 @@ trait ThemeTrait
         }
 
         if ($cached) {
-            $cacheKey['language'] = $gantry['page']->language;
+            $language = '';
+            if (isset($gantry['page']) && isset($gantry['page']->language)) {
+                $language = $gantry['page']->language;
+            } elseif (isset($gantry['site']) && isset($gantry['site']->language)) {
+                $language = $gantry['site']->language;
+            }
+
+            $cacheKey['language'] = $language;
             $cacheKey['attributes'] = $particle;
             $cacheKey += (array) $item;
 

@@ -24,12 +24,6 @@
     "require-dev": {
         "phpunit/phpunit": "^9.0"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/rockettheme/toolbox"
-        }
-    ],
     "autoload": {
         "psr-4": {
             "Gantry\\": "src/classes/Gantry"
