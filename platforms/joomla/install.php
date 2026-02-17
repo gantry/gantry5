@@ -37,8 +37,9 @@ class Pkg_Gantry5InstallerScript
             '0' => '8.2.0' // Preferred version
         ),
         'Joomla!' => array (
-            '4.0' => '4.0.0',
-            '0' => '4.4.0' // Preferred version
+            // Require Joomla 5+ (minimum 5.0.0)
+            '5.0' => '5.0.0',
+            '0' => '5.0.0' // Preferred version
         )
     );
     /**

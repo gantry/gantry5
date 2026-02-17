@@ -3,8 +3,8 @@
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2022 Tiger12, LLC
  * @license   GNU/GPLv2 and later
  *
@@ -165,21 +165,15 @@ class ContentFinder extends Finder
         }
 
         // Filter by start and end dates.
-        if (!$user->authorise('core.edit.state', 'com_content') && !$user->authorise('core.edit', 'com_content')) {
-            // Define null and now dates
+            if (!$user->authorise('core.edit.state', 'com_content') && !$user->authorise('core.edit', 'com_content')) {
+            // Define now date and use modern datetime null checks (Joomla 5)
             $nowDate = $this->db->quote(Factory::getDate()->toSql());
-            if (version_compare(JVERSION, '4.0', '<')) {
-                $nullDate = $this->db->quote($this->db->getNullDate());
-                $nullDateUp = "a.publish_up = {$nullDate}";
-                $nullDateDown = "a.publish_down = {$nullDate}";
-            } else {
-                $nullDateUp = $this->query->isNullDatetime('a.publish_up');
-                $nullDateDown = $this->query->isNullDatetime('a.publish_down');
-            }
+            $nullDateUp = $this->query->isNullDatetime('a.publish_up');
+            $nullDateDown = $this->query->isNullDatetime('a.publish_down');
 
             $this->query
                 ->where('(' . $nullDateUp . ' OR a.publish_up <= ' . $nowDate . ')')
-                ->where('(' . $nullDateDown. ' OR a.publish_down >= ' . $nowDate . ')')
+                ->where('(' . $nullDateDown . ' OR a.publish_down >= ' . $nowDate . ')')
                 ->where('a.state >= 1')
             ;
         }
@@ -228,10 +222,10 @@ class ContentFinder extends Finder
         $input = $tagIds['id'][0];
         $tagIdsArray = [];
         $tagNamesArray = [];
-        
+
         // Separate IDs and names
         $items = array_map('trim', explode(',', $input));
-        
+
         foreach ($items as $item) {
             if (is_numeric($item)) {
                 $tagIdsArray[] = (int)$item;
@@ -239,7 +233,7 @@ class ContentFinder extends Finder
                 $tagNamesArray[] = $item;
             }
         }
-        
+
         // If we have tag names, get their IDs
         if (!empty($tagNamesArray)) {
             // Use the same database object as other methods in this class
@@ -247,21 +241,21 @@ class ContentFinder extends Finder
                 ->select($this->db->quoteName('id'))
                 ->from($this->db->quoteName('#__tags'))
                 ->where($this->db->quoteName('title') . ' IN (' . implode(',', array_map([$this->db, 'quote'], $tagNamesArray)) . ')');
-            
+
             $this->db->setQuery($query);
             $tagIdsFromNames = $this->db->loadColumn();
-            
+
             if (!empty($tagIdsFromNames)) {
                 $tagIdsArray = array_merge($tagIdsArray, $tagIdsFromNames);
             }
         }
-        
+
         if (empty($tagIdsArray)) {
             return $this;
         }
-        
+
         $this->query->join('INNER', '#__contentitem_tag_map AS t ON t.content_item_id = a.id');
-        
+
         return $this->where('t.tag_id', 'IN', $tagIdsArray)->where('t.type_alias', '=', 'com_content.article');
     }
 }

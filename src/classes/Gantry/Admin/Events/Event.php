@@ -3,8 +3,8 @@
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2022 Tiger12, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
@@ -25,6 +25,12 @@ use Gantry\Framework\Gantry;
  */
 class Event extends \RocketTheme\Toolbox\Event\Event
 {
+ /**
+     * Permanent fix for PHP 8.2 dynamic property warning:
+     * Creation of dynamic property Event::$types is deprecated.
+     */
+    public array $types = [];
+
     /** @var Gantry */
     public $gantry;
     /** @var RestfulControllerInterface */

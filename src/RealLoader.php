@@ -103,9 +103,10 @@ abstract class RealLoader
             throw new \LogicException('Please run composer in Gantry 5 Library!');
         }
 
-        // In PHP >=7.2.5 we need to use newer version of ctype library.
-        $useNewLibraries = \PHP_VERSION_ID >= 70205 && GANTRY5_PLATFORM !== 'grav';
-        if ($useNewLibraries) {
+        // Load compat libraries only on platforms that still rely on the legacy stack.
+        // WordPress ships with modern dependencies in vendor/, so prefer those there.
+        $useCompatLibraries = GANTRY5_PLATFORM !== 'wordpress' && \PHP_VERSION_ID >= 70205 && GANTRY5_PLATFORM !== 'grav';
+        if ($useCompatLibraries) {
             /** @var ClassLoader $loader */
             $loader = require "{$lib}/compat/vendor/autoload.php";
             $loader->unregister();
@@ -114,8 +115,8 @@ abstract class RealLoader
         /** @var ClassLoader $loader */
         $loader = require $autoload;
 
-        // In PHP >=7.2.5 we need to use newer version of Pimple and Twig.
-        if ($useNewLibraries) {
+        // On legacy platforms, map Pimple/Twig to compat vendor.
+        if ($useCompatLibraries) {
             $loader->setPsr4('Twig\\', "{$lib}/compat/vendor/twig/twig/src");
             $loader->set('Twig_', "{$lib}/compat/vendor/twig/twig/lib");
             $loader->set('Pimple', "{$lib}/compat/vendor/pimple/pimple/src");

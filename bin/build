@@ -3,8 +3,8 @@
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2022 Tiger12, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
@@ -20,11 +20,17 @@ chdir(__DIR__ . '/builder');
 
 $hasVersion = false;
 $isProd = true;
+$hasTmpDir = false;
+$hasBuildDir = false;
 array_shift($argv);
 foreach ($argv as $arg) {
     if (strpos($arg, '-') === 0) {
         if (strpos($arg, '-Dxml.version=') === 0) {
             $hasVersion = true;
+        } elseif (strpos($arg, '-Dtmp_dir=') === 0) {
+            $hasTmpDir = true;
+        } elseif (strpos($arg, '-Dbuild_dir=') === 0) {
+            $hasBuildDir = true;
         }
     } elseif (strpos($arg, 'dev') !== false) {
         $isProd = false;
@@ -32,6 +38,19 @@ foreach ($argv as $arg) {
 }
 
 $base = dirname(__DIR__);
+if (stripos(PHP_OS, 'WIN') === 0) {
+    $drive = substr($base, 0, 2);
+    if (preg_match('/^[A-Za-z]:$/', $drive)) {
+        // Keep Phing working directories short on Windows to avoid MAX_PATH issues.
+        if (!$hasTmpDir) {
+            $argv[] = '-Dtmp_dir=' . $drive . '\\g5build\\tmp';
+        }
+        if (!$hasBuildDir) {
+            $argv[] = '-Dbuild_dir=' . $drive . '\\g5build\\package';
+        }
+    }
+}
+
 if (false === $hasVersion) {
     $file = fopen("{$base}/CHANGELOG.md",'rb');
     if (preg_match('/^# (\d\.\d+.\d+(-[a-z0-9.]+)?)\s*$/i', fgets($file), $matches) !== 1) {
@@ -58,9 +77,37 @@ if (false === $hasVersion) {
     }
 
     $argv[] = '-Dxml.version=' . $version;
+
+// Pre-flight: note if PHP intl extension is missing. Build can continue because build.xml
+// now uses PHP date fallback, but some environments may still expect intl.
+if (!extension_loaded('intl')) {
+    fwrite(STDERR, "\nWARNING: PHP 'intl' extension is not enabled for CLI.\n");
+    fwrite(STDERR, "The build will attempt a fallback (PHP date). Consider enabling 'intl' for full compatibility.\n");
+    fwrite(STDERR, "Verify with: php -m | findstr /i intl\n\n");
+    // continue without exiting
+}
 }
 
-$command = 'vendor/bin/phing ' . implode(' ', $argv);
+// Ensure Phing can create zip archives even if CLI php.ini doesn't load zip by default.
+$phpCommand = 'php';
+if (!extension_loaded('zip')) {
+    $extensionDir = ini_get('extension_dir') ?: '';
+    if ($extensionDir && !preg_match('#^([a-zA-Z]:[\\\\/]|[\\\\/])#', $extensionDir)) {
+        $extensionDir = dirname(PHP_BINARY) . DIRECTORY_SEPARATOR . $extensionDir;
+    }
+    $zipExtension = 'zip.' . PHP_SHLIB_SUFFIX;
+    if (stripos(PHP_OS, 'WIN') === 0) {
+        $zipExtension = 'php_zip.' . PHP_SHLIB_SUFFIX;
+    }
+
+    $zipPath = rtrim($extensionDir, '/\\') . DIRECTORY_SEPARATOR . $zipExtension;
+    if (is_file($zipPath)) {
+        $phpCommand .= ' -d extension=' . $zipExtension;
+    }
+}
+
+$escapedArgs = array_map('escapeshellarg', $argv);
+$command = $phpCommand . ' vendor/bin/phing ' . implode(' ', $escapedArgs);
 if (false === system($command, $result) || $result) {
     throw new \RuntimeException('Failed to run build script');
 }

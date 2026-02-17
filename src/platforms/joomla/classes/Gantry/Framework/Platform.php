@@ -66,12 +66,9 @@ class Platform extends BasePlatform
 
         $this->module_wrapper = '<div class="platform-content">%s</div>';
 
-        if (Version::MAJOR_VERSION < 4) {
-            $this->component_wrapper = '<div class="platform-content row-fluid"><div class="span12">%s</div></div>';
-        } else {
-            $this->features['fontawesome'] = true;
-            $this->component_wrapper = '<div class="platform-content container"><div class="row"><div class="col">%s</div></div></div>';
-        }
+        // Joomla 5-only: always use modern container/component wrapper and enable fontawesome
+        $this->features['fontawesome'] = true;
+        $this->component_wrapper = '<div class="platform-content container"><div class="row"><div class="col">%s</div></div></div>';
     }
 
     /**
@@ -700,7 +697,8 @@ class Platform extends BasePlatform
                     $db = Factory::getDbo();
                     $userId = $user->id;
 
-                    $checked_out_default = Version::MAJOR_VERSION < 4 ? 'checked_out != 0' : 'checked_out IS NOT null';
+                    // Joomla 5: checked_out field is nullable
+                    $checked_out_default = 'checked_out IS NOT null';
 
                     // Verify that no items are checked out.
                     $query = $db->getQuery(true)

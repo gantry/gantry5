@@ -3,8 +3,8 @@
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2021 Tiger12, LLC
  * @license   GNU/GPLv2 and later
  *
@@ -51,10 +51,7 @@ class Theme extends AbstractTheme
         if ($enable && !$this->joomla) {
             $this->joomla = true;
 
-            // Workaround for Joomla! 3.x not loading bootstrap when it needs it.
-            if (version_compare(JVERSION, '4', '<')) {
-                static::gantry()->load('bootstrap');
-            }
+            // Joomla 5 only: no Joomla 3 bootstrap workaround needed.
         }
 
         return $this->joomla;
