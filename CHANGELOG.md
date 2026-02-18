@@ -1,3 +1,14 @@
+# 5.6.0
+## 02/18/2026
+1. [Joomla](#joomla)
+    1. [](#improved)
+        - Added native compatibility with Joomla 5
+        - Dropped support for Joomla 4
+        - Limited compatibility to PHP 8.x only
+2. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - Fixed deprecation warning related to $types events
+
 # 5.5.25
 ## 09/15/2025
 1. [Common](#common)
@@ -26,7 +37,7 @@
 
 # 5.5.23
 ## 08/11/2025
-1. [Common](#common) 
+1. [Common](#common)
     1. [](#improved)
         - Updated author name.
 2. [Joomla](#joomla)
