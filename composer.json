@@ -11,15 +11,15 @@
         "ext-mbstring": "*"
     },
     "scripts": {
-        "install-deps": "php bin/composer-install",
-        "update-deps": "php bin/composer-update",
+        "install-deps": "bin/composer-install",
+        "update-deps": "bin/composer-update",
         "build-dev": [
-            "php bin/composer-install",
-            "php bin/build dev"
+            "bin/composer-install",
+            "bin/build dev"
         ],
         "build-prod": [
-            "php bin/composer-install",
-            "php bin/build prod"
+            "bin/composer-install",
+            "bin/build prod"
         ]
     }
 }
