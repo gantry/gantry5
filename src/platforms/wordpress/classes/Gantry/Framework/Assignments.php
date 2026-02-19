@@ -68,7 +68,11 @@ class Assignments extends AbstractAssignments
 
         $gantry = Gantry::instance();
 
-        $event = new Event;
+        // Use a concrete event with declared property to avoid PHP 8.2+ dynamic property deprecations.
+        $event = new class extends Event {
+            /** @var array */
+            public $types = [];
+        };
         $event->types = $types;
 
         $gantry->fireEvent('assignments.types', $event);
