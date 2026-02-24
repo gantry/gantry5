@@ -1,3 +1,38 @@
+## Recent Updates – 2026 Activity & 5.6.0 Release
+
+We've been heads-down on development since taking over stewardship, with lighter public communication than ideal (last major updates were quieter after October 2025). Thank you for your patience—we're back to more visible progress.
+
+**Gantry 5.6.0** was released on **February 24, 2026** (just released!):
+- Full native compatibility with **Joomla 5** (dropped Joomla 4 support)
+- PHP restricted to **8.1.0 – 8.3.x** (PHP 8.4+ not supported yet)
+- Platform-specific improvements and fixes across Joomla, WordPress, and Grav
+- Updated compatibility matrix and admin notices for smoother upgrades
+- Recent commits include Joomla 5 native changes, WordPress page assignment fixes, code cleanups, and version bumps
+
+Check the full [CHANGELOG.md](https://github.com/gantry/gantry5/blob/develop/CHANGELOG.md) for details.
+
+**Project Status**  
+Gantry is actively developed and maintained by the Tiger12 team (me: Gene Teigland / @gteigland). It's **not** in maintenance-only mode or abandoned—we're committed long-term.
+
+**What's Ahead in 2026**
+- Gantry remains **free and open-source** forever (MIT/GPL).
+- Focus areas: **Developer tools** + **AI-assisted features** (smarter particle/outline workflows, AI integration points).
+- Optional premium **add-on packages** to expand core capabilities without gating anything.
+- Actively working on a **theme migration addon** to help convert legacy RocketTheme Gantry themes (e.g., Quasar, Dominion, Galatea, Versla, and similar from their older catalog) to current Gantry using **Helium** (or Hydrogen) as the base—while preserving as much of the original design, layout, and styling as possible.  
+  This includes tools to adapt/replace bundled legacy RocketTheme addons/plugins like **RokSprocket**, **RokGallery**, **RokNavMenu**, **RokCandy**, **RokQuickCart**, **RokFeatureTable**, and others that were common in RT themes.  
+  *No firm promises on 100% perfect 1:1 fidelity* (legacy extensions + platform changes can be complex), but we believe we can cover most common scenarios and make upgrades far easier for sites still on older RT setups.
+
+- **Gantry 6.0** (next major version) is in planning/active development, with deeper modern integrations (including MCP support). A detailed feature list and roadmap will be shared soon via GitHub discussions and gantry.org.
+
+**Community & Transparency**  
+We'll improve regular updates here on GitHub (discussions/announcements), gantry.org/blog, and possibly X. If you have open PRs, issues, or ideas—especially around legacy theme migrations—please open a discussion or comment below. We're prioritizing backlog review and merges now that 5.6.0 is out.
+
+Thanks for sticking with Gantry. Your feedback and support mean a lot—let's keep building!
+
+— Gene Teigland, Tiger12 / Gantry Maintainer
+
+
+
 > [!IMPORTANT]
 > **A NEW CHAPTER FOR GANTRY** - [Read about it here](https://tiger12.com/gantry/)
 >
