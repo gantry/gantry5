@@ -12,7 +12,7 @@ We've been heads-down on development since taking over stewardship, with lighter
 Check the full [CHANGELOG.md](https://github.com/gantry/gantry5/blob/develop/CHANGELOG.md) for details.
 
 **Project Status**  
-Gantry is actively developed and maintained by the Tiger12 team (me: Gene Teigland / @gteigland). It's **not** in maintenance-only mode or abandoned—we're committed long-term.
+Gantry is actively developed and maintained by the Tiger12 team. It's **not** in maintenance-only mode or abandoned—we're committed long-term.
 
 **What's Ahead in 2026**
 - Gantry remains **free and open-source** forever (MIT/GPL).
