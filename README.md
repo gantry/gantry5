@@ -29,7 +29,7 @@ We'll improve regular updates here on GitHub (discussions/announcements), gantry
 
 Thanks for sticking with Gantry. Your feedback and support mean a lot—let's keep building!
 
-— Gene Teigland, Tiger12 / Gantry Maintainer
+— Gene Teigland, Tiger12
 
 
 
