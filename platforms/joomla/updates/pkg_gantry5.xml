@@ -6,11 +6,11 @@
 		<element>pkg_gantry5</element>
 		<type>package</type>
 		<client>site</client>
-		<version>5.5.25</version>
-		<infourl title="Gantry 5.5.25">http://docs.gantry.org/gantry5</infourl>
+		<version>5.6.0</version>
+		<infourl title="Gantry 5.6.0">http://docs.gantry.org/gantry5</infourl>
         <sha512>24655736807b40c50d057796334e4d310910a5c95d725d6fe8b3d0b15b5524adf85d5769efd7c72c587456f5ab0846aedd09201b6dd75d8cd216d0eda77baecb</sha512>
 		<downloads>
-			<downloadurl type="full" format="zip">http://updates.gantry.org/download/5.5.25/joomla-pkg_gantry5_v5.5.25.zip</downloadurl>
+			<downloadurl type="full" format="zip">http://updates.gantry.org/download/5.6.0/joomla-pkg_gantry5_v5.6.0.zip</downloadurl>
 		</downloads>
 		<tags>
 			<tag>stable</tag>

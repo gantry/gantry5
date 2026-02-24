@@ -12,7 +12,7 @@ form:
     version:
       type: input.text
       label: Version
-      default: "5.5.25"
+      default: "5.6.0"
 
     icon:
       type: input.text
