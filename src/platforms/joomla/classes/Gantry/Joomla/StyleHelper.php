@@ -3,8 +3,8 @@
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2021 Tiger12, LLC
  * @license   GNU/GPLv2 and later
  *
@@ -154,32 +154,11 @@ class StyleHelper
         static $model = [];
 
         if (!isset($model[$name])) {
-            if (version_compare(JVERSION, '4', '<')) {
-                // Joomla 3 support.
-                $path = JPATH_ADMINISTRATOR . '/components/com_templates/';
-                $filename = strtolower($name);
-                $className = "\\TemplatesModel{$name}";
-
-                Table::addIncludePath("{$path}/tables");
-
-                require_once "{$path}/models/{$filename}.php";
-
-                /** @var CMSApplication $application */
-                $application = Factory::getApplication();
-
-                // Load language strings.
-                $language = $application->getLanguage();
-                $language->load('com_templates');
-
-                // Load the model.
-                $model[$name] = new $className();
-            } else {
-                // Joomla 4 support.
-                $application = Factory::getApplication();
-                $model[$name] = $application->bootComponent('com_templates')
-                    ->getMVCFactory()
-                    ->createModel($name, 'Administrator', ['ignore_request' => true]);
-            }
+            // Joomla 5+ (use modern component boot and MVC factory)
+            $application = Factory::getApplication();
+            $model[$name] = $application->bootComponent('com_templates')
+                ->getMVCFactory()
+                ->createModel($name, 'Administrator', ['ignore_request' => true]);
         }
 
         return $model[$name];

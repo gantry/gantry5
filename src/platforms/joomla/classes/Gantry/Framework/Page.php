@@ -3,8 +3,8 @@
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2022 Tiger12, LLC
  * @license   GNU/GPLv2 and later
  *
@@ -146,15 +146,10 @@ class Page extends Base\Page
      */
     public function bodyAttributes($attributes = [])
     {
-        if ($this->tmpl === 'component') {
-            if (version_compare(JVERSION, '4.0', '<')) {
-                $classes = ['contentpane', 'modal'];
-            }
-        } else {
-            $classes = ['site', $this->option, "view-{$this->view}"];
-            $classes[] = $this->layout ? 'layout-' . $this->layout : 'no-layout';
-            $classes[] = $this->task ? 'task-' . $this->task : 'no-task';
-        }
+        // Use modern Joomla class set for site and component pages (Joomla 5)
+        $classes = ['site', $this->option, "view-{$this->view}"];
+        $classes[] = $this->layout ? 'layout-' . $this->layout : 'no-layout';
+        $classes[] = $this->task ? 'task-' . $this->task : 'no-task';
         $classes[] = 'dir-' . $this->direction;
         if ($this->class) $classes[] = $this->class;
         if ($this->printing) $classes[] = 'print-mode';

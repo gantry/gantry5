@@ -22,6 +22,7 @@ class AssignmentsWalker
 {
     var $tree_type = ['post_type', 'taxonomy', 'custom'];
     var $db_fields = ['parent' => 'parent_id', 'id' => 'id'];
+    var $has_children = false;
 
     /**
      * Traverse elements to create list from elements.

@@ -3,8 +3,8 @@
 /**
  * @package   Gantry 5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2022 Tiger12, LLC
  * @license   GNU/GPLv2 and later
  *
@@ -106,11 +106,6 @@ class plgSystemGantry5 extends CMSPlugin
 
     public function onAfterRoute()
     {
-        if (version_compare(JVERSION, '4.0', '<')) {
-            // In Joomla 3.9 we need to make sure that user identity has been loaded.
-            $this->app->loadIdentity();
-        }
-
         if ($this->app->isClient('site')) {
             $this->onAfterRouteSite();
 

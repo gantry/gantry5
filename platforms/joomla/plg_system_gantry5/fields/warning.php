@@ -11,8 +11,8 @@ use Joomla\Database\DatabaseInterface;
 /**
  * @package   Gantry 5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2021 Tiger12, LLC
  * @license   GNU/GPLv2 and later
  *
@@ -110,7 +110,4 @@ HTML;
     }
 }
 
-// Compatibility alias for Joomla 4
-if (!class_exists('JFormFieldWarning') && version_compare(JVERSION, '5.0', '<')) {
-    class_alias('WarningField', 'JFormFieldWarning');
-}
+// Joomla 5 only: no legacy alias required

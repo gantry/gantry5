@@ -27,6 +27,19 @@ class Translator extends BaseTranslator
      */
     public function translate($string)
     {
+        if (!\did_action('init')) {
+            $translated = parent::translate($string);
+
+            if (\func_num_args() === 1) {
+                return $translated;
+            }
+
+            $args = \func_get_args();
+            $args[0] = $translated;
+
+            return sprintf(...$args);
+        }
+
         static $textdomain;
         static $enginedomain;
 

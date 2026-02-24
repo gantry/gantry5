@@ -3,8 +3,8 @@
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2022 Tiger12, LLC
  * @license   GNU/GPLv2 and later
  *
@@ -142,13 +142,7 @@ class Content extends AbstractObject
     public function route()
     {
         $category = $this->category();
-
-        if (version_compare(JVERSION, '4.0', '<')) {
-            require_once JPATH_SITE . '/components/com_content/helpers/route.php';
-
-            return htmlspecialchars_decode(Route::_(\ContentHelperRoute::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias), false), ENT_COMPAT);
-        }
-
+        // Joomla 5: use namespaced RouteHelper
         require_once JPATH_SITE . '/components/com_content/src/Helper/RouteHelper.php';
 
         return htmlspecialchars_decode(Route::_(RouteHelper::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias), false), ENT_COMPAT);
@@ -165,12 +159,9 @@ class Content extends AbstractObject
         $asset = "com_content.article.{$this->id}";
 
         if ($user && ($user->authorise('core.edit', $asset) || $user->authorise('core.edit.own', $asset))) {
-            if (version_compare(JVERSION, '4.0', '<')) {
-                return "index.php?option=com_content&task=article.edit&a_id={$this->id}&tmpl=component";
-            }
-
+            // Joomla 5: use namespaced RouteHelper and build edit url
             $contentUrl = RouteHelper::getArticleRoute($this->id . ':' . $this->alias, $this->catid);
-		    $url = $contentUrl . '&task=article.edit&a_id=' . $this->id;
+            $url = $contentUrl . '&task=article.edit&a_id=' . $this->id;
 
             return htmlspecialchars_decode(Route::_($url), ENT_COMPAT);
         }

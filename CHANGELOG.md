@@ -1,3 +1,32 @@
+# 5.6.0
+## 02/24/2026
+1. [Common](#common)
+    1. [](#improved)
+        - Added native compatibility with Joomla 5
+        - Dropped support for Joomla 4 (Joomla 3.9+ and 4.x no longer compatible)
+        - Limited compatibility to PHP 8.x only (minimum PHP 8.1.0, maximum supported up to PHP 8.3.x PHP 8.4+ not supported in this release)
+        - Added release compatibility matrix for all platforms:
+        - PHP support range: 8.1.0 to 8.3.x
+        - Joomla support range: 5.0+ (Joomla 4.x dropped)
+        - WordPress support range: 5.2+ (tested up to 6.9.1)
+        - Grav support range: 1.7.25+ (tested up to 1.7.49.5 requires Grav Admin 1.10.25+, tested up to 1.10.48)
+2. [Joomla](#joomla)
+    1. [](#improved)
+        - Minimum Joomla version is now 5.0.0
+        - Highest supported Joomla major for this release is Joomla 5.x
+        - Minimum PHP version for Joomla packages is 8.1.0 and maximum supported is up to PHP 8.3.x
+3. [WordPress](#wordpress)
+    1. [](#improved)
+        - WordPress compatibility tested through 6.9.1
+        - Minimum PHP version for WordPress package/runtime is 8.1.0 and maximum supported is up to PHP 8.3.x
+    1. [](#bugfix)
+        - Fixed deprecation warning related to $types events
+4. [Grav](#grav)
+    1. [](#improved)
+        - Minimum Grav version is now 1.7.25 (tested up to 1.7.49.5)
+        - Minimum Grav Admin plugin version is 1.10.25 (tested up to 1.10.48)
+        - Minimum PHP version for Grav package/runtime is 8.1.0 and maximum supported is up to PHP 8.3.x
+
 # 5.5.25
 ## 09/15/2025
 1. [Common](#common)
@@ -26,7 +55,7 @@
 
 # 5.5.23
 ## 08/11/2025
-1. [Common](#common) 
+1. [Common](#common)
     1. [](#improved)
         - Updated author name.
 2. [Joomla](#joomla)

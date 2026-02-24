@@ -17,6 +17,8 @@ CLAUDE.md
 # Builds
 bin/build/tmp
 bin/build/package
+bin/builder/tmp
+bin/builder/package
 dist
 
 # Tester

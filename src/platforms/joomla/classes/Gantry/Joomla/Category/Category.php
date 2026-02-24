@@ -3,8 +3,8 @@
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2021 Tiger12, LLC
  * @license   GNU/GPLv2 and later
  *
@@ -82,12 +82,7 @@ class Category extends AbstractObject
      */
     public function route()
     {
-        if (version_compare(JVERSION, '4.0', '<')) {
-            require_once JPATH_SITE . '/components/com_content/helpers/route.php';
-
-            return Route::_(\ContentHelperRoute::getCategoryRoute($this->id . ':' . $this->alias), false);
-        }
-
+        // Joomla 5: use namespaced RouteHelper
         require_once JPATH_SITE . '/components/com_content/src/Helper/RouteHelper.php';
 
         return Route::_(RouteHelper::getCategoryRoute($this->id . ':' . $this->alias), false);
