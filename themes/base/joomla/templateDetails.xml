@@ -40,9 +40,7 @@
 
     <config>
         <fields name="params" addfieldpath="/templates/g5_base/fields">
-            <fieldset name="basic">
-                <field name="warning" type="warning" />
-            </fieldset>
+            <fieldset name="basic"></fieldset>
         </fields>
     </config>
 
