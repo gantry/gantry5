@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <extension version="3.9" type="template" client="site" method="upgrade">
     <name>g5_hydrogen</name>
+    <element>tpl_g5_hydrogen</element>
     <version>@version@</version>
     <creationDate>@versiondate@</creationDate>
     <author>Tiger12, LLC</author>
@@ -39,12 +40,12 @@
     </positions>
 
     <config>
-        <fields name="params" addfieldpath="/templates/g5_hydrogen/fields">
-            <fieldset name="basic"></fieldset>
+        <fields name="params">
+            <fieldset name="basic">
+            </fieldset>
         </fields>
     </config>
-
     <updateservers>
-        <server type="extension" priority="1" name="Hydrogen Template">https://updates.gantry.org/5.0/joomla/tpl_g5_hydrogen.xml</server>
+        <server type="extension" priority="1" name="Gantry 5 Hydrogen">https://updates.gantry.org/5.0/joomla/tpl_g5_hydrogen.xml</server>
     </updateservers>
 </extension>
