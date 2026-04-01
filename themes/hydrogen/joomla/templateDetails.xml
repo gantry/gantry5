@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <extension version="3.9" type="template" client="site" method="upgrade">
     <name>g5_hydrogen</name>
-    <element>tpl_g5_hydrogen</element>
     <version>@version@</version>
     <creationDate>@versiondate@</creationDate>
     <author>Tiger12, LLC</author>
