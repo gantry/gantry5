@@ -335,8 +335,6 @@ class plgSystemGantry5 extends CMSPlugin
         $task   = $input->getCmd('task');
 
         if (in_array($option, array('com_templates', 'com_advancedtemplates'), true)) {
-            // Register field class with namespace
-            require_once __DIR__ . '/fields/warning.php';
 
             if ($task && strpos($task, 'style') === 0 && $this->params->get('use_assignments', true)) {
                 // Get all ids.

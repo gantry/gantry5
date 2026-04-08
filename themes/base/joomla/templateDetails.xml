@@ -16,7 +16,6 @@
         <folder>admin</folder>
         <folder>blueprints</folder>
         <folder>config</folder>
-        <folder>fields</folder>
         <folder>fonts</folder>
         <folder>gantry</folder>
         <folder>html</folder>
@@ -40,9 +39,7 @@
 
     <config>
         <fields name="params" addfieldpath="/templates/g5_base/fields">
-            <fieldset name="basic">
-                <field name="warning" type="warning" />
-            </fieldset>
+            <fieldset name="basic"></fieldset>
         </fields>
     </config>
 

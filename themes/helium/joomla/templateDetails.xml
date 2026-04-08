@@ -9,14 +9,11 @@
     <copyright>(C) 2007 - 2022 Tiger12, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2</license>
     <description>TPL_G5_HELIUM_DESC</description>
-
     <scriptfile>install.php</scriptfile>
-
     <files>
         <folder>admin</folder>
         <folder>blueprints</folder>
         <folder>config</folder>
-        <folder>fields</folder>
         <folder>fonts</folder>
         <folder>gantry</folder>
         <folder>html</folder>
@@ -71,14 +68,12 @@
     </positions>
 
     <config>
-        <fields name="params" addfieldpath="/templates/g5_helium/fields">
+        <fields name="params">
             <fieldset name="basic">
-                <field name="warning" type="warning" />
             </fieldset>
         </fields>
     </config>
-
     <updateservers>
-        <server type="extension" priority="1" name="Helium Template">https://updates.gantry.org/5.0/joomla/tpl_g5_helium.xml</server>
+        <server type="extension" priority="1" name="Gantry 5 Helium">https://updates.gantry.org/5.0/joomla/tpl_g5_helium.xml</server>
     </updateservers>
 </extension>

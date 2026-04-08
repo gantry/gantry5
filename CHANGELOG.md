@@ -1,3 +1,12 @@
+# 5.6.1
+## 04/08/2026
+1. [joomla](#joomla)
+    1. [](#bugfix)
+      - Fixed table line rendering issue in Helium template (Joomla 5) (#3373)
+      - Fixed header size inconsistency in Hydrogen template (Joomla 5) (#3374)
+      - Fixed checksum warning preventing successful package updates (#3371)
+      - Fixed issue where Hydrogen and Helium template updates were incorrectly shown in Joomla 5 update list (#3367)
+      - Fixed “Please install Gantry 5 Framework” error appearing in Joomla 5 installations (#3375)
 # 5.6.0
 ## 02/24/2026
 1. [Common](#common)

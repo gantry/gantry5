@@ -16,7 +16,6 @@
         <folder>admin</folder>
         <folder>blueprints</folder>
         <folder>config</folder>
-        <folder>fields</folder>
         <folder>fonts</folder>
         <folder>gantry</folder>
         <folder>html</folder>
@@ -40,14 +39,12 @@
     </positions>
 
     <config>
-        <fields name="params" addfieldpath="/templates/g5_hydrogen/fields">
+        <fields name="params">
             <fieldset name="basic">
-                <field name="warning" type="warning" />
             </fieldset>
         </fields>
     </config>
-
     <updateservers>
-        <server type="extension" priority="1" name="Hydrogen Template">https://updates.gantry.org/5.0/joomla/tpl_g5_hydrogen.xml</server>
+        <server type="extension" priority="1" name="Gantry 5 Hydrogen">https://updates.gantry.org/5.0/joomla/tpl_g5_hydrogen.xml</server>
     </updateservers>
 </extension>
