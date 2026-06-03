@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.WP.AlternativeFunctions.rand_mt_rand
 
 /**
  * @package   Gantry5
@@ -331,7 +332,7 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
         $type = $item['type'];
 
         do {
-            $num = mt_rand(1000, 9999);
+            $num = function_exists('wp_rand') ? wp_rand(1000, 9999) : mt_rand(1000, 9999);
             if (!isset($this->ids["{$type}-{$num}"])) {
                 break;
             }

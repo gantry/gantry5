@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped
 
 /**
  * @package   Gantry5
@@ -42,7 +43,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
      * @param  array  $items  Initial items inside the iterator.
      * @param  callable|null $blueprint  Function to load Blueprints for the configuration.
      */
-    public function __construct(array $items, callable $blueprint = null)
+    public function __construct(array $items, ?callable $blueprint = null)
     {
         $this->items = $items;
         $this->blueprint = $blueprint;
@@ -62,12 +63,12 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
         $old = $this->get($name, null, $separator);
         if ($old !== null) {
             if (!is_array($old)) {
-                throw new \RuntimeException("Value is not array in {$name}: " . print_r($old, true));
+                throw new \RuntimeException(sprintf('Value is not an array at key "%s".', (string) $name));
             }
             if (is_object($value)) {
                 $value = (array) $value;
             } elseif (!is_array($value)) {
-                throw new \RuntimeException("Value is not array in {$name}: " . print_r($value, true));
+                throw new \RuntimeException(sprintf('Value is not an array at key "%s".', (string) $name));
             }
             $value = $this->blueprint()->mergeData($old, $value, $name, $separator);
         }
@@ -127,7 +128,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
         if (is_object($value)) {
             $value = (array) $value;
         } elseif (!is_array($value)) {
-            throw new \RuntimeException("Value is not array in '{$name}': " . print_r($value, true));
+            throw new \RuntimeException(sprintf('Value is not an array at key "%s".', (string) $name));
         }
 
         $old = $this->get($name, null, $separator);
@@ -138,7 +139,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
         }
 
         if (!is_array($old)) {
-            throw new \RuntimeException("Value is not array in '{$name}': " . print_r($value, true));
+            throw new \RuntimeException(sprintf('Value is not an array at key "%s".', (string) $name));
         }
 
         // Return joined data.

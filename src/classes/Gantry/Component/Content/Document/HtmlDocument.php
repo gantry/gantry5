@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped,WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet,WordPress.WP.EnqueuedResources.NonEnqueuedScript,WordPress.WP.AlternativeFunctions.rand_mt_rand
 
 /**
  * @package   Gantry5
@@ -550,7 +551,8 @@ class HtmlDocument
 
         $html = preg_replace_callback('#<(pre|code|script)(\s[^>]+)?>.*?</\\1>#ius', static function($matches) use (&$tokens) {
             // Unfortunately uniqid() doesn't quite work in Windows, so we need to work it around by adding some randomness.
-            $token = '@@'. uniqid((string)mt_rand(), true) . '@@';
+            $random = function_exists('wp_rand') ? wp_rand() : mt_rand();
+            $token = '@@'. uniqid((string) $random, true) . '@@';
             $match = $matches[0];
 
             $tokens[$token] = $match;

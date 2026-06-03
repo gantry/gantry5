@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable PluginCheck.CodeAnalysis.EnqueuedResourceOffloading.OffloadedContent,WordPress.WP.EnqueuedResourceParameters.NotInFooter,WordPress.WP.EnqueuedResourceParameters.MissingVersion
 
 /**
  * @package   Gantry5
@@ -148,7 +149,7 @@ class Document extends HtmlDocument
 
         if (!isset($domain)) {
             $url = \get_site_url();
-            $components = parse_url($url);
+            $components = \wp_parse_url($url);
 
             $scheme = isset($components['scheme']) ? $components['scheme'] . '://' : '';
             $host = isset($components['host']) ? $components['host'] : '';
@@ -181,7 +182,7 @@ class Document extends HtmlDocument
         if (!isset($path)) {
             // Support for WordPress core files stored in a non-root directory.
             $url = defined('WP_HOME') && WP_HOME ? WP_HOME : \get_site_url();
-            $components = parse_url($url);
+            $components = \wp_parse_url($url);
 
             $path = !empty($components['path']) ? $components['path'] : '/';
         }
@@ -236,32 +237,32 @@ class Document extends HtmlDocument
 
     protected static function registerBootstrap2()
     {
-        \wp_enqueue_script('bootstrap', 'https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js');
+        \wp_enqueue_script('bootstrap', 'https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js', [], '2.3.2', true);
     }
 
     protected static function registerBootstrap3()
     {
-        \wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js');
+        \wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js', [], '3.4.1', true);
     }
 
     protected static function registerBootstrap4()
     {
-        \wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js');
+        \wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js', [], '4.6.0', true);
     }
 
     protected static function registerBootstrap5()
     {
-        \wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js');
+        \wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js', [], '5.0.2', true);
     }
 
     protected static function registerMootools()
     {
-        \wp_enqueue_script('mootools', 'https://cdnjs.cloudflare.com/ajax/libs/mootools/1.5.2/mootools-core-compat.min.js');
+        \wp_enqueue_script('mootools', 'https://cdnjs.cloudflare.com/ajax/libs/mootools/1.5.2/mootools-core-compat.min.js', [], '1.5.2', true);
     }
 
     protected static function registerMootoolsMore()
     {
-        \wp_enqueue_script('mootools-more', 'https://cdnjs.cloudflare.com/ajax/libs/mootools-more/1.5.2/mootools-more-compat-compressed.js');
+        \wp_enqueue_script('mootools-more', 'https://cdnjs.cloudflare.com/ajax/libs/mootools-more/1.5.2/mootools-more-compat-compressed.js', ['mootools'], '1.5.2', true);
     }
     
     /**

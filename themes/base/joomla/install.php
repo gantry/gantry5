@@ -17,9 +17,9 @@ use Gantry\Framework\Gantry;
 use Gantry\Framework\ThemeInstaller;
 use Gantry5\Loader;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Installer\Adapter\TemplateAdapter;
 use Joomla\CMS\Language\Text;
+use Joomla\Filesystem\Folder;
 
 /**
  * Class G5_BaseInstallerScript

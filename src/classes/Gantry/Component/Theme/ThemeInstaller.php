@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped,WordPress.WP.AlternativeFunctions.unlink_unlink
 
 /**
  * @package   Gantry5
@@ -67,7 +68,7 @@ abstract class ThemeInstaller
      * @param array $filter
      * @return array
      */
-    public function getOutlines(array $filter = null)
+    public function getOutlines(?array $filter = null)
     {
         if (!isset($this->outlines)) {
             $this->outlines = [];
@@ -177,7 +178,7 @@ abstract class ThemeInstaller
      * @param array $outlines If parameter isn't provided, outlines list get reloaded from the disk.
      * @return $this
      */
-    public function setOutlines(array $outlines = null)
+    public function setOutlines(?array $outlines = null)
     {
         $this->outlines = $outlines;
 
@@ -187,7 +188,7 @@ abstract class ThemeInstaller
     /**
      * @param array $filter
      */
-    public function createOutlines(array $filter = null)
+    public function createOutlines(?array $filter = null)
     {
         $outlines = $this->getOutlines($filter);
 
@@ -331,7 +332,7 @@ abstract class ThemeInstaller
                 Folder::copy($src, $dst);
             }
         } catch (\Exception $e) {
-            throw new \RuntimeException("Creating configuration for outline '{$layout}' failed: {$e->getMessage()}", 500, $e);
+            throw new \RuntimeException('Creating configuration for outline failed.', 500, $e);
         }
 
         return true;

@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped
 
 /**
  * @package   Gantry5
@@ -376,7 +377,7 @@ class Platform extends BasePlatform
     public function truncate($text, $length, $html = false)
     {
         if (!$html) {
-            $text = strip_tags($text);
+            $text = \wp_strip_all_tags($text);
         }
 
         if (!$length) {

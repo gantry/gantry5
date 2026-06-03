@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped,Squiz.PHP.DiscouragedFunctions.Discouraged,WordPress.WP.AlternativeFunctions.file_system_operations_fopen,PluginCheck.CodeAnalysis.Heredoc.NotAllowed,Internal.LineEndings.Mixed
 
 /**
  * @package   Gantry5

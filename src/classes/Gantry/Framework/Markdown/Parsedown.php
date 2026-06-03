@@ -29,7 +29,7 @@ class Parsedown extends \Parsedown
      *
      * @param array|null $defaults
      */
-    public function __construct(array $defaults = null)
+    public function __construct(?array $defaults = null)
     {
         $this->init($defaults ?: []);
     }

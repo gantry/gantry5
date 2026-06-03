@@ -50,7 +50,7 @@ class ThemeDetails implements \ArrayAccess
 
         $filename = $locator->findResource("gantry-themes://{$theme}/custom/gantry/theme.yaml") ?: $locator->findResource("gantry-themes://{$theme}/gantry/theme.yaml");
         if (!$filename) {
-            throw new \RuntimeException(sprintf('Theme %s not found', $theme), 404);
+            throw new \RuntimeException('Theme not found.', 404);
         }
 
         /** @var string $cache */
@@ -111,7 +111,7 @@ class ThemeDetails implements \ArrayAccess
             try {
                 $this->parent = new ThemeDetails($parent);
             } catch (\RuntimeException $e) {
-                throw new \RuntimeException(sprintf('Parent theme %s not found', $parent), 404);
+                throw new \RuntimeException('Parent theme not found.', 404);
             }
         }
 

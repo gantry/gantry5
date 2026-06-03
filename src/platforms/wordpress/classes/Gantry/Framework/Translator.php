@@ -51,13 +51,16 @@ class Translator extends BaseTranslator
             $enginedomain = $theme->details()->get('configuration.gantry.engine', 'nucleus');
         }
 
+        // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText,WordPress.WP.I18n.NonSingularStringLiteralDomain -- Runtime translation values are intentional.
         $translated = $textdomain ? \__($string, $textdomain) : $string;
 
         if ($translated === $string) {
+            // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText,WordPress.WP.I18n.NonSingularStringLiteralDomain -- Runtime translation values are intentional.
             $translated = \__($string, $enginedomain);
         }
 
         if ($translated === $string) {
+            // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- Runtime translation text is intentional.
             $translated = \__($string, 'gantry5');
         }
 
@@ -65,8 +68,10 @@ class Translator extends BaseTranslator
             // Create WP compatible translation string.
             $string = parent::translate($string);
 
+            // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText,WordPress.WP.I18n.NonSingularStringLiteralDomain -- Runtime translation values are intentional.
             $translated = $textdomain ? \__($string, $textdomain) : $string;
             if ($translated === $string) {
+                // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- Runtime translation text is intentional.
                 $translated = \__($string, 'gantry5');
             }
         }

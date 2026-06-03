@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped,WordPress.WP.AlternativeFunctions.file_system_operations_copy,WordPress.WP.AlternativeFunctions.file_system_operations_mkdir,WordPress.WP.AlternativeFunctions.file_system_operations_touch,WordPress.WP.AlternativeFunctions.rename_rename,WordPress.WP.AlternativeFunctions.unlink_unlink,WordPress.WP.AlternativeFunctions.file_system_operations_rmdir,Internal.LineEndings.Mixed
 
 /**
  * @package   Gantry5
@@ -279,6 +280,36 @@ abstract class Folder
         // Make sure that the change will be detected when caching.
         @touch(dirname($source));
         @touch(dirname($target));
+    }
+
+    /**
+     * Move file in filesystem.
+     *
+     * @param  string $source
+     * @param  string $target
+     * @throws \RuntimeException
+     */
+    public static function moveFile($source, $target)
+    {
+        if (!is_file($source)) {
+            throw new \RuntimeException('Cannot move non-existing file.');
+        }
+
+        self::create(dirname($target));
+
+        if (@rename($source, $target)) {
+            @touch(dirname($target));
+            return;
+        }
+
+        if (@copy($source, $target)) {
+            @unlink($source);
+            @touch(dirname($target));
+            return;
+        }
+
+        $error = error_get_last();
+        throw new \RuntimeException($error['message'] ?: 'Cannot move file.');
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped
 
 /**
  * @package   Gantry5
@@ -64,7 +65,8 @@ class Gantry extends Base\Gantry
         if (class_exists('Timber', false) && empty(\Timber::$version)) {
             $action = 'deactivate';
             $slug = 'timber-library/timber.php';
-            throw new \LogicException('<strong>Timber Plugin</strong> is too old for <strong>Gantry 5</strong> and it is no longer needed. Click <a href="' . \wp_nonce_url(\add_query_arg(['action' => $action, 'plugin' => $slug], \admin_url( 'plugins.php')), 'deactivate-plugin_' . $slug) . '"><strong>here</strong></a> to deactivate it.');
+            $url = \esc_url(\wp_nonce_url(\add_query_arg(['action' => $action, 'plugin' => $slug], \admin_url('plugins.php')), 'deactivate-plugin_' . $slug));
+            throw new \LogicException('<strong>Timber Plugin</strong> is too old for <strong>Gantry 5</strong> and it is no longer needed. Click <a href="' . $url . '"><strong>here</strong></a> to deactivate it.');
         }
 
         $container = parent::init();

@@ -20,6 +20,15 @@ namespace Gantry\WordPress;
 abstract class Utilities
 {
     /**
+     * @param string $string
+     * @return int
+     */
+    protected static function compatLength($string)
+    {
+        return preg_match_all('/./us', $string, $matches) ?: strlen($string);
+    }
+
+    /**
      * @param string $text
      * @param int $length
      * @param string $ending
@@ -179,14 +188,14 @@ abstract class Utilities
 
         if ($considerHtml) {
             // if the plain text is shorter than the maximum length, return the whole text
-            if (strlen(utf8_decode(preg_replace(['/<.*?>/', '/\n/', '/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i'], ['', '', ' '], $text))) <= $length) {
+            if (static::compatLength(preg_replace(['/<.*?>/', '/\n/', '/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i'], ['', '', ' '], $text)) <= $length) {
                 return $text;
             }
 
             // splits all html-tags to scanable lines
             preg_match_all('/(<.+?>)?([^<>]*)/s', $text, $lines, PREG_SET_ORDER);
 
-            $total_length = ($ending === '&hellip;') ? 2 : strlen(utf8_decode($ending));
+            $total_length = ($ending === '&hellip;') ? 2 : static::compatLength($ending);
             $truncate     = '';
 
             foreach ($lines as $line_matchings) {
@@ -213,7 +222,7 @@ abstract class Utilities
                 }
 
                 // calculate the length of the plain text part of the line; handle entities as one character
-                $content_length = strlen(utf8_decode(preg_replace('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i', ' ', $line_matchings[2])));
+                $content_length = static::compatLength(preg_replace('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i', ' ', $line_matchings[2]));
                 if ($total_length + $content_length > $length) {
                     // the number of characters which are left
                     $left            = $length - $total_length;
@@ -224,7 +233,7 @@ abstract class Utilities
                         foreach ($entities[0] as $entity) {
                             if ($entity[1] + 1 - $entities_length <= $left) {
                                 $left--;
-                                $entities_length += strlen(utf8_decode($entity[0]));
+                                $entities_length += static::compatLength($entity[0]);
                             } else {
                                 // no more characters left
                                 break;
@@ -245,11 +254,11 @@ abstract class Utilities
                 }
             }
         } else {
-            if (strlen(utf8_decode($text)) <= $length) {
+            if (static::compatLength($text) <= $length) {
                 return $text;
             }
 
-            $truncate = substr($text, 0, $length - strlen(utf8_decode($ending)));
+            $truncate = substr($text, 0, $length - static::compatLength($ending));
         }
 
         // if the words shouldn't be cut in the middle...

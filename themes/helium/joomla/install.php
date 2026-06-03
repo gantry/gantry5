@@ -3,8 +3,8 @@
 /**
  * @package   Gantry 5 Theme
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2022 Tiger12, LLC
  * @license   GNU/GPLv2 and later
  *
@@ -17,9 +17,9 @@ use Gantry\Framework\Gantry;
 use Gantry\Framework\ThemeInstaller;
 use Gantry5\Loader;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Installer\Adapter\TemplateAdapter;
 use Joomla\CMS\Language\Text;
+use Joomla\Filesystem\Folder;
 
 /**
  * Class G5_HeliumInstallerScript
@@ -80,8 +80,30 @@ class G5_HeliumInstallerScript
             return true;
         }
 
+        $app = Factory::getApplication();
+        $manifest = $parent->getManifest();
+        $template = $parent->getName();
+
+        // Auto-cleanup duplicates (old templates without proper element/version)
+        $db = Factory::getDbo();
+        $query = $db->getQuery(true)
+            ->select('*')
+            ->from('#__extensions')
+            ->where($db->quoteName('name') . ' = ' . $db->quote((string) $manifest->name))
+            ->where($db->quoteName('type') . ' = ' . $db->quote('template'))
+            ->where($db->quoteName('client_id') . ' = 0')
+            ->where($db->quoteName('element') . ' != ' . $db->quote($template));
+        $oldTemplates = $db->setQuery($query)->loadObjectList();
+
+        foreach ($oldTemplates as $old) {
+            if (version_compare((string) $old->version, (string) $manifest->version, '<')) {
+                $installer = new \Joomla\CMS\Installer\Installer($this);
+                $installer->uninstall('template', $old->extension_id);
+                $app->enqueueMessage("Removed old duplicate: {$old->name} v{$old->version}", 'info');
+            }
+        }
         // Delete previous jQuery overrides, those just break things.
-        $search = JPATH_ROOT . "/templates/{$parent->getName()}/js/jui";
+        $search = JPATH_ROOT . "/templates/{$template}/js/jui";
         if (Folder::exists($search)) {
             Folder::delete($search);
         }

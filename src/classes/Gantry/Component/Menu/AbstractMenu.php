@@ -94,7 +94,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
      * @param array|null $orderMap
      * @return array
      */
-    public static function prepareMenuItems(array $items, array $ordering, array $orderMap = null)
+    public static function prepareMenuItems(array $items, array $ordering, ?array $orderMap = null)
     {
         $ordering = static::fixOrdering($ordering);
         static::embedOrderingRecurse($items, $ordering);
@@ -269,7 +269,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
      * @param Config $menu
      * @return AbstractMenu
      */
-    public function instance(array $params = [], Config $menu = null)
+    public function instance(array $params = [], ?Config $menu = null)
     {
         $params += $this->defaults;
 
@@ -627,7 +627,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
      * @param string $path
      * @param array $map
      */
-    public function sortAll(array $ordering = null, $path = '', $map = null)
+    public function sortAll(?array $ordering = null, $path = '', $map = null)
     {
         if ($ordering === null) {
             $config = $this->config();

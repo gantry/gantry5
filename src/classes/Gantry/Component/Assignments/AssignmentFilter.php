@@ -32,7 +32,7 @@ class AssignmentFilter
     * @param callable|null $function    Matching function.
      * @return array
      */
-    public function scores(array &$candidates, array &$page, callable $function = null)
+    public function scores(array &$candidates, array &$page, ?callable $function = null)
     {
         $matches = $this->matches($candidates, $page, $function);
 
@@ -56,7 +56,7 @@ class AssignmentFilter
      * @param callable|null $function Matching function.
      * @return array
      */
-    public function matches(array $candidates, array &$page, callable $function = null)
+    public function matches(array $candidates, array &$page, ?callable $function = null)
     {
         $matches = [];
         foreach ($candidates as $type => $candidate) {

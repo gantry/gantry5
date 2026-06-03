@@ -498,7 +498,7 @@ class Validation
 
         $dateFromFormat = \DateTime::createFromFormat($params['format'], $value);
 
-        return $dateFromFormat && $value === date($params['format'], $dateFromFormat->getTimestamp());
+        return $dateFromFormat && $value === gmdate($params['format'], $dateFromFormat->getTimestamp());
     }
 
     /**

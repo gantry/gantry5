@@ -91,7 +91,7 @@ abstract class AbstractTheme
      * @param LoaderInterface $loader
      * @return Environment
      */
-    public function extendTwig(Environment $twig, LoaderInterface $loader = null)
+    public function extendTwig(Environment $twig, ?LoaderInterface $loader = null)
     {
         if ($twig->hasExtension(TwigExtension::class)) {
             return $twig;
@@ -286,7 +286,7 @@ abstract class AbstractTheme
     /**
      * @deprecated 5.1.5
      */
-    public function add_to_twig(Environment $twig, LoaderInterface $loader = null)
+    public function add_to_twig(Environment $twig, ?LoaderInterface $loader = null)
     {
         return $this->extendTwig($twig, $loader);
     }

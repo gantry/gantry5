@@ -131,7 +131,7 @@ class Particles
         $files = $this->locateParticles();
 
         if (empty($files[$id])) {
-            throw new \RuntimeException(sprintf("Settings for '%s' not found.", $id), 404);
+            throw new \RuntimeException('Settings not found.', 404);
         }
 
         $filename = key($files[$id]);

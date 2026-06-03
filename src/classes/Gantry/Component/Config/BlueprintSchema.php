@@ -1,10 +1,11 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped
 
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2022 Tiger12, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
@@ -126,11 +127,13 @@ class BlueprintSchema extends BlueprintSchemaBase
             $messages = $this->validateArray($data, $this->nested);
 
         } catch (\RuntimeException $e) {
-            throw (new ValidationException($e->getMessage(), $e->getCode(), $e))->setMessages();
+            $exception = new ValidationException($e->getMessage(), $e->getCode(), $e);
+            throw $exception->setMessages();
         }
 
         if (!empty($messages)) {
-            throw (new ValidationException())->setMessages($messages);
+            $exception = new ValidationException();
+            throw $exception->setMessages($messages);
         }
     }
 

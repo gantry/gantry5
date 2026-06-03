@@ -88,12 +88,12 @@ class Input implements \ArrayAccess, \Iterator, ExportInterface
         }
 
         if (!is_string($data)) {
-            throw new \RuntimeException(sprintf('%s::%s(%s) expects input to be JSON encoded string', __CLASS__, __FUNCTION__, $path));
+            throw new \RuntimeException('Input expects a JSON encoded string.');
         }
 
         $data = json_decode($data, $assoc);
         if (!isset($data)) {
-            throw new \RuntimeException(sprintf('%s::%s(): %s', __CLASS__, __FUNCTION__, json_last_error_msg()));
+            throw new \RuntimeException('Failed to decode JSON input.');
         }
 
         return $data;

@@ -48,13 +48,13 @@ interface CssCompilerInterface
      * @param array $paths
      * @return $this
      */
-    public function setPaths(array $paths = null);
+    public function setPaths(?array $paths = null);
 
     /**
      * @param array $files
      * @return $this
      */
-    public function setFiles(array $files = null);
+    public function setFiles(?array $files = null);
 
     /**
      * @param array $fonts

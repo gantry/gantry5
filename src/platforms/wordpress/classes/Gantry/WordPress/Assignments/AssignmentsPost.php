@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound,WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 
 /**
  * @package   Gantry5
@@ -88,7 +89,7 @@ class AssignmentsPost implements AssignmentsInterface
         // Get label and items for each post types
         $list = [];
         foreach($post_types as $post_type) {
-            $post_type = \apply_filters('g5_assignments_' . $post_type->name . '_object', $post_type);
+            $post_type = \apply_filters('gantry5_assignments_' . $post_type->name . '_object', $post_type);
 
             if($post_type) {
                 $list[$post_type->name]['label'] = $post_type->labels->name;
@@ -120,7 +121,7 @@ class AssignmentsPost implements AssignmentsInterface
 
         $args = \wp_parse_args($args, $defaults);
 
-        $post_types = \get_post_types(\apply_filters('g5_assignments_get_post_types_args', $args), 'object');
+        $post_types = \get_post_types(\apply_filters('gantry5_assignments_get_post_types_args', $args), 'object');
 
         return $post_types;
     }
@@ -148,7 +149,7 @@ class AssignmentsPost implements AssignmentsInterface
             'order'                  => 'ASC',
             'orderby'                => 'title',
             'post_type'              => $post_type->name,
-            'suppress_filters'       => true,
+            'suppress_filters'       => false,
             'update_post_term_cache' => false,
             'update_post_meta_cache' => false,
             'posts_per_page'         => -1
@@ -219,7 +220,7 @@ class AssignmentsPost implements AssignmentsInterface
 
         }
 
-        return \apply_filters('g5_assignments_' . $post_type->name . '_list_items', $items, $post_type, $this->type);
+        return \apply_filters('gantry5_assignments_' . $post_type->name . '_list_items', $items, $post_type, $this->type);
 
     }
 
@@ -249,7 +250,7 @@ class AssignmentsPost implements AssignmentsInterface
 
         foreach($taxonomies as $tax) {
             $taxonomy = \get_taxonomy($tax);
-            $terms    = \get_terms($tax, $args);
+            $terms    = \get_terms(array_merge($args, ['taxonomy' => $tax]));
 
             if ($terms) {
                 $items[] = [
@@ -289,6 +290,6 @@ class AssignmentsPost implements AssignmentsInterface
             }
         }
 
-        return \apply_filters('g5_assignments_' . $post_type->name . '_terms_list_items', $items, $taxonomies, $post_type, $this->type);
+        return \apply_filters('gantry5_assignments_' . $post_type->name . '_terms_list_items', $items, $taxonomies, $post_type, $this->type);
     }
 }

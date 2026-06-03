@@ -165,6 +165,9 @@ class Pkg_Gantry5InstallerScript
         // Enable and lock extensions to prevent uninstalling them individually.
         $this->prepareExtensions($manifest, 1);
 
+        // Repair missing update-site registrations for installed Gantry templates.
+        $this->registerTemplateUpdateSites();
+
         // Make sure that all file formats used by Gantry 5 are editable from template manager.
         $this->adjustTemplateSettings();
 
@@ -258,6 +261,132 @@ class Pkg_Gantry5InstallerScript
         $items = array_flip(explode(',', $string)) + array_flip($options);
 
         return implode(',', array_keys($items));
+    }
+
+    protected function registerTemplateUpdateSites()
+    {
+        $db = Factory::getDbo();
+
+        $query = $db->getQuery(true)
+            ->select('extension_id, element')
+            ->from('#__extensions')
+            ->where('type=' . $db->quote('template'))
+            ->where('client_id=0')
+            ->where('element IN (' . $db->quote('g5_hydrogen') . ',' . $db->quote('g5_helium') . ')');
+        $db->setQuery($query);
+
+        $templates = (array) $db->loadObjectList();
+
+        foreach ($templates as $template) {
+            $this->registerTemplateUpdateSite((int) $template->extension_id, (string) $template->element);
+        }
+    }
+
+    /**
+     * @param int $extensionId
+     * @param string $template
+     */
+    protected function registerTemplateUpdateSite($extensionId, $template)
+    {
+        if (!$extensionId || !$template) {
+            return;
+        }
+
+        $manifestFile = JPATH_SITE . "/templates/{$template}/templateDetails.xml";
+        if (!is_file($manifestFile)) {
+            return;
+        }
+
+        $manifest = simplexml_load_file($manifestFile);
+        if (!$manifest || empty($manifest->updateservers->server)) {
+            return;
+        }
+
+        $server = $manifest->updateservers->server[0];
+        $location = trim((string) $server);
+        if ($location === '') {
+            return;
+        }
+
+        $name = trim((string) $server['name']) ?: $template;
+        $type = trim((string) $server['type']) ?: 'extension';
+        $enabled = isset($server['enabled']) ? (int) $server['enabled'] : 1;
+
+        $db = Factory::getDbo();
+
+        $query = $db->getQuery(true)
+            ->select('us.update_site_id')
+            ->from($db->quoteName('#__update_sites', 'us'))
+            ->innerJoin(
+                $db->quoteName('#__update_sites_extensions', 'usex') .
+                ' ON ' . $db->quoteName('usex.update_site_id') . ' = ' . $db->quoteName('us.update_site_id')
+            )
+            ->where($db->quoteName('usex.extension_id') . ' = ' . (int) $extensionId)
+            ->where($db->quoteName('us.location') . ' = ' . $db->quote($location));
+        $db->setQuery($query);
+        $updateSiteId = (int) $db->loadResult();
+
+        if ($updateSiteId) {
+            $query = $db->getQuery(true)
+                ->update($db->quoteName('#__update_sites'))
+                ->set($db->quoteName('name') . ' = ' . $db->quote($name))
+                ->set($db->quoteName('type') . ' = ' . $db->quote($type))
+                ->set($db->quoteName('location') . ' = ' . $db->quote($location))
+                ->set($db->quoteName('enabled') . ' = ' . (int) $enabled)
+                ->where($db->quoteName('update_site_id') . ' = ' . $updateSiteId);
+            $db->setQuery($query);
+            $db->execute();
+
+            return;
+        }
+
+        $query = $db->getQuery(true)
+            ->select('update_site_id')
+            ->from($db->quoteName('#__update_sites'))
+            ->where($db->quoteName('location') . ' = ' . $db->quote($location));
+        $db->setQuery($query);
+        $updateSiteId = (int) $db->loadResult();
+
+        if ($updateSiteId) {
+            $query = $db->getQuery(true)
+                ->update($db->quoteName('#__update_sites'))
+                ->set($db->quoteName('name') . ' = ' . $db->quote($name))
+                ->set($db->quoteName('type') . ' = ' . $db->quote($type))
+                ->set($db->quoteName('enabled') . ' = ' . (int) $enabled)
+                ->where($db->quoteName('update_site_id') . ' = ' . $updateSiteId);
+            $db->setQuery($query);
+            $db->execute();
+        } else {
+            $updateSite = (object) array(
+                'name' => $name,
+                'type' => $type,
+                'location' => $location,
+                'enabled' => $enabled,
+                'extra_query' => ''
+            );
+            $db->insertObject('#__update_sites', $updateSite, 'update_site_id');
+            $updateSiteId = (int) $updateSite->update_site_id;
+        }
+
+        if (!$updateSiteId) {
+            return;
+        }
+
+        $query = $db->getQuery(true)
+            ->select('COUNT(*)')
+            ->from($db->quoteName('#__update_sites_extensions'))
+            ->where($db->quoteName('update_site_id') . ' = ' . $updateSiteId)
+            ->where($db->quoteName('extension_id') . ' = ' . (int) $extensionId);
+        $db->setQuery($query);
+        $exists = (int) $db->loadResult();
+
+        if (!$exists) {
+            $link = (object) array(
+                'update_site_id' => $updateSiteId,
+                'extension_id' => (int) $extensionId
+            );
+            $db->insertObject('#__update_sites_extensions', $link);
+        }
     }
 
     /**

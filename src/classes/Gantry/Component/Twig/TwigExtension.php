@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped,Internal.LineEndings.Mixed
 
 /**
  * @package   Gantry5
@@ -417,7 +418,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
      * @param array $settings
      * @return mixed|string
      */
-    public function markdownFunction($string, $block = true, array $settings = null)
+    public function markdownFunction($string, $block = true, ?array $settings = null)
     {
         // Initialize the preferred variant of Parsedown
         if (!empty($settings['extra'])) {

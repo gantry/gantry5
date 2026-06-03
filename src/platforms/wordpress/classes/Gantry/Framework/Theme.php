@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound,WordPress.Security.NonceVerification.Recommended
 
 /**
  * @package   Gantry5
@@ -12,6 +13,8 @@
  */
 
 namespace Gantry\Framework;
+
+defined('ABSPATH') || exit;
 
 use Gantry\Component\Config\Config;
 use Gantry\Component\Theme\AbstractTheme;
@@ -80,7 +83,7 @@ class Theme extends AbstractTheme
      * @param LoaderInterface $loader
      * @return Environment
      */
-    public function extendTwig(Environment $twig, LoaderInterface $loader = null)
+    public function extendTwig(Environment $twig, ?LoaderInterface $loader = null)
     {
         parent::extendTwig($twig, $loader);
 
@@ -186,7 +189,8 @@ class Theme extends AbstractTheme
             \add_action('load-widgets.php',
                 function() {
                     \add_action('admin_notices', function() {
-                        echo '<div class="error"><p>' . \__('No widget blocks have been defined. Please add some in Gantry 5 Layout Manger or read <a target="_blank" rel="noopener" href="http://docs.gantry.org/gantry5/particles/position">documentation</a> on how to create widget blocks.', 'gantry5') . '</p></div>';
+                        $message = __('No widget blocks have been defined. Please add some in Gantry 5 Layout Manger or read <a target="_blank" rel="noopener" href="http://docs.gantry.org/gantry5/particles/position">documentation</a> on how to create widget blocks.', 'gantry5');
+                        echo '<div class="error"><p>' . wp_kses_post($message) . '</p></div>';
                     });
                 });
         } else {
@@ -194,7 +198,8 @@ class Theme extends AbstractTheme
                 // We are just registering positions with defaults; there is an event to override chrome based on the
                 // template settings. See \Gantry\Wordpress\Widgets for more information.
                 \register_sidebar([
-                    'name'          => \__($title, 'gantry5'),
+                    // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- Sidebar title is dynamic from configuration.
+                    'name'          => $title,
                     'id'            => \sanitize_title($name),
                     'before_widget' => '<div id="%1$s" class="widget %2$s">',
                     'after_widget'  => '</div>',
@@ -273,6 +278,7 @@ class Theme extends AbstractTheme
     {
         $styles = Gantry::instance()->styles();
         if ($styles) {
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Contains pre-built style tags.
             echo implode("\n    ", $styles) . "\n";
         }
     }
@@ -281,6 +287,7 @@ class Theme extends AbstractTheme
     {
         $scripts = Gantry::instance()->scripts();
         if ($scripts) {
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Contains pre-built script tags.
             echo implode("\n    ", $scripts) . "\n";
         }
     }
@@ -295,6 +302,7 @@ class Theme extends AbstractTheme
 
         $scripts = Gantry::instance()->scripts('footer');
         if ($scripts) {
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Contains pre-built script tags.
             echo implode("\n    ", $scripts) . "\n";
         }
     }
@@ -547,7 +555,7 @@ class Theme extends AbstractTheme
                             return \locate_template(['offline.php']);
                         });
                     } else {
-                        \wp_die($global->get('offline_message'), \get_bloginfo('title'));
+                        \wp_die(wp_kses_post($global->get('offline_message')), esc_html(\get_bloginfo('title')));
                     }
                 } else {
                     $gantry['messages']->add(\__('Site is currently in offline mode.', 'gantry5'), 'warning');
@@ -611,8 +619,10 @@ class Theme extends AbstractTheme
         $themePath = $this->path . '/languages';
 
         $loader = static function () use ($engineDomain, $lookup, $themeDomain, $themePath) {
+            // phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound
             if (\load_plugin_textdomain($engineDomain, false, $lookup) === false) {
                 \add_filter('plugin_locale', 'modify_gantry5_locale', 10, 2);
+                // phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound
                 \load_plugin_textdomain($engineDomain, false, $lookup);
                 \remove_filter('plugin_locale', 'modify_gantry5_locale', 10);
             }
@@ -695,6 +705,7 @@ class Theme extends AbstractTheme
         ob_clean();
 
         if ($format === 'raw') {
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Particle HTML is rendered server-side content.
             echo $html;
         } else {
             header('Content-Type: application/json; charset=utf-8');

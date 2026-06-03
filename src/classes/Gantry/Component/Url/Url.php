@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.WP.AlternativeFunctions.parse_url_parse_url
 
 /**
  * @package   Gantry5
@@ -37,7 +38,7 @@ class Url
             $url
         );
 
-        $parts = parse_url($encodedUrl);
+        $parts = function_exists('wp_parse_url') ? wp_parse_url($encodedUrl) : parse_url($encodedUrl);
 
         if (!$parts) {
             return false;

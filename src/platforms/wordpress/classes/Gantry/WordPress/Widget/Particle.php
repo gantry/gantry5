@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.NonceVerification.Missing,WordPress.Security.EscapeOutput.OutputNotEscaped,WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 /**
  * @package   Gantry5
@@ -12,6 +13,8 @@
  */
 
 namespace Gantry\WordPress\Widget;
+
+defined('ABSPATH') || exit;
 
 use Gantry\Admin\Router;
 use Gantry\Component\Config\Config;

@@ -104,7 +104,7 @@ class Menu extends HtmlController
         // Get menu item and make sure it exists.
         $item = $resource->get($path);
         if (!$item) {
-            throw new \RuntimeException(sprintf('Menu item not found: %s', $path), 404);
+            throw new \RuntimeException('Menu item not found.', 404);
         }
 
         // Fill parameters to be passed to the template file.
@@ -531,7 +531,7 @@ class Menu extends HtmlController
      * @return AbstractMenu
      * @throws \RuntimeException
      */
-    protected function loadResource($id, Config $config = null)
+    protected function loadResource($id, ?Config $config = null)
     {
         /** @var MenuObject $menus */
         $menus = $this->container['menu'];
