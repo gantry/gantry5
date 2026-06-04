@@ -1,10 +1,11 @@
 <?php
+// phpcs:disable WordPress.PHP.DevelopmentFunctions.prevent_path_disclosure_error_reporting
 
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2022 Tiger12, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
@@ -100,7 +101,7 @@ class SystemFacade extends \Whoops\Util\SystemFacade
     {
         // TODO: remove when upgrading to Twig 2+
         if (($level === E_DEPRECATED) && strpos($file, '/twig/') !== false) {
-            if (str_contains($message, '#[\ReturnTypeWillChange]') || str_contains($message, 'Passing null to parameter')) {
+            if (strpos($message, '#[\ReturnTypeWillChange]') !== false || strpos($message, 'Passing null to parameter') !== false) {
                 return true;
             }
         }
@@ -168,5 +169,31 @@ class SystemFacade extends \Whoops\Util\SystemFacade
         if ($error && !($error['type'] & (E_CORE_WARNING | E_CORE_ERROR))) {
             $handler();
         }
+    }
+
+    /**
+     * Avoid raising a secondary warning if headers have already been finalized.
+     *
+     * @param int $httpCode
+     * @return int
+     */
+    public function setHttpResponseCode($httpCode)
+    {
+        if (!function_exists('http_response_code')) {
+            return $httpCode;
+        }
+
+        if (!headers_sent()) {
+            header_remove('location');
+        }
+
+        $previousLevel = error_reporting();
+        error_reporting($previousLevel & ~E_WARNING);
+
+        $result = http_response_code($httpCode);
+
+        error_reporting($previousLevel);
+
+        return $result ?: $httpCode;
     }
 }

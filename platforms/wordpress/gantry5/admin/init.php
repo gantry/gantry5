@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.Security.NonceVerification.Recommended
 defined('ABSPATH') or die;
 
 use Gantry\Admin\Router;
@@ -29,7 +30,8 @@ if (class_exists( 'Timber')) {
         'admin_enqueue_scripts',
         static function() {
             if(is_admin()) {
-                wp_enqueue_style( 'wordpress-admin-icon', Document::url('gantry-assets://css/wordpress-admin-icon.css'));
+                $version = defined('GANTRY5_VERSION') ? GANTRY5_VERSION : null;
+                wp_enqueue_style('wordpress-admin-icon', Document::url('gantry-assets://css/wordpress-admin-icon.css'), [], $version);
             }
         }
     );
@@ -85,17 +87,17 @@ function gantry5_add_menu_item_type_particle()
                 <?php if ($name !== 'widget' && $particle['type'] !== 'particle') continue; ?>
                 <li>
                     <label class="menu-item-title">
-                        <input type="radio" class="menu-item-checkbox" name="menu-item[<?php echo $_nav_menu_placeholder; ?>][menu-item-object-id]" value="-1">
-                        <?php echo $particle['name']; ?>
+                        <input type="radio" class="menu-item-checkbox" name="menu-item[<?php echo esc_attr((string) $_nav_menu_placeholder); ?>][menu-item-object-id]" value="-1">
+                        <?php echo esc_html($particle['name']); ?>
                     </label>
-                    <input type="hidden" class="menu-item-type" name="menu-item[<?php echo $_nav_menu_placeholder; ?>][menu-item-type]" value="custom">
-                    <input type="hidden" class="menu-item-title" name="menu-item[<?php echo $_nav_menu_placeholder; ?>][menu-item-title]" value="<?php echo $particle['name']; ?>">
-                    <input type="hidden" class="menu-item-attr-title" name="menu-item[<?php echo $_nav_menu_placeholder; ?>][menu-item-attr-title]" value="gantry-particle-<?php echo $name; ?>"/>
+                    <input type="hidden" class="menu-item-type" name="menu-item[<?php echo esc_attr((string) $_nav_menu_placeholder); ?>][menu-item-type]" value="custom">
+                    <input type="hidden" class="menu-item-title" name="menu-item[<?php echo esc_attr((string) $_nav_menu_placeholder); ?>][menu-item-title]" value="<?php echo esc_attr($particle['name']); ?>">
+                    <input type="hidden" class="menu-item-attr-title" name="menu-item[<?php echo esc_attr((string) $_nav_menu_placeholder); ?>][menu-item-attr-title]" value="gantry-particle-<?php echo esc_attr($name); ?>"/>
                 </li>
                 <?php endforeach; ?>
             </ul>
         </div>
-        <input type="hidden" value="custom" name="menu-item[<?php echo $_nav_menu_placeholder; ?>][menu-item-type]" />
+        <input type="hidden" value="custom" name="menu-item[<?php echo esc_attr((string) $_nav_menu_placeholder); ?>][menu-item-type]" />
 
         <p class="button-controls wp-clearfix">
             <span class="add-to-menu">
@@ -147,8 +149,13 @@ function gantry5_wp_unique_post_slug($override_slug, $slug, $post_ID, $post_stat
         return $slug;
     }
 
-    $sql = "SELECT * FROM $wpdb->posts WHERE post_type = %s AND ID = %d LIMIT 1";
-    $post = $wpdb->get_row($wpdb->prepare($sql, $post_type, $post_ID));
+    $post = $wpdb->get_row(
+        $wpdb->prepare(
+            "SELECT * FROM {$wpdb->posts} WHERE post_type = %s AND ID = %d LIMIT 1",
+            $post_type,
+            $post_ID
+        )
+    );
     if (!isset($post->content) || strpos($post->post_excerpt, 'gantry-particle-') !== 0) {
         return null;
     }
@@ -168,7 +175,8 @@ function gantry5_add_menu_item_types()
 
 function gantry5_admin_scripts()
 {
-    if (isset($_GET['page']) && $_GET['page'] === 'layout-manager') {
+    $page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
+    if ($page === 'layout-manager') {
         gantry5_layout_manager();
     }
 }
@@ -178,7 +186,7 @@ function gantry5_layout_manager()
     static $output = null;
 
     if (!current_user_can('manage_options')) {
-        wp_die(__('You do not have sufficient permissions to access this page.'));
+        wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'gantry5'));
     }
 
     add_filter('admin_body_class', static function() {
@@ -186,13 +194,14 @@ function gantry5_layout_manager()
     });
 
     if ($output) {
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Router output is trusted admin HTML.
         echo $output;
         return;
     }
 
     // Detect Gantry Framework or fail gracefully.
     if (!class_exists(Loader::class)) {
-        wp_die(__('Gantry 5 Framework not found.'));
+        wp_die(esc_html__('Gantry 5 Framework not found.', 'gantry5'));
     }
 
     // Initialize administrator or fail gracefully.

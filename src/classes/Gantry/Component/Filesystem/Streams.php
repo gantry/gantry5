@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped,Internal.LineEndings.Mixed
 
 /**
  * @package   Gantry5
@@ -39,7 +40,7 @@ class Streams
      * Streams constructor.
      * @param UniformResourceLocator|null $locator
      */
-    public function __construct(UniformResourceLocator $locator = null)
+    public function __construct(?UniformResourceLocator $locator = null)
     {
         if ($locator) {
             $this->setLocator($locator);

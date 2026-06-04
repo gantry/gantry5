@@ -1,8 +1,8 @@
 details:
   name: Helium
-  version: '5.6.1'
+  version: '@version@'
   icon: paper-plane
-  date: 'Sep 15, 2025'
+  date: '@versiondate@'
   author:
     name: 'Tiger12, LLC'
     email: 'gantry@tiger12.com'

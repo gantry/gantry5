@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 /**
  * @package   Gantry5
@@ -71,7 +72,7 @@ class AssignmentsContext implements AssignmentsInterface
         }
 
         // Allow to filter out rules by 3rd party plugin integration
-        $rules = \apply_filters('g5_assignments_page_context_rules', $rules, $this->priority);
+        $rules = \apply_filters('gantry5_assignments_page_context_rules', $rules, $this->priority);
 
         return [$rules];
     }
@@ -97,7 +98,7 @@ class AssignmentsContext implements AssignmentsInterface
     {
         $items = [];
 
-        $context = \apply_filters('g5_assignments_page_context_array', $this->context, $this->type);
+        $context = \apply_filters('gantry5_assignments_page_context_array', $this->context, $this->type);
         ksort($context);
 
         foreach($context as $conditional => $label) {
@@ -107,7 +108,7 @@ class AssignmentsContext implements AssignmentsInterface
             ];
         }
 
-        return \apply_filters('g5_assignments_page_context_list_items', $items, $this->type);
+        return \apply_filters('gantry5_assignments_page_context_list_items', $items, $this->type);
     }
 
 }

@@ -1,3 +1,16 @@
+# 5.6.2
+## 06/03/2026
+1. [WordPress](#WordPress)
+    1. [](#improved)
+      - Added compatibility with Wordpress 7
+      - Highest supported Wordpress major for this release is Wordpress 7.x
+      - Minimum PHP version for Wordpress packages is 8.1.0 and maximum supported is up to PHP 8.4.x
+2. [joomla](#joomla)
+    1. [](#improved)
+     - Added compatibility with Joomla 6
+     - Highest supported Joomla major for this release is Joomla 6.x
+     - Minimum PHP version for Joomla packages is 8.1.0 and maximum supported is up to PHP 8.4.x
+
 # 5.6.1
 ## 04/08/2026
 1. [joomla](#joomla)
@@ -28,7 +41,7 @@
     1. [](#improved)
         - WordPress compatibility tested through 6.9.1
         - Minimum PHP version for WordPress package/runtime is 8.1.0 and maximum supported is up to PHP 8.3.x
-    1. [](#bugfix)
+    2. [](#bugfix)
         - Fixed deprecation warning related to $types events
 4. [Grav](#grav)
     1. [](#improved)

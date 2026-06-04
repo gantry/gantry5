@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.WP.AlternativeFunctions.rand_mt_rand
 
 /**
  * @package   Gantry5
@@ -525,7 +526,7 @@ class Format2
 
         if (!$id || isset($this->keys[$key][$id])) {
             do {
-                $id = mt_rand(1000, 9999);
+                $id = function_exists('wp_rand') ? wp_rand(1000, 9999) : mt_rand(1000, 9999);
                 if (!isset($this->keys[$key][$id])) {
                     break;
                 }

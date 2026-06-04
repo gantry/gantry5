@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped
 
 /**
  * @package   Gantry5
@@ -108,7 +109,7 @@ class OutlineCollection extends Collection
      * @param string[]|null $include
      * @return $this
      */
-    public function filter(array $include = null)
+    public function filter(?array $include = null)
     {
         if ($include !== null) {
             foreach ($this->items as $key => $item) {
@@ -466,7 +467,7 @@ class OutlineCollection extends Collection
         }
 
         if ($name === 'default') {
-            throw new \RuntimeException("Outline cannot use reserved name '{$name}'", 400);
+            throw new \RuntimeException(sprintf('Outline cannot use reserved name "%s".', $name), 400);
         }
 
         $name = $this->findFreeName($name);
@@ -498,7 +499,7 @@ class OutlineCollection extends Collection
     public function duplicate($id, $title = null, $inherit = false)
     {
         if (!$this->canDuplicate($id)) {
-            throw new \RuntimeException("Outline '{$id}' cannot be duplicated", 400);
+            throw new \RuntimeException(sprintf('Outline "%s" cannot be duplicated.', $id), 400);
         }
 
         $layout = Layout::load($id);
@@ -528,7 +529,7 @@ class OutlineCollection extends Collection
             // Copy everything over except index, layout and assignments.
             Folder::copy($path, $newPath, '/^(index|layout|assignments)\..*$/');
         } catch (\Exception $e) {
-            throw new \RuntimeException(sprintf('Duplicating Outline failed: %s', $e->getMessage()), 500, $e);
+            throw new \RuntimeException('Duplicating outline failed.', 500, $e);
         }
 
         return $new;
@@ -543,7 +544,7 @@ class OutlineCollection extends Collection
     public function rename($id, $title)
     {
         if (!$this->canDelete($id)) {
-            throw new \RuntimeException("Outline '{$id}' cannot be renamed", 400);
+            throw new \RuntimeException(sprintf('Outline "%s" cannot be renamed.', $id), 400);
         }
 
         $gantry = $this->container;
@@ -559,12 +560,12 @@ class OutlineCollection extends Collection
         $folder = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $title));
 
         if ($folder === 'default' || $folder[0] === '_') {
-            throw new \RuntimeException("Outline cannot use reserved name '{$folder}'", 400);
+            throw new \RuntimeException(sprintf('Outline cannot use reserved name "%s".', $folder), 400);
         }
 
         $newPath = $locator->findResource("{$this->path}/{$folder}", true, true);
         if (is_dir($newPath)) {
-            throw new \RuntimeException("Outline '$id' already exists.", 400);
+            throw new \RuntimeException(sprintf('Outline "%s" already exists.', $id), 400);
         }
 
         try {
@@ -578,7 +579,7 @@ class OutlineCollection extends Collection
             Folder::move($path, $newPath);
 
         } catch (\Exception $e) {
-            throw new \RuntimeException(sprintf('Renaming Outline failed: %s', $e->getMessage()), 500, $e);
+            throw new \RuntimeException('Renaming outline failed.', 500, $e);
         }
 
         $this->items[$id] = $title;
@@ -593,7 +594,7 @@ class OutlineCollection extends Collection
     public function delete($id)
     {
         if (!$this->canDelete($id)) {
-            throw new \RuntimeException("Outline '{$id}' cannot be deleted", 400);
+            throw new \RuntimeException(sprintf('Outline "%s" cannot be deleted.', $id), 400);
         }
 
         $gantry = $this->container;

@@ -3,8 +3,8 @@
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2021 Tiger12, LLC
  * @license   GNU/GPLv2 and later
  *
@@ -448,7 +448,7 @@ class ThemeInstaller extends AbstractInstaller
      * @param int $parent
      * @throws \RuntimeException
      */
-    public function installMenus(array $menus = null, $parent = 1)
+    public function installMenus(?array $menus = null, $parent = 1)
     {
         if ($menus === null) {
             $path = $this->getPath();
@@ -571,6 +571,25 @@ class ThemeInstaller extends AbstractInstaller
         $manifest = new Manifest($name);
         $manifest->setPositions(array_keys($positions));
         $manifest->save();
+
+        $this->registerUpdateSite($manifest);
+    }
+
+    /**
+     * Repair missing Joomla update-site linkage for an installed theme.
+     *
+     * This is useful for older/manual installs where the manifest metadata
+     * exists but Joomla never got the matching update-site association.
+     *
+     * @return void
+     */
+    public function repairUpdateSite()
+    {
+        if (!$this->extension || !$this->extension->extension_id) {
+            return;
+        }
+
+        $this->registerUpdateSite();
     }
 
     /**
@@ -660,5 +679,109 @@ class ThemeInstaller extends AbstractInstaller
         }
 
         return $component_id;
+    }
+
+    /**
+     * Ensure the installed template has its Joomla update server registered.
+     *
+     * Older installs and some custom install flows can miss this linkage, which
+     * prevents Joomla from listing theme updates alongside the Gantry package.
+     *
+     * @param Manifest|null $manifest
+     */
+    protected function registerUpdateSite(?Manifest $manifest = null)
+    {
+        $manifest = $manifest ?: $this->getManifest();
+        $xml = $manifest->getXml();
+
+        if (empty($xml->updateservers->server)) {
+            return;
+        }
+
+        $server = $xml->updateservers->server[0];
+        $location = trim((string) $server);
+        if ($location === '' || !$this->extension->extension_id) {
+            return;
+        }
+
+        $name = trim((string) $server['name']) ?: $this->name;
+        $type = trim((string) $server['type']) ?: 'extension';
+        $enabled = isset($server['enabled']) ? (int) $server['enabled'] : 1;
+
+        $db = Factory::getDbo();
+
+        $query = $db->getQuery(true)
+            ->select('us.update_site_id')
+            ->from($db->quoteName('#__update_sites', 'us'))
+            ->innerJoin(
+                $db->quoteName('#__update_sites_extensions', 'usex') .
+                ' ON ' . $db->quoteName('usex.update_site_id') . ' = ' . $db->quoteName('us.update_site_id')
+            )
+            ->where($db->quoteName('usex.extension_id') . ' = ' . (int) $this->extension->extension_id)
+            ->where($db->quoteName('us.location') . ' = ' . $db->quote($location));
+        $db->setQuery($query);
+        $updateSiteId = (int) $db->loadResult();
+
+        if ($updateSiteId) {
+            $query = $db->getQuery(true)
+                ->update($db->quoteName('#__update_sites'))
+                ->set($db->quoteName('name') . ' = ' . $db->quote($name))
+                ->set($db->quoteName('type') . ' = ' . $db->quote($type))
+                ->set($db->quoteName('location') . ' = ' . $db->quote($location))
+                ->set($db->quoteName('enabled') . ' = ' . (int) $enabled)
+                ->where($db->quoteName('update_site_id') . ' = ' . $updateSiteId);
+            $db->setQuery($query);
+            $db->execute();
+
+            return;
+        }
+
+        $query = $db->getQuery(true)
+            ->select('update_site_id')
+            ->from($db->quoteName('#__update_sites'))
+            ->where($db->quoteName('location') . ' = ' . $db->quote($location));
+        $db->setQuery($query);
+        $updateSiteId = (int) $db->loadResult();
+
+        if ($updateSiteId) {
+            $query = $db->getQuery(true)
+                ->update($db->quoteName('#__update_sites'))
+                ->set($db->quoteName('name') . ' = ' . $db->quote($name))
+                ->set($db->quoteName('type') . ' = ' . $db->quote($type))
+                ->set($db->quoteName('enabled') . ' = ' . (int) $enabled)
+                ->where($db->quoteName('update_site_id') . ' = ' . $updateSiteId);
+            $db->setQuery($query);
+            $db->execute();
+        } else {
+            $updateSite = (object) [
+                'name' => $name,
+                'type' => $type,
+                'location' => $location,
+                'enabled' => $enabled,
+                'extra_query' => ''
+            ];
+            $db->insertObject('#__update_sites', $updateSite, 'update_site_id');
+            $updateSiteId = (int) $updateSite->update_site_id;
+        }
+
+        if (!$updateSiteId) {
+            return;
+        }
+
+        $query = $db->getQuery(true)
+            ->select('COUNT(*)')
+            ->from($db->quoteName('#__update_sites_extensions'))
+            ->where($db->quoteName('update_site_id') . ' = ' . $updateSiteId)
+            ->where($db->quoteName('extension_id') . ' = ' . (int) $this->extension->extension_id);
+        $db->setQuery($query);
+        $exists = (int) $db->loadResult();
+
+        if (!$exists) {
+            $link = (object) [
+                'update_site_id' => $updateSiteId,
+                'extension_id' => (int) $this->extension->extension_id
+            ];
+            $db->insertObject('#__update_sites_extensions', $link);
+        }
     }
 }

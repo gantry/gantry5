@@ -27,6 +27,13 @@ defined('ABSPATH') or die;
 $requiredGantryVersion = '5.5';
 $translationDomain = 'g5_helium';
 
+if (is_admin()) {
+    $gantry_private_updater = __DIR__ . '/private/theme-updates.php';
+    if (file_exists($gantry_private_updater)) {
+        require_once $gantry_private_updater;
+    }
+}
+
 // Bootstrap Gantry framework or fail gracefully.
 $gantry_include = locate_template('/custom/includes/gantry.php') ?: locate_template('/includes/gantry.php');
 if (!$gantry_include) {

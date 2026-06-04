@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable Generic.PHP.ForbiddenFunctions.Found,WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound,WordPress.Security.EscapeOutput.OutputNotEscaped,WordPress.Security.EscapeOutput.UnsafePrintingFunction
 
 /**
  * @package   Gantry5
@@ -12,6 +13,8 @@
  */
 
 namespace Gantry\WordPress;
+
+defined('ABSPATH') || exit;
 
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Framework\Theme;

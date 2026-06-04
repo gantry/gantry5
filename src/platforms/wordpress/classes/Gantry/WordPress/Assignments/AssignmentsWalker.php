@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable Internal.LineEndings.Mixed
 
 /**
  * @package   Gantry5

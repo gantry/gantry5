@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped,Internal.LineEndings.Mixed
 
 /**
  * @package   Gantry5
@@ -96,7 +97,7 @@ abstract class AbstractAssignments
      * @param array|null $candidates
      * @return array
      */
-    public function scores(array $candidates = null)
+    public function scores(?array $candidates = null)
     {
         $this->init();
         $candidates = $candidates ?: $this->candidates;
@@ -110,7 +111,7 @@ abstract class AbstractAssignments
      * @param array|null $candidates
      * @return array
      */
-    public function matches(array $candidates = null)
+    public function matches(?array $candidates = null)
     {
         $this->init();
         $candidates = $candidates ?: $this->candidates;

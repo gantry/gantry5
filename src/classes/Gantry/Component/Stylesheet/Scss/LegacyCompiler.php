@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
@@ -85,7 +86,7 @@ class LegacyCompiler extends \Leafo\ScssPhp\Compiler
      *
      * @return mixed
      */
-    public function get($name, $shouldThrow = true, Environment $env = null, $unreduced = false)
+    public function get($name, $shouldThrow = true, ?Environment $env = null, $unreduced = false)
     {
         try {
             return parent::get($name, $shouldThrow, $env, $unreduced);

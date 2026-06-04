@@ -47,7 +47,7 @@ class Module implements \ArrayAccess
      * @param string $position
      * @param array $data
      */
-    public function __construct($name, $position = null, array $data = null)
+    public function __construct($name, $position = null, ?array $data = null)
     {
         $this->name = $name;
         $this->position = $position;

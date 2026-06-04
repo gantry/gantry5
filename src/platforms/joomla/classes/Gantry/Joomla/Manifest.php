@@ -30,7 +30,7 @@ class Manifest
      * @param \SimpleXMLElement $manifest
      * @throws \RuntimeException
      */
-    public function __construct($theme, \SimpleXMLElement $manifest = null)
+    public function __construct($theme, ?\SimpleXMLElement $manifest = null)
     {
         $this->theme = $theme;
         $this->path = JPATH_SITE . "/templates/{$theme}/templateDetails.xml";

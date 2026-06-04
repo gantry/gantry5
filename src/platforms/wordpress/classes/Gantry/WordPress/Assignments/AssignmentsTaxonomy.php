@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound,WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 
 /**
  * @package   Gantry5
@@ -71,7 +72,7 @@ class AssignmentsTaxonomy implements AssignmentsInterface
         // Get label and items for each taxonomy
         $list = [];
         foreach ($taxonomies as $tax) {
-            $tax = \apply_filters('g5_assignments_' . $this->type . '_' . $tax->name . '_taxonomy_object', $tax);
+            $tax = \apply_filters('gantry5_assignments_' . $this->type . '_' . $tax->name . '_taxonomy_object', $tax);
 
             $list[$tax->name]['label'] = sprintf($this->label, $tax->labels->name);
             $list[$tax->name]['items'][] = [
@@ -113,7 +114,7 @@ class AssignmentsTaxonomy implements AssignmentsInterface
 
         $args = \wp_parse_args($args, $defaults);
 
-        $taxonomies = \get_taxonomies(\apply_filters('g5_assignments_get_taxonomies_args', $args), 'object');
+        $taxonomies = \get_taxonomies(\apply_filters('gantry5_assignments_get_taxonomies_args', $args), 'object');
 
         return $taxonomies;
     }
@@ -141,7 +142,7 @@ class AssignmentsTaxonomy implements AssignmentsInterface
 
         $args = \wp_parse_args($args, $defaults);
 
-        $terms = \get_terms($tax->name, $args);
+        $terms = \get_terms(array_merge($args, ['taxonomy' => $tax->name]));
 
         if (empty($terms) || \is_wp_error($terms)) {
             /*
@@ -172,7 +173,7 @@ class AssignmentsTaxonomy implements AssignmentsInterface
             }
         }
 
-        return \apply_filters('g5_assignments_' . $this->type . '_' . $tax->name . '_taxonomy_list_items', $items, $tax, $this->type);
+        return \apply_filters('gantry5_assignments_' . $this->type . '_' . $tax->name . '_taxonomy_list_items', $items, $tax, $this->type);
 
     }
 

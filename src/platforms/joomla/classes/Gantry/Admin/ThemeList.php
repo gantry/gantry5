@@ -17,6 +17,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Platform;
+use Gantry\Framework\ThemeInstaller;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -163,12 +164,22 @@ class ThemeList
 
         /** @var ThemeDetails[] $list */
         $list = [];
+        $repaired = [];
 
         foreach ($styles as $style)
         {
             $details = isset(static::$items[$style->name]) ? static::$items[$style->name] : null;
             if (!$details) {
                 continue;
+            }
+
+            if (!isset($repaired[$style->name])) {
+                try {
+                    (new ThemeInstaller($style->name))->repairUpdateSite();
+                } catch (\Exception $e) {
+                    // Ignore repair failures here; the theme should still be listed.
+                }
+                $repaired[$style->name] = true;
             }
 
             $params = new Registry($style->params);

@@ -1,5 +1,11 @@
 <?php
 
+if (!defined('ABSPATH')) {
+    if (!defined('_JEXEC') && !defined('GRAV_ROOT')) {
+        exit;
+    }
+}
+
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com

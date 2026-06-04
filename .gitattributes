@@ -6,3 +6,7 @@
 **/js/*.js linguist-vendored
 **/js/*.json linguist-vendored
 **/css-compiled/*.css linguist-vendored
+
+# Enforce normalized line endings in source/distributions.
+* text=auto eol=lf
+*.php text eol=lf

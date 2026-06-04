@@ -3,8 +3,8 @@
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2021 Tiger12, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
@@ -15,6 +15,12 @@
  */
 
 namespace Gantry\Framework\Base;
+
+if (!defined('ABSPATH')) {
+    if (!defined('_JEXEC') && !defined('GRAV_ROOT')) {
+        exit;
+    }
+}
 
 use Gantry\Component\Config\Config;
 use Gantry\Component\System\Messages;
@@ -177,7 +183,7 @@ abstract class Gantry extends Container
      * @param  Event  $event
      * @return Event
      */
-    public function fireEvent($eventName, Event $event = null)
+    public function fireEvent($eventName, ?Event $event = null)
     {
         /** @var EventDispatcher $events */
         $events = $this['events'];

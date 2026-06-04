@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped
 
 /**
  * @package   Gantry5
@@ -81,7 +82,7 @@ trait ThemeTrait
      * @param array $outlines
      * @return array List of CSS warnings.
      */
-    public function updateCss(array $outlines = null)
+    public function updateCss(?array $outlines = null)
     {
         $gantry = static::gantry();
         $compiler = $this->compiler();
@@ -420,7 +421,7 @@ trait ThemeTrait
 
                 } catch (\Exception $e) {
                     if ($gantry->debug()) {
-                        throw new \RuntimeException("Rendering Atom '{$atom['subtype']}' failed on error: {$e->getMessage()}", 500, $e);
+                        throw new \RuntimeException('Rendering atom failed.', 500, $e);
                     }
                 }
             }
@@ -442,7 +443,7 @@ trait ThemeTrait
 
                 } catch (\Exception $e) {
                     if ($gantry->debug()) {
-                        throw new \RuntimeException("Rendering CSS/JS Assets failed on error: {$e->getMessage()}", 500, $e);
+                        throw new \RuntimeException('Rendering CSS/JS assets failed.', 500, $e);
                     }
                 }
             }

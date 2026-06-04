@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 /**
  * @package   Gantry5
@@ -12,6 +13,8 @@
  */
 
 namespace Gantry\WordPress\Assignments;
+
+defined('ABSPATH') || exit;
 
 use Gantry\Component\Assignments\AssignmentsInterface;
 
@@ -102,7 +105,7 @@ class AssignmentsMenu implements AssignmentsInterface
 
         $args = \wp_parse_args($args, $defaults);
 
-        $menus = \wp_get_nav_menus(\apply_filters('g5_assignments_get_menus_args', $args));
+        $menus = \wp_get_nav_menus(\apply_filters('gantry5_assignments_get_menus_args', $args));
 
         return $menus;
     }
@@ -153,7 +156,7 @@ class AssignmentsMenu implements AssignmentsInterface
 
         }
 
-        return \apply_filters('g5_assignments_' . $menu->slug . '_menu_list_items', $items, $menu->slug, $this->type);
+        return \apply_filters('gantry5_assignments_' . $menu->slug . '_menu_list_items', $items, $menu->slug, $this->type);
     }
 
     /**

@@ -1,10 +1,11 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped,WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2022 Tiger12, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
@@ -15,6 +16,12 @@
  */
 
 namespace Gantry5;
+
+if (!defined('ABSPATH')) {
+    if (!defined('_JEXEC') && !defined('GRAV_ROOT')) {
+        exit;
+    }
+}
 
 use Composer\Autoload\ClassLoader;
 
@@ -52,7 +59,7 @@ abstract class RealLoader
         }
 
         define('GANTRY5_VERSION', '5.6.1');
-        define('GANTRY5_VERSION_DATE', 'Apr 08, 2026');
+        define('GANTRY5_VERSION_DATE', '2026-05-06');
 
         if (!defined('DS')) {
             define('DS', DIRECTORY_SEPARATOR);

@@ -18,18 +18,18 @@ class LayoutTest extends MockableTest
         // Test creating a layout instance with minimal parameters
         $layout = new Layout('test');
         $this->assertInstanceOf(Layout::class, $layout);
-        
+
         // Test getting layout name
         $this->assertEquals('test', $layout->name);
     }
-    
+
     /**
      * Test layout preset loading
      */
     public function testLayoutPresets()
     {
         $layout = new Layout('test');
-        
+
         // Test preset functionality
         $preset = [
             'name' => 'Test Preset',
@@ -40,20 +40,20 @@ class LayoutTest extends MockableTest
                 ]
             ]
         ];
-        
+
         $layout->initPreset($preset);
-        
+
         // Test that preset was applied
         $this->assertNotEmpty($layout->preset);
     }
-    
+
     /**
      * Test layout rendering with PHP 8.3 compatibility
      */
     public function testLayoutRendering()
     {
         $layout = new Layout('test');
-        
+
         // Simple preset for testing
         $preset = [
             'name' => 'Test Preset',
@@ -65,9 +65,9 @@ class LayoutTest extends MockableTest
                 ]
             ]
         ];
-        
+
         $layout->initPreset($preset);
-        
+
         // Test that the layout can be converted to array
         $array = $layout->toArray();
         $this->assertIsArray($array);

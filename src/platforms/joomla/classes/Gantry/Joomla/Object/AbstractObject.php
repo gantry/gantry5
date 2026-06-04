@@ -196,7 +196,7 @@ abstract class AbstractObject extends \Joomla\CMS\Object\CMSObject
      *
      * @return  bool  True on success.
      */
-    public function bind(array $src = null, array $fields = null, $include = false)
+    public function bind(?array $src = null, ?array $fields = null, $include = false)
     {
         if (empty($src)) {
             return false;

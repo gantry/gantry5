@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_mkdir,WordPress.WP.AlternativeFunctions.file_system_operations_is_writable,WordPress.WP.AlternativeFunctions.rename_rename,WordPress.WP.AlternativeFunctions.file_system_operations_chmod
 
 /**
  * @package   Gantry5
@@ -70,11 +71,11 @@ class TwigCacheFilesystem implements CacheInterface
             if (false === @mkdir($dir, 0777, true)) {
                 clearstatcache(true, $dir);
                 if (!is_dir($dir)) {
-                    throw new \RuntimeException(sprintf('Unable to create the cache directory (%s).', $dir));
+                    throw new \RuntimeException('Unable to create the cache directory.');
                 }
             }
         } elseif (!is_writable($dir)) {
-            throw new \RuntimeException(sprintf('Unable to write in the cache directory (%s).', $dir));
+            throw new \RuntimeException('Unable to write in the cache directory.');
         }
 
         $tmpFile = tempnam($dir, basename($key));
@@ -93,7 +94,7 @@ class TwigCacheFilesystem implements CacheInterface
             return;
         }
 
-        throw new \RuntimeException(sprintf('Failed to write cache file "%s".', $key));
+        throw new \RuntimeException('Failed to write cache file.');
     }
     /**
      * {@inheritdoc}

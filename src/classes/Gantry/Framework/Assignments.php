@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
@@ -29,6 +28,18 @@ class Assignments extends AbstractAssignments
      */
     public function types()
     {
-        return [];
+        // Fixed: Added WordPress prefix 'gantry5_' to the hook
+        return apply_filters('gantry5_assignments_types', []);
+    }
+
+    /**
+     * Get assignments page
+     *
+     * @return array
+     */
+    public function page()
+    {
+        // Fixed: Added WordPress prefix 'gantry5_' to the hook
+        return apply_filters('gantry5_assignments_page', []);
     }
 }

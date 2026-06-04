@@ -108,7 +108,7 @@ class Positions extends HtmlController
 
         if (!$exists) {
             if (!$data) {
-                throw new \RuntimeException(sprintf("Position '%s' not found", $old), 404);
+                throw new \RuntimeException('Position not found.', 404);
             }
 
             $position = new Position($key ?: $old);

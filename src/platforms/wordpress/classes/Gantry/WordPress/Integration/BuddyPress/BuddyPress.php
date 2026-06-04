@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 /**
  * @package   Gantry5
@@ -12,6 +13,8 @@
  */
 
 namespace Gantry\WordPress\Integration\BuddyPress;
+
+defined('ABSPATH') || exit;
 
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
@@ -76,8 +79,8 @@ class BuddyPress implements ServiceProviderInterface, EventSubscriberInterface
      */
     public function onThemeInit(Event $event)
     {
-        \add_filter('g5_assignments_page_context_array', ['Gantry\\WordPress\\Assignments\\AssignmentsBuddyPress', 'addPageContextItem']);
-        \add_filter('g5_assignments_page_context_rules', ['Gantry\\WordPress\\Assignments\\AssignmentsBuddyPress', 'addPageContextConditionals'], 10, 2);
+        \add_filter('gantry5_assignments_page_context_array', ['Gantry\\WordPress\\Assignments\\AssignmentsBuddyPress', 'addPageContextItem']);
+        \add_filter('gantry5_assignments_page_context_rules', ['Gantry\\WordPress\\Assignments\\AssignmentsBuddyPress', 'addPageContextConditionals'], 10, 2);
     }
 
     /**

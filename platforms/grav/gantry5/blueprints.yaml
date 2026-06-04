@@ -1,5 +1,5 @@
 name: Gantry 5 Framework
-version: '5.6.1'
+version: '@version@'
 description: Gantry 5 Theme framework
 icon: gantry
 author:

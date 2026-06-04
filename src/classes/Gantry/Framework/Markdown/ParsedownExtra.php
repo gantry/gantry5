@@ -30,7 +30,7 @@ class ParsedownExtra extends \ParsedownExtra
      * @param array|null $defaults
      * @throws \Exception
      */
-    public function __construct(array $defaults = null)
+    public function __construct(?array $defaults = null)
     {
         parent::__construct();
 

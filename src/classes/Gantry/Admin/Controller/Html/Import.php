@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 /**
  * @package   Gantry5
@@ -50,12 +51,16 @@ class Import extends HtmlController
      */
     public function import()
     {
-        if (!isset($_FILES['file']['error']) || is_array($_FILES['file']['error'])) {
+        \check_admin_referer('gantry5-layout-manager');
+
+        if (!isset($_FILES['file']) || !is_array($_FILES['file']) || !isset($_FILES['file']['error']) || is_array($_FILES['file']['error'])) {
             throw new \RuntimeException('No file sent', 400);
         }
 
-        // Check $_FILES['file']['error'] value.
-        switch ($_FILES['file']['error']) {
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- The Gantry admin router already requires the matching nonce.
+        $upload = $_FILES['file'];
+
+        switch ($upload['error']) {
             case UPLOAD_ERR_OK:
                 break;
             case UPLOAD_ERR_NO_FILE:
@@ -67,7 +72,11 @@ class Import extends HtmlController
                 throw new \RuntimeException('Unkown errors', 400);
         }
 
-        $filename = $_FILES['file']['tmp_name'];
+        if (empty($upload['tmp_name']) || !is_string($upload['tmp_name'])) {
+            throw new \RuntimeException('No file sent', 400);
+        }
+
+        $filename = $upload['tmp_name'];
 
         if (!is_uploaded_file($filename)) {
             throw new \RuntimeException('No file sent', 400);

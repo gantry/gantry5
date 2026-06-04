@@ -48,7 +48,7 @@ interface ThemeInterface
      * @param LoaderInterface $loader
      * @return Environment
      */
-    public function extendTwig(Environment $twig, LoaderInterface $loader = null);
+    public function extendTwig(Environment $twig, ?LoaderInterface $loader = null);
 
     /**
      * Returns renderer.
@@ -74,7 +74,7 @@ interface ThemeInterface
      * @param array $outlines
      * @return array List of CSS warnings.
      */
-    public function updateCss(array $outlines = null);
+    public function updateCss(?array $outlines = null);
 
     /**
      * Set current layout.

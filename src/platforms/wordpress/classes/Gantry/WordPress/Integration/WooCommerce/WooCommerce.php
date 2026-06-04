@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 /**
  * @package   Gantry5
@@ -12,6 +13,8 @@
  */
 
 namespace Gantry\WordPress\Integration\WooCommerce;
+
+defined('ABSPATH') || exit;
 
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
@@ -79,8 +82,8 @@ class WooCommerce implements ServiceProviderInterface, EventSubscriberInterface
     {
         \add_theme_support('woocommerce');
 
-        \add_filter('g5_assignments_page_context_array', ['Gantry\\WordPress\\Assignments\\AssignmentsWoocommerce', 'addPageContextItem']);
-        \add_filter('g5_assignments_page_context_rules', ['Gantry\\WordPress\\Assignments\\AssignmentsWoocommerce', 'addPageContextConditionals'], 10, 2);
+        \add_filter('gantry5_assignments_page_context_array', ['Gantry\\WordPress\\Assignments\\AssignmentsWoocommerce', 'addPageContextItem']);
+        \add_filter('gantry5_assignments_page_context_rules', ['Gantry\\WordPress\\Assignments\\AssignmentsWoocommerce', 'addPageContextConditionals'], 10, 2);
     }
 
     /**

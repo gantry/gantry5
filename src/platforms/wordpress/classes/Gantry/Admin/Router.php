@@ -64,7 +64,7 @@ class Router extends BaseRouter
      */
     protected function makeUri($url)
     {
-        $components = parse_url($url);
+        $components = wp_parse_url($url);
 
         $path     = isset($components['path']) ? $components['path'] : '';
         $query    = isset($components['query']) ? '?' . $components['query'] : '';
@@ -141,6 +141,7 @@ class Router extends BaseRouter
             header('Pragma: no-cache');
 
             // Output Gantry JSON response.
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- JsonResponse is already encoded output.
             echo $response;
 
             die();
