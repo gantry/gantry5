@@ -1,7 +1,7 @@
 === Gantry 5 Framework ===
 Contributors: gantry
 Author URI: http://gantry.org
-Tags: gantry, gantry5, framework, template, theme, yaml, twig, timber, scss, html5, css3, bourbon, layout, builder, widgets, flexible, extensible, configurable, flex, grid, columns, powerful, buddypress, woocommerce, bbpress
+Tags: gantry, gantry5, framework, theme, builder
 Requires at least: 5.2
 Tested up to: 7.0
 Requires PHP: 8.1.0
