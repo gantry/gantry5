@@ -16,7 +16,7 @@ namespace Gantry\Joomla\Category;
 use Gantry\Joomla\Object\Finder;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
-
+use Joomla\Database\DatabaseInterface;
 /**
  * Class CategoryFinder
  * @package Gantry\Joomla\Category
@@ -193,7 +193,7 @@ class CategoryFinder extends Finder
         static $list;
 
         if ($list === null) {
-            $db = Factory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
 
             $query = $db->getQuery(true)
                 ->select('cat.id AS id')

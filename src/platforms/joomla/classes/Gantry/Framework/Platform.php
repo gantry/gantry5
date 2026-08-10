@@ -24,6 +24,7 @@ use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Editor\Editor;
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\Layout\LayoutHelper;
@@ -137,7 +138,7 @@ class Platform extends BasePlatform
      */
     public function getCachePath()
     {
-        $path = Factory::getConfig()->get('cache_path', JPATH_SITE . '/cache');
+        $path = Factory::getApplication()->getConfig()->get('cache_path', JPATH_SITE . '/cache');
         if (!is_dir($path)) {
             throw new \RuntimeException('Joomla cache path does not exist!');
         }
@@ -415,7 +416,7 @@ class Platform extends BasePlatform
      */
     public function listModules()
     {
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
 
         $query->select('a.id, a.title, a.position, a.module, a.published AS enabled')
@@ -448,7 +449,7 @@ class Platform extends BasePlatform
      */
     public function getEditor($name, $content = '', $width = null, $height = null)
     {
-        $config = Factory::getConfig();
+        $config = Factory::getApplication()->getConfig();
         $editor = Editor::getInstance($config->get('editor'));
         if (!$height) {
             $height = 250;
@@ -504,7 +505,7 @@ class Platform extends BasePlatform
 
         $extension_ids = $extension_ids ? implode(',', $extension_ids) : '-1';
 
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         $query
             ->select('*')
@@ -694,7 +695,7 @@ class Platform extends BasePlatform
                         return false;
                     }
 
-                    $db = Factory::getDbo();
+                    $db = Factory::getContainer()->get(DatabaseInterface::class);
                     $userId = $user->id;
 
                     // Joomla 5: checked_out field is nullable

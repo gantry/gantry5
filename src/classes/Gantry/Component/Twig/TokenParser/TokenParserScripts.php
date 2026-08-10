@@ -41,7 +41,7 @@ class TokenParserScripts extends TokenParserAssets
      *
      * @return string The tag name
      */
-    public function getTag()
+    public function getTag(): string
     {
         return 'scripts';
     }

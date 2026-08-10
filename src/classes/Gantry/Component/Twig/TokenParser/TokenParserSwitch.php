@@ -42,7 +42,7 @@ class TokenParserSwitch extends AbstractTokenParser
      * @return TwigNodeSwitch
      * @throws SyntaxError
      */
-    public function parse(Token $token)
+    public function parse(Token $token): Node
     {
         $lineno = $token->getLine();
         $stream = $this->parser->getStream();
@@ -124,7 +124,7 @@ class TokenParserSwitch extends AbstractTokenParser
      * @param Token $token
      * @return bool
      */
-    public function decideIfEnd(Token $token)
+    public function decideIfEnd(Token $token): bool
     {
         return $token->test(['endswitch']);
     }
@@ -132,7 +132,7 @@ class TokenParserSwitch extends AbstractTokenParser
     /**
      * {@inheritdoc}
      */
-    public function getTag()
+    public function getTag(): string
     {
         return 'switch';
     }

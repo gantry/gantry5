@@ -16,8 +16,10 @@ use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Table\Extension as ExtensionTable;
 use Joomla\CMS\Table\Table;
 use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
@@ -136,12 +138,12 @@ class Pkg_Gantry5InstallerScript
     public function postflight($type, $parent)
     {
         // Clear Joomla system cache.
-        /** @var JCache|JCacheController $cache */
-        $cache = Factory::getCache();
+        $cache = Factory::getContainer()->get(\Joomla\CMS\Cache\CacheControllerFactoryInterface::class)
+            ->createCacheController('callback');
         $cache->clean('_system');
 
         // Clear Gantry5 cache.
-        $path = Factory::getConfig()->get('cache_path', JPATH_SITE . '/cache') . '/gantry5';
+        $path = Factory::getApplication()->getConfig()->get('cache_path', JPATH_SITE . '/cache') . '/gantry5';
         if (is_dir($path)) {
             Folder::delete($path);
         }
@@ -220,7 +222,7 @@ class Pkg_Gantry5InstallerScript
                 $search +=  array('folder' => $group);
             }
 
-            $extension = Table::getInstance('extension');
+            $extension = new ExtensionTable(Factory::getContainer()->get(DatabaseInterface::class));
 
             if (!$extension->load($search)) {
                 continue;
@@ -238,7 +240,7 @@ class Pkg_Gantry5InstallerScript
 
     protected function adjustTemplateSettings()
     {
-        $extension = Table::getInstance('extension');
+        $extension = new ExtensionTable(Factory::getContainer()->get(DatabaseInterface::class));
         if (!$extension->load(array('type' => 'component', 'element' => 'com_templates'))) {
             return;
         }
@@ -265,7 +267,7 @@ class Pkg_Gantry5InstallerScript
 
     protected function registerTemplateUpdateSites()
     {
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
         $query = $db->getQuery(true)
             ->select('extension_id, element')
@@ -312,7 +314,7 @@ class Pkg_Gantry5InstallerScript
         $type = trim((string) $server['type']) ?: 'extension';
         $enabled = isset($server['enabled']) ? (int) $server['enabled'] : 1;
 
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
         $query = $db->getQuery(true)
             ->select('us.update_site_id')

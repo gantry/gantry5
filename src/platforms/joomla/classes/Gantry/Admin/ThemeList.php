@@ -19,6 +19,7 @@ use Gantry\Framework\Gantry;
 use Gantry\Framework\Platform;
 use Gantry\Framework\ThemeInstaller;
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -141,7 +142,7 @@ class ThemeList
         /** @var Platform $platform */
         $platform = $gantry['platform'];
 
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
         $query = $db
             ->getQuery(true)

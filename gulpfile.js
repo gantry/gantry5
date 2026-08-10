@@ -57,7 +57,7 @@ var argv            = require('yargs').argv,
     browserify      = require('browserify'),
     watchifyModule  = require('watchify'),
     jsonminify      = require('gulp-jsonminify'),
-    sass            = require('gulp-sass'),
+    sass            = require('gulp-sass')(require('sass')),
 
     prod            = !!(argv.p || argv.prod || argv.production),
     watchType       = (argv.css && argv.js) ? 'all' : (argv.css ? 'css' : (argv.js ? 'js' : 'all')),
@@ -138,7 +138,7 @@ var compileCSS = function(app, done) {
     var options = {
         sourceMap: !prod,
         includePaths: _load,
-        outputStyle: prod ? 'compact' : 'expanded'
+        outputStyle: prod ? 'compressed' : 'expanded'
     };
 
     var stream = gulp.src(_in, { sourcemaps: !prod })
@@ -369,4 +369,5 @@ exports.css = css;
 exports.js = js;
 exports.minify = minify;
 exports.all = gulp.series(css, js, minify);
-exports.defaults = gulp.series(css, js, minify)
+exports.defaults = gulp.series(css, js, minify);
+exports.default = exports.defaults;

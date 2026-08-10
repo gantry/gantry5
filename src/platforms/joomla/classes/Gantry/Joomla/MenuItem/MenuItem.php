@@ -15,7 +15,7 @@ namespace Gantry\Joomla\MenuItem;
 
 use Gantry\Joomla\Object\AbstractObject;
 use Joomla\CMS\Factory;
-
+use Joomla\Database\DatabaseInterface;
 /**
  * Class ContactDetails
  * @package Gantry\Joomla\MenuItem
@@ -53,7 +53,7 @@ class MenuItem extends AbstractObject
         static $components;
 
         if (null === $components) {
-            $db = Factory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
 
             $query = $db->getQuery(true);
             $query->select('extension_id, name')->from('#__extensions');

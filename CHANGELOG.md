@@ -1,3 +1,42 @@
+# 5.6.3
+## 08/10/2026
+1. [WordPress](#wordpress)
+    1. [](#improved)
+        - Prepared Gantry 5 WordPress plugin for Twig 3 compatibility while maintaining compatibility with the bundled Twig 2.16.
+        - Added required return types to Gantry Twig extensions, node classes and token parsers for Twig 3 compatibility.
+        - Updated Twig node and token parser method signatures to match Twig 3 interfaces.
+        - Updated `TokenParserMarkdown` with the required `Twig\Node\Node` import.
+        - Replaced deprecated Twig `{% spaceless %}` usage with `{% apply spaceless %}` in templates where whitespace control is required.
+        - Removed the unnecessary `{% spaceless %}` wrapper from the Nucleus assets particle where no HTML output is generated.
+        - Updated MD5 checksums for all modified WordPress plugin files.
+        - Improved the Whoops deprecation guard to correctly handle both Windows and Unix vendor paths and identify third-party vendor deprecations.
+
+    2. [](#bugfix)
+        - Fixed Twig compatibility issues that could occur when Gantry is used with newer Twig environments.
+        - Fixed deprecation handling on Windows by normalizing vendor paths before matching.
+        - Improved handling of PHP 8.4 deprecation messages from bundled third-party dependencies.
+
+2. [Joomla](#joomla)
+    1. [](#improved)
+        - Updated Gantry 5 Joomla code to remove deprecated Joomla APIs and improve Joomla 6 compatibility.
+        - Replaced deprecated `Factory::getDbo()` calls with Joomla's Dependency Injection container and `DatabaseInterface`.
+        - Replaced deprecated `Factory::getConfig()` and `Factory::getUser()` calls with the modern Joomla application APIs.
+        - Replaced deprecated cache APIs with `CacheControllerFactoryInterface`.
+        - Replaced deprecated `Table::getInstance('extension')` usage with direct `Extension` table instantiation.
+        - Updated `AbstractObject::getTable()` to use modern Joomla table resolution while retaining a fallback for third-party table classes.
+        - Removed the deprecated `CMSObject` dependency from `AbstractObject` and adopted Joomla's modern object/property handling pattern.
+        - Replaced deprecated `HTMLHelper` asset helpers with Joomla's `WebAssetManager`.
+        - Prepared Gantry Twig extensions, nodes and token parsers for Twig 3 compatibility while maintaining compatibility with bundled Twig 2.16.
+        - Removed the deprecated Twig `{% spaceless %}` tag from the Nucleus assets particle.
+        - Regenerated MD5 checksums for modified Joomla package files.
+
+    2. [](#bugfix)
+        - Fixed a Twig parser compatibility issue when Gantry 5 is used with extensions that initialize independent Twig 3 environments, such as phpBB3/p8pBB integration.
+        - Fixed `setParser()` errors caused by Twig token parsers being returned as arrays instead of Gantry's expected handler object.
+        - Added defensive handling for both object-based and array-based Twig token parser handlers.
+        - Fixed Twig rendering errors where the Gantry global was lost after phpBB session initialization.
+        - Ensured the `gantry` instance is explicitly restored as a Twig global during theme rendering.
+
 # 5.6.2
 ## 06/03/2026
 1. [WordPress](#WordPress)

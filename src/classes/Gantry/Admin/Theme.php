@@ -3,8 +3,8 @@
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2022 Tiger12, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
@@ -79,7 +79,7 @@ class Theme extends AbstractTheme
         $locator = $gantry['locator'];
 
         $nucleus = $patform->getEnginePaths('nucleus')[''];
-        if (strpos($this->path, '://')) {
+        if (strpos($this->path, '://') !== false) {
             $relpath = $this->path;
         } else {
             $relpath = Folder::getRelativePath($this->path);

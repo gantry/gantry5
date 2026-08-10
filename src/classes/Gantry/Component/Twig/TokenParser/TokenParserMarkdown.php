@@ -17,6 +17,7 @@
 namespace Gantry\Component\Twig\TokenParser;
 
 use Gantry\Component\Twig\Node\TwigNodeMarkdown;
+use Twig\Node\Node;
 use Twig\Error\SyntaxError;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
@@ -38,7 +39,7 @@ class TokenParserMarkdown extends AbstractTokenParser
      * @return TwigNodeMarkdown
      * @throws SyntaxError
      */
-    public function parse(Token $token)
+    public function parse(Token $token): Node
     {
         $lineno = $token->getLine();
         $this->parser->getStream()->expect(Token::BLOCK_END_TYPE);
@@ -59,7 +60,7 @@ class TokenParserMarkdown extends AbstractTokenParser
     /**
      * {@inheritdoc}
      */
-    public function getTag()
+    public function getTag(): string
     {
         return 'markdown';
     }
