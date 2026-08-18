@@ -23,7 +23,6 @@ use Gantry\Component\Router\Router as BaseRouter;
 use Gantry\Joomla\StyleHelper;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -37,7 +36,8 @@ class Router extends BaseRouter
      */
     public function boot()
     {
-        HTMLHelper::_('behavior.keepalive');
+        // Keep the admin session alive while editing (HTMLHelper 'behavior.keepalive' is deprecated, removed in Joomla 7).
+        Factory::getApplication()->getDocument()->getWebAssetManager()->useScript('keepalive');
 
         /** @var CMSApplication $application */
         $application = Factory::getApplication();

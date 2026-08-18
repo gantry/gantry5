@@ -174,7 +174,10 @@ class Document extends HtmlDocument
     protected static function registerJquery()
     {
         if (!static::errorPage()) {
-            HTMLHelper::_('jquery.framework');
+            // HTMLHelper 'jquery.framework' is deprecated (removed in Joomla 7); this is its exact equivalent.
+            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+            $wa->useScript('jquery');
+            $wa->useScript('jquery-noconflict');
 
             return;
         }

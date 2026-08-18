@@ -13,7 +13,7 @@ var argv            = require('yargs').argv,
     sourcemaps      = require('gulp-sourcemaps'),
     browserify      = require('browserify'),
     watchifyModule  = require('watchify'),
-    sass            = require('gulp-sass'),
+    sass            = require('gulp-sass')(require('sass')),
 
     prod            = !!(argv.p || argv.prod || argv.production),
     watch           = false;
@@ -43,7 +43,7 @@ var compileCSS = function(app) {
     var options = {
         sourceMap: !prod,
         includePaths: _load,
-        outputStyle: prod ? 'compact' : 'expanded'
+        outputStyle: prod ? 'compressed' : 'expanded'
     };
 
     return gulp.src(_in)

@@ -53,7 +53,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
      *
      * @return array
      */
-    public function getGlobals()
+    public function getGlobals(): array
     {
         return [
             'gantry' => static::gantry(),
@@ -65,7 +65,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
      *
      * @return array
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         $filters = [
             new TwigFilter('html', [$this, 'htmlFilter']),
@@ -106,7 +106,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
      *
      * @return array
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         $functions = [
             new TwigFunction('nested', [$this, 'nestedFunc']),
@@ -138,7 +138,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
     /**
      * @return array
      */
-    public function getTokenParsers()
+    public function getTokenParsers(): array
     {
         return [
             new TokenParserPageblock(),

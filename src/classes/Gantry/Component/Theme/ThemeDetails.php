@@ -3,8 +3,8 @@
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2022 Tiger12, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
@@ -154,7 +154,7 @@ class ThemeDetails implements \ArrayAccess
         if (strpos($uri, 'gantry-theme://') === 0) {
             list (, $uri) = explode('://', $uri, 2);
         }
-        if (!strpos($uri, '://')) {
+        if (strpos($uri, '://') === false) {
             $name = $this->offsetGet('name');
 
             // Stream needs to be valid URL.
@@ -191,7 +191,7 @@ class ThemeDetails implements \ArrayAccess
         if (strpos($path, 'gantry-theme://') === 0) {
             list (, $path) = explode('://', $path, 2);
         }
-        if (!strpos($path, '://')) {
+        if (strpos($path, '://') === false) {
             $name = $this->offsetGet('name');
             $path = "gantry-themes://{$name}/{$path}";
         }

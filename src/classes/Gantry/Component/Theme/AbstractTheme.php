@@ -94,6 +94,8 @@ abstract class AbstractTheme
     public function extendTwig(Environment $twig, ?LoaderInterface $loader = null)
     {
         if ($twig->hasExtension(TwigExtension::class)) {
+            $this->addGantryTwigGlobal($twig);
+
             return $twig;
         }
 
@@ -104,6 +106,7 @@ abstract class AbstractTheme
         $this->setTwigLoaderPaths($loader);
 
         $twig->addExtension(new TwigExtension);
+        $this->addGantryTwigGlobal($twig);
 
         if (method_exists($this, 'toGrid')) {
             $filter = new TwigFilter('toGrid', [$this, 'toGrid']);
@@ -248,6 +251,18 @@ abstract class AbstractTheme
         $loader->setPaths($locator->findResources('gantry-particles://'), 'particles');
 
         return $loader;
+    }
+
+    /**
+     * Ensure phpBB-provided Twig environments have Gantry available as a global.
+     *
+     * @param Environment $twig
+     */
+    protected function addGantryTwigGlobal(Environment $twig)
+    {
+        if (!array_key_exists('gantry', $twig->getGlobals())) {
+            $twig->addGlobal('gantry', static::gantry());
+        }
     }
 
     /**

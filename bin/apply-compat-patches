@@ -1,0 +1,79 @@
+#!/usr/bin/env php
+<?php
+
+chdir(__DIR__ . '/..');
+
+$parserFiles = [
+    'platforms/joomla/lib_gantry5/compat/vendor/twig/twig/src/Parser.php',
+    'platforms/wordpress/gantry5/compat/vendor/twig/twig/src/Parser.php',
+];
+
+foreach ($parserFiles as $file) {
+    patch_twig_parser($file);
+}
+
+function patch_twig_parser($file)
+{
+    if (!is_file($file)) {
+        return;
+    }
+
+    $contents = file_get_contents($file);
+    if ($contents === false) {
+        throw new RuntimeException("Unable to read {$file}");
+    }
+
+    $contents = str_replace(
+        <<<'PHP'
+        if (null === $this->handlers) {
+            $this->handlers = $this->env->getTokenParsers();
+            $this->handlers->setParser($this);
+        }
+PHP,
+        <<<'PHP'
+        if (null === $this->handlers) {
+            $this->handlers = $this->env->getTokenParsers();
+            if (is_object($this->handlers) && method_exists($this->handlers, 'setParser')) {
+                $this->handlers->setParser($this);
+            } elseif (is_array($this->handlers)) {
+                foreach ($this->handlers as $handler) {
+                    if (is_object($handler) && method_exists($handler, 'setParser')) {
+                        $handler->setParser($this);
+                    }
+                }
+            }
+        }
+PHP,
+        $contents,
+        $count
+    );
+
+    if ($count === 0 && strpos($contents, 'foreach ($this->handlers as $handler)') === false) {
+        throw new RuntimeException("Unable to patch token parser setup in {$file}");
+    }
+
+    $contents = str_replace(
+        <<<'PHP'
+                    $subparser = $this->handlers->getTokenParser($token->getValue());
+PHP,
+        <<<'PHP'
+                    if (is_object($this->handlers) && method_exists($this->handlers, 'getTokenParser')) {
+                        $subparser = $this->handlers->getTokenParser($token->getValue());
+                    } elseif (is_array($this->handlers)) {
+                        $subparser = isset($this->handlers[$token->getValue()]) ? $this->handlers[$token->getValue()] : null;
+                    } else {
+                        $subparser = null;
+                    }
+PHP,
+        $contents,
+        $count
+    );
+
+    if ($count === 0 && strpos($contents, 'isset($this->handlers[$token->getValue()])') === false) {
+        throw new RuntimeException("Unable to patch token parser lookup in {$file}");
+    }
+
+    if (file_put_contents($file, $contents) === false) {
+        throw new RuntimeException("Unable to write {$file}");
+    }
+}

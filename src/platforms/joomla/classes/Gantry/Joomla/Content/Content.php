@@ -19,6 +19,7 @@ use Gantry\Joomla\Category\Category;
 use Gantry\Joomla\Object\AbstractObject;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Router\Route;
@@ -67,7 +68,7 @@ class Content extends AbstractObject
         $this->attribs = json_decode($this->attribs, false);
         $this->metadata = json_decode($this->metadata, false);
 
-        $nullDate = Factory::getDbo()->getNullDate();
+        $nullDate = Factory::getContainer()->get(DatabaseInterface::class)->getNullDate();
         if ($this->modified === $nullDate) {
             $this->modified = $this->created;
         }
@@ -203,7 +204,7 @@ class Content extends AbstractObject
             'ignore_request' => true
         ];
 
-        $user = Factory::getUser();
+        $user = Factory::getApplication()->getIdentity();
         $app = Factory::getApplication();
         $params = $app->getParams();
 

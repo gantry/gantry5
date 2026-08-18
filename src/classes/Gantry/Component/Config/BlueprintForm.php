@@ -3,8 +3,8 @@
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2022 Tiger12, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
@@ -144,7 +144,7 @@ class BlueprintForm extends BaseBlueprintForm
      */
     protected function getFiles($path, $context = null)
     {
-        if (is_string($path) && !strpos($path, '://')) {
+        if (is_string($path) && strpos($path, '://') === false) {
             // Resolve filename.
             if (isset($this->overrides[$path])) {
                 $path = $this->overrides[$path];
@@ -163,7 +163,7 @@ class BlueprintForm extends BaseBlueprintForm
             }
         }
 
-        if (is_string($path) && strpos($path, '://')) {
+        if (is_string($path) && strpos($path, '://') !== false) {
             /** @var UniformResourceLocator $locator */
             $locator = Gantry::instance()['locator'];
 

@@ -15,7 +15,9 @@ namespace Gantry\Joomla\Object;
 
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Object\CMSObject;
+use Joomla\Database\DatabaseInterface;
+use Joomla\CMS\Object\LegacyErrorHandlingTrait;
+use Joomla\CMS\Object\LegacyPropertyManagementTrait;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseQuery;
@@ -23,8 +25,11 @@ use Joomla\Database\DatabaseQuery;
 /**
  * Abstract base class for database objects.
  */
-abstract class AbstractObject extends \Joomla\CMS\Object\CMSObject
+abstract class AbstractObject extends \stdClass
 {
+    use LegacyErrorHandlingTrait;
+    use LegacyPropertyManagementTrait;
+
     /** @var array If you don't have global instance ids, override this in extending class. */
     static protected $instances = [];
     /** @var string Override table class in your own class. */
@@ -58,7 +63,9 @@ abstract class AbstractObject extends \Joomla\CMS\Object\CMSObject
             $properties = null;
         }
 
-        parent::__construct($properties);
+        if ($properties !== null) {
+            $this->setProperties($properties);
+        }
 
         if ($identifier) {
             $this->load($identifier);
@@ -518,6 +525,20 @@ abstract class AbstractObject extends \Joomla\CMS\Object\CMSObject
      */
     protected static function getTable()
     {
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+
+        // Resolve the table class directly (Table::getInstance() is deprecated and will be removed in Joomla 7).
+        if (static::$tablePrefix === 'JTable') {
+            $class = '\\Joomla\\CMS\\Table\\' . static::$table;
+        } else {
+            $class = static::$tablePrefix . static::$table;
+        }
+
+        if (class_exists($class)) {
+            return new $class($db);
+        }
+
+        // Fallback to the legacy factory for third party subclasses.
         return Table::getInstance(static::$table, static::$tablePrefix);
     }
 
@@ -527,7 +548,7 @@ abstract class AbstractObject extends \Joomla\CMS\Object\CMSObject
     static protected function getQuery()
     {
         $table = static::getTable();
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         $query->select('a.*')->from($table->getTableName().' AS a')->order(static::$order);
 
@@ -543,7 +564,7 @@ abstract class AbstractObject extends \Joomla\CMS\Object\CMSObject
             $query = static::getQuery();
         }
 
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $db->setQuery($query);
 
         /** @var Object[] $items */

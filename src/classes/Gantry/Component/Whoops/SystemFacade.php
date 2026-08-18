@@ -106,6 +106,20 @@ class SystemFacade extends \Whoops\Util\SystemFacade
             }
         }
 
+        // PHP 8.4+: bundled vendor libraries (Twig 2.16, Symfony 5.4, scssphp, rockettheme/toolbox,
+        // parsedown) predate the explicit-nullable requirement and emit E_DEPRECATED notices such as
+        // "Implicitly marking parameter $x as nullable is deprecated". These are harmless and cannot be
+        // fixed without upgrading the vendored dependencies (tracked separately: Timber 2 -> Twig 3 ->
+        // Symfony 6.4). Suppress them for the bundled vendor tree only; Gantry's own code is already clean.
+        // TODO: remove once bundled dependencies support PHP 8.4 natively.
+        if (($level === E_DEPRECATED) && $file && strpos(str_replace('\\', '/', $file), '/vendor/') !== false) {
+            if (strpos($message, 'Implicitly marking parameter') !== false
+                || strpos($message, 'Passing null to parameter') !== false
+                || strpos($message, '#[\ReturnTypeWillChange]') !== false) {
+                return true;
+            }
+        }
+
         $handler = $this->whoopsErrorHandler;
 
         if (!$this->registeredPatterns) {

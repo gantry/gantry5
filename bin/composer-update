@@ -24,6 +24,9 @@ composer_update('wordpress/gantry5', true);
 composer_update('wordpress/gantry5_debugbar', false);
 composer_update('wordpress/gantry5/compat', false);
 
+echo "# Applying compat vendor patches\n";
+require __DIR__ . '/apply-compat-patches';
+
 function composer_update($folder, $link)
 {
     chdir($folder);

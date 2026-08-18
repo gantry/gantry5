@@ -19,6 +19,7 @@ use Gantry\Component\Menu\Item;
 use Gantry\Joomla\MenuHelper;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Menu\MenuItem;
 use Joomla\CMS\Router\Route;
@@ -148,7 +149,7 @@ class Menu extends AbstractMenu
         static $items;
 
         if ($items === null) {
-            $db = Factory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true)
                 ->select($db->quoteName('a.menutype'))
                 ->select($db->quoteName('a.title'))
@@ -172,7 +173,7 @@ class Menu extends AbstractMenu
      */
     public function getMenuIds()
     {
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true)
             ->select('a.id')
             ->from('#__menu_types AS a');
@@ -845,7 +846,7 @@ class Menu extends AbstractMenu
                 $db = Factory::getContainer()->get(\Joomla\Database\DatabaseInterface::class);
             } catch (\Exception $e) {
                 // Fallback for older versions
-                $db = Factory::getDbo();
+                $db = Factory::getContainer()->get(DatabaseInterface::class);
             }
             
             $query = $db->getQuery(true)

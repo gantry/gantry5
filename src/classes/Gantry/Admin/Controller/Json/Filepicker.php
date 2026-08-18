@@ -91,7 +91,7 @@ class Filepicker extends JsonController
             $path     = rtrim($this->base, '/') . '/' . ltrim($drive, '/');
 
             // It's a stream but the scheme doesn't exist. we skip it.
-            if (!$isStream && (strpos($drive, '://') || !file_exists($path))) {
+            if (!$isStream && (strpos($drive, '://') !== false || !file_exists($path))) {
                 continue;
             }
 
@@ -644,6 +644,6 @@ class Filepicker extends JsonController
      */
     private function isStream($folder)
     {
-        return $folder instanceof UniformResourceIterator || strpos($folder, '://');
+        return $folder instanceof UniformResourceIterator || strpos($folder, '://') !== false;
     }
 }
