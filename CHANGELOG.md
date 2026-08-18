@@ -1,5 +1,5 @@
 # 5.6.3
-## 08/10/2026
+## 08/18/2026
 1. [WordPress](#wordpress)
     1. [](#improved)
         - Prepared Gantry 5 WordPress plugin for Twig 3 compatibility while maintaining compatibility with the bundled Twig 2.16.
