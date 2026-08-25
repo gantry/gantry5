@@ -36,6 +36,20 @@
         - Added defensive handling for both object-based and array-based Twig token parser handlers.
         - Fixed Twig rendering errors where the Gantry global was lost after phpBB session initialization.
         - Ensured the `gantry` instance is explicitly restored as a Twig global during theme rendering.
+        - Fixed the Gantry version being incorrectly reported as 5.6.1 instead of 5.6.3 in the Joomla Layout Manager and theme footer information. (#3405)
+
+3. [Grav](#grav)
+    1. [](#improved)
+        - Updated Grav dependency floors to Grav `>=1.7.48` and Admin `>=1.10.48`, while retaining `>=` constraints to avoid locking out older installations and documenting the tested baseline.
+        - Prepared the 17 shared Gantry engine classes for Twig 3 compatibility while maintaining compatibility with the bundled Twig 2.16.
+        - Updated `TokenParserMarkdown` with the required `Twig\Node\Node` import for Twig 3 compatibility.
+        - Replaced deprecated Twig `{% spaceless %}` usage with `{% apply spaceless %}` in the affected admin templates.
+        - Removed the unnecessary `{% spaceless %}` wrapper from the Nucleus assets particle where no HTML output is generated.
+        - Added a PHP 8.4 vendor-deprecation guard to `SystemFacade.php`, with normalized vendor paths to support both Windows `\vendor\` paths and `compat/vendor/`.
+        - Regenerated MD5 checksums for modified Grav package files.
+    2. [](#bugfix)
+        - Fixed potential Twig compatibility issues when Gantry is used with newer Twig environments.
+        - Improved PHP 8.4 deprecation handling for bundled vendor dependencies by correctly normalizing and matching vendor paths across supported environments.
 
 # 5.6.2
 ## 06/03/2026
