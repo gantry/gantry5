@@ -1,0 +1,9 @@
+GANTRY5_ENGINE_SORRY_NO_CONTENT: "Désolé, aucun contenu"
+GANTRY5_ENGINE_UNKNOWN_ERROR: "Erreur inconnue"
+
+# Grav
+
+GANTRY5_ENGINE_FORM_SUMMARY: "Voici le résumé de ce que vous nous avez écrit:"
+GANTRY5_ENGINE_BLOG_ITEM_NEXT_POST: "Article suivant"
+GANTRY5_ENGINE_BLOG_ITEM_PREV_POST: "Article précédent"
+GANTRY5_ENGINE_READMORE: "Lire la suite..."
