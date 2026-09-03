@@ -500,7 +500,8 @@ class Filepicker extends JsonController
     {
         try {
             Folder::moveFile($source, $destination);
-            return true;
+
+            return @chmod($destination, 0666 & ~umask());
         } catch (\RuntimeException $e) {
             return false;
         }
