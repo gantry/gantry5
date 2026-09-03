@@ -486,7 +486,13 @@ class Filepicker extends JsonController
             return $content !== false && $wp_filesystem && $wp_filesystem->put_contents($destination, $content, FS_CHMOD_FILE);
         }
 
-        return $this->moveLocalFile($source, $destination);
+        if (!$this->moveLocalFile($source, $destination)) {
+            return false;
+        }
+
+        $this->setLocalUploadedFilePermissions($destination);
+
+        return true;
     }
 
     /**
@@ -504,6 +510,20 @@ class Filepicker extends JsonController
             return @chmod($destination, 0666 & ~umask());
         } catch (\RuntimeException $e) {
             return false;
+        }
+    }
+
+    /**
+     * Normalize local uploads to public file permissions instead of preserving
+     * restrictive temporary upload modes.
+     *
+     * @param string $path
+     * @return void
+     */
+    protected function setLocalUploadedFilePermissions($path)
+    {
+        if (is_file($path)) {
+            @chmod($path, 0644);
         }
     }
 
