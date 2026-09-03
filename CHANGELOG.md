@@ -1,5 +1,5 @@
 # 5.6.3
-## 08/18/2026
+## 09/03/2026
 1. [WordPress](#wordpress)
     1. [](#improved)
         - Prepared Gantry 5 WordPress plugin for Twig 3 compatibility while maintaining compatibility with the bundled Twig 2.16.
@@ -37,6 +37,7 @@
         - Fixed Twig rendering errors where the Gantry global was lost after phpBB session initialization.
         - Ensured the `gantry` instance is explicitly restored as a Twig global during theme rendering.
         - Fixed the Gantry version being incorrectly reported as 5.6.1 instead of 5.6.3 in the Joomla Layout Manager and theme footer information. (#3405)
+        - Fixed the Gantry Image Uploader issue in Joomla 6.1.3 (#3407).
 
 3. [Grav](#grav)
     1. [](#improved)
