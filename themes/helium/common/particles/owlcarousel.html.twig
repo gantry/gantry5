@@ -8,7 +8,22 @@
         <div id="g-owlcarousel-{{ id }}" class="g-owlcarousel owl-carousel {% if particle.imageOverlay == 'enable' %}has-color-overlay{% endif %}">
 
             {% for item in particle.items %}
-                {% if not item.disable %}
+                {% set showItem = item.showItem|default('yes') %}
+                {% if showItem != 'yes' and showItem != 'no' %}
+                    {% set format = (showItem == 'once') ? 'Y-m-d' : 'm-d' %}
+                    {% set start, now, end = item.startDate|date(format), "now"|date(format), item.endDate|date(format) %}
+                    {% if showItem == 'once' %}
+                        {% if start <= now and end >= now %}
+                            {% set showItem = 'yes' %}
+                        {% endif %}       
+                    {% elseif showItem == 'annual' %}
+                        {% if (start <= end and start <= now and end >= now) or 
+                              (start > end and (start <= now or end >= now)) %}
+                            {% set showItem = 'yes' %}
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+                {% if showItem == 'yes' %}
                     <div class="g-owlcarousel-item {{ item.class|e }}">
                         <div class="g-owlcarousel-item-wrapper">
                             <div class="g-owlcarousel-item-img">
