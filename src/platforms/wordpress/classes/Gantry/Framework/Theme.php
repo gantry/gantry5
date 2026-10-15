@@ -656,7 +656,17 @@ class Theme extends AbstractTheme
 
         $gantry = Gantry::instance();
 
-        $this->setLayout($outline, true);
+        // Only accept outlines that exist in the current theme.
+        try {
+            $outlines = $gantry['outlines'];
+            if ($outline !== 'default' && !isset($outlines[$outline])) {
+                $this->ajax_not_found($format);
+            }
+
+            $this->setLayout($outline, true);
+        } catch (\Throwable $e) {
+            $this->ajax_not_found($format);
+        }
 
         if ($identifier === 'main-particle') {
             // Does not exist in WP.
@@ -674,8 +684,12 @@ class Theme extends AbstractTheme
             $this->ajax_particle_output('widget.' . $type, $identifier, $props, $html, $format);
         } else {
             // Render particle.
-            $layout = $this->loadLayout();
-            $particle = $layout->find($identifier);
+            try {
+                $layout = $this->loadLayout();
+                $particle = $layout->find($identifier);
+            } catch (\Throwable $e) {
+                $this->ajax_not_found($format);
+            }
             if (!isset($particle->type) || $particle->type !== 'particle') {
                 $this->ajax_not_found($format);
             }

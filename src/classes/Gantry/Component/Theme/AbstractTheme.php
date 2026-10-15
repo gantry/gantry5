@@ -207,8 +207,9 @@ abstract class AbstractTheme
         $gantry = static::gantry();
         $gantry['streams']->register();
 
-        // Only add error service if development or debug mode has been enabled or user is admin.
-        if (!$gantry['global']->get('production', 0) || $gantry->debug() || $gantry->admin()) {
+        // Only add the detailed error service in debug mode or for administrators.
+        // Never show it to anonymous visitors (including admin-ajax.php requests).
+        if ($gantry->debug() || $gantry->admin()) {
             $gantry->register(new ErrorServiceProvider);
         }
 

@@ -3,7 +3,7 @@ Contributors: gantry
 Author URI: http://gantry.org
 Tags: gantry, gantry5, framework, theme, builder
 Requires at least: 5.2
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 8.1.0
 Stable tag: @version@
 License: GPLv2 or later
@@ -112,5 +112,8 @@ Gantry 5 plugin is a framework working in the background providing the functiona
 Once you downloaded and installed Gantry 5 plugin, please download also a default theme (that is intended to be used as a basis for building your own themes) from [Gantry Framework](http://gantry.org/ "Gantry Framework") site.
 
 == Changelog ==
+
+= 5.6.5 =
+* Security: fixed a sensitive data exposure issue where an unauthenticated particle AJAX request with an invalid outline could show the detailed debug error page. The debug error page is now only shown in debug mode or to administrators, the AJAX handler validates the outline and handles errors safely, and secret values are masked on the debug page.
 
 You can read the full changelog at the [Gantry Framework](http://gantry.org/#changelog:p=wordpress "Gantry Framework") site.

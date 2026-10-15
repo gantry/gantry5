@@ -68,6 +68,25 @@ class ErrorServiceProvider implements ServiceProviderInterface
         }
         $error_page->addCustomCss('whoops.css');
 
+        // Mask secrets (database credentials, keys, salts, tokens) in the environment tables.
+        $secretPattern = '/(PASS|PWD|SECRET|KEY|TOKEN|SALT|AUTH|CREDENTIAL|DB_|DATABASE|PRIVATE)/i';
+        foreach (['_SERVER' => $_SERVER, '_ENV' => $_ENV, '_COOKIE' => $_COOKIE] as $global => $values) {
+            if (!is_array($values)) {
+                continue;
+            }
+            foreach (array_keys($values) as $key) {
+                if ($global === '_COOKIE' || preg_match($secretPattern, (string) $key)) {
+                    $error_page->hideSuperglobalKey($global, $key);
+                }
+            }
+        }
+        foreach (array_keys((array) getenv()) as $key) {
+            if (preg_match($secretPattern, (string) $key)) {
+                $error_page->hideSuperglobalKey('_ENV', $key);
+                $error_page->hideSuperglobalKey('_SERVER', $key);
+            }
+        }
+
         $errors->pushHandler($error_page);
 
         $jsonRequest = $this->format === 'json' || ($_SERVER && isset($_SERVER['HTTP_ACCEPT']) && $_SERVER['HTTP_ACCEPT'] === 'application/json');
