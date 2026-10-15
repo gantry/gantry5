@@ -235,34 +235,47 @@ class Document extends HtmlDocument
         \wp_enqueue_script('jquery-ui-sortable');
     }
 
+    /**
+     * URL of a script bundled in the plugin (assets/js/vendor), instead of a third-party CDN.
+     *
+     * @param string $file
+     * @return string
+     */
+    protected static function vendorScript($file)
+    {
+        return \plugins_url('assets/js/vendor/' . $file, GANTRY5_PATH . '/gantry5.php');
+    }
+
     protected static function registerBootstrap2()
     {
-        \wp_enqueue_script('bootstrap', 'https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js', [], '2.3.2', true);
+        \wp_enqueue_script('bootstrap', static::vendorScript('bootstrap-2.3.2.min.js'), ['jquery'], '2.3.2', true);
     }
 
     protected static function registerBootstrap3()
     {
-        \wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js', [], '3.4.1', true);
+        \wp_enqueue_script('bootstrap', static::vendorScript('bootstrap-3.4.1.min.js'), ['jquery'], '3.4.1', true);
     }
 
     protected static function registerBootstrap4()
     {
-        \wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js', [], '4.6.0', true);
+        \wp_enqueue_script('bootstrap', static::vendorScript('bootstrap-4.6.0.bundle.min.js'), ['jquery'], '4.6.0', true);
     }
 
     protected static function registerBootstrap5()
     {
-        \wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js', [], '5.0.2', true);
+        \wp_enqueue_script('bootstrap', static::vendorScript('bootstrap-5.0.2.bundle.min.js'), [], '5.0.2', true);
     }
 
     protected static function registerMootools()
     {
-        \wp_enqueue_script('mootools', 'https://cdnjs.cloudflare.com/ajax/libs/mootools/1.5.2/mootools-core-compat.min.js', [], '1.5.2', true);
+        \wp_enqueue_script('mootools', static::vendorScript('mootools-core-1.5.2-compat.min.js'), [], '1.5.2', true);
     }
 
     protected static function registerMootoolsMore()
     {
-        \wp_enqueue_script('mootools-more', 'https://cdnjs.cloudflare.com/ajax/libs/mootools-more/1.5.2/mootools-more-compat-compressed.js', ['mootools'], '1.5.2', true);
+        static::registerMootools();
+
+        \wp_enqueue_script('mootools-more', static::vendorScript('mootools-more-1.5.2-compat.min.js'), ['mootools'], '1.5.2', true);
     }
     
     /**
