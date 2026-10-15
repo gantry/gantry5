@@ -716,7 +716,9 @@ class Theme extends AbstractTheme
      */
     protected function ajax_particle_output($type, $identifier, $props, $html, $format)
     {
-        ob_clean();
+        if (ob_get_level() > 0) {
+            ob_clean();
+        }
 
         if ($format === 'raw') {
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Particle HTML is rendered server-side content.
@@ -740,19 +742,25 @@ class Theme extends AbstractTheme
      */
     protected function ajax_not_found($format)
     {
-        ob_clean();
+        while (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+
+        \status_header(404);
+        \nocache_headers();
 
         if ($format === 'raw') {
+            header('Content-Type: text/plain; charset=utf-8');
             echo 'Not Found';
         } else {
-            header('Content-Type: "application/json; charset=utf-8"');
-            echo json_encode([
+            header('Content-Type: application/json; charset=utf-8');
+            echo \wp_json_encode([
                 'code' => 404,
                 'message' => 'Not Found'
             ]);
         }
 
-        \wp_die();
+        \wp_die('', '', ['response' => 404]);
     }
 
     /**

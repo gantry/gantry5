@@ -501,7 +501,19 @@ class Filepicker extends JsonController
         try {
             Folder::moveFile($source, $destination);
 
-            return @chmod($destination, 0666 & ~umask());
+            global $wp_filesystem;
+            if (empty($wp_filesystem) && \function_exists('WP_Filesystem')) {
+                if (!\function_exists('request_filesystem_credentials')) {
+                    require_once ABSPATH . 'wp-admin/includes/file.php';
+                }
+                \WP_Filesystem();
+            }
+            if (!empty($wp_filesystem)) {
+                $perms = \defined('FS_CHMOD_FILE') ? FS_CHMOD_FILE : (0666 & ~umask());
+                $wp_filesystem->chmod($destination, $perms);
+            }
+
+            return true;
         } catch (\RuntimeException $e) {
             return false;
         }

@@ -59,7 +59,7 @@ abstract class RealLoader
         }
 
         define('GANTRY5_VERSION', '5.6.5');
-        define('GANTRY5_VERSION_DATE', '2026-09-03');
+        define('GANTRY5_VERSION_DATE', '2026-10-15');
 
         if (!defined('DS')) {
             define('DS', DIRECTORY_SEPARATOR);

@@ -17,7 +17,6 @@
 namespace Gantry\Admin\Controller\Json;
 
 use Gantry\Component\Admin\JsonController;
-use Gantry\Component\Remote\Response as RemoteResponse;
 use Gantry\Component\Response\JsonResponse;
 
 /**
@@ -26,8 +25,6 @@ use Gantry\Component\Response\JsonResponse;
  */
 class Changelog extends JsonController
 {
-    /** @var string */
-    protected $url = 'https://raw.githubusercontent.com/gantry/gantry5';
     /** @var string */
     protected $fullurl = 'https://github.com/gantry/gantry5/blob/develop';
     /** @var string */
@@ -63,8 +60,8 @@ class Changelog extends JsonController
             $lookup  = '';
         }
 
-        $url       = $this->url . '/' . $version . '/' . $this->file;
-        $changelog = RemoteResponse::get($url);
+        // Read the changelog bundled with the plugin (readme.txt) instead of a remote URL.
+        $changelog = $this->localChangelog();
 
         if ($changelog) {
             $found = preg_match("/(#\\s" . $lookup . ".+?\\n.*?)(?=\\n{1,}#|$)/uis", $changelog, $changelog);
@@ -91,11 +88,37 @@ class Changelog extends JsonController
             'html' => $this->render('@gantry-admin/ajax/changelog.html.twig', [
                 'changelog' => $changelog,
                 'version'   => $version,
-                'url'       => $url,
+                'url'       => $this->fullurl . '/' . $this->file,
                 'fullurl'   => $this->fullurl . '/' . $this->file
             ])
         ];
 
         return new JsonResponse($response);
+    }
+
+    /**
+     * Convert the readme.txt changelog section into Markdown headings ("# x.y.z").
+     *
+     * @return string|null
+     */
+    protected function localChangelog()
+    {
+        if (!\defined('GANTRY5_PATH')) {
+            return null;
+        }
+        $file = GANTRY5_PATH . '/readme.txt';
+        if (!is_file($file) || !is_readable($file)) {
+            return null;
+        }
+
+        $readme = (string) file_get_contents($file);
+        $pos = strpos($readme, '== Changelog ==');
+        if ($pos === false) {
+            return null;
+        }
+
+        $section = substr($readme, $pos + strlen('== Changelog =='));
+
+        return (string) preg_replace('/^=\s*(.+?)\s*=\s*$/m', '# $1', $section);
     }
 }

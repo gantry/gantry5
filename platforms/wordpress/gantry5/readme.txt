@@ -113,7 +113,11 @@ Once you downloaded and installed Gantry 5 plugin, please download also a defaul
 
 == Changelog ==
 
-= 5.6.5 =
+= 5.6.5 (2026-10-15) =
 * Security: fixed a sensitive data exposure issue where an unauthenticated particle AJAX request with an invalid outline could show the detailed debug error page. The debug error page is now only shown in debug mode or to administrators, the AJAX handler validates the outline and handles errors safely, and secret values are masked on the debug page.
+* Security: invalid particle AJAX requests now return HTTP 404 with a valid JSON Content-Type; detailed error pages are never shown to logged-out visitors, even in debug mode; error output hides environment, cookie, session and POST data.
+* Bundled local copies of jQuery, jQuery UI, Bootstrap 2-5 and MooTools instead of loading them from third-party CDNs.
+* The admin changelog is now read from the bundled readme.txt instead of a remote URL.
+* File picker uses WP_Filesystem to set file permissions.
 
 You can read the full changelog at the [Gantry Framework](http://gantry.org/#changelog:p=wordpress "Gantry Framework") site.

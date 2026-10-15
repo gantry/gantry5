@@ -46,10 +46,26 @@ class ErrorServiceProvider implements ServiceProviderInterface
     }
 
     /**
+     * Detailed error pages are only allowed for logged-in administrators.
+     *
+     * @return bool
+     */
+    public static function allowed()
+    {
+        return \function_exists('is_user_logged_in') && \function_exists('current_user_can')
+            && \is_user_logged_in() && \current_user_can('manage_options');
+    }
+
+    /**
      * @param Container $container
      */
     public function register(Container $container)
     {
+        // Defense in depth: never register the detailed handler for anyone but administrators.
+        if (!static::allowed()) {
+            return;
+        }
+
         /** @var UniformResourceLocator $locator */
         $locator = $container['locator'];
 
@@ -62,36 +78,51 @@ class ErrorServiceProvider implements ServiceProviderInterface
 
         $error_page = new PrettyPageHandler();
         $error_page->setPageTitle('Crikey! There was an error...');
-        $error_page->setEditor('sublime');
         foreach ($locator->findResources('gantry-assets://css/whoops.css') as $path) {
             $error_page->addResourcePath(dirname($path));
         }
         $error_page->addCustomCss('whoops.css');
 
-        // Mask secrets (database credentials, keys, salts, tokens) in the environment tables.
-        $secretPattern = '/(PASS|PWD|SECRET|KEY|TOKEN|SALT|AUTH|CREDENTIAL|DB_|DATABASE|PRIVATE)/i';
-        foreach (['_SERVER' => $_SERVER, '_ENV' => $_ENV, '_COOKIE' => $_COOKIE] as $global => $values) {
+        // Scrub sensitive details: hide every superglobal value except a small safe list,
+        // all cookies, sessions, POST/FILES and the whole environment.
+        $safeServerKeys = ['REQUEST_METHOD', 'REQUEST_URI', 'QUERY_STRING', 'HTTP_HOST', 'HTTP_USER_AGENT', 'HTTP_ACCEPT', 'REQUEST_TIME', 'REQUEST_TIME_FLOAT', 'SERVER_PROTOCOL'];
+        // phpcs:disable WordPress.Security.NonceVerification -- only array keys are read, to hide them.
+        $globals = [
+            '_SERVER' => isset($_SERVER) ? $_SERVER : [],
+            '_ENV' => isset($_ENV) ? $_ENV : [],
+            '_COOKIE' => isset($_COOKIE) ? $_COOKIE : [],
+            '_SESSION' => isset($_SESSION) ? $_SESSION : [],
+            '_POST' => isset($_POST) ? $_POST : [],
+            '_FILES' => isset($_FILES) ? $_FILES : [],
+        ];
+        // phpcs:enable WordPress.Security.NonceVerification
+        foreach ($globals as $global => $values) {
             if (!is_array($values)) {
                 continue;
             }
             foreach (array_keys($values) as $key) {
-                if ($global === '_COOKIE' || preg_match($secretPattern, (string) $key)) {
+                if ($global !== '_SERVER' || !in_array($key, $safeServerKeys, true)) {
                     $error_page->hideSuperglobalKey($global, $key);
                 }
             }
         }
         foreach (array_keys((array) getenv()) as $key) {
-            if (preg_match($secretPattern, (string) $key)) {
-                $error_page->hideSuperglobalKey('_ENV', $key);
+            $error_page->hideSuperglobalKey('_ENV', $key);
+            if (!in_array($key, $safeServerKeys, true)) {
                 $error_page->hideSuperglobalKey('_SERVER', $key);
             }
         }
+        // Do not expose the local editor link handler (reveals absolute file paths as URLs).
+        $error_page->setEditor(static function () {
+            return false;
+        });
 
         $errors->pushHandler($error_page);
 
         $jsonRequest = $this->format === 'json' || ($_SERVER && isset($_SERVER['HTTP_ACCEPT']) && $_SERVER['HTTP_ACCEPT'] === 'application/json');
         if (Misc::isAjaxRequest() || $jsonRequest) {
             $json_handler = new JsonResponseHandler();
+            $json_handler->addTraceToOutput(false);
             //$json_handler->setJsonApi(true);
 
             $errors->pushHandler($json_handler);

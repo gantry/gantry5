@@ -166,7 +166,7 @@ abstract class Router implements RouterInterface
             /** @var Streams $streams */
             $streams = $this->container['streams'];
             $streams->register();
-            if ($this->container->debug() || $this->container->admin()) {
+            if (ErrorServiceProvider::allowed() && ($this->container->debug() || $this->container->admin())) {
                 $this->container->register(new ErrorServiceProvider);
             }
         }
