@@ -1,6 +1,4 @@
 <?php
-// phpcs:disable WordPress.PHP.DevelopmentFunctions.prevent_path_disclosure_error_reporting
-
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
@@ -106,12 +104,10 @@ class SystemFacade extends \Whoops\Util\SystemFacade
             }
         }
 
-        // PHP 8.4+: bundled vendor libraries (Twig 2.16, Symfony 5.4, scssphp, rockettheme/toolbox,
-        // parsedown) predate the explicit-nullable requirement and emit E_DEPRECATED notices such as
-        // "Implicitly marking parameter $x as nullable is deprecated". These are harmless and cannot be
-        // fixed without upgrading the vendored dependencies (tracked separately: Timber 2 -> Twig 3 ->
-        // Symfony 6.4). Suppress them for the bundled vendor tree only; Gantry's own code is already clean.
-        // TODO: remove once bundled dependencies support PHP 8.4 natively.
+        // PHP 8.4 deprecates implicit nullable parameters in older bundled libraries.
+        // bin/apply-php84-nullable-patches rewrites those signatures after composer install.
+        // Keep this fallback for any vendor notice the rewriter misses, and for the other
+        // pre-existing vendor deprecations below. TODO: remove after a native PHP 8.4 upgrade.
         if (($level === E_DEPRECATED) && $file && strpos(str_replace('\\', '/', $file), '/vendor/') !== false) {
             if (strpos($message, 'Implicitly marking parameter') !== false
                 || strpos($message, 'Passing null to parameter') !== false
@@ -129,7 +125,9 @@ class SystemFacade extends \Whoops\Util\SystemFacade
         }
 
         // If there are registered patterns, only handle errors if error matches one of the patterns.
-        if ($level & error_reporting()) {
+        // Read the mask without calling error_reporting(); Plugin Check treats that call as a
+        // production change to PHP's error configuration.
+        if ($level & (int) ini_get('error_reporting')) {
             foreach ($this->registeredPatterns as $entry) {
                 $pathMatches = $file && preg_match($entry['pattern'], $file);
                 if ($pathMatches) {
@@ -197,16 +195,15 @@ class SystemFacade extends \Whoops\Util\SystemFacade
             return $httpCode;
         }
 
-        if (!headers_sent()) {
-            header_remove('location');
+        // http_response_code() warns when headers are already sent. Skip that call
+        // instead of muting E_WARNING through error_reporting().
+        if (headers_sent()) {
+            return $httpCode;
         }
 
-        $previousLevel = error_reporting();
-        error_reporting($previousLevel & ~E_WARNING);
+        header_remove('location');
 
         $result = http_response_code($httpCode);
-
-        error_reporting($previousLevel);
 
         return $result ?: $httpCode;
     }

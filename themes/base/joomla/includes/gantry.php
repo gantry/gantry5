@@ -22,7 +22,7 @@ use Joomla\CMS\Language\Text;
  * @param Gantry|null $gantry
  * @return mixed|string
  */
-$gantry_theme_name = static function (Gantry $gantry = null) {
+$gantry_theme_name = static function (?Gantry $gantry = null) {
     // First attempt to look up the theme name from Gantry.
     if ($gantry && isset($gantry['theme.name'])) {
         return $gantry['theme.name'];
