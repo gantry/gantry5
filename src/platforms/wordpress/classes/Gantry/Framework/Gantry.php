@@ -30,7 +30,9 @@ class Gantry extends Base\Gantry
      */
     public function admin()
     {
-        return \is_admin();
+        // is_admin() is also true for anonymous admin-ajax.php requests, so require a real
+        // administrator capability before treating the request as an admin request.
+        return \is_admin() && \function_exists('current_user_can') && \current_user_can('manage_options');
     }
 
     /**

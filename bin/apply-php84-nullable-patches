@@ -1,0 +1,549 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Rewrite PHP 8.4 implicit nullable parameters to explicit nullable types.
+ *
+ * PHP 8.4 deprecates `Type $param = null` when the file is compiled, which
+ * prints before Gantry can install an error handler. Composer reinstalls the
+ * bundled libraries on every build, so this pass runs again after install.
+ */
+
+declare(strict_types=1);
+
+if (PHP_VERSION_ID < 80100) {
+    fwrite(STDERR, "PHP 8.1+ is required to apply nullable patches.\n");
+    exit(1);
+}
+
+/**
+ * @return int
+ */
+function gantry_php84_run()
+{
+    try {
+        gantry_php84_self_test();
+
+        $project = dirname(__DIR__);
+        $roots = ['src', 'themes', 'platforms', 'tests'];
+        $pending = [];
+        $signatures = 0;
+
+        foreach ($roots as $relative) {
+            $root = $project . DIRECTORY_SEPARATOR . $relative;
+            if (!is_dir($root)) {
+                continue;
+            }
+
+            foreach (gantry_php84_php_files($root) as $file) {
+                $original = file_get_contents($file);
+                if ($original === false) {
+                    throw new RuntimeException('Unable to read ' . $file);
+                }
+
+                [$fixed, $count] = gantry_php84_fix_code($original);
+                if ($count === 0) {
+                    if ($fixed !== $original) {
+                        throw new RuntimeException('Nullable rewrite changed ' . $file . ' without a signature edit.');
+                    }
+                    continue;
+                }
+
+                try {
+                    token_get_all($fixed, TOKEN_PARSE);
+                } catch (ParseError $error) {
+                    throw new RuntimeException(
+                        'Nullable rewrite produced invalid PHP in ' . $file . ': ' . $error->getMessage(),
+                        0,
+                        $error
+                    );
+                }
+
+                $pending[] = [$file, $fixed, $count];
+                $signatures += $count;
+            }
+        }
+
+        foreach ($pending as [$file, $fixed, $count]) {
+            if (file_put_contents($file, $fixed) === false) {
+                throw new RuntimeException('Unable to write ' . $file);
+            }
+
+            $normalized = str_replace('\\', '/', $file);
+            $root = str_replace('\\', '/', $project) . '/';
+            $display = strpos($normalized, $root) === 0 ? substr($normalized, strlen($root)) : $normalized;
+            if (strpos($display, '/vendor/') === false) {
+                echo '  source ' . $display . ' (' . $count . ")\n";
+            }
+        }
+
+        echo '# PHP 8.4 explicit nullable: ' . count($pending) . ' files, ' . $signatures . " signatures\n";
+
+        return 0;
+    } catch (Throwable $error) {
+        fwrite(STDERR, $error->getMessage() . "\n");
+
+        return 1;
+    }
+}
+
+/**
+ * @return list<string>
+ */
+function gantry_php84_php_files($root)
+{
+    $skip = ['node_modules' => true, '.git' => true, 'dist' => true, 'bower_components' => true];
+    $directory = new RecursiveDirectoryIterator($root, FilesystemIterator::SKIP_DOTS);
+    $filtered = new RecursiveCallbackFilterIterator($directory, function ($current) use ($skip) {
+        $name = $current->getFilename();
+        if (isset($skip[$name])) {
+            return false;
+        }
+        if ($current->isDir()) {
+            return true;
+        }
+
+        return strtolower($current->getExtension()) === 'php';
+    });
+
+    $files = [];
+    foreach (new RecursiveIteratorIterator($filtered) as $file) {
+        if ($file->isFile()) {
+            $files[] = $file->getPathname();
+        }
+    }
+
+    return $files;
+}
+
+/**
+ * @return array{0:string,1:int}
+ */
+function gantry_php84_fix_code($code)
+{
+    if (!preg_match('/\bnull\b/i', $code)) {
+        return [$code, 0];
+    }
+
+    $tokens = token_get_all($code);
+    $count = count($tokens);
+    $out = [];
+    $changes = 0;
+    $index = 0;
+
+    while ($index < $count) {
+        $token = $tokens[$index];
+        $isFunction = is_array($token) && ($token[0] === T_FUNCTION || $token[0] === T_FN);
+        if (!$isFunction) {
+            $out[] = $token;
+            $index++;
+            continue;
+        }
+
+        $out[] = $token;
+        $index++;
+        while ($index < $count && $tokens[$index] !== '(') {
+            $out[] = $tokens[$index];
+            $index++;
+        }
+        if ($index >= $count) {
+            break;
+        }
+
+        $out[] = $tokens[$index];
+        $index++;
+
+        while ($index < $count) {
+            if ($tokens[$index] === ')') {
+                $out[] = ')';
+                $index++;
+                break;
+            }
+
+            $param = [];
+            $paren = 0;
+            $brace = 0;
+            $bracket = 0;
+            while ($index < $count) {
+                $current = $tokens[$index];
+                if ($current === '(') {
+                    $paren++;
+                    $param[] = $current;
+                    $index++;
+                    continue;
+                }
+                if ($current === ')') {
+                    if ($paren === 0 && $brace === 0 && $bracket === 0) {
+                        break;
+                    }
+                    $paren--;
+                    $param[] = $current;
+                    $index++;
+                    continue;
+                }
+                if ($current === '{') {
+                    $brace++;
+                } elseif ($current === '}' && $brace > 0) {
+                    $brace--;
+                } elseif ($current === '[') {
+                    $bracket++;
+                } elseif ($current === ']' && $bracket > 0) {
+                    // Attribute closers are "]" without a "[" token ("#[" is one token).
+                    $bracket--;
+                } elseif ($current === ',' && $paren === 0 && $brace === 0 && $bracket === 0) {
+                    break;
+                }
+                $param[] = $current;
+                $index++;
+            }
+
+            [$fixedParam, $changed] = gantry_php84_fix_parameter($param);
+            if ($changed) {
+                $changes++;
+            }
+            foreach ($fixedParam as $fixedToken) {
+                $out[] = $fixedToken;
+            }
+
+            if ($index < $count && $tokens[$index] === ',') {
+                $out[] = ',';
+                $index++;
+            }
+        }
+    }
+
+    $rebuilt = '';
+    foreach ($out as $token) {
+        $rebuilt .= is_array($token) ? $token[1] : $token;
+    }
+
+    return [$rebuilt, $changes];
+}
+
+/**
+ * @param list<mixed> $tokens
+ * @return array{0:list<mixed>,1:bool}
+ */
+function gantry_php84_fix_parameter(array $tokens)
+{
+    if (!$tokens) {
+        return [$tokens, false];
+    }
+
+    [$head, $tail, $isNull] = gantry_php84_split_parameter($tokens);
+    if (!$isNull) {
+        return [$tokens, false];
+    }
+
+    [$head, $changed] = gantry_php84_fix_head($head);
+    if (!$changed) {
+        return [$tokens, false];
+    }
+
+    return [array_merge($head, $tail), true];
+}
+
+/**
+ * @param list<mixed> $tokens
+ * @return array{0:list<mixed>,1:list<mixed>,2:bool}
+ */
+function gantry_php84_split_parameter(array $tokens)
+{
+    $paren = 0;
+    $brace = 0;
+    $bracket = 0;
+    $equals = null;
+
+    foreach ($tokens as $index => $token) {
+        if ($token === '(') {
+            $paren++;
+        } elseif ($token === ')' && $paren > 0) {
+            $paren--;
+        } elseif ($token === '{') {
+            $brace++;
+        } elseif ($token === '}' && $brace > 0) {
+            $brace--;
+        } elseif ($token === '[') {
+            $bracket++;
+        } elseif ($token === ']' && $bracket > 0) {
+            $bracket--;
+        } elseif ($token === '=' && $paren === 0 && $brace === 0 && $bracket === 0) {
+            $equals = $index;
+            break;
+        }
+    }
+
+    if ($equals === null) {
+        return [$tokens, [], false];
+    }
+
+    $default = array_slice($tokens, $equals + 1);
+    $significant = [];
+    foreach ($default as $token) {
+        if (!gantry_php84_is_ignorable($token)) {
+            $significant[] = $token;
+        }
+    }
+
+    $isNull = false;
+    if (count($significant) === 1 && is_array($significant[0])) {
+        $token = $significant[0];
+        if ($token[0] === T_STRING && strcasecmp($token[1], 'null') === 0) {
+            $isNull = true;
+        } elseif (defined('T_NAME_FULLY_QUALIFIED') && $token[0] === T_NAME_FULLY_QUALIFIED && strcasecmp($token[1], '\\null') === 0) {
+            $isNull = true;
+        }
+    }
+
+    return [array_slice($tokens, 0, $equals), array_slice($tokens, $equals), $isNull];
+}
+
+/**
+ * @param list<mixed> $tokens
+ * @return array{0:list<mixed>,1:bool}
+ */
+function gantry_php84_fix_head(array $tokens)
+{
+    $count = count($tokens);
+    $first = null;
+    $last = null;
+    $index = 0;
+
+    while ($index < $count) {
+        $token = $tokens[$index];
+        if (gantry_php84_is_ignorable($token)) {
+            $index++;
+            continue;
+        }
+        if (gantry_php84_is_attribute($token)) {
+            $index = gantry_php84_skip_attribute($tokens, $index);
+            continue;
+        }
+        if (gantry_php84_is_visibility($token)) {
+            $index++;
+            continue;
+        }
+        if (gantry_php84_is_name_prelude($token) || !gantry_php84_is_type_token($token)) {
+            break;
+        }
+        if ($first === null) {
+            $first = $index;
+        }
+        $last = $index;
+        $index++;
+    }
+
+    if ($first === null || $last === null) {
+        return [$tokens, false];
+    }
+
+    $compact = gantry_php84_type_text($tokens, $first, $last);
+    if ($compact === '' || strncmp($compact, '?', 1) === 0 || strcasecmp($compact, 'mixed') === 0) {
+        return [$tokens, false];
+    }
+    foreach (explode('|', $compact) as $part) {
+        if (strcasecmp($part, 'null') === 0) {
+            return [$tokens, false];
+        }
+    }
+
+    if (strpos($compact, '|') !== false) {
+        array_splice($tokens, $last + 1, 0, ['|', [T_STRING, 'null', 0]]);
+
+        return [$tokens, true];
+    }
+
+    if (strpos($compact, '&') !== false) {
+        $wrapped = strncmp($compact, '(', 1) === 0 && substr($compact, -1) === ')';
+        if ($wrapped) {
+            array_splice($tokens, $first, 0, ['?']);
+        } else {
+            array_splice($tokens, $last + 1, 0, [')']);
+            array_splice($tokens, $first, 0, ['?', '(']);
+        }
+
+        return [$tokens, true];
+    }
+
+    array_splice($tokens, $first, 0, ['?']);
+
+    return [$tokens, true];
+}
+
+/**
+ * @param list<mixed> $tokens
+ */
+function gantry_php84_skip_attribute(array $tokens, $index)
+{
+    $count = count($tokens);
+    $index++;
+    $bracket = 1;
+    while ($index < $count && $bracket > 0) {
+        $token = $tokens[$index];
+        if ($token === '[') {
+            $bracket++;
+        } elseif ($token === ']') {
+            $bracket--;
+        }
+        $index++;
+    }
+
+    return $index;
+}
+
+/**
+ * @param list<mixed> $tokens
+ */
+function gantry_php84_type_text(array $tokens, $first, $last)
+{
+    $text = '';
+    for ($index = $first; $index <= $last; $index++) {
+        $token = $tokens[$index];
+        if (gantry_php84_is_ignorable($token)) {
+            continue;
+        }
+        $text .= is_array($token) ? $token[1] : $token;
+    }
+
+    return preg_replace('/\s+/', '', $text);
+}
+
+/**
+ * @param mixed $token
+ */
+function gantry_php84_is_ignorable($token)
+{
+    return is_array($token) && ($token[0] === T_WHITESPACE || $token[0] === T_COMMENT || $token[0] === T_DOC_COMMENT);
+}
+
+/**
+ * @param mixed $token
+ */
+function gantry_php84_is_attribute($token)
+{
+    return defined('T_ATTRIBUTE') && is_array($token) && $token[0] === T_ATTRIBUTE;
+}
+
+/**
+ * @param mixed $token
+ */
+function gantry_php84_is_visibility($token)
+{
+    if (!is_array($token)) {
+        return false;
+    }
+
+    static $ids = null;
+    if ($ids === null) {
+        $ids = [];
+        foreach (['T_PUBLIC', 'T_PROTECTED', 'T_PRIVATE', 'T_READONLY', 'T_PUBLIC_SET', 'T_PROTECTED_SET', 'T_PRIVATE_SET'] as $name) {
+            if (defined($name)) {
+                $ids[constant($name)] = true;
+            }
+        }
+    }
+
+    return isset($ids[$token[0]]);
+}
+
+/**
+ * @param mixed $token
+ */
+function gantry_php84_is_name_prelude($token)
+{
+    if (is_array($token)) {
+        if ($token[0] === T_VARIABLE || $token[0] === T_ELLIPSIS) {
+            return true;
+        }
+
+        return defined('T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG') && $token[0] === T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG;
+    }
+
+    return $token === '&';
+}
+
+/**
+ * @param mixed $token
+ */
+function gantry_php84_is_type_token($token)
+{
+    if (!is_array($token)) {
+        return $token === '?' || $token === '|' || $token === '(' || $token === ')';
+    }
+
+    static $ids = null;
+    if ($ids === null) {
+        $ids = [];
+        foreach ([
+            'T_STRING',
+            'T_ARRAY',
+            'T_CALLABLE',
+            'T_STATIC',
+            'T_NAME_QUALIFIED',
+            'T_NAME_FULLY_QUALIFIED',
+            'T_NAME_RELATIVE',
+            'T_NS_SEPARATOR',
+            'T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG',
+        ] as $name) {
+            if (defined($name)) {
+                $ids[constant($name)] = true;
+            }
+        }
+    }
+
+    return isset($ids[$token[0]]);
+}
+
+function gantry_php84_self_test()
+{
+    $cases = [
+        ['function f(array $a = null) {}', 'function f(?array $a = null) {}', 1],
+        ['function f(?array $a = null) {}', 'function f(?array $a = null) {}', 0],
+        ['function f($a = null) {}', 'function f($a = null) {}', 0],
+        ['function f(mixed $a = null) {}', 'function f(mixed $a = null) {}', 0],
+        ['function f(string|int $a = null) {}', 'function f(string|int|null $a = null) {}', 1],
+        ['function f(string|null $a = null) {}', 'function f(string|null $a = null) {}', 0],
+        ['function f(A&B $a = null) {}', 'function f(?(A&B) $a = null) {}', 1],
+        ['function f(?(A&B) $a = null) {}', 'function f(?(A&B) $a = null) {}', 0],
+        ['function f((A&B)|C $a = null) {}', 'function f((A&B)|C|null $a = null) {}', 1],
+        ['function f(array $a = null, array $b = null): array {}', 'function f(?array $a = null, ?array $b = null): array {}', 2],
+        ['function f(array &$a = null) {}', 'function f(?array &$a = null) {}', 1],
+        ['function f(#[\\SensitiveParameter] string $a = null) {}', 'function f(#[\\SensitiveParameter] ?string $a = null) {}', 1],
+        ['function __construct(public array $a = null) {}', 'function __construct(public ?array $a = null) {}', 1],
+        ["function f(\r\n    array \$a = null\r\n) {}", "function f(\r\n    ?array \$a = null\r\n) {}", 1],
+        ['static function (Gantry $gantry = null) {}', 'static function (?Gantry $gantry = null) {}', 1],
+        ['$s = "function f(array $a = null)"; function g(array $a = null) {}', '$s = "function f(array $a = null)"; function g(?array $a = null) {}', 1],
+        ['fn(string $a = null) => $a;', 'fn(?string $a = null) => $a;', 1],
+        ['function f(Foo\\Bar $a = null) {}', 'function f(?Foo\\Bar $a = null) {}', 1],
+        ['function f(callable $a = null) {}', 'function f(?callable $a = null) {}', 1],
+        ['function f(array $a = []) {}', 'function f(array $a = []) {}', 0],
+        ['function f(string $a = null, int $b = 1) {}', 'function f(?string $a = null, int $b = 1) {}', 1],
+        ['function dispatch($eventName, BaseEvent $event = null) {}', 'function dispatch($eventName, ?BaseEvent $event = null) {}', 1],
+        ['function f(array /* type */ $a = null) {}', 'function f(?array /* type */ $a = null) {}', 1],
+        ['function f(array $a = /* none */ null) {}', 'function f(?array $a = /* none */ null) {}', 1],
+        ['function f(string $a = Foo::null) {}', 'function f(string $a = Foo::null) {}', 0],
+        ['function f(string $a = NULL) {}', 'function f(?string $a = NULL) {}', 1],
+    ];
+
+    foreach ($cases as [$input, $expected, $expectedCount]) {
+        $source = "<?php\n" . $input;
+        $target = "<?php\n" . $expected;
+        [$output, $count] = gantry_php84_fix_code($source);
+        if ($output !== $target || $count !== $expectedCount) {
+            throw new RuntimeException(
+                "Nullable patch self-test failed.\nInput:\n{$source}\nOutput:\n{$output}\nExpected:\n{$target}\nCount: {$count}, expected {$expectedCount}"
+            );
+        }
+        [$again, $againCount] = gantry_php84_fix_code($output);
+        if ($again !== $output || $againCount !== 0) {
+            throw new RuntimeException("Nullable patch is not idempotent for:\n{$source}\nSecond pass:\n{$again}");
+        }
+    }
+}
+
+if (PHP_SAPI === 'cli') {
+    $script = isset($_SERVER['SCRIPT_FILENAME']) ? realpath($_SERVER['SCRIPT_FILENAME']) : false;
+    $self = realpath(__FILE__);
+    if ($script !== false && $self !== false && $script === $self) {
+        exit(gantry_php84_run());
+    }
+}

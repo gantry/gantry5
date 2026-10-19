@@ -16,6 +16,14 @@
 
 setlocale(LC_ALL, ['en_GB.utf8', 'en_GB']);
 date_default_timezone_set('America/Denver');
+
+// PHP 8.4 deprecates implicit nullable parameters when the file is compiled.
+// Composer reinstalls vendor code, so rewrite those signatures before packaging.
+require_once __DIR__ . '/apply-php84-nullable-patches';
+if (gantry_php84_run() !== 0) {
+    throw new RuntimeException('Failed to apply PHP 8.4 nullable patches');
+}
+
 chdir(__DIR__ . '/builder');
 
 $hasVersion = false;

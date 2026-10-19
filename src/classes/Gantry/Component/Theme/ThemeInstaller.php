@@ -261,8 +261,8 @@ abstract class ThemeInstaller
         $streams = $gantry['streams'];
         $streams->register();
 
-        // Only add error service if debug mode has been enabled.
-        if ($gantry->debug()) {
+        // Only add error service in debug mode, and only for logged-in administrators.
+        if (ErrorServiceProvider::allowed() && $gantry->debug()) {
             $gantry->register(new ErrorServiceProvider());
         }
 

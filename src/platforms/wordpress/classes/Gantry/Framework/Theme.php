@@ -656,7 +656,17 @@ class Theme extends AbstractTheme
 
         $gantry = Gantry::instance();
 
-        $this->setLayout($outline, true);
+        // Only accept outlines that exist in the current theme.
+        try {
+            $outlines = $gantry['outlines'];
+            if ($outline !== 'default' && !isset($outlines[$outline])) {
+                $this->ajax_not_found($format);
+            }
+
+            $this->setLayout($outline, true);
+        } catch (\Throwable $e) {
+            $this->ajax_not_found($format);
+        }
 
         if ($identifier === 'main-particle') {
             // Does not exist in WP.
@@ -674,8 +684,12 @@ class Theme extends AbstractTheme
             $this->ajax_particle_output('widget.' . $type, $identifier, $props, $html, $format);
         } else {
             // Render particle.
-            $layout = $this->loadLayout();
-            $particle = $layout->find($identifier);
+            try {
+                $layout = $this->loadLayout();
+                $particle = $layout->find($identifier);
+            } catch (\Throwable $e) {
+                $this->ajax_not_found($format);
+            }
             if (!isset($particle->type) || $particle->type !== 'particle') {
                 $this->ajax_not_found($format);
             }
@@ -702,7 +716,9 @@ class Theme extends AbstractTheme
      */
     protected function ajax_particle_output($type, $identifier, $props, $html, $format)
     {
-        ob_clean();
+        if (ob_get_level() > 0) {
+            ob_clean();
+        }
 
         if ($format === 'raw') {
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Particle HTML is rendered server-side content.
@@ -726,19 +742,25 @@ class Theme extends AbstractTheme
      */
     protected function ajax_not_found($format)
     {
-        ob_clean();
+        while (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+
+        \status_header(404);
+        \nocache_headers();
 
         if ($format === 'raw') {
+            header('Content-Type: text/plain; charset=utf-8');
             echo 'Not Found';
         } else {
-            header('Content-Type: "application/json; charset=utf-8"');
-            echo json_encode([
+            header('Content-Type: application/json; charset=utf-8');
+            echo \wp_json_encode([
                 'code' => 404,
                 'message' => 'Not Found'
             ]);
         }
 
-        \wp_die();
+        \wp_die('', '', ['response' => 404]);
     }
 
     /**

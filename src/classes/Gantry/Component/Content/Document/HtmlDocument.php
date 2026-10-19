@@ -757,83 +757,61 @@ class HtmlDocument
         }
     }
 
+    /**
+     * Local copy of a bundled vendor script (no third-party CDN).
+     *
+     * @param string $file
+     * @return string|null
+     */
+    protected static function vendorScript($file)
+    {
+        return static::url('gantry-assets://js/vendor/' . $file, false, null, false);
+    }
+
     protected static function registerJquery()
     {
-        static::addScript(
-            [
-                'src' => 'https://code.jquery.com/jquery-3.6.0.min.js',
-			    'integrity' => 'sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=',
-			    'crossorigin' => 'anonymous'
-            ],
-            11
-        );
+        static::addScript(['src' => static::vendorScript('jquery-3.6.0.min.js')], 11);
     }
 
     protected static function registerJqueryUiSortable()
     {
         static::registerJquery();
 
-        static::addScript(
-            [
-                'src' => 'https://code.jquery.com/ui/1.11.4/jquery-ui.min.js',
-                'integrity' => 'sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=',
-                'crossorigin' => 'anonymous'
-            ],
-            11
-        );
+        static::addScript(['src' => static::vendorScript('jquery-ui-1.11.4.min.js')], 11);
     }
 
     protected static function registerBootstrap2()
     {
         static::registerJquery();
 
-        static::addScript(['src' => 'https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js'], 11);
+        static::addScript(['src' => static::vendorScript('bootstrap-2.3.2.min.js')], 11);
     }
 
     protected static function registerBootstrap3()
     {
-        static::addScript(
-            [
-                'src' => 'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js',
-                'integrity' => 'sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd',
-                'crossorigin' => 'anonymous'
-            ],
-            11);
+        static::addScript(['src' => static::vendorScript('bootstrap-3.4.1.min.js')], 11);
     }
 
     protected static function registerBootstrap4()
     {
-        static::addScript(
-            [
-                'src' => 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js',
-                'integrity' => 'sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns',
-                'crossorigin' => 'anonymous'
-            ],
-            11);
+        static::addScript(['src' => static::vendorScript('bootstrap-4.6.0.bundle.min.js')], 11);
     }
-
 
     protected static function registerBootstrap5()
     {
-        static::addScript(
-            [
-                'src' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js',
-                'integrity' => 'sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM',
-                'crossorigin' => 'anonymous'
-            ],
-            11);
+        static::addScript(['src' => static::vendorScript('bootstrap-5.0.2.bundle.min.js')], 11);
     }
 
     protected static function registerMootools()
     {
-        static::addScript(['src' => 'https://cdnjs.cloudflare.com/ajax/libs/mootools/1.5.2/mootools-core-compat.min.js'], 11);
+        static::addScript(['src' => static::vendorScript('mootools-core-1.5.2-compat.min.js')], 11);
     }
 
     protected static function registerMootoolsMore()
     {
         static::registerMootools();
 
-        static::addScript(['src' => 'https://cdnjs.cloudflare.com/ajax/libs/mootools-more/1.5.2/mootools-more-compat-compressed.js'], 11);
+        static::addScript(['src' => static::vendorScript('mootools-more-1.5.2-compat.min.js')], 11);
     }
 
     protected static function registerLightcase()
