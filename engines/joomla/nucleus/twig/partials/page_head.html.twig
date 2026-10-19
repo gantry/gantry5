@@ -33,7 +33,7 @@
         {% endif %}
     {% endif %}
 
-    {% if gantry.theme.joomla %}
+    {% if gantry.theme.joomla and gantry.debug %}
         {% if gantry.platform.checkVersion(5) %}
             {# Joomla 5.x #}
             <link rel="stylesheet" href="{{ url('media/plg_system_debug/css/debug.css') }}" type="text/css"/>
@@ -42,9 +42,7 @@
             <link rel="stylesheet" href="{{ url('media/system/css/debug.css') }}" type="text/css"/>
         {% elseif gantry.platform.checkVersion(3) %}
             {# Joomla 3.x #}
-            {% if gantry.debug %}
-                <link rel="stylesheet" href="{{ url('media/cms/css/debug.css') }}" type="text/css"/>
-            {% endif %}
+            <link rel="stylesheet" href="{{ url('media/cms/css/debug.css') }}" type="text/css"/>
         {% endif %}
     {% endif %}
 {%- endblock %}
