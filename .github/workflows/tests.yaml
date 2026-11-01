@@ -40,6 +40,8 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
       - name: Build Gantry packages
         run: composer build-dev
+      - name: Check icon catalogue guards for supported CMS markers
+        run: php tests/php84/icon-catalogues.php
       - name: Run PHP 8.3 compatibility tests
         if: matrix.php == '8.3'
         run: ./tests/php83/scripts/run-tests.sh
