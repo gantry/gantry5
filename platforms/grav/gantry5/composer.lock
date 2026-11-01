@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dae652f962d7af9ddc38525e251a9fd8",
+    "content-hash": "27790188e931a2906d0389dbb8a09b55",
     "packages": [
         {
             "name": "scssphp/scssphp",
@@ -94,7 +94,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.3.6 <8.4.0",
+        "php": ">=8.1.0 <8.5.0",
         "ext-mbstring": "*",
         "ext-json": "*",
         "ext-dom": "*",
