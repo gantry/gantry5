@@ -1,16 +1,3 @@
-# 5.6.6
-## 11/02/2026
-1. [Common](#common)
-    1. [](#improved)
-        - Security: hardened permission checks and input handling in the admin file picker.
-        - Security: hardened validation of archive contents during outline import.
-        - File picker uploads are now limited to images, SVG, fonts and common video formats, with file type verification.
-        - File picker paths are limited to the site's media and image folders. Pickers configured with a root outside these folders now open in the Gantry media folder.
-2. [Joomla](#joomla)
-    1. [](#improved)
-        - Users who can only manage modules can still pick and upload images in the particle module editor, but have no other file picker access.
-        - File picker uploads respect the Media Manager's allowed file extensions.
-
 # 5.6.4
 ## 09/03/2026
 1. [Joomla](#joomla)

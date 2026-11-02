@@ -102,8 +102,8 @@ abstract class Router implements RouterInterface
         }
 
         if (!class_exists($class)) {
-            if ($format === 'json' && empty($this->container['admin.restricted'])) {
-                // Special case: All HTML requests can be returned also as JSON (not for restricted admin access).
+            if ($format === 'json') {
+                // Special case: All HTML requests can be returned also as JSON.
                 $response = $this->execute($resource, $method, $path, $params, 'html');
                 return $response instanceof JsonResponse ? $response : new JsonResponse($response);
             }

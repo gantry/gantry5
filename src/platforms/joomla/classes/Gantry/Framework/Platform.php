@@ -661,13 +661,6 @@ class Platform extends BasePlatform
         }
 
         switch ($action) {
-            case 'filesystem.manage':
-                // Admin file picker and import: same access as the Gantry admin itself.
-                return $user->authorise('core.manage', 'com_gantry5') || $user->authorise('core.manage', 'com_templates');
-            case 'filesystem.images':
-                // Image-only picker access (also for module managers using the particle module editor).
-                return $user->authorise('core.manage', 'com_gantry5') || $user->authorise('core.manage', 'com_templates')
-                    || $user->authorise('core.manage', 'com_modules');
             case 'platform.settings.manage':
                 return $user->authorise('core.admin', 'com_templates') || $user->authorise('core.admin', 'com_gantry5');
             case 'menu.manage':

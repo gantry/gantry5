@@ -19,7 +19,6 @@ namespace Gantry\Admin\Controller\Json;
 
 use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Filesystem\Folder;
-use Gantry\Component\Filesystem\PathGuard;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\File\File;
@@ -36,7 +35,7 @@ class Filepicker extends JsonController
     protected $base;
     /** @var string */
     protected $value;
-    /** @var bool|string */
+    /** @var bool */
     protected $filter = false;
     /** @var array */
     protected $httpVerbs = [
@@ -62,64 +61,16 @@ class Filepicker extends JsonController
         ]
     ];
 
-    /** @var PathGuard|null */
-    protected $pathGuard;
-
-    /** @var string|null */
-    protected $accessLevel;
-
-    /**
-     * Resolve filesystem access level for the current user.
-     *
-     * @return string 'full' or 'images'
-     */
-    protected function getAccessLevel()
-    {
-        if ($this->accessLevel !== null) {
-            return $this->accessLevel;
-        }
-
-        if ($this->authorize('filesystem.manage')) {
-            $this->accessLevel = 'full';
-        } elseif ($this->authorize('filesystem.images')) {
-            $this->accessLevel = 'images';
-        } else {
-            throw new \RuntimeException('Forbidden', 403);
-        }
-
-        return $this->accessLevel;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getSiteRoot()
-    {
-        return GANTRY5_ROOT;
-    }
-
-    /**
-     * @param string $tmp
-     * @return bool
-     */
-    protected function isUploadedFile($tmp)
-    {
-        return is_uploaded_file($tmp);
-    }
-
     /**
      * @return JsonResponse
      */
     public function index()
     {
-        $access = $this->getAccessLevel();
-
         /** @var UniformResourceLocator $locator */
         $locator   = $this->container['locator'];
         $bookmarks = [];
         $drives    = ['/'];
         $subfolder = false;
-        $guard     = $this->getPathGuard();
 
         $this->base = $locator->base;
 
@@ -130,56 +81,22 @@ class Filepicker extends JsonController
             $filter       = $this->request->post['filter'];
             $this->filter = isset($filter) ? ($filter !== 'false' ? $filter : false) : false;
             $this->value  = $this->request->post['value'] ?: '';
-
-            // Guard against invalid regex patterns.
-            if ($this->filter !== false && is_string($this->filter)) {
-                if (@preg_match('/' . $this->filter . '/i', '') === false) {
-                    $this->filter = false;
-                }
-            }
-        }
-
-        if ($access === 'images') {
-            $this->filter = '\.(jpe?g|png|gif|webp|avif|svg)$';
-        }
-
-        $readSchemes = ['gantry-media', 'gantry-theme', 'gantry-assets'];
-        if ($access === 'images') {
-            $readSchemes = ['gantry-media'];
         }
 
         foreach ($drives as $drive) {
-            try {
-                $drive = PathGuard::assertCleanInput($drive);
-            } catch (\RuntimeException $e) {
+            // cleanup of the path so it's chrooted.
+            $drive  = str_replace('..', '', $drive);
+
+            $isStream = $locator->isStream($drive);
+            $path     = rtrim($this->base, '/') . '/' . ltrim($drive, '/');
+
+            // It's a stream but the scheme doesn't exist. we skip it.
+            if (!$isStream && (strpos($drive, '://') !== false || !file_exists($path))) {
                 continue;
             }
 
-            $isStream = $locator->isStream($drive);
-
-            if ($isStream) {
-                $parts = explode('://', $drive, 2);
-                $scheme = isset($parts[0]) ? $parts[0] : '';
-                if (!in_array($scheme, $readSchemes, true)) {
-                    continue;
-                }
-                if (!$locator->findResources($drive)) {
-                    continue;
-                }
-            } else {
-                if (strpos($drive, '://') !== false) {
-                    continue;
-                }
-                $path = rtrim($this->base, '/') . '/' . ltrim($drive, '/');
-                if (!file_exists($path)) {
-                    continue;
-                }
-                $real = realpath($path);
-                // Images mode: only write roots; full mode: any read root.
-                $writeOnly = ($access === 'images');
-                if ($real === false || !$guard->isUnderRoots($real, $writeOnly)) {
-                    continue;
-                }
+            if ($isStream && !$locator->findResources($drive)) {
+                continue;
             }
 
             $key = $isStream ? $drive : preg_replace('#/{2,}+#', '/', $drive);
@@ -187,19 +104,7 @@ class Filepicker extends JsonController
             if (!array_key_exists($key, $bookmarks)) {
                 $bookmarks[$key] = $isStream
                     ? [$locator->getIterator($drive)]
-                    : [rtrim(Folder::getRelativePath(rtrim($this->base, '/') . '/' . ltrim($drive, '/'), $this->getSiteRoot()), '/') . '/'];
-            }
-        }
-
-        // Fall back to media drive when nothing allowed remains.
-        if (!count($bookmarks)) {
-            $fallback = 'gantry-media://';
-            try {
-                if ($locator->isStream($fallback) && $locator->findResources($fallback)) {
-                    $bookmarks[$fallback] = [$locator->getIterator($fallback)];
-                }
-            } catch (\Exception $e) {
-                // ignore
+                    : [rtrim(Folder::getRelativePath($path), '/') . '/'];
             }
         }
 
@@ -241,16 +146,6 @@ class Filepicker extends JsonController
                 foreach ($iterator as $info) {
                     // no dot files nor files beginning with dot
                     if ($info->isDot() || substr($info->getFilename(), 0, 1) === '.') {
-                        continue;
-                    }
-
-                    // security hardening: skip forbidden files
-                    if (!$info->isDir() && PathGuard::isForbiddenFile($info->getFilename())) {
-                        continue;
-                    }
-
-                    // Images mode: folders plus image files only.
-                    if ($access === 'images' && !$info->isDir() && !PathGuard::isImageFile($info->getFilename())) {
                         continue;
                     }
 
@@ -338,9 +233,7 @@ class Filepicker extends JsonController
             $node->{$keyMethod} = $iteration->{$method}();
 
             if ($method === 'getPathname') {
-                $node->{$keyMethod} = $this->isStream($folder)
-                    ? $iteration->getUrl()
-                    : Folder::getRelativePath($node->{$keyMethod}, $this->getSiteRoot());
+                $node->{$keyMethod} = $this->isStream($folder) ? $iteration->getUrl() : Folder::getRelativePath($node->{$keyMethod});
             } else {
                 if ($method === 'getExtension') {
                     $node->isImage = in_array(strtolower($node->{$keyMethod}), ['jpg', 'jpeg', 'png', 'gif', 'ico', 'svg', 'bmp', 'webp']);
@@ -355,7 +248,6 @@ class Filepicker extends JsonController
      */
     protected function listFiles($folder)
     {
-        $access   = $this->getAccessLevel();
         $isStream = $this->isStream($folder);
         $locator  = $this->container['locator'];
         $iterator = $isStream ? new \IteratorIterator($locator->getIterator($folder)) : new \DirectoryIterator($this->base . '/' . ltrim($folder, '/'));
@@ -368,19 +260,10 @@ class Filepicker extends JsonController
                 continue;
             }
 
-            // security hardening: skip forbidden files
-            if (PathGuard::isForbiddenFile($info->getFilename())) {
-                continue;
-            }
-
             $file = new \stdClass();
             $this->attachData($file, $info, $folder);
 
             if (!$file->dir) {
-                if ($access === 'images' && !PathGuard::isImageFile($file->filename)) {
-                    continue;
-                }
-
                 if ($this->filter && !preg_match("/" . $this->filter . "/i", $file->filename)) {
                     continue;
                 }
@@ -411,8 +294,6 @@ class Filepicker extends JsonController
      */
     public function subfolder()
     {
-        $this->getAccessLevel();
-
         $response         = [];
         $response['html'] = 'subfolder';
 
@@ -422,66 +303,9 @@ class Filepicker extends JsonController
 
     public function displayFile()
     {
-        $this->getAccessLevel();
-
-        if (!$this->checkRequestToken()) {
-            throw new \RuntimeException('Invalid security token; please reload the page and try again.', 403);
-        }
-
         $path = implode('/', func_get_args());
 
         $this->doDownload($path, false);
-    }
-
-    /**
-     * Validate and resolve a download/display path.
-     *
-     * @param string $path
-     * @param bool $download
-     * @return array{path:string,inline:bool,mime:?string,name:string}
-     */
-    protected function prepareDownload($path, $download)
-    {
-        $access = $this->getAccessLevel();
-
-        if (!$path) {
-            throw new \RuntimeException('No file specified', 400);
-        }
-
-        $targetPath = $this->resolveRequestPath($path, false);
-
-        if (!is_file($targetPath) || PathGuard::isForbiddenFile($targetPath)) {
-            throw new \RuntimeException('Access denied.', 403);
-        }
-
-        if ($access === 'images' && !PathGuard::isImageFile($targetPath)) {
-            throw new \RuntimeException('Access denied.', 403);
-        }
-
-        // Get the image file information.
-        $info    = @getimagesize($targetPath);
-        $safeInlineMimes = [
-            'image/jpeg',
-            'image/png',
-            'image/gif',
-            'image/webp',
-            'image/avif',
-            'image/bmp',
-            'image/x-icon',
-            'image/vnd.microsoft.icon',
-        ];
-        $isSafeImage = is_array($info) && isset($info['mime']) && in_array($info['mime'], $safeInlineMimes, true);
-
-        $safeName = str_replace(['"', "\r", "\n"], '', Gantry::basename($targetPath));
-        $inline = !$download && $isSafeImage;
-        $mime = $inline ? $info['mime'] : null;
-
-        return [
-            'path'   => $targetPath,
-            'inline' => $inline,
-            'mime'   => $mime,
-            'name'   => $safeName,
-        ];
     }
 
     /**
@@ -490,8 +314,16 @@ class Filepicker extends JsonController
      */
     protected function doDownload($path, $download)
     {
-        $prepared = $this->prepareDownload($path, $download);
-        $targetPath = $prepared['path'];
+        if (!$path) {
+            throw new \RuntimeException('No file specified', 400);
+        }
+
+        // TODO: handle streams
+        $targetPath = GANTRY5_ROOT . '/' . $path;
+
+        if (!file_exists($targetPath)) {
+            throw new \RuntimeException('File not found.', 404);
+        }
 
         $hash = md5_file($targetPath);
 
@@ -512,14 +344,19 @@ class Filepicker extends JsonController
         header('ETag: ' . $hash);
         header('Pragma: public');
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($targetPath)) . ' GMT');
-        header('X-Content-Type-Options: nosniff');
 
-        if ($prepared['inline']) {
+        // Get the image file information.
+        $info    = getimagesize($targetPath);
+        $isImage = (bool)$info;
+
+        if (!$download && $isImage) {
+            $fileType = $info['mime'];
+
             // Force re-validate.
             header('Expires: 0');
             header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-            header('Content-type: ' . $prepared['mime']);
-            header('Content-Disposition: inline; filename="' . $prepared['name'] . '"');
+            header('Content-type: ' . $fileType);
+            header('Content-Disposition: inline; filename="' . Gantry::basename($targetPath) . '"');
         } else {
             // Force file download.
             header('Expires: 0');
@@ -528,7 +365,7 @@ class Filepicker extends JsonController
             header('Content-Type: application/force-download');
             header('Content-Type: application/octet-stream');
             header('Content-Type: application/download');
-            header('Content-Disposition: attachment; filename="' . $prepared['name'] . '"');
+            header('Content-Disposition: attachment; filename="' . Gantry::basename($targetPath) . '"');
         }
 
         header('Content-Transfer-Encoding: binary');
@@ -545,12 +382,6 @@ class Filepicker extends JsonController
 
     public function downloadFile()
     {
-        $this->getAccessLevel();
-
-        if (!$this->checkRequestToken()) {
-            throw new \RuntimeException('Invalid security token; please reload the page and try again.', 403);
-        }
-
         $path = implode('/', func_get_args());
 
         $this->doDownload($path, true);
@@ -561,12 +392,9 @@ class Filepicker extends JsonController
      */
     public function upload()
     {
-        $access = $this->getAccessLevel();
-
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
         $path    = implode('/', func_get_args());
-        $guard   = $this->getPathGuard();
 
         if (function_exists('check_ajax_referer') && !check_ajax_referer('gantry5-layout-manager', '_wpnonce', false)) {
             throw new \RuntimeException('Invalid request token.', 403);
@@ -610,31 +438,22 @@ class Filepicker extends JsonController
             $uploadedName = sanitize_file_name($uploadedName);
         }
         $tmpName = isset($uploadedFile['tmp_name']) ? $uploadedFile['tmp_name'] : '';
-        if ($uploadedName === '' || $tmpName === '' || !$this->isUploadedFile($tmpName)) {
+        if ($uploadedName === '' || $tmpName === '' || !is_uploaded_file($tmpName)) {
             throw new \RuntimeException('Invalid uploaded file.', 400);
         }
 
-        if ($access === 'images') {
-            $ext = strtolower(pathinfo($uploadedName, PATHINFO_EXTENSION));
-            if ($ext === '' || !in_array($ext, PathGuard::imageExtensions(), true)) {
-                throw new \RuntimeException('File type not allowed.', 400);
-            }
-        }
+        $fileParts = Gantry::pathinfo($uploadedName);
+        $fileExt   = strtolower($fileParts['extension']);
 
-        $extraAllowed = $this->getJoomlaMediaExtensions();
-        PathGuard::assertUploadAllowed($uploadedName, $tmpName, $extraAllowed);
+        // TODO: check if download is of supported type.
 
         $targetPath = $this->getUploadTargetPath($path, $locator);
 
-        // Ensure the target directory is (or will be) inside a write root.
-        if (!is_dir($targetPath)) {
-            if (!$guard->canCreateDirectory($targetPath)) {
-                throw new \RuntimeException('Access denied.', 403);
-            }
-            Folder::create($targetPath);
-        }
+        // Upload it
+        $destination = sprintf('%s/%s', $targetPath, $uploadedName);
+        $destination = preg_replace('#//#', '/', $destination);
 
-        $destination = $guard->resolveNewFile($targetPath, $uploadedName);
+        Folder::create($targetPath);
 
         if (!$this->writeUploadedFile($tmpName, $destination)) {
             throw new \RuntimeException('Failed to move uploaded file.', 500);
@@ -707,19 +526,14 @@ class Filepicker extends JsonController
      * @param UniformResourceLocator $locator
      * @return string
      */
-    protected function getUploadTargetPath($path, $locator)
+    protected function getUploadTargetPath($path, UniformResourceLocator $locator)
     {
         $path = str_replace('\\', '/', $path);
-        $path = PathGuard::assertCleanInput($path);
 
         $stream = explode('://', $path, 2);
         $scheme = $stream[0];
 
         if ($locator->schemeExists($scheme)) {
-            if (!in_array($scheme, ['gantry-media', 'gantry-theme'], true)) {
-                throw new \RuntimeException('Access denied.', 403);
-            }
-
             $directory = $this->getUploadDirectory($path);
             $targetPath = $locator->findResource($directory, true, true);
 
@@ -727,7 +541,7 @@ class Filepicker extends JsonController
                 throw new \RuntimeException(
                     sprintf(
                         'Unable to resolve upload target: %s',
-                        htmlspecialchars($directory, ENT_QUOTES, 'UTF-8')
+                        esc_html($directory)
                     ),
                     500
                 );
@@ -739,7 +553,7 @@ class Filepicker extends JsonController
         $directory = dirname($path);
         $directory = $directory === '.' ? '' : trim($directory, '/');
 
-        return rtrim($this->getSiteRoot(), '/\\') . ($directory ? '/' . $directory : '');
+        return rtrim(GANTRY5_ROOT, '/\\') . ($directory ? '/' . $directory : '');
     }
 
     /**
@@ -799,26 +613,26 @@ class Filepicker extends JsonController
      */
     public function delete()
     {
-        $access = $this->getAccessLevel();
-
-        if ($access === 'images') {
-            throw new \RuntimeException('Forbidden', 403);
-        }
-
-        $path = implode('/', func_get_args());
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+        $path    = implode('/', func_get_args());
 
         if (base64_decode($path, true) !== false) {
             $path = urldecode(base64_decode($path));
         }
 
+        $stream = explode('://', $path);
+        $scheme = $stream[0];
+
         if (!$path) {
             throw new \RuntimeException('No file specified for delete', 400);
         }
 
-        $targetPath = $this->resolveRequestPath($path, true);
-
-        if (!is_file($targetPath) || PathGuard::isForbiddenFile($targetPath)) {
-            throw new \RuntimeException('Access denied.', 403);
+        $isStream = $locator->schemeExists($scheme);
+        if ($isStream) {
+            $targetPath = $locator->findResource($path, true, true);
+        } else {
+            $targetPath = GANTRY5_ROOT . '/' . $path;
         }
 
         $file = File::instance($targetPath);
@@ -827,8 +641,6 @@ class Filepicker extends JsonController
             throw new \RuntimeException('File not found.', 404);
         }
 
-        $basename = basename($targetPath);
-
         try {
             $file->delete();
         } catch (\Exception $e) {
@@ -836,191 +648,7 @@ class Filepicker extends JsonController
         }
         $file->free();
 
-        return new JsonResponse(['success', 'File deleted: ' . $basename]);
-    }
-
-    /**
-     * Security hardening: verify CSRF token on GET file serve routes.
-     *
-     * @return bool
-     */
-    protected function checkRequestToken()
-    {
-        if (function_exists('check_ajax_referer')) {
-            return (bool) check_ajax_referer('gantry5-layout-manager', '_wpnonce', false);
-        }
-
-        if (class_exists('\Joomla\CMS\Session\Session')) {
-            return \Joomla\CMS\Session\Session::checkToken('get') || \Joomla\CMS\Session\Session::checkToken('post');
-        }
-
-        return false;
-    }
-
-    /**
-     * @param string $path
-     * @param bool $write
-     * @return string
-     */
-    protected function resolveRequestPath($path, $write = false)
-    {
-        $access = $this->getAccessLevel();
-        $path = PathGuard::assertCleanInput($path);
-        $guard = $this->getPathGuard();
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-
-        // Images mode always resolves against write roots.
-        if ($access === 'images') {
-            $write = true;
-        }
-
-        if (strpos($path, '://') !== false) {
-            $parts = explode('://', $path, 2);
-            $scheme = isset($parts[0]) ? $parts[0] : '';
-            $readSchemes = ['gantry-media', 'gantry-theme', 'gantry-assets'];
-            $writeSchemes = ['gantry-media', 'gantry-theme'];
-
-            if ($access === 'images') {
-                $allowed = ['gantry-media', 'gantry-theme'];
-            } else {
-                $allowed = $write ? $writeSchemes : $readSchemes;
-            }
-
-            if (!in_array($scheme, $allowed, true)) {
-                throw new \RuntimeException('Access denied.', 403);
-            }
-
-            $resolved = $locator->findResource($path, true);
-            if ($resolved === false || $resolved === null) {
-                throw new \RuntimeException('File not found.', 404);
-            }
-
-            return $guard->resolveExisting($resolved, $write);
-        }
-
-        $absolute = rtrim($this->getSiteRoot(), '/') . '/' . ltrim($path, '/');
-
-        return $guard->resolveExisting($absolute, $write);
-    }
-
-    /**
-     * Guard roots used to build PathGuard (overridable in tests).
-     *
-     * @return array{read:string[],write:string[]}
-     */
-    protected function getGuardRoots()
-    {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-
-        $writeRoots = [];
-        $readRoots = [];
-
-        $resourceSets = [
-            'gantry-media://' => true,
-            'gantry-theme://images' => true,
-            'gantry-theme://custom' => true,
-            'gantry-assets://' => false,
-        ];
-
-        foreach ($resourceSets as $uri => $writable) {
-            try {
-                $found = $locator->findResources($uri, true, true);
-                if (is_array($found)) {
-                    foreach ($found as $p) {
-                        if ($writable) {
-                            $writeRoots[] = $p;
-                        } else {
-                            $readRoots[] = $p;
-                        }
-                    }
-                }
-            } catch (\Exception $e) {
-                // ignore missing schemes
-            }
-        }
-
-        if (isset($this->container['theme.path'])) {
-            $themePath = $this->container['theme.path'];
-            $writeRoots[] = $themePath . '/images';
-            $writeRoots[] = $themePath . '/custom';
-        }
-
-        if (defined('JPATH_ROOT')) {
-            $writeRoots[] = JPATH_ROOT . '/images';
-            $writeRoots[] = JPATH_ROOT . '/media/gantry5';
-            $readRoots[] = JPATH_ROOT . '/media';
-        }
-
-        if (function_exists('wp_upload_dir')) {
-            $uploads = wp_upload_dir();
-            if (!empty($uploads['basedir'])) {
-                $writeRoots[] = $uploads['basedir'];
-            }
-            if (defined('WP_CONTENT_DIR')) {
-                $writeRoots[] = WP_CONTENT_DIR . '/gantry5';
-            }
-        }
-
-        return [
-            'read'  => $readRoots,
-            'write' => $writeRoots,
-        ];
-    }
-
-    /**
-     * Build and cache the path allowlist guard.
-     *
-     * @return PathGuard
-     */
-    protected function getPathGuard()
-    {
-        if ($this->pathGuard instanceof PathGuard) {
-            return $this->pathGuard;
-        }
-
-        $roots = $this->getGuardRoots();
-        $this->pathGuard = new PathGuard($this->getSiteRoot(), $roots['read'], $roots['write']);
-
-        return $this->pathGuard;
-    }
-
-    /**
-     * Joomla com_media allowed extensions list, or null when unavailable/empty.
-     *
-     * @return array|null
-     */
-    protected function getJoomlaMediaExtensions()
-    {
-        if (!class_exists('\Joomla\CMS\Component\ComponentHelper')) {
-            return null;
-        }
-
-        try {
-            $params = \Joomla\CMS\Component\ComponentHelper::getParams('com_media');
-            $list = $params->get(
-                'restrict_uploads_extensions',
-                $params->get('upload_extensions', '')
-            );
-        } catch (\Exception $e) {
-            return null;
-        }
-
-        if (!is_string($list) || $list === '') {
-            return null;
-        }
-
-        $parts = explode(',', $list);
-        $out = [];
-        foreach ($parts as $part) {
-            $part = strtolower(trim($part));
-            if ($part !== '') {
-                $out[] = $part;
-            }
-        }
-
-        return count($out) ? $out : null;
+        return new JsonResponse(['success', 'File deleted: ' . $targetPath]);
     }
 
     /**

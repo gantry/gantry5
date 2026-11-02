@@ -386,21 +386,4 @@ class Platform extends BasePlatform
 
         return Utilities::truncate($text, $length, '...', true, $html);
     }
-
-    /**
-     * @param string $action
-     * @param int|string|null $id
-     * @return bool
-     */
-    public function authorize($action, $id = null)
-    {
-        switch ($action) {
-            case 'filesystem.manage':
-            case 'filesystem.images':
-                // Admin file picker and import: same capability as the Gantry admin gate.
-                return \function_exists('current_user_can') && \current_user_can('manage_options');
-        }
-
-        return parent::authorize($action, $id);
-    }
 }

@@ -113,9 +113,6 @@ Once you downloaded and installed Gantry 5 plugin, please download also a defaul
 
 == Changelog ==
 
-= 5.6.6 (unreleased) =
-* Security hardening of the admin file picker.
-
 = 5.6.5 (2026-10-15) =
 * Security: fixed a sensitive data exposure issue where an unauthenticated particle AJAX request with an invalid outline could show the detailed debug error page. The debug error page is now only shown in debug mode or to administrators, the AJAX handler validates the outline and handles errors safely, and secret values are masked on the debug page.
 * Security: invalid particle AJAX requests now return HTTP 404 with a valid JSON Content-Type; detailed error pages are never shown to logged-out visitors, even in debug mode; error output hides environment, cookie, session and POST data.
