@@ -43,6 +43,10 @@ class Import extends HtmlController
      */
     public function index()
     {
+        if (!$this->authorize('filesystem.manage')) {
+            throw new \RuntimeException('Forbidden', 403);
+        }
+
         return $this->render('@gantry-admin/pages/import/import.html.twig', $this->params);
     }
 
@@ -51,7 +55,13 @@ class Import extends HtmlController
      */
     public function import()
     {
-        \check_admin_referer('gantry5-layout-manager');
+        if (!$this->authorize('filesystem.manage')) {
+            throw new \RuntimeException('Forbidden', 403);
+        }
+
+        if (function_exists('check_admin_referer')) {
+            \check_admin_referer('gantry5-layout-manager');
+        }
 
         if (!isset($_FILES['file']) || !is_array($_FILES['file']) || !isset($_FILES['file']['error']) || is_array($_FILES['file']['error'])) {
             throw new \RuntimeException('No file sent', 400);
@@ -85,6 +95,30 @@ class Import extends HtmlController
         $zip = new \ZipArchive;
         if ($zip->open($filename) !== true || !($export = Yaml::parse($zip->getFromName('export.yaml'))) || !isset($export['gantry'])) {
             throw new \RuntimeException('Uploaded file is not Gantry 5 export file', 400);
+        }
+
+        // security hardening: reject unsafe zip entry names
+        for ($i = 0, $n = $zip->numFiles; $i < $n; $i++) {
+            $entry = $zip->getNameIndex($i);
+            if ($entry === false) {
+                $zip->close();
+                throw new \RuntimeException('Invalid export file.', 400);
+            }
+            if (strpos($entry, "\0") !== false
+                || isset($entry[0]) && ($entry[0] === '/' || $entry[0] === '\\')
+                || preg_match('/^[a-z]:/i', $entry)
+            ) {
+                $zip->close();
+                throw new \RuntimeException('Invalid export file.', 400);
+            }
+            $normalised = str_replace('\\', '/', $entry);
+            $segments = explode('/', $normalised);
+            foreach ($segments as $segment) {
+                if ($segment === '..') {
+                    $zip->close();
+                    throw new \RuntimeException('Invalid export file.', 400);
+                }
+            }
         }
 
         /** @var UniformResourceLocator $locator */
