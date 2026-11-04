@@ -52,8 +52,24 @@ class ErrorServiceProvider implements ServiceProviderInterface
      */
     public static function allowed()
     {
-        return \function_exists('is_user_logged_in') && \function_exists('current_user_can')
-            && \is_user_logged_in() && \current_user_can('manage_options');
+        // WordPress: administrators only.
+        if (\function_exists('is_user_logged_in') && \function_exists('current_user_can')) {
+            return \is_user_logged_in() && \current_user_can('manage_options');
+        }
+
+        // Joomla: logged-in super users (core.admin) only.
+        if (\class_exists('Joomla\\CMS\\Factory')) {
+            try {
+                $app = \Joomla\CMS\Factory::getApplication();
+                $user = \method_exists($app, 'getIdentity') ? $app->getIdentity() : null;
+
+                return $user && !$user->guest && $user->authorise('core.admin');
+            } catch (\Throwable $e) {
+                return false;
+            }
+        }
+
+        return false;
     }
 
     /**

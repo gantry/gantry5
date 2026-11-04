@@ -24,6 +24,27 @@ use Pimple\ServiceProviderInterface;
 class ErrorServiceProvider implements ServiceProviderInterface
 {
     /**
+     * Detailed error pages are only allowed for logged-in Grav administrators.
+     *
+     * @return bool
+     */
+    public static function allowed()
+    {
+        try {
+            $grav = Grav::instance();
+            if (!isset($grav['user'])) {
+                return false;
+            }
+            $user = $grav['user'];
+
+            return $user && !empty($user->authenticated)
+                && ($user->authorize('admin.super') || $user->authorize('admin.login'));
+        } catch (\Throwable $e) {
+            return false;
+        }
+    }
+
+    /**
      * @param Container $container
      */
     public function register(Container $container)

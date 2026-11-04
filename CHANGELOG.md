@@ -1,3 +1,9 @@
+# 5.6.7
+## 11/04/2026
+1. [Common](#common)
+    1. [](#bugfix)
+        - Fixed a fatal error on some platforms when checking whether detailed error pages may be shown.
+
 # 5.6.6
 ## 11/04/2026
 1. [Common](#common)
