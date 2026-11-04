@@ -57,6 +57,12 @@ form:
       overridable: false
 
       fields:
+        .enabled:
+          type: enable.enable
+          label: Enabled
+          description: Enables the item on the front end.
+          default: true
+
         .icon:
           type: input.icon
           label: Icon
