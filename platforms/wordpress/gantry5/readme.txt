@@ -113,6 +113,9 @@ Once you downloaded and installed Gantry 5 plugin, please download also a defaul
 
 == Changelog ==
 
+= 5.6.7 (2026-11-04) =
+* Fixed a fatal error on some platforms when checking whether detailed error pages may be shown.
+
 = 5.6.6 (2026-11-04) =
 * Security: hardened permission checks and input handling in the admin file picker.
 * Security: hardened validation of archive contents during outline import.
