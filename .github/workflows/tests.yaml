@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        php: [ 8.3, 8.2, 8.1 ]
+        php: [ 8.4, 8.3, 8.2, 8.1 ]
         os: [ubuntu-latest]
     timeout-minutes: 10
     steps:
@@ -43,6 +43,9 @@ jobs:
       - name: Run PHP 8.3 compatibility tests
         if: matrix.php == '8.3'
         run: ./tests/php83/scripts/run-tests.sh
+      - name: Run targeted PHP 8.4 nullable-rewriter checks
+        if: matrix.php == '8.4'
+        run: php tests/php84/nullable-rewriter.php
 
 #  slack:
 #      name: Slack

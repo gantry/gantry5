@@ -3,6 +3,11 @@
 /**
  * Rewrite PHP 8.4 implicit nullable parameters to explicit nullable types.
  *
+ * Maintenance contribution Copyright 2026 Matthew C. Murphy https://MatthewxMurphy.com
+ * Product/support https://builtnotbegged.com | SPDX-License-Identifier: MIT
+ * Existing Gantry upstream licenses and attribution are preserved.
+
+ *
  * PHP 8.4 deprecates `Type $param = null` when the file is compiled, which
  * prints before Gantry can install an error handler. Composer reinstalls the
  * bundled libraries on every build, so this pass runs again after install.
@@ -184,7 +189,7 @@ function gantry_php84_fix_code($code)
                     $brace++;
                 } elseif ($current === '}' && $brace > 0) {
                     $brace--;
-                } elseif ($current === '[') {
+                } elseif ($current === '[' || gantry_php84_is_attribute($current)) {
                     $bracket++;
                 } elseif ($current === ']' && $bracket > 0) {
                     // Attribute closers are "]" without a "[" token ("#[" is one token).
@@ -262,7 +267,7 @@ function gantry_php84_split_parameter(array $tokens)
             $brace++;
         } elseif ($token === '}' && $brace > 0) {
             $brace--;
-        } elseif ($token === '[') {
+        } elseif ($token === '[' || gantry_php84_is_attribute($token)) {
             $bracket++;
         } elseif ($token === ']' && $bracket > 0) {
             $bracket--;
@@ -354,12 +359,12 @@ function gantry_php84_fix_head(array $tokens)
 
     if (strpos($compact, '&') !== false) {
         $wrapped = strncmp($compact, '(', 1) === 0 && substr($compact, -1) === ')';
-        if ($wrapped) {
-            array_splice($tokens, $first, 0, ['?']);
-        } else {
-            array_splice($tokens, $last + 1, 0, [')']);
-            array_splice($tokens, $first, 0, ['?', '(']);
+        // PHP permits nullable intersections as DNF unions, never as ?(A&B).
+        $type = array_slice($tokens, $first, $last - $first + 1);
+        if (!$wrapped) {
+            $type = array_merge(['('], $type, [')']);
         }
+        array_splice($tokens, $first, $last - $first + 1, array_merge($type, ['|', [T_STRING, 'null', 0]]));
 
         return [$tokens, true];
     }
@@ -502,15 +507,17 @@ function gantry_php84_self_test()
         ['function f(mixed $a = null) {}', 'function f(mixed $a = null) {}', 0],
         ['function f(string|int $a = null) {}', 'function f(string|int|null $a = null) {}', 1],
         ['function f(string|null $a = null) {}', 'function f(string|null $a = null) {}', 0],
-        ['function f(A&B $a = null) {}', 'function f(?(A&B) $a = null) {}', 1],
-        ['function f(?(A&B) $a = null) {}', 'function f(?(A&B) $a = null) {}', 0],
+        ['function f(A&B $a = null) {}', 'function f((A&B)|null $a = null) {}', 1],
+        ['function f((A&B)|null $a = null) {}', 'function f((A&B)|null $a = null) {}', 0],
         ['function f((A&B)|C $a = null) {}', 'function f((A&B)|C|null $a = null) {}', 1],
         ['function f(array $a = null, array $b = null): array {}', 'function f(?array $a = null, ?array $b = null): array {}', 2],
         ['function f(array &$a = null) {}', 'function f(?array &$a = null) {}', 1],
+        ['function f(A&B &$a = null) {}', 'function f((A&B)|null &$a = null) {}', 1],
+        ['function f(#[A, B] array $a = null) {}', 'function f(#[A, B] ?array $a = null) {}', 1],
         ['function f(#[\\SensitiveParameter] string $a = null) {}', 'function f(#[\\SensitiveParameter] ?string $a = null) {}', 1],
-        ['function __construct(public array $a = null) {}', 'function __construct(public ?array $a = null) {}', 1],
+        ['class C { function __construct(public array $a = null) {} }', 'class C { function __construct(public ?array $a = null) {} }', 1],
         ["function f(\r\n    array \$a = null\r\n) {}", "function f(\r\n    ?array \$a = null\r\n) {}", 1],
-        ['static function (Gantry $gantry = null) {}', 'static function (?Gantry $gantry = null) {}', 1],
+        ['static function (Gantry $gantry = null) {};', 'static function (?Gantry $gantry = null) {};', 1],
         ['$s = "function f(array $a = null)"; function g(array $a = null) {}', '$s = "function f(array $a = null)"; function g(?array $a = null) {}', 1],
         ['fn(string $a = null) => $a;', 'fn(?string $a = null) => $a;', 1],
         ['function f(Foo\\Bar $a = null) {}', 'function f(?Foo\\Bar $a = null) {}', 1],
@@ -527,6 +534,10 @@ function gantry_php84_self_test()
     foreach ($cases as [$input, $expected, $expectedCount]) {
         $source = "<?php\n" . $input;
         $target = "<?php\n" . $expected;
+        // DNF syntax is available from PHP 8.2; the dedicated suite requires actual PHP 8.4.
+        if (PHP_VERSION_ID >= 80200) {
+            token_get_all($target, TOKEN_PARSE);
+        }
         [$output, $count] = gantry_php84_fix_code($source);
         if ($output !== $target || $count !== $expectedCount) {
             throw new RuntimeException(
