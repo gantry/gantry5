@@ -1,5 +1,5 @@
 # 5.6.6
-## 11/02/2026
+## 11/04/2026
 1. [Common](#common)
     1. [](#improved)
         - Security: hardened permission checks and input handling in the admin file picker.

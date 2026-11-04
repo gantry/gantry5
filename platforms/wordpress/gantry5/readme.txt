@@ -113,8 +113,11 @@ Once you downloaded and installed Gantry 5 plugin, please download also a defaul
 
 == Changelog ==
 
-= 5.6.6 (unreleased) =
-* Security hardening of the admin file picker.
+= 5.6.6 (2026-11-04) =
+* Security: hardened permission checks and input handling in the admin file picker.
+* Security: hardened validation of archive contents during outline import.
+* File picker uploads are now limited to images, SVG, fonts and common video formats, with file type verification.
+* File picker paths are limited to the site's media and image folders.
 
 = 5.6.5 (2026-10-15) =
 * Security: fixed a sensitive data exposure issue where an unauthenticated particle AJAX request with an invalid outline could show the detailed debug error page. The debug error page is now only shown in debug mode or to administrators, the AJAX handler validates the outline and handles errors safely, and secret values are masked on the debug page.
