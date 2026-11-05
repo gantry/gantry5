@@ -1,7 +1,9 @@
 <?php
 // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
-defined('ABSPATH') || exit;
+if (!defined('ABSPATH') && !defined('_JEXEC') && !defined('GRAV_ROOT')) {
+    exit;
+}
 
 // Font Awesome Icons list [v5.14.0 - 1598 icons]
 // NOTE: To get an updated list of icons:
